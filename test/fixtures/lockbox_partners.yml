@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  address: MyString
-  phone_number: MyString
+partner_one:
+  name: Partner Org 1
+  address: "123 Main Street, Somecity, FL 39281"
+  phone_number: 555-777-5555
 
-two:
-  name: MyString
-  address: MyString
-  phone_number: MyString
+partner_two:
+  name: Other Partner Org
+  address: "66 City Street, Somewhere, IL 40506"
+  phone_number: 555-888-2222

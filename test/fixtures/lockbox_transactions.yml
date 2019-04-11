@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  eff_date: 2019-04-11
+  type: 
+  category: MyString
+  amount: 1
+  lockbox_action: one
+
+two:
+  eff_date: 2019-04-11
+  type: 
+  category: MyString
+  amount: 1
+  lockbox_action: two

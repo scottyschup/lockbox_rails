@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class LockboxPartnerTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "it works" do
+    assert_equal 2, LockboxPartner.count
+  end
 end
