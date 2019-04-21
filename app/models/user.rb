@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-  # all but :timeoutable and :omniauthable
+  # all but :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :trackable
+         :confirmable, :lockable, :trackable,
+         :timeoutable
 end
