@@ -1,9 +1,32 @@
+## MVP for First Release
+
+**MAC User**
+
+As a MAC user (coordinator or finance), I can...
+
+- Add a new LockboxPartner to the app
+- Add cash to a LockboxPartner's cashbox by filling out a form in the app (can also edit the add cash lockbox action)
+- Create a SupportRequest for a LockboxPartner to set aside a certain amount of cash for a client on a given date
+- See a dashboard of all Support Requests across LockboxPartners** (need to define what dashboard looks like and how many filters there are)
+- See an invidivual LockboxPartner lockbox
+  - includes ability to add cash
+  - includes lockbox action history / support request history
+  - includes balance
+- View and edit an individual SupportRequest
+- Add a note to a SupportRequest
+
+**Partner User**
+
+As a LockboxPartner, I can...
+
+TODO
+
 ## User Stories
 
-**Clinic (Lockbox) Partners**
+**Lockbox Partners**
 
-- As a clinic partner, I would like to log updated cash amount in the lockbox so that the system reflects the updated cash value
-- As a clinic partner, I would like update that lockbox so that I can reflect whether a client got the cash and record any discrepancies
+- As a lockbox partner, I would like to log updated cash amount in the lockbox so that the system reflects the updated cash value
+- As a lockbox partner, I would like update that lockbox so that I can reflect whether a client got the cash and record any discrepancies
 - As a clinic partner, I would like to reconcile the lockbox so that the physical money in the lockbox matches our lockbox app records
 
 **MAC Finance User**
@@ -60,6 +83,7 @@
   - Pending ($$ has been requested but not disbursed)
   - Completed ($$ has been disbursed to client)
   - Canceled (Client no longer needs $$, nothing disbursed)
+- Resolved At (logs the date the Lockbox Action was completed/canceled)
 - Belongs to a Lockbox Partner
 - Belongs to a Support Request
 - Has many accounting events
