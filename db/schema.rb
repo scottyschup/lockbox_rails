@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_21_191047) do
+ActiveRecord::Schema.define(version: 2019_04_21_201237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2019_04_21_191047) do
 
   create_table "lockbox_transactions", force: :cascade do |t|
     t.date "eff_date"
-    t.string "type"
+    t.string "balance_effect"
     t.string "category"
     t.integer "amount"
     t.bigint "lockbox_action_id"
