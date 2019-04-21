@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_21_185224) do
+ActiveRecord::Schema.define(version: 2019_04_21_191047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 2019_04_21_185224) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lockbox_action_id"], name: "index_lockbox_transactions_on_lockbox_action_id"
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.text "text"
+    t.bigint "notable_id"
+    t.string "notable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["notable_type", "notable_id"], name: "index_notes_on_notable_type_and_notable_id"
   end
 
   create_table "support_requests", force: :cascade do |t|
