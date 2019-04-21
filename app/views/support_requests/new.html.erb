@@ -1,2 +1,12 @@
-<h1>SupportRequests#new</h1>
-<p>Find me in app/views/support_requests/new.html.erb</p>
+<%= form_for @support_request, url: { action: 'create' } do |f| %>
+  <% # This will all need to be reviewed/changed once we have assets and design mockups %>
+  <%= f.label :lockbox_partner %>
+  <%= f.select :lockbox_partner_id, options_for_select(LockboxPartner.select_options) %>
+  <%= f.label :client_ref_id %>
+  <%= f.text_field :client_ref_id %>
+  <%= f.label :name_or_alias %>
+  <%= f.text_field :name_or_alias %>
+  <%= f.label :urgency_flag %>
+  <%= f.check_box :urgency_flag %>
+  <%= f.submit %>
+<% end %>

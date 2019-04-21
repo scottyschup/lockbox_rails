@@ -1,13 +1,13 @@
 class SupportRequestsController < ApplicationController
   def new
-    @support_requests = current_user.support_requests.build
+    @support_request = current_user.support_requests.build
   end
 
   def create
     @support_request = current_user.support_requests.new(support_request_params)
     if @support_request.save
       # TODO redirect to support_requests#show, which doesn't exist yet
-      redirect_to :root_path
+      redirect_to :root
     else
       render :new
     end
