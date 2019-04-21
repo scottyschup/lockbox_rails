@@ -35,8 +35,23 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails'
 
-  gem 'shoulda', '~> 3.5'
-  gem 'shoulda-matchers', '~> 2.0'
+  # RSpec & testing gems!
+
+  # Apparently rspec is not yet ready for rails 6 :(
+  # gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', github: 'rspec/rspec-rails', branch: '4-0-dev'
+  gem 'rspec', github: 'rspec/rspec', branch: 'master'
+  gem 'rspec-core', github: 'rspec/rspec-core', branch: 'master'
+  gem 'rspec-mocks', github: 'rspec/rspec-mocks', branch: 'master'
+  gem 'rspec-expectations', github: 'rspec/rspec-expectations', branch: 'master'
+  gem 'rspec-support', github: 'rspec/rspec-support', branch: 'master'
+  gem 'rails-controller-testing'
+
+  gem 'shoulda-matchers', '~> 4.0', '>= 4.0.1'
+
+  # For test data generation
+  gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
+  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 end
 
 group :development do
