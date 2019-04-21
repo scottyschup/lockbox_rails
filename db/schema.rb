@@ -87,9 +87,11 @@ ActiveRecord::Schema.define(version: 2019_04_21_191047) do
     t.bigint "lockbox_partner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["lockbox_partner_id"], name: "index_users_on_lockbox_partner_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   add_foreign_key "lockbox_transactions", "lockbox_actions"
