@@ -53,9 +53,9 @@
 
 - Eff date
 - Action Type
-- Adding Cash
-- Reconciling
-- Client Support
+  - Adding Cash
+  - Reconciling
+  - Client Support
 - Status
   - Pending ($$ has been requested but not disbursed)
   - Completed ($$ has been disbursed to client)
