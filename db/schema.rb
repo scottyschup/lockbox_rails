@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_191835) do
+ActiveRecord::Schema.define(version: 2019_04_21_185224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,9 @@ ActiveRecord::Schema.define(version: 2019_04_11_191835) do
     t.bigint "lockbox_partner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "support_request_id"
     t.index ["lockbox_partner_id"], name: "index_lockbox_actions_on_lockbox_partner_id"
+    t.index ["support_request_id"], name: "index_lockbox_actions_on_support_request_id"
   end
 
   create_table "lockbox_partners", force: :cascade do |t|
