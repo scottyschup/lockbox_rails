@@ -14,12 +14,20 @@ As a MAC user (coordinator or finance), I can...
   - includes balance
 - View and edit an individual SupportRequest
 - Add a note to a SupportRequest
+- Receive a notification email that a reconciliation mismatch occurred
 
 **Partner User**
 
 As a LockboxPartner, I can...
 
-TODO
+- View alerts in app prompting me to confirm receipt of cash added to the box OR reconcile the lockbox
+- Confirm that I have received cash in my Lockbox by clicking a button
+- Reconcile the lockbox by completing a webform asking for the amount in the lockbox
+- Receive a notification email that a new support request exists for my lockbox
+- View all of my support requests (auto filter to 'pending' status but ability to view all historical)
+- View details for one support request
+- Update status of support request's lockbox action to completed or canceled with option to edit the amount and pickup date
+- Add notes to a support request
 
 ## User Stories
 
