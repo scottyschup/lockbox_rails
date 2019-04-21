@@ -61,6 +61,7 @@
   - Completed ($$ has been disbursed to client)
   - Canceled (Client no longer needs $$, nothing disbursed)
 - Belongs to a Lockbox Partner
+- Belongs to a Support Request
 - Has many accounting events
 
 **Lockbox Transactions**
