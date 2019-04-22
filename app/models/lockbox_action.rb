@@ -8,4 +8,8 @@ class LockboxAction < ApplicationRecord
     :reconcile,
     :support_client
   ].freeze
+
+  def amount
+    lockbox_transactions.map(&:amount).sum
+  end
 end
