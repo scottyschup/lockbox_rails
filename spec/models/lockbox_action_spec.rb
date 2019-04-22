@@ -5,7 +5,7 @@ describe LockboxAction, type: :model do
   it { is_expected.to have_many(:lockbox_transactions) }
   it { is_expected.to have_many(:notes) }
 
-  describe 'amount' do
+  describe '#amount' do
     subject do
       FactoryBot.create(:lockbox_action, :support_client).tap do |action|
         action.lockbox_transactions.create(
@@ -37,6 +37,22 @@ describe LockboxAction, type: :model do
     xcontext 'when action is in canceled status' do
       # Does it make sense to return zero no matter
       # what if it's in canceled status?
+    end
+  end
+
+  describe '#cancel!' do
+    subject { FactoryBot.create(:lockbox_action) }
+
+    it 'updates the status to canceled' do
+      expect { subject.cancel! }.to change{ subject.status }.from('pending').to('canceled')
+    end
+  end
+
+  describe '#complete!' do
+    subject { FactoryBot.create(:lockbox_action) }
+
+    it 'updates the status to canceled' do
+      expect { subject.complete! }.to change{ subject.status }.from('pending').to('completed')
     end
   end
 end

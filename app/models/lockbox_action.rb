@@ -12,4 +12,12 @@ class LockboxAction < ApplicationRecord
   def amount
     lockbox_transactions.map(&:amount).sum
   end
+
+  def cancel!
+    update!(status: 'canceled')
+  end
+
+  def complete!
+    update!(status: 'completed')
+  end
 end
