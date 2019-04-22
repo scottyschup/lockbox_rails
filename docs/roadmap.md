@@ -108,8 +108,7 @@ As a LockboxPartner, I can...
   - Childcare
   - Meds
   - Food
--Lockbox $$ Added
-- Adjustment
+  - Adjustment
 - Amount
 
 ## Balance Calculation Logic

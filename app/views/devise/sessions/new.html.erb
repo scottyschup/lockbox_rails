@@ -1,0 +1,32 @@
+<h2>Log in</h2>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'usa-form') do |f| %>
+  <fieldset>
+    <%= devise_error_messages! %>
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+
+    <%= f.label :password %>
+    <%= f.password_field :password, autocomplete: "off" %>
+    <p class="usa-form-note left">
+      <a title="Forgot your password?" href="<%= new_password_path(resource_name) %>"
+        class="forgot">Forgot your password?</a>
+    </p>
+    <p class="usa-form-note">
+      <a title="Show password" href="javascript:void(0);"
+        class="usa-show_password"
+        aria-controls="user_password">Show password</a>
+    </p>
+
+    <div>
+      <% if devise_mapping.rememberable? -%>
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+      <% end -%>
+    </div>
+
+    <%= f.submit "Log in" %>
+  </fieldset>
+<% end %>
+
+<%= render "devise/shared/links" %>
