@@ -1,5 +1,31 @@
 FactoryBot.define do
   factory :lockbox_action do
-    # TODO IMPLEMENT ME
+    eff_date        { Date.current }
+    status          { 'pending' }
+    lockbox_partner { create(:lockbox_partner) }
+
+    trait :add_cash do
+      action_type   { 'add_cash' }
+    end
+
+    trait :reconciliation do
+      action_type   { 'reconcile' }
+    end
+
+    trait :support_client do
+      action_type   { 'support_client' }
+    end
+
+    trait :adjustment do
+      action_type   { 'adjust' }
+    end
+
+    trait :completed do
+      status        { 'completed' }
+    end
+
+    trait :canceled do
+      status        { 'canceled' }
+    end
   end
 end

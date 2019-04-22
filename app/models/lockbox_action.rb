@@ -3,5 +3,9 @@ class LockboxAction < ApplicationRecord
   has_many :lockbox_transactions
   has_many :notes, as: :notable
 
-  ACTION_TYPES = [ :add_cash, :reconcile, :support_client ].freeze
+  ACTION_TYPES = [
+    :add_cash,
+    :reconcile,
+    :support_client
+  ].freeze
 end

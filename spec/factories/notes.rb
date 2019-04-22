@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :note do
-    # TODO
+    text    { Faker::Lorem.paragraph }
+    notable { create(:user) }
   end
 end
