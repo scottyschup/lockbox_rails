@@ -31,7 +31,8 @@ jobs:
 
       -run:
           name: install latest bundler
-          command: gem install bundler
+          command: |
+            gem install bundler
 
       - run:
           name: install dependencies
