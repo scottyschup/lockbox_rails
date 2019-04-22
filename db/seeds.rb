@@ -10,7 +10,7 @@ LOCKBOX_PARTNERS = [
   ['Dogs Clinic', 'floof@dogs.com'],
 ]
 
-lbps = LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
+LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
   lockbox_partner = LockboxPartner.where(name: partner_name).first_or_create(
     address: Faker::Address.full_address,
     phone_number: Faker::PhoneNumber.phone_number
@@ -43,6 +43,4 @@ lbps = LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
     end
   end
 end
-
-puts lbps
 
