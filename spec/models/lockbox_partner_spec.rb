@@ -9,7 +9,7 @@ describe LockboxPartner, type: :model do
 
     let(:start_date) { Date.current - 2.months }
 
-    let(:add_cash) do
+    def add_cash(date)
       LockboxAction.create!(
         action_type:     'add_cash',
         status:          'pending',
@@ -41,7 +41,7 @@ describe LockboxPartner, type: :model do
     end
 
     context 'have only added cash but no support requests yet' do
-      before { add_cash }
+      before { add_cash(start_date) }
 
       it 'returns the amount of the initial cashbox deposit' do
         expect(lockbox.balance).to eq(1000.to_money)
@@ -53,7 +53,7 @@ describe LockboxPartner, type: :model do
         end
 
         context 'add cash was completed' do
-          before { add_cash.complete! }
+          before { add_cash(start_date).complete! }
 
           it 'returns the 1000' do
             expect(lockbox.balance(exclude_pending: true)).to eq(1000.to_money)
@@ -64,7 +64,7 @@ describe LockboxPartner, type: :model do
 
     context 'add cash, multiple pending & completed actions' do
       before do
-        add_cash.complete!
+        add_cash(start_date).complete!
         pending_request_on(start_date + 1.week,  [20_00, 50_00]).complete!
         pending_request_on(start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
         pending_request_on(start_date + 3.weeks, [100_00]).complete!
@@ -79,6 +79,86 @@ describe LockboxPartner, type: :model do
       context 'excluding pending transactions' do
         it 'returns the correct balance -- $765' do
           expect(lockbox.balance(exclude_pending: true)).to eq(765.to_money)
+        end
+      end
+    end
+
+    context 'add cash, multiple pending, completed, and canceled actions' do
+      before do
+        add_cash(start_date).complete!
+        pending_request_on(start_date + 1.week,  [20_00, 50_00]).complete!
+        pending_request_on(start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
+        pending_request_on(start_date + 3.weeks, [100_00]).complete!
+        pending_request_on(start_date + 4.weeks, [75_00, 20_00]).cancel!
+        pending_request_on(Date.current - 2.weeks, [85_00, 10_00]).complete!
+        pending_request_on(Date.current - 10.days, [100_00]).complete!
+        pending_request_on(Date.current - 1.week, [30_00]).cancel!
+        pending_request_on(Date.current + 3.days, [45_00, 15_00, 10_00])
+        pending_request_on(Date.current + 5.days, [50_00, 15_00])
+      end
+
+      it 'returns the correct balance -- $435' do
+        expect(lockbox.balance(exclude_pending: false)).to eq(435.to_money)
+      end
+
+      context 'excluding pending transactions' do
+        it 'returns the correct balance -- $570' do
+          expect(lockbox.balance(exclude_pending: true)).to eq(570.to_money)
+        end
+      end
+    end
+
+    context 'multiple add cash events and a variety of transactions' do
+      before do
+        add_cash(start_date).complete!
+        pending_request_on(start_date + 1.week,  [20_00, 50_00]).complete!
+        pending_request_on(start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
+        pending_request_on(start_date + 3.weeks, [100_00]).complete!
+        pending_request_on(start_date + 4.weeks, [75_00, 20_00]).cancel!
+        pending_request_on(Date.current - 2.weeks, [85_00, 10_00]).complete!
+        pending_request_on(Date.current - 10.days, [100_00]).complete!
+        pending_request_on(Date.current - 1.week, [30_00]).cancel!
+        add_cash(Date.yesterday)
+        pending_request_on(Date.current + 3.days, [45_00, 15_00, 10_00])
+        pending_request_on(Date.current + 5.days, [50_00, 15_00])
+      end
+
+      it 'returns the correct balance -- $1435' do
+        expect(lockbox.balance(exclude_pending: false)).to eq(1435.to_money)
+      end
+
+      context 'excluding pending transactions' do
+        it 'returns the correct balance -- $570' do
+          expect(lockbox.balance(exclude_pending: true)).to eq(570.to_money)
+        end
+      end
+    end
+
+    context 'With transactions on the current date' do
+      before do
+        add_cash(start_date).complete!
+        pending_request_on(start_date + 1.week,  [20_00, 50_00]).complete!
+        pending_request_on(start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
+        pending_request_on(start_date + 3.weeks, [100_00]).complete!
+        pending_request_on(start_date + 4.weeks, [75_00, 20_00]).cancel!
+        pending_request_on(Date.current - 2.weeks, [85_00, 10_00]).complete!
+        pending_request_on(Date.current - 10.days, [100_00]).complete!
+        pending_request_on(Date.current - 1.week, [30_00]).cancel!
+        add_cash(Date.yesterday)
+        pending_request_on(Date.current, [10_00, 30_00])
+        pending_request_on(Date.current, [35_00, 45_00]).complete!
+        pending_request_on(Date.current, [70_00, 50_00, 30_00]).cancel!
+        pending_request_on(Date.current + 3.days, [45_00, 15_00, 10_00])
+        pending_request_on(Date.current + 5.days, [50_00, 15_00])
+      end
+
+      it 'returns the correct balance -- $1315' do
+        expect(lockbox.balance(exclude_pending: false)).to eq(1315.to_money)
+      end
+
+      context 'excluding pending transactions' do
+        it 'returns the correct balance -- $490' do
+          expect(lockbox.balance(exclude_pending: true)).to eq(490.to_money)
         end
       end
     end
