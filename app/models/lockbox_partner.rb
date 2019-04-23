@@ -1,5 +1,6 @@
 class LockboxPartner < ApplicationRecord
   has_many :users
+  has_many :lockbox_actions
 
   def balance(exclude_pending: false)
     relevant_transactions_for_balance(exclude_pending: exclude_pending).inject(Money.zero) do |balance, action|
