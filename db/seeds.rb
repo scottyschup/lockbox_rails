@@ -22,6 +22,17 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
     confirmed_at: Time.current
   )
 
+  lockbox_partner.lockbox_actions.create!(
+    eff_date: Date.current - 1.week,
+    action_type: 'add_cash'
+  ).tap do |action|
+    action.lockbox_transactions.create!(
+      eff_date: action.eff_date,
+      amount_cents: 1000_00,
+      balance_effect: 'credit'
+    )
+  end
+
   support_request = SupportRequest.create(
     client_ref_id: Faker::Alphanumeric.alpha(10),
     name_or_alias: [Faker::Name.first_name, Faker::Name.initials(2)].sample,
