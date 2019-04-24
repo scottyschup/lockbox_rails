@@ -16,10 +16,6 @@ FactoryBot.define do
       action_type   { 'support_client' }
     end
 
-    trait :adjustment do
-      action_type   { 'adjust' }
-    end
-
     trait :completed do
       status        { 'completed' }
     end
