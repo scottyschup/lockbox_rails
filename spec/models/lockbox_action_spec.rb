@@ -45,6 +45,24 @@ describe LockboxAction, type: :model do
     end
   end
 
+  describe '#pending?' do
+    subject { FactoryBot.create(:lockbox_action) }
+
+    it { is_expected.to be_pending }
+  end
+
+  describe '#completed?' do
+    subject { FactoryBot.create(:lockbox_action, :completed) }
+
+    it { is_expected.to be_completed }
+  end
+
+  describe '#canceled?' do
+    subject { FactoryBot.create(:lockbox_action, :canceled) }
+
+    it { is_expected.to be_canceled }
+  end
+
   describe '#cancel!' do
     subject { FactoryBot.create(:lockbox_action) }
 
