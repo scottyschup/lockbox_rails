@@ -1,6 +1,6 @@
 # MAC Lockbox
 
-The MAC clinic lockbox is a system for tracking MAC cash at clinics across the Midwest. For a detailed list of app functionality, see [docs/roadmap.md](https://github.com/MidwestAccessCoalition/lockbox_rails/blob/master/docs/roadmap.md)
+The MAC lockbox is a system for tracking MAC cash at partners across the Midwest. For a detailed list of app functionality, see [docs/roadmap.md](https://github.com/MidwestAccessCoalition/lockbox_rails/blob/master/docs/roadmap.md)
 
 # Local dev setup
 ## Requirements
