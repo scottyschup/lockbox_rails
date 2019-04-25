@@ -23,20 +23,25 @@ describe LockboxAction, type: :model do
       expect(subject.amount).to eq(40.to_money)
     end
 
-    xcontext 'when no transactions are present' do
-      # Is this even a valid use case?
-      # I think the only context in which this would
-      # makes sense is reconciliation where the amount
-      # expected vs the amount counted
+    context 'when no transactions are present' do
+      before do
+        subject.lockbox_transactions.each(&:destroy)
+        subject.reload
+      end
 
       it "return zero" do
-
+        expect(subject.amount).to eq(Money.zero)
       end
     end
 
-    xcontext 'when action is in canceled status' do
-      # Does it make sense to return zero no matter
-      # what if it's in canceled status?
+    context 'when action is in canceled status' do
+      before do
+        subject.cancel!
+      end
+
+      it "returns zero" do
+        expect(subject.amount).to eq(Money.zero)
+      end
     end
   end
 
