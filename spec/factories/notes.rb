@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :note do
     text    { Faker::Lorem.paragraph }
-    notable { create(:user) }
+    association :notable, factory: :user
   end
 end
