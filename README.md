@@ -1,24 +1,17 @@
-# README
+# MAC Lockbox
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The MAC clinic lockbox is a system for tracking MAC cash at clinics across the Midwest. For a detailed list of app functionality, see [docs/roadmap.md](https://github.com/MidwestAccessCoalition/lockbox_rails/blob/master/docs/roadmap.md)
 
-Things you may want to cover:
+# Local dev setup
+## Requirements
+* Ruby  v2.6.2
+* Rails v6.0.0.beta3
+* Node  v11.14.0
+* PostgreSQL 11.2
 
-* Ruby version
+#### Set up local email interceptor
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```sh
+gem install mailcatcher
+mailcatcher
+```
