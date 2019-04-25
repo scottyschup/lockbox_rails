@@ -11,5 +11,5 @@ class LockboxTransaction < ApplicationRecord
     medicine
     food
     adjustment
-  )
+  ).freeze
 end

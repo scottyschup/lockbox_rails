@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :lockbox_action do
     eff_date        { Date.current }
     status          { 'pending' }
-    lockbox_partner { create(:lockbox_partner) }
+    lockbox_partner
 
     trait :add_cash do
       action_type   { 'add_cash' }
