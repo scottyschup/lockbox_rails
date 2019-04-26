@@ -48,7 +48,7 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
     categories.each do |category|
       action.lockbox_transactions.create(
         eff_date: action.eff_date,
-        amount: (1..60).to_a.sample * 100, # TODO use money gem here
+        amount_cents: (1..60).to_a.sample,
         balance_effect: 'debit'
       )
     end

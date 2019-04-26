@@ -15,6 +15,8 @@ class LockboxAction < ApplicationRecord
     :support_client
   ].freeze
 
+  scope :excluding_statuses, -> (*statuses) { where.not(status: statuses) }
+
   # action_type should correspond with ACTION_TYPES
   def self.create_with_transactions(action_type, params)
     if !ACTION_TYPES.include?(action_type)
@@ -57,5 +59,31 @@ class LockboxAction < ApplicationRecord
         end
       end
     end
+  end
+
+  def amount
+    return Money.zero if canceled?
+    return Money.zero if lockbox_transactions.none?
+    lockbox_transactions.map(&:amount).sum
+  end
+
+  def pending?
+    status == PENDING
+  end
+
+  def completed?
+    status == COMPLETED
+  end
+
+  def canceled?
+    status == CANCELED
+  end
+
+  def cancel!
+    update!(status: CANCELED)
+  end
+
+  def complete!
+    update!(status: COMPLETED)
   end
 end
