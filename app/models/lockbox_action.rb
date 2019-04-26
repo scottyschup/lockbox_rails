@@ -15,6 +15,8 @@ class LockboxAction < ApplicationRecord
     :support_client
   ].freeze
 
+  scope :excluding_statuses, -> (*statuses) { where.not(status: statuses) }
+
   def amount
     return Money.zero if canceled?
     return Money.zero if lockbox_transactions.none?
