@@ -1,0 +1,18 @@
+<div class="lockbox-partner clearfix">
+  <div>
+    <p><strong>City</strong></p>
+  </div>
+  <h3>
+    <%= lockbox_partner.name %>
+  </h3>
+
+  <hr />
+
+  <div class="lockbox-activity">
+    <p>(placeholder for a list of recent activity)</p>
+  </div>
+
+  <%= link_to 'View Lockbox Partner Details',
+              lockbox_partner_path(lockbox_partner),
+              class: 'usa-button view-full' %>
+</div>

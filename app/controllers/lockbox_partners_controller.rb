@@ -12,6 +12,10 @@ class LockboxPartnersController < ApplicationController
     end
   end
 
+  def show
+    @lockbox_partner = LockboxPartner.find(params[:id])
+  end
+
   private
 
   def lockbox_params

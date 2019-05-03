@@ -1,0 +1,96 @@
+#dashboard-lockbox-partners {
+  .lockbox-partner {
+    background: lightgray;
+    margin-bottom: 20px;
+    padding: 20px;
+    position: relative;
+    @media screen and (min-width: 481px) {
+      border-bottom-right-radius: 5px;
+    }
+
+    h3,
+    h4 {
+      clear: none;
+      margin: 0;
+
+      a,
+      a:hover,
+      a:focus,
+      a:active {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+
+    p {
+      margin: 0;
+      &:first-of-type {
+        margin-top: 1em;
+      }
+      &.alert {
+        color: #c0081e;
+      }
+    }
+
+    .lockbox-activity {
+      margin-bottom: 50px;
+    }
+
+    .view-full {
+      @media screen and (min-width: 481px) {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 0;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.usa-button.view-full {
+  max-width: none;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 0;
+  text-align: left;
+}
+
+.horizontal-rule {
+  width: 100%;
+  height: 15px;
+  border-bottom: 5px solid dimgray;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#dashboard-links {
+  margin-top: 20px;
+  white-space: nowrap;
+  @media screen and (max-width: 700px) {
+    .usa-width-one-half {
+      width: 100%;
+    }
+  }
+  .dashboard-resource {
+    padding: 20px;
+    line-height: 50px;
+    margin: 0 auto;
+    .large-icon {
+      font-size: 50px;
+      vertical-align: middle;
+    }
+    .resource-text {
+      vertical-align: middle;
+      margin-left: 15px;
+    }
+  }
+  a,
+  a:hover,
+  a:focus,
+  a:active {
+    text-decoration: none;
+    color: inherit;
+  }
+}
