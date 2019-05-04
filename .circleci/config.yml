@@ -90,5 +90,5 @@ workflows:
             - build
           filters:
             branches:
-              only: auto_deploy_to_staging # master
+              only: master
 
