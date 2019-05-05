@@ -5,7 +5,7 @@ class LockboxAction < ApplicationRecord
   has_many :notes, as: :notable
 
   validates :eff_date, presence: true
-  validates :support_request_id, presence: true, if: -> { action_type == :support_client }
+  validates :support_request_id, presence: true, if: -> { action_type == 'support_client' }
 
   before_validation :inherit_lockbox_partner_id
 
