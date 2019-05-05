@@ -1,10 +1,11 @@
 class LockboxAction < ApplicationRecord
   belongs_to :lockbox_partner
-  belongs_to :support_request
+  belongs_to :support_request, optional: true
   has_many :lockbox_transactions
   has_many :notes, as: :notable
 
   validates :eff_date, presence: true
+  validates :support_request_id, presence: true, if: -> { action_type == :support_client }
 
   before_validation :inherit_lockbox_partner_id
 
