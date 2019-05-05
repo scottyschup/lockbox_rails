@@ -1,4 +1,4 @@
-<%= form_for @support_request, url: { action: 'create' } do |f| %>
+<%= form_with model: @support_request do |f| %>
   <% # This will all need to be reviewed/changed once we have assets and design mockups %>
   <%= f.label :lockbox_partner %>
   <%= f.select :lockbox_partner_id, options_for_select(LockboxPartner.select_options) %>
@@ -8,5 +8,10 @@
   <%= f.text_field :name_or_alias %>
   <%= f.label :urgency_flag %>
   <%= f.check_box :urgency_flag %>
+  <% # fields_for is intentionally not called on f; we are not nesting these attrs %>
+  <%= fields_for @lockbox_action do |la_f| %>
+    <%= la_f.label :eff_date %>
+    <%= la_f.date_field :eff_date %>
+  <% end %>
   <%= f.submit %>
 <% end %>

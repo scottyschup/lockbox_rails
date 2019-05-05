@@ -1,11 +1,17 @@
 class SupportRequestsController < ApplicationController
   def new
     @support_request = current_user.support_requests.build
+    @lockbox_action = @support_request.lockbox_actions.build
   end
 
   def create
     @support_request = current_user.support_requests.new(support_request_params)
-    if @support_request.save
+    result = ActiveRecord::Base.transaction do
+      @support_request.save!
+      @lockbox_action = @support_request.lockbox_actions.build(lockbox_action_params)
+      @lockbox_action.save!
+    end
+    if result
       # TODO redirect to support_requests#show, which doesn't exist yet
       redirect_to :root
     else
@@ -21,6 +27,12 @@ class SupportRequestsController < ApplicationController
       :name_or_alias,
       :urgency_flag,
       :lockbox_partner_id
+    )
+  end
+
+  def lockbox_action_params
+    params.require(:lockbox_action).permit(
+      :eff_date
     )
   end
 end
