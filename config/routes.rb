@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   root to: 'dashboard#index'
 
-  resources :lockbox_partners, only: [:new, :create]
+  resources :lockbox_partners, only: [:new, :create, :show]
 end
