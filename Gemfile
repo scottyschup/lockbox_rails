@@ -29,14 +29,32 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.4.1', require: false
 
 gem 'devise', '~> 4.6.2'
+gem 'font-awesome-rails'
+
+gem 'money-rails', '~>1.12'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails'
 
-  gem 'shoulda', '~> 3.5'
-  gem 'shoulda-matchers', '~> 2.0'
+  # RSpec & testing gems!
+
+  # Apparently rspec is not yet ready for rails 6 :(
+  # gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', github: 'rspec/rspec-rails', branch: '4-0-dev'
+  gem 'rspec', github: 'rspec/rspec', branch: 'master'
+  gem 'rspec-core', github: 'rspec/rspec-core', branch: 'master'
+  gem 'rspec-mocks', github: 'rspec/rspec-mocks', branch: 'master'
+  gem 'rspec-expectations', github: 'rspec/rspec-expectations', branch: 'master'
+  gem 'rspec-support', github: 'rspec/rspec-support', branch: 'master'
+  gem 'rails-controller-testing'
+
+  gem 'shoulda-matchers', '~> 4.0', '>= 4.0.1'
+
+  # For test data generation
+  gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
+  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 end
 
 group :development do
@@ -54,6 +72,9 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+
+  # This is used in CI
+  gem 'rspec_junit_formatter', '~> 0.4.1'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
