@@ -1,5 +1,6 @@
 class LockboxAction < ApplicationRecord
   belongs_to :lockbox_partner
+  belongs_to :support_request, optional: true
   has_many :lockbox_transactions
   has_many :notes, as: :notable
 
@@ -24,7 +25,7 @@ class LockboxAction < ApplicationRecord
     else
       ActiveRecord::Base.transaction do
         lockbox_action = create!(
-          eff_date: params[:date],
+          eff_date: params[:eff_date],
           action_type: action_type,
           status: PENDING
         )
@@ -32,7 +33,7 @@ class LockboxAction < ApplicationRecord
         case action_type
         when :add_cash
           lockbox_action.lockbox_transactions.create!(
-            eff_date: params[:date],
+            eff_date: params[:eff_date],
             amount_cents: params[:amount_cents],
             balance_effect: 'credit'
           )
@@ -42,7 +43,7 @@ class LockboxAction < ApplicationRecord
           balance_effect = expected_amount > params[:amount_cents] ? 'debit' : 'credit'
 
           lockbox_action.lockbox_transactions.create!(
-            eff_date: params[:date],
+            eff_date: params[:eff_date],
             amount_cents: params[:amount_cents],
             balance_effect: balance_effect,
             category: 'adjustment'
@@ -50,7 +51,7 @@ class LockboxAction < ApplicationRecord
         when :support_client
           params[:cost_breakdown].each do |item|
             lockbox_action.lockbox_transactions.create!(
-              eff_date:       params[:date],
+              eff_date:       params[:eff_date],
               amount_cents:   item[:amount_cents],
               balance_effect: 'debit',
               category:       item[:category]
