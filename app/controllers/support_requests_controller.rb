@@ -1,6 +1,9 @@
 class SupportRequestsController < ApplicationController
   def new
     @support_request = current_user.support_requests.build
+    # We won't actually be calling any methods on the following two objects;
+    # they're here so that the form helpers and params will work. This could
+    # probably be refactored to make it cleaner
     @lockbox_action = @support_request.lockbox_actions.build
     @lockbox_transaction = @lockbox_action.lockbox_transactions.build
   end
