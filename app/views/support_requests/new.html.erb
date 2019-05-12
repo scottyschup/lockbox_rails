@@ -13,5 +13,11 @@
     <%= la_f.label :eff_date %>
     <%= la_f.date_field :eff_date %>
   <% end %>
+  <%= fields_for @lockbox_transaction do |lt_f| %>
+    <%= lt_f.label :amount_cents %>
+    <%= lt_f.text_field :amount_cents %>
+    <%= lt_f.label :category %>
+    <%= lt_f.select :category, LockboxTransaction::EXPENSE_CATEGORIES %>
+  <% end %>
   <%= f.submit %>
 <% end %>
