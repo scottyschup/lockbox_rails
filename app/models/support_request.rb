@@ -3,9 +3,7 @@ class SupportRequest < ApplicationRecord
   belongs_to :user
   has_many :lockbox_actions
 
-  UUID_REGEX = /\A[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\z/
-
-  validates :client_ref_id, presence: true, format: { with: UUID_REGEX }
+  validates :client_ref_id, presence: true
   validates :name_or_alias, presence: true
   validates :user, presence: true
   validates :lockbox_partner, presence: true
