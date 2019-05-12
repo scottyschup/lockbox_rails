@@ -10,6 +10,7 @@ class LockboxPartners::UsersController < ApplicationController
     set_user_password
     if @user.save
       flash.clear
+      flash[:notice] = "New user created for Lockbox Partner #{@lockbox_partner.name}"
       redirect_to lockbox_partner_path(@lockbox_partner)
     else
       flash[:alert] = @user.errors.full_messages.join(', ')

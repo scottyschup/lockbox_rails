@@ -6,4 +6,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :trackable,
          :timeoutable
+
+  private
+
+  def password_required?
+    confirmed? ? super : false
+  end
 end
