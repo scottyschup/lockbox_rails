@@ -17,7 +17,7 @@
     <%= lt_f.label :amount_cents %>
     <%= lt_f.text_field :amount_cents %>
     <%= lt_f.label :category %>
-    <%= lt_f.select :category, LockboxTransaction::EXPENSE_CATEGORIES %>
+    <%= lt_f.select :category, options_for_select(expense_category_select_options) %>
   <% end %>
   <%= f.submit %>
 <% end %>
