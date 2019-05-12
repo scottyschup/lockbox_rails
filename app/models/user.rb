@@ -8,4 +8,6 @@ class User < ApplicationRecord
          :timeoutable
 
   has_many :support_requests
+
+  scope :confirmed, -> { where.not(confirmed_at: nil) }
 end
