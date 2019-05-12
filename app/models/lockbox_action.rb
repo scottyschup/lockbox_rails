@@ -4,6 +4,11 @@ class LockboxAction < ApplicationRecord
   has_many :lockbox_transactions
   has_many :notes, as: :notable
 
+  validates :eff_date, presence: true
+  validates :support_request_id, presence: true, if: -> { action_type == 'support_client' }
+
+  before_validation :inherit_lockbox_partner_id
+
   STATUSES = [
     PENDING   = 'pending',
     COMPLETED = 'completed',
@@ -93,5 +98,13 @@ class LockboxAction < ApplicationRecord
 
   def complete!
     update!(status: COMPLETED)
+  end
+
+  private
+
+  def inherit_lockbox_partner_id
+    if lockbox_partner_id.blank? && support_request&.lockbox_partner_id
+      self.lockbox_partner_id = support_request.lockbox_partner_id
+    end
   end
 end

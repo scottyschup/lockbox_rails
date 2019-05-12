@@ -14,6 +14,7 @@ FactoryBot.define do
 
     trait :support_client do
       action_type   { 'support_client' }
+      association :support_request
     end
 
     trait :completed do

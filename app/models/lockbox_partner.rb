@@ -2,6 +2,10 @@ class LockboxPartner < ApplicationRecord
   has_many :users
   has_many :lockbox_actions
 
+  def self.select_options
+    all.order(:name).pluck(:name, :id)
+  end
+
   def balance(exclude_pending: false)
     relevant_transactions_for_balance(exclude_pending: exclude_pending).inject(Money.zero) do |balance, action|
       case action.balance_effect

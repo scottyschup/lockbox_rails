@@ -62,7 +62,9 @@ ActiveRecord::Schema.define(version: 2019_04_22_052048) do
     t.bigint "lockbox_partner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
     t.index ["lockbox_partner_id"], name: "index_support_requests_on_lockbox_partner_id"
+    t.index ["user_id"], name: "index_support_requests_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
