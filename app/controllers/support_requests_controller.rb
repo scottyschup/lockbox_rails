@@ -16,8 +16,6 @@ class SupportRequestsController < ApplicationController
                                         .create_with_transactions(
         :support_client, action_and_transaction_params
       )
-      # @lockbox_action = @support_request.lockbox_actions.build(lockbox_action_params)
-      # @lockbox_action.save!
     end
     if result
       # TODO redirect to support_requests#show, which doesn't exist yet
