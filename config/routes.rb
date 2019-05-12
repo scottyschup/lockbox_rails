@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     put '/users', to: 'devise/registrations#update'
   end
 
+  resources :support_requests, only: [:new, :create]
+
   root to: 'dashboard#index'
 
   resources :lockbox_partners, only: [:new, :create, :show] do

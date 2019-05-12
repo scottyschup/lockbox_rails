@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   belongs_to :lockbox_partner, optional: true
+  has_many :support_requests
 
   # all but :omniauthable
   devise :database_authenticatable, :registerable,
