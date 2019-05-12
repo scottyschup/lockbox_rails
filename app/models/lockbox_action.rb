@@ -63,6 +63,8 @@ class LockboxAction < ApplicationRecord
             )
           end
         end
+
+        lockbox_action
       end
     end
   end
