@@ -7,7 +7,7 @@
   <%= f.label :name_or_alias %>
   <%= f.text_field :name_or_alias %>
   <%= f.label :urgency_flag %>
-  <%= f.check_box :urgency_flag %>
+  <%= f.text_field :urgency_flag %>
   <% # fields_for is intentionally not called on f; we are not nesting these attrs %>
   <%= fields_for @lockbox_action do |la_f| %>
     <%= la_f.label :eff_date %>
