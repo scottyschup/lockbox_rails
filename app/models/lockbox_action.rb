@@ -35,25 +35,30 @@ class LockboxAction < ApplicationRecord
           lockbox_action.lockbox_transactions.create!(
             eff_date: params[:eff_date],
             amount_cents: params[:amount_cents],
-            balance_effect: 'credit'
+            balance_effect: LockboxTransaction::CREDIT
           )
         when :reconcile
           expected_amount = lockbox_partner.expected_cash_in_box.cents
           return if expected_amount == params[:amount_cents]
-          balance_effect = expected_amount > params[:amount_cents] ? 'debit' : 'credit'
+
+          balance_effect = if expected_amount > params[:amount_cents]
+            LockboxTransaction::DEBIT
+          else
+            LockboxTransaction::CREDIT
+          end
 
           lockbox_action.lockbox_transactions.create!(
             eff_date: params[:eff_date],
             amount_cents: params[:amount_cents],
             balance_effect: balance_effect,
-            category: 'adjustment'
+            category: LockboxTransation::ADJUSTMENT
           )
         when :support_client
           params[:cost_breakdown].each do |item|
             lockbox_action.lockbox_transactions.create!(
               eff_date:       params[:eff_date],
               amount_cents:   item[:amount_cents],
-              balance_effect: 'debit',
+              balance_effect: LockboxTransaction::DEBIT,
               category:       item[:category]
             )
           end

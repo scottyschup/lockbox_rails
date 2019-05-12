@@ -3,15 +3,18 @@ class LockboxTransaction < ApplicationRecord
 
   belongs_to :lockbox_action
 
-  BALANCE_EFFECTS = [ :debit, :credit ].freeze
+  BALANCE_EFFECTS = [
+    DEBIT  = :debit,
+    CREDIT = :credit
+  ].freeze
 
-  EXPENSE_CATEGORIES = %w(
-    gas
-    parking
-    transit
-    childcare
-    medicine
-    food
-    adjustment
-  ).freeze
+  EXPENSE_CATEGORIES = [
+    GAS        = 'gas',
+    PARKING    = 'parking',
+    TRANSIT    = 'transit',
+    CHILDCARE  = 'childcare',
+    MEDICINE   = 'medicine',
+    FOOD       = 'food',
+    ADJUSTMENT = 'adjustment'
+  ].freeze
 end
