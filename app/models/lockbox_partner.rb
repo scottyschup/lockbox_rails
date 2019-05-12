@@ -2,6 +2,22 @@ class LockboxPartner < ApplicationRecord
   has_many :users
   has_many :lockbox_actions
 
+  scope :active, -> { has_active_user.has_initial_cash }
+
+  scope :has_active_user, -> do
+    # TODO before merge: make sure this logic is correct
+    joins(:users).where.not(users: { confirmed_at: nil })
+  end
+
+  scope :has_initial_cash, -> do
+    joins(:lockbox_actions).where(
+      lockbox_actions: {
+        status: LockboxAction::COMPLETED,
+        action_type: 'add_cash'
+      }
+    )
+  end
+
   def self.select_options
     all.order(:name).pluck(:name, :id)
   end
