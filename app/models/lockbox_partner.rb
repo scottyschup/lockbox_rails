@@ -2,11 +2,11 @@ class LockboxPartner < ApplicationRecord
   has_many :users
   has_many :lockbox_actions
 
-  scope :active, -> { has_active_user.has_initial_cash }
+  scope :active, -> { with_active_user.with_initial_cash }
   # TODO before merge: make sure this logic is correct
-  scope :has_active_user, -> { joins(:users).merge(User.confirmed) }
+  scope :with_active_user, -> { joins(:users).merge(User.confirmed) }
 
-  scope :has_initial_cash, -> do
+  scope :with_initial_cash, -> do
     joins(:lockbox_actions).merge(LockboxAction.completed_cash_additions)
   end
 
