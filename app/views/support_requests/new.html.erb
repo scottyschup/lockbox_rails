@@ -1,7 +1,7 @@
 <%= form_with model: @support_request do |f| %>
   <% # This will all need to be reviewed/changed once we have assets and design mockups %>
   <%= f.label :lockbox_partner %>
-  <%= f.select :lockbox_partner_id, options_for_select(LockboxPartner.select_options) %>
+  <%= f.select :lockbox_partner_id, options_for_select(active_lockbox_partner_select_options) %>
   <%= f.label :client_ref_id %>
   <%= f.text_field :client_ref_id %>
   <%= f.label :name_or_alias %>

@@ -29,7 +29,7 @@ class LockboxPartner < ApplicationRecord
     LockboxTransaction.where(lockbox_action_id: lockbox_action_ids)
   end
 
-  def is_active?
+  def active?
     users.confirmed.exists? && lockbox_actions.completed_cash_additions.exists?
   end
 end
