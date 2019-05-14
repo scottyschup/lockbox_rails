@@ -33,6 +33,11 @@ gem 'font-awesome-rails'
 
 gem 'money-rails', '~>1.12'
 
+# TODO -- before we go live, should move this back to test/dev bundle
+# For test data generation
+gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
+gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -51,10 +56,6 @@ group :development, :test do
   gem 'rails-controller-testing'
 
   gem 'shoulda-matchers', '~> 4.0', '>= 4.0.1'
-
-  # For test data generation
-  gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
-  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 end
 
 group :development do
