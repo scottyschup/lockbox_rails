@@ -3,7 +3,6 @@ class LockboxPartner < ApplicationRecord
   has_many :lockbox_actions
 
   scope :active, -> { with_active_user.with_initial_cash }
-  # TODO before merge: make sure this logic is correct
   scope :with_active_user, -> { joins(:users).merge(User.confirmed) }
 
   scope :with_initial_cash, -> do
