@@ -6,6 +6,7 @@ class LockboxPartner < ApplicationRecord
   scope :with_active_user, -> { joins(:users).merge(User.confirmed) }
 
   scope :with_initial_cash, -> do
+    # returns partners that have had cash successfully added at least once
     joins(:lockbox_actions).merge(LockboxAction.completed_cash_additions)
   end
 
