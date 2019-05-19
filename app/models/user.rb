@@ -8,6 +8,8 @@ class User < ApplicationRecord
          :confirmable, :lockable, :trackable,
          :timeoutable
 
+  scope :confirmed, -> { where.not(confirmed_at: nil) }
+
   private
 
   def password_required?

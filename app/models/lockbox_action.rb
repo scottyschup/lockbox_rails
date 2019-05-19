@@ -6,6 +6,8 @@ class LockboxAction < ApplicationRecord
 
   validates :eff_date, presence: true
   validates :support_request_id, presence: true, if: -> { action_type == 'support_client' }
+  validate :validate_partner_is_active,
+    if: -> { ['support_client', 'reconcile'].include?(action_type) }
 
   before_validation :inherit_lockbox_partner_id
 
@@ -22,6 +24,10 @@ class LockboxAction < ApplicationRecord
   ].freeze
 
   scope :excluding_statuses, -> (*statuses) { where.not(status: statuses) }
+
+  scope :completed_cash_additions, -> do
+    where(status: COMPLETED, action_type: :add_cash)
+  end
 
   # action_type should correspond with ACTION_TYPES
   def self.create_with_transactions(action_type, params)
@@ -105,6 +111,12 @@ class LockboxAction < ApplicationRecord
   def inherit_lockbox_partner_id
     if lockbox_partner_id.blank? && support_request&.lockbox_partner_id
       self.lockbox_partner_id = support_request.lockbox_partner_id
+    end
+  end
+
+  def validate_partner_is_active
+    unless lockbox_partner.active?
+      errors.add(:lockbox_partner, "must be active")
     end
   end
 end
