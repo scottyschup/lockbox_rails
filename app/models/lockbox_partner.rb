@@ -20,4 +20,8 @@ class LockboxPartner < ApplicationRecord
     lockbox_action_ids = LockboxAction.excluding_statuses(excluded_statuses).pluck(:id)
     LockboxTransaction.where(lockbox_action_id: lockbox_action_ids)
   end
+
+  def historical_actions
+    @all_actions ||= lockbox_actions.order(:eff_date)
+  end
 end

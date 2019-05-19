@@ -163,4 +163,22 @@ describe LockboxPartner, type: :model do
       end
     end
   end
+
+  describe '#historical_actions' do
+    let(:lockbox_partner_1) { FactoryBot.create(:lockbox_partner) }
+    let(:lockbox_partner_2) { FactoryBot.create(:lockbox_partner) }
+    context 'when no actions are present for that lockbox partner' do
+      it 'returns an empty array' do
+        expect(lockbox_partner_1.historical_actions).to eq([])
+      end
+    end
+    context 'when actions are present for that lockbox partner' do
+      before do 
+        FactoryBot.create(:lockbox_action, lockbox_partner:lockbox_partner_1)
+      end  
+      it 'returns an array of lockbox transactions' do
+      end
+    end    
+  end
+
 end
