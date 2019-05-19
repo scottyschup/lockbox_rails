@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   belongs_to :lockbox_partner, optional: true
+  has_many :support_requests
 
   # all but :omniauthable
   devise :database_authenticatable, :registerable,
@@ -7,7 +8,11 @@ class User < ApplicationRecord
          :confirmable, :lockable, :trackable,
          :timeoutable
 
-  has_many :support_requests
-
   scope :confirmed, -> { where.not(confirmed_at: nil) }
+
+  private
+
+  def password_required?
+    confirmed? ? super : false
+  end
 end
