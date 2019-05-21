@@ -167,16 +167,20 @@ describe LockboxPartner, type: :model do
   describe '#historical_actions' do
     let(:lockbox_partner_1) { FactoryBot.create(:lockbox_partner) }
     let(:lockbox_partner_2) { FactoryBot.create(:lockbox_partner) }
+
     context 'when no actions are present for that lockbox partner' do
       it 'returns an empty array' do
         expect(lockbox_partner_1.historical_actions).to eq([])
       end
     end
+
     context 'when actions are present for that lockbox partner' do
-      before do 
-        FactoryBot.create(:lockbox_action, lockbox_partner:lockbox_partner_1)
-      end  
-      it 'returns an array of lockbox transactions' do
+      let!(:older_lb_action) { FactoryBot.create(:lockbox_action, lockbox_partner: lockbox_partner_1, eff_date: Date.yesterday) }
+      let!(:newer_lb_action) { FactoryBot.create(:lockbox_action, lockbox_partner: lockbox_partner_1, eff_date: Date.today) }
+      let!(:action_for_diff_partner) { FactoryBot.create(:lockbox_action, lockbox_partner: lockbox_partner_2, eff_date: Date.today) }
+
+      it 'returns an array of lockbox transactions in reverse chronological order' do
+        expect(lockbox_partner_1.historical_actions).to match([newer_lb_action, older_lb_action])
       end
     end    
   end

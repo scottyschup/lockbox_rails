@@ -22,6 +22,6 @@ class LockboxPartner < ApplicationRecord
   end
 
   def historical_actions
-    @all_actions ||= lockbox_actions.order(:eff_date)
+    @all_actions ||= lockbox_actions.order(eff_date: :desc)
   end
 end
