@@ -164,6 +164,42 @@ describe LockboxPartner, type: :model do
     end
   end
 
+  describe '#relevant_transactions_for_balance' do
+    let(:partner_1) { FactoryBot.create(:lockbox_partner) }
+    let(:partner_2) { FactoryBot.create(:lockbox_partner) }
+
+    def create_action_txn(partner, status)
+      LockboxAction.create!(
+        lockbox_partner: partner,
+        status: status,
+        eff_date: Date.current,
+        action_type: LockboxAction::ADD_CASH # using add cash b/c client support has extra validations
+      ).tap do |action|
+        action.lockbox_transactions.create!(
+          balance_effect: LockboxTransaction::CREDIT,
+          amount_cents: 1000_00
+        )
+      end
+    end
+
+    let!(:canceled_action_txn)     { create_action_txn(partner_1, LockboxAction::CANCELED) }
+    let!(:pending_action_txn)      { create_action_txn(partner_1, LockboxAction::PENDING) }
+    let!(:diff_partner_action_txn) { create_action_txn(partner_2, LockboxAction::COMPLETED) }
+    let!(:completed_action_txn)    { create_action_txn(partner_1, LockboxAction::COMPLETED) }
+
+    it 'returns pending and completed transactions for that lockbox partner' do
+      expected_results = [ pending_action_txn.lockbox_transactions, completed_action_txn.lockbox_transactions ].flatten
+      expect(partner_1.relevant_transactions_for_balance).to match(expected_results)
+    end
+
+    context 'when exclude_pending: true' do
+      it 'returns only completed transactions for that lockbox partner' do
+        expected_results = completed_action_txn.lockbox_transactions
+        expect(partner_1.relevant_transactions_for_balance(exclude_pending: true)).to match(expected_results)
+      end
+    end
+  end
+
   describe '#historical_actions' do
     let(:lockbox_partner_1) { FactoryBot.create(:lockbox_partner) }
     let(:lockbox_partner_2) { FactoryBot.create(:lockbox_partner) }

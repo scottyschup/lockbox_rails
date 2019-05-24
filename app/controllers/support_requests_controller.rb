@@ -9,6 +9,8 @@ class SupportRequestsController < ApplicationController
   end
 
   def create
+    # TODO -- REFACTOR THIS
+    # LockboxAction.create_support_request(all_params)
     @support_request = current_user.support_requests.new(support_request_params)
     result = ActiveRecord::Base.transaction do
       @support_request.save!

@@ -105,4 +105,30 @@ describe LockboxAction, type: :model do
       expect { subject.complete! }.to change{ subject.status }.from('pending').to('completed')
     end
   end
+
+  describe '#set_default_status' do
+    let(:partner) { FactoryBot.create(:lockbox_partner) }
+    let(:action) do
+      LockboxAction.create(
+        lockbox_partner: partner,
+        eff_date: Date.current,
+        action_type: LockboxAction::ADD_CASH,
+        status: status
+      )
+    end
+
+    context 'When a lockbox action is created with a nil status' do
+      let(:status) { nil }
+      it "saves it with a pending status" do
+        expect(action).to be_pending
+      end
+    end
+
+    context 'When a lockbox action is created with a status' do
+      let(:status) { LockboxAction::COMPLETED }
+      it "uses the given status" do
+        expect(action).to be_completed
+      end
+    end
+  end
 end
