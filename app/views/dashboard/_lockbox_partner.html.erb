@@ -11,27 +11,15 @@
   <div class="lockbox-activity">
     <table class="usa-table-borderless">
       <tbody>
-        <tr>
-          <th scope="row">02/15/19</th>
-          <td>Support Request</td>
-          <td>pending</td>
-          <td>Client Alias</td>
-          <td>$55.00</td>
-        </tr>
-        <tr>
-          <th scope="row">02/10/19</th>
-          <td>Cash Added</td>
-          <td>completed</td>
-          <td></td>
-          <td>$1000.00</td>
-        </tr>
-        <tr>
-          <th scope="row">02/01/19</th>
-          <td>Support Request</td>
-          <td>completed</td>
-          <td>Client Alias</td>
-          <td>$105.69</td>
-        </tr>
+        <% lockbox_partner.historical_actions.each do |action| %>
+          <tr>
+            <th scope="row"><%= action.eff_date %></th>
+            <td><%= action.action_type.humanize %></td>
+            <td><%= action.status %></td>
+            <td><%= action.support_request&.name_or_alias %></td>
+            <td><%= action.amount %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
