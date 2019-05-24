@@ -18,9 +18,9 @@ class LockboxAction < ApplicationRecord
   ].freeze
 
   ACTION_TYPES = [
-    :add_cash,
-    :reconcile,
-    :support_client
+    ADD_CASH = :add_cash,
+    RECONCILE = :reconcile,
+    SUPPORT_CLIENT = :support_client
   ].freeze
 
   scope :excluding_statuses, -> (*statuses) { where.not(status: statuses) }
