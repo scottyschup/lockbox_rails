@@ -11,6 +11,8 @@ class LockboxAction < ApplicationRecord
 
   before_validation :inherit_lockbox_partner_id
 
+  before_save :set_default_status
+
   STATUSES = [
     PENDING   = 'pending',
     COMPLETED = 'completed',
@@ -112,6 +114,10 @@ class LockboxAction < ApplicationRecord
     if lockbox_partner_id.blank? && support_request&.lockbox_partner_id
       self.lockbox_partner_id = support_request.lockbox_partner_id
     end
+  end
+
+  def set_default_status
+    self.status ||= PENDING
   end
 
   def validate_partner_is_active

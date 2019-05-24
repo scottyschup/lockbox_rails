@@ -25,7 +25,7 @@ class LockboxPartner < ApplicationRecord
   def relevant_transactions_for_balance(exclude_pending: false)
     excluded_statuses = [ LockboxAction::CANCELED ]
     excluded_statuses << LockboxAction::PENDING if exclude_pending
-    lockbox_action_ids = LockboxAction.excluding_statuses(excluded_statuses).pluck(:id)
+    lockbox_action_ids = LockboxAction.where(lockbox_partner: self).excluding_statuses(excluded_statuses).pluck(:id)
     LockboxTransaction.where(lockbox_action_id: lockbox_action_ids)
   end
 
