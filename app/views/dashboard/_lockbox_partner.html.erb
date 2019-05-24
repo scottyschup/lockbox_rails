@@ -3,13 +3,37 @@
     <p><strong>City</strong></p>
   </div>
   <h3>
-    <%= lockbox_partner.name %>
+    <%= lockbox_partner.name %><span class="pull-right">$ <%= lockbox_partner.balance %></span>
   </h3>
 
   <hr />
 
   <div class="lockbox-activity">
-    <p>(placeholder for a list of recent activity)</p>
+    <table class="usa-table-borderless">
+      <tbody>
+        <tr>
+          <th scope="row">02/15/19</th>
+          <td>Support Request</td>
+          <td>pending</td>
+          <td>Client Alias</td>
+          <td>$55.00</td>
+        </tr>
+        <tr>
+          <th scope="row">02/10/19</th>
+          <td>Cash Added</td>
+          <td>completed</td>
+          <td></td>
+          <td>$1000.00</td>
+        </tr>
+        <tr>
+          <th scope="row">02/01/19</th>
+          <td>Support Request</td>
+          <td>completed</td>
+          <td>Client Alias</td>
+          <td>$105.69</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <%= link_to 'View Lockbox Partner Details',

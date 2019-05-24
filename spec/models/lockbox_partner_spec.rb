@@ -185,4 +185,42 @@ describe LockboxPartner, type: :model do
     end    
   end
 
+  describe '#active?' do
+    let(:lockbox_partner) { FactoryBot.create(:lockbox_partner) }
+
+    before do
+      allow(lockbox_partner.users).to receive_message_chain(:confirmed, :exists?)
+                                  .and_return(confirmed_user_exists)
+    end
+
+    subject { lockbox_partner.active? }
+
+    context 'when no confirmed user exists' do
+      let(:confirmed_user_exists) { false }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when a confirmed user exists' do
+      let(:confirmed_user_exists) { true }
+
+      before do
+        allow(lockbox_partner.lockbox_actions)
+          .to receive_message_chain(:completed_cash_additions, :exists?)
+          .and_return(completed_cash_addition_exists)
+      end
+
+      context 'when a completed cash addition does not exist' do
+        let(:completed_cash_addition_exists) { false }
+
+        it { is_expected.to be false }
+      end
+
+      context 'when a completed cash addition exists' do
+        let(:completed_cash_addition_exists) { true }
+
+        it { is_expected.to be true }
+      end
+    end
+  end
 end
