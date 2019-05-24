@@ -32,4 +32,8 @@ class LockboxPartner < ApplicationRecord
   def active?
     users.confirmed.exists? && lockbox_actions.completed_cash_additions.exists?
   end
+
+  def historical_actions
+    @all_actions ||= lockbox_actions.order(eff_date: :desc)
+  end
 end

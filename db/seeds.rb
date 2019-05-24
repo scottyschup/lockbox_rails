@@ -24,12 +24,13 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
 
   lockbox_partner.lockbox_actions.create!(
     eff_date: Date.current - 1.week,
-    action_type: 'add_cash'
+    action_type: LockboxAction::ADD_CASH,
+    status: LockboxAction::COMPLETED
   ).tap do |action|
     action.lockbox_transactions.create!(
       eff_date: action.eff_date,
       amount_cents: 1000_00,
-      balance_effect: 'credit'
+      balance_effect: LockboxTransaction::CREDIT
     )
   end
 
@@ -41,7 +42,7 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
   ).tap do |sup_req|
     action = sup_req.lockbox_actions.create!(
       eff_date: Date.current + (1..10).to_a.sample.days,
-      action_type: 'support_client',
+      action_type: LockboxAction::SUPPORT_CLIENT,
       lockbox_partner: lockbox_partner
     )
 
@@ -49,8 +50,8 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
     categories.each do |category|
       action.lockbox_transactions.create!(
         eff_date: action.eff_date,
-        amount_cents: (1..60).to_a.sample,
-        balance_effect: 'debit'
+        amount_cents: (1_00..60_00).to_a.sample,
+        balance_effect: LockboxTransaction::DEBIT
       )
     end
   end
