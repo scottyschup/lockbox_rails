@@ -9,28 +9,24 @@ class SupportRequestsController < ApplicationController
   end
 
   def create
-    # TODO -- REFACTOR THIS
-    # LockboxAction.create_support_request(all_params)
-    @support_request = current_user.support_requests.new(support_request_params)
-    result = ActiveRecord::Base.transaction do
-      @support_request.save!
-      action_and_transaction_params = lockbox_action_params.merge(
-        cost_breakdown: [lockbox_transaction_params]
-      )
-      @lockbox_action = @support_request.lockbox_actions
-                                        .create_with_transactions(
-        :support_client, action_and_transaction_params
-      )
-    end
-    if result
+    @support_request = SupportRequest.create_with_action(all_support_request_params)
+    if @support_request
       # TODO redirect to support_requests#show, which doesn't exist yet
       redirect_to :root
     else
+      flash[:alert] = "Could not create support request"
       render :new
     end
   end
 
   private
+
+  def all_support_request_params
+    support_request_params
+      .merge(lockbox_action_params)
+      .merge(lockbox_transaction_params)
+      .merge(user_id: current_user.id)
+  end
 
   def support_request_params
     params.require(:support_request).permit(
