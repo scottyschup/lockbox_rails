@@ -1,3 +1,5 @@
+require './lib/create_support_request'
+
 class SupportRequestsController < ApplicationController
   def new
     @support_request = current_user.support_requests.build
@@ -9,12 +11,13 @@ class SupportRequestsController < ApplicationController
   end
 
   def create
-    @support_request = SupportRequest.create_with_action(all_support_request_params)
-    if @support_request
+    result = CreateSupportRequest.call(params: all_support_request_params)
+    if result.success?
+      @support_request = result.value
       # TODO redirect to support_requests#show, which doesn't exist yet
       redirect_to :root
     else
-      flash[:alert] = "Could not create support request"
+      flash[:alert] = "Could not create support request: #{result.failure}"
       render :new
     end
   end
@@ -26,6 +29,7 @@ class SupportRequestsController < ApplicationController
       .merge(lockbox_action_params)
       .merge(lockbox_transaction_params)
       .merge(user_id: current_user.id)
+      .merge(cost_breakdown: [lockbox_transaction_params])
   end
 
   def support_request_params
