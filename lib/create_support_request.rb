@@ -13,7 +13,7 @@ class CreateSupportRequest
         user_id: params[:user_id]
       )
 
-      fail!('Support request not valid') unless support_req.valid?
+      fail!(support_req.errors.full_messages.join(', ')) unless support_req.valid?
 
       lockbox_action = LockboxAction.create(
         eff_date: params[:eff_date],
@@ -23,7 +23,7 @@ class CreateSupportRequest
         support_request: support_req
       )
 
-      fail!('Lockbox Action not valid') unless lockbox_action.valid?
+      fail!(lockbox_action.errors.full_messages.join(', ')) unless lockbox_action.valid?
 
       params[:cost_breakdown].each do |item|
         lockbox_action.lockbox_transactions.create(

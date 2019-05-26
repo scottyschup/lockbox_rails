@@ -17,8 +17,7 @@ class SupportRequestsController < ApplicationController
       # TODO redirect to support_requests#show, which doesn't exist yet
       redirect_to :root
     else
-      flash[:alert] = "Could not create support request: #{result.failure}"
-      render :new
+      render partial: 'shared/error', locals: { key: 'alert', value: result.failure }
     end
   end
 
