@@ -4,7 +4,8 @@
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
 
-  <% unless resource.password.present? %>
+  <% # Coercing to a boolean because #nonzero? does not return a boolean %>
+  <% unless !!@resouce&.sign_in_count&.nonzero? %>
     <div class="field">
       <%= f.label :name %><br />
       <%= f.text_field :name %>
