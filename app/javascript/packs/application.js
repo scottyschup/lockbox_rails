@@ -10,9 +10,13 @@ require('channels');
 require('uswds');
 
 const fadeAlert = () => {
-  document.getElementsByClassName('fade')[0].style.maxHeight = '0';
+  const alerts = Array.from(document.getElementsByClassName('fade'));
+  alerts.forEach(alert => (alert.style.maxHeight = '0'));
 };
 
 document.addEventListener('DOMContentLoaded', () => {
   window.setTimeout(fadeAlert, 3000);
+  document.addEventListener('ajax:success', response => {
+    document.getElementById('errors').innerHTML = response.detail[0];
+  });
 });
