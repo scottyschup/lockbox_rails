@@ -10,6 +10,19 @@ class User < ApplicationRecord
 
   scope :confirmed, -> { where.not(confirmed_at: nil) }
 
+  ROLES = [
+    ADMIN  = 'admin',
+    PARTNER = 'partner'
+  ].freeze
+
+  def admin?
+    role == ADMIN
+  end
+
+  def partner?
+    role == PARTNER
+  end
+
   private
 
   def password_required?
