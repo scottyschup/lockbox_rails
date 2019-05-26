@@ -8,6 +8,7 @@ class LockboxPartners::UsersController < ApplicationController
   def create
     @user = @lockbox_partner.users.new(user_params)
     set_user_password
+    set_user_role
     if @user.save
       flash.clear
       flash[:notice] = "New user created for Lockbox Partner #{@lockbox_partner.name}"
@@ -26,6 +27,10 @@ class LockboxPartners::UsersController < ApplicationController
 
   def set_user_password
     @user.password = Devise.friendly_token.first(12)
+  end
+
+  def set_user_role
+    @user.role = User::PARTNER
   end
 
   def user_params
