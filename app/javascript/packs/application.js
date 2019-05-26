@@ -8,3 +8,13 @@ require('turbolinks').start();
 require('@rails/activestorage').start();
 require('channels');
 require('uswds');
+
+const fadeAlert = () => {
+  const alert = document.getElementsByClassName('fade')[0];
+  alert.style.maxHeight = '0';
+  alert.style.padding = '0';
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  window.setTimeout(fadeAlert, 3000);
+});

@@ -18,3 +18,12 @@
 @import 'devise';
 @import 'font-awesome';
 @import 'dashboard';
+
+.fade {
+  overflow-y: hidden;
+  max-height: 300px;
+
+  transition-property: all;
+  transition-duration: 0.7s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}

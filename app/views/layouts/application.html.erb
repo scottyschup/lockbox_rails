@@ -14,9 +14,11 @@
     <%= render 'layouts/navbar' %>
     <div class="usa-grid">
       <% flash.each do |key, value| %>
-        <div class="<%= flash_class(key) %>" role="alert">
-          <div class="usa-alert-body">
-            <p class="usa-alert-text"><%= value %></p>
+        <div class="fade">
+          <div class="<%= flash_class(key) %>" role="alert">
+            <div class="usa-alert-body">
+              <p class="usa-alert-text"><%= value %></p>
+            </div>
           </div>
         </div>
       <% end %>
