@@ -10,9 +10,7 @@ require('channels');
 require('uswds');
 
 const fadeAlert = () => {
-  const alert = document.getElementsByClassName('fade')[0];
-  alert.style.maxHeight = '0';
-  alert.style.padding = '0';
+  document.getElementsByClassName('fade')[0].style.maxHeight = '0';
 };
 
 document.addEventListener('DOMContentLoaded', () => {
