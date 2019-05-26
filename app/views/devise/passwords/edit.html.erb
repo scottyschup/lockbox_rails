@@ -4,6 +4,13 @@
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
 
+  <% unless resource.password.present? %>
+    <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :password, "New password" %><br />
     <% if @minimum_password_length %>
