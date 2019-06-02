@@ -23,6 +23,10 @@ class User < ApplicationRecord
     role == PARTNER
   end
 
+  def has_signed_in?
+    !!last_sign_in_at
+  end
+
   private
 
   def password_required?

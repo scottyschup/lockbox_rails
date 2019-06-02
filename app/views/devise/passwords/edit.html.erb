@@ -4,6 +4,14 @@
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
 
+  <% # The user should be able to set a name the first time they confirm the account, but not if they request a subsequent password reset %>
+  <% unless @resource&.has_signed_in? %>
+    <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :password, "New password" %><br />
     <% if @minimum_password_length %>
