@@ -4,8 +4,8 @@
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
 
-  <% # Coercing to a boolean because #nonzero? does not return a boolean %>
-  <% unless !!@resouce&.sign_in_count&.nonzero? %>
+  <% # The user should be able to set a name the first time they confirm the account, but not if they request a subsequent password reset %>
+  <% unless @resource&.has_signed_in? %>
     <div class="field">
       <%= f.label :name %><br />
       <%= f.text_field :name %>
