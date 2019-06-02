@@ -1,0 +1,12 @@
+<%= fields_for 'lockbox_transaction[]' do |lt_f| %>
+  <div>
+    <div class="usa-input-grid usa-input-grid-small">
+      <%= lt_f.label :amount_cents, 'Amount' %>
+      <%= lt_f.text_field :amount_cents, type: 'number', step: "0.01", value: 0 %>
+    </div>
+    <div class="usa-input-grid usa-input-grid-medium">
+      <%= lt_f.label :category, 'Support Type' %>
+      <%= lt_f.select :category, options_for_select(expense_category_select_options) %>
+    </div>
+  </div>
+<% end %>
