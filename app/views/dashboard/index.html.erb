@@ -10,7 +10,7 @@
     <%= link_to 'Create new lockbox partner', new_lockbox_partner_path, class: 'usa-button view-half' %>
     <hr />
     <div id="dashboard-lockbox-partners">
-      <%= render partial: 'dashboard/lockbox_partner', collection: @lockbox_partners, as: :lockbox_partner%>
+      <%= render partial: 'dashboard/admin_dash', collection: @lockbox_partners, as: :lockbox_partner%>
     </div>
   <% end %>
   <div class="horizontal-rule"></div>
