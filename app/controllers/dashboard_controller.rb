@@ -1,5 +1,9 @@
 class DashboardController < ApplicationController
   def index
-    @lockbox_partners = LockboxPartner.all
+    if current_user.partner?
+      @lockbox_partner = current_user.lockbox_partner
+    else
+      @lockbox_partners = LockboxPartner.all
+    end
   end
 end
