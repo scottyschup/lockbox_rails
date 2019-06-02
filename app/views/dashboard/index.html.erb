@@ -6,9 +6,7 @@
   <% if current_user.partner? %>
     <%= render partial: 'dashboard/lockbox_partner', object: @lockbox_partner, as: :lockbox_partner %>
   <% else %>
-  </div>
-  <%= link_to 'Create new lockbox partner', new_lockbox_partner_path %>
-  <div>
+    <%= link_to 'Create new lockbox partner', new_lockbox_partner_path %>
     <%= render partial: 'dashboard/lockbox_partner', collection: @lockbox_partners, as: :lockbox_partner%>
   <% end %>
   <div class="horizontal-rule"></div>
