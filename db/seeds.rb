@@ -1,6 +1,7 @@
 mac_user = User.where(email: 'cats@test.com').first_or_create!(
   password: 'password1234',
-  confirmed_at: Time.current
+  confirmed_at: Time.current,
+  role: User::ADMIN
 )
 
 LOCKBOX_PARTNERS = [
@@ -19,7 +20,8 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
   User.where(email: partner_user_email).first_or_create!(
     lockbox_partner: lockbox_partner,
     password: 'heytherefancypants4321',
-    confirmed_at: Time.current
+    confirmed_at: Time.current,
+    role: User::PARTNER
   )
 
   lockbox_partner.lockbox_actions.create!(
