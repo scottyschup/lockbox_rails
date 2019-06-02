@@ -21,7 +21,7 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
     lockbox_partner: lockbox_partner,
     password: 'heytherefancypants4321',
     confirmed_at: Time.current,
-    role: 'partner'
+    role: User::PARTNER
   )
 
   lockbox_partner.lockbox_actions.create!(
