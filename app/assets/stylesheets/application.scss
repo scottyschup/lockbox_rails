@@ -13,13 +13,16 @@
  *= require_self
  */
 
-@import 'uswds';
-@import 'uswds-overwrites';
-@import "bootstrap";
-@import 'devise';
+// DEPENDENCIES
+@import 'bootstrap';
 @import 'font-awesome';
-@import 'dashboard';
+@import 'devise';
 
+@import 'variables';
+@import 'dashboard';
+@import 'navbar';
+
+// TEMP
 .fade {
   overflow-y: hidden;
   max-height: 300px;

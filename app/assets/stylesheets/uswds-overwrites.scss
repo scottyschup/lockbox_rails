@@ -1,38 +1,3 @@
-header.usa-header {
-  background: $color-primary;
-}
-
-nav.usa-nav {
-  background: $color-primary;
-  .usa-nav-primary * {
-    color: white;
-  }
-  border: none;
-}
-
-.usa-navbar {
-  border: none;
-}
-
-.usa-logo a {
-  color: white;
-}
-
-.usa-nav-primary {
-  li {
-    border: none;
-    a:hover {
-      background: #205493;
-    }
-  }
-}
-
-@media screen and (min-width: 951px) {
-  .usa-nav-primary .hidden-nav-link {
-    display: none;
-  }
-}
-
 .usa-table-borderless {
   width: 100%;
 }
