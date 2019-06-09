@@ -13,35 +13,14 @@
  *= require_self
  */
 
-@import 'uswds';
-@import 'uswds-overwrites';
-@import "bootstrap";
-@import 'devise';
+// DEPENDENCIES
+@import 'bootstrap';
 @import 'font-awesome';
+@import 'devise';
+
+@import 'variables';
+@import 'bootstrap-overrides';
 @import 'dashboard';
-
-@mixin clearfix {
-  &::after {
-    clear: both;
-    content: '';
-    display: block;
-  }
-}
-
-.fade {
-  overflow-y: hidden;
-  max-height: 300px;
-  transition-property: all;
-  transition-duration: 0.7s;
-  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-}
-
-.support_case_transactions {
-  @include clearfix;
-  border-bottom: 1px solid black;
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  div label {
-    margin-top: 1rem;
-  }
-}
+@import 'navbar';
+@import 'temp';
+@import 'lockbox_activity'
