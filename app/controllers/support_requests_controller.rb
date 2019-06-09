@@ -21,6 +21,13 @@ class SupportRequestsController < ApplicationController
     end
   end
 
+  def show
+    @support_request = SupportRequest.find(params[:id])
+  end
+
+  def index
+  end
+
   private
 
   def all_support_request_params

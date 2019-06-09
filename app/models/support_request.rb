@@ -11,6 +11,18 @@ class SupportRequest < ApplicationRecord
   # Sometimes the UUID will already have been created elsewhere, and sometimes not
   before_validation :populate_client_ref_id
 
+  def lockbox_action
+    @lockbox_action ||= lockbox_actions.last
+  end
+
+  def status
+    lockbox_action.status
+  end
+
+  def amount
+    lockbox_action.amount
+  end
+
   private
 
   def populate_client_ref_id

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resources :support_requests, only: [:new, :create]
+  resources :support_requests, only: [:new, :create, :show]
 
   root to: 'dashboard#index'
 

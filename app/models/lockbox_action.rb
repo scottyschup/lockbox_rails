@@ -108,6 +108,12 @@ class LockboxAction < ApplicationRecord
     update!(status: COMPLETED)
   end
 
+  def breakdown
+    lockbox_transactions.map do |txn|
+      { amount: txn.amount, category: txn.category }
+    end
+  end
+
   private
 
   def inherit_lockbox_partner_id
