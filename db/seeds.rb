@@ -1,8 +1,8 @@
 User.destroy_all
 LockboxPartner.destroy_all
 SupportRequest.destroy_all
-LockboxAction.destroy_all
 LockboxTransaction.destroy_all
+LockboxAction.destroy_all
 
 mac_user = User.where(email: 'cats@test.com').first_or_create!(
   name: 'Sally Snake',
@@ -37,7 +37,6 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
     status: LockboxAction::COMPLETED
   ).tap do |action|
     action.lockbox_transactions.create!(
-      eff_date: action.eff_date,
       amount_cents: 1000_00,
       balance_effect: LockboxTransaction::CREDIT
     )
@@ -58,7 +57,6 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
     categories = LockboxTransaction::EXPENSE_CATEGORIES.sample((1..3).to_a.sample)
     categories.each do |category|
       action.lockbox_transactions.create!(
-        eff_date: action.eff_date,
         amount_cents: (1_00..60_00).to_a.sample,
         balance_effect: LockboxTransaction::DEBIT
       )

@@ -1,23 +1,37 @@
-<%= form_with model: @support_request do |f| %>
+<%= form_with model: @support_request, class: 'usa-form-large' do |f| %>
   <% # This will all need to be reviewed/changed once we have assets and design mockups %>
-  <%= f.label :lockbox_partner %>
-  <%= f.select :lockbox_partner_id, options_for_select(active_lockbox_partner_select_options) %>
-  <%= f.label :client_ref_id %>
-  <%= f.text_field :client_ref_id %>
-  <%= f.label :name_or_alias %>
-  <%= f.text_field :name_or_alias %>
-  <%= f.label :urgency_flag %>
-  <%= f.text_field :urgency_flag %>
-  <% # fields_for is intentionally not called on f; we are not nesting these attrs %>
-  <%= fields_for @lockbox_action do |la_f| %>
-    <%= la_f.label :eff_date %>
-    <%= la_f.date_field :eff_date %>
-  <% end %>
-  <%= fields_for @lockbox_transaction do |lt_f| %>
-    <%= lt_f.label :amount_cents %>
-    <%= lt_f.text_field :amount_cents %>
-    <%= lt_f.label :category %>
-    <%= lt_f.select :category, options_for_select(expense_category_select_options) %>
-  <% end %>
+  <legend>File a support request</legend>
+  <div>
+    <%= label_tag 'lockbox_action[eff_date]', 'Pick-up Date' %>
+    <%= date_field_tag 'lockbox_action[eff_date]' %>
+  </div>
+  <div>
+    <%= f.label :lockbox_partner %>
+    <%= f.select :lockbox_partner_id, options_for_select(active_lockbox_partner_select_options) %>
+  </div>
+  <div>
+    <%= f.label :name_or_alias, 'Client Alias' %>
+    <span class="usa-form-hint">Please do not use legal name</span>
+    <%= f.text_field :name_or_alias %>
+  </div>
+  <div>
+    <%= f.label :client_ref_id, 'Client Reference ID' %>
+    <%= f.text_field :client_ref_id %>
+  </div>
+  <%= f.label :amount_breakdown %>
+  <div class="support_case_transactions">
+    <div class="entries">
+      <% 3.times do %>
+        <%= render partial: 'lockbox_transaction_form' %>
+      <% end %>
+    </div>
+    <%= link_to 'Add Transaction', '#', id: 'add_transaction' %>
+  </div>
+  <legend id="total">Total: $0.00</legend>
+  <div>
+    <%= f.label :urgency_flag %>
+    <%= f.text_field :urgency_flag %>
+  </div>
   <%= f.submit %>
 <% end %>
+<script id="transaction_template" type="text/template"><%= render partial: 'lockbox_transaction_form' %></script>

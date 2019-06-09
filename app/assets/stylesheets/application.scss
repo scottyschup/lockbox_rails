@@ -21,12 +21,4 @@
 @import 'variables';
 @import 'dashboard';
 @import 'navbar';
-
-// TEMP
-.fade {
-  overflow-y: hidden;
-  max-height: 300px;
-  transition-property: all;
-  transition-duration: 0.7s;
-  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-}
+@import 'temp';
