@@ -2,11 +2,8 @@
   <% # This will all need to be reviewed/changed once we have assets and design mockups %>
   <legend>File a support request</legend>
   <div>
-    <% # fields_for is intentionally not called on f; we are not nesting these attrs %>
-    <%= fields_for @lockbox_action do |la_f| %>
-      <%= la_f.label :eff_date, 'Pick-up Date' %>
-      <%= la_f.date_field :eff_date %>
-    <% end %>
+    <%= label_tag 'lockbox_action[eff_date]', 'Pick-up Date' %>
+    <%= date_field_tag 'lockbox_action[eff_date]' %>
   </div>
   <div>
     <%= f.label :lockbox_partner %>

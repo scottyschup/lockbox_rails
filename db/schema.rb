@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 2019_05_12_210202) do
   end
 
   create_table "lockbox_transactions", force: :cascade do |t|
-    t.date "eff_date"
     t.string "balance_effect"
     t.string "category"
     t.integer "amount_cents"
