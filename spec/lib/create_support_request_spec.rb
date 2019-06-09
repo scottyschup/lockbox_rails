@@ -13,13 +13,16 @@ describe CreateSupportRequest do
       name_or_alias:      "some name",
       urgency_flag:       "urgent",
       lockbox_partner_id: lockbox_partner.id,
-      eff_date:           Date.current,
-      # amount_cents:       100_00,
-      # category:           "gas",
+      lockbox_action: {
+        eff_date:         Date.current,
+        lockbox_transactions: [
+          {
+            amount:       42.42,
+            category:     "gas"
+          }
+        ]
+      },
       user_id:            mac_user.id,
-      cost_breakdown: [
-        { amount_cents: 100_00, category: 'gas' }
-      ]
     }
   end
 
