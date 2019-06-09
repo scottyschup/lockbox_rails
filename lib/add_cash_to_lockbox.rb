@@ -6,7 +6,9 @@ class AddCashToLockbox
   input :lockbox_partner, :eff_date, :amount_cents
 
   def call
-    lockbox_action = ActiveRecord::Base.transaction do
+    err_message = nil
+
+    result = ActiveRecord::Base.transaction do
       lockbox_action = lockbox_partner.lockbox_actions.create(
         eff_date: eff_date,
         action_type: :add_cash,
@@ -15,7 +17,7 @@ class AddCashToLockbox
 
       unless lockbox_action.valid?
         err_message = "Lockbox action not created: #{lockbox_action.errors.full_messages.join(', ')}"
-        fail!(err_message)
+        raise ActiveRecord::Rollback
       end
 
       lockbox_transaction = lockbox_action.lockbox_transactions.create(
@@ -26,17 +28,19 @@ class AddCashToLockbox
 
       unless lockbox_transaction.valid?
         err_message = "Lockbox transaction not created: #{lockbox_transaction.errors.full_messages.join(', ')}"
-        fail!(err_message)
+        raise ActiveRecord::Rollback
       end
 
       lockbox_action
     end
 
-    if lockbox_action
+    if result
       LockboxActionMailer
-        .with(lockbox_partner: lockbox_partner, lockbox_action: lockbox_action)
+        .with(lockbox_partner: lockbox_partner, lockbox_action: result)
         .add_cash_email
         .deliver_now
+    else
+      fail!(err_message)
     end
   end
 end
