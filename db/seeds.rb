@@ -1,4 +1,11 @@
+User.destroy_all
+LockboxPartner.destroy_all
+SupportRequest.destroy_all
+LockboxAction.destroy_all
+LockboxTransaction.destroy_all
+
 mac_user = User.where(email: 'cats@test.com').first_or_create!(
+  name: 'Sally Snake',
   password: 'password1234',
   confirmed_at: Time.current,
   role: User::ADMIN
