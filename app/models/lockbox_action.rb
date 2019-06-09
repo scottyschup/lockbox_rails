@@ -20,15 +20,15 @@ class LockboxAction < ApplicationRecord
   ].freeze
 
   ACTION_TYPES = [
-    ADD_CASH = :add_cash,
-    RECONCILE = :reconcile,
-    SUPPORT_CLIENT = :support_client
+    ADD_CASH = 'add_cash',
+    RECONCILE = 'reconcile',
+    SUPPORT_CLIENT = 'support_client'
   ].freeze
 
   scope :excluding_statuses, -> (*statuses) { where.not(status: statuses) }
 
   scope :completed_cash_additions, -> do
-    where(status: COMPLETED, action_type: :add_cash)
+    where(status: COMPLETED, action_type: ADD_CASH)
   end
 
   # action_type should correspond with ACTION_TYPES

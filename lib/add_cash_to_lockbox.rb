@@ -11,7 +11,7 @@ class AddCashToLockbox
     result = ActiveRecord::Base.transaction do
       lockbox_action = lockbox_partner.lockbox_actions.create(
         eff_date: eff_date,
-        action_type: :add_cash,
+        action_type: LockboxAction::ADD_CASH,
         status: LockboxAction::PENDING
       )
 
@@ -39,6 +39,7 @@ class AddCashToLockbox
         .with(lockbox_partner: lockbox_partner, lockbox_action: result)
         .add_cash_email
         .deliver_now
+      result # Return the lockbox action
     else
       fail!(err_message)
     end
