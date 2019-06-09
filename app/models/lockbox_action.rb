@@ -1,7 +1,7 @@
 class LockboxAction < ApplicationRecord
   belongs_to :lockbox_partner
   belongs_to :support_request, optional: true
-  has_many :lockbox_transactions
+  has_many :lockbox_transactions, dependent: :destroy
   has_many :notes, as: :notable
 
   validates :eff_date, presence: true

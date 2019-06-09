@@ -46,3 +46,10 @@ nav.usa-nav {
   border: 0;
   background-color: inherit;
 }
+
+input,
+textarea,
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}

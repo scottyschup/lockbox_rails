@@ -1,0 +1,10 @@
+<div>
+  <div class="usa-input-grid usa-input-grid-small">
+    <%= label_tag 'lockbox_action[lockbox_transactions][][amount]', 'Amount' %>
+    <%= text_field_tag 'lockbox_action[lockbox_transactions][][amount]', '', type: 'number', step: "0.01" %>
+  </div>
+  <div class="usa-input-grid usa-input-grid-medium">
+    <%= label_tag 'lockbox_action[lockbox_transactions][][category]', 'Support Type' %>
+    <%= select_tag 'lockbox_action[lockbox_transactions][][category]', options_for_select(expense_category_select_options), prompt: '' %>
+  </div>
+</div>
