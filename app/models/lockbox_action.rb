@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LockboxAction < ApplicationRecord
   belongs_to :lockbox_partner
   belongs_to :support_request, optional: true
