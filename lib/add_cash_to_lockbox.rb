@@ -6,7 +6,7 @@ class AddCashToLockbox
   input :lockbox_partner, :eff_date, :amount_cents
 
   def call
-    result = ActiveRecord::Base.transaction do
+    lockbox_action = ActiveRecord::Base.transaction do
       lockbox_action = lockbox_partner.lockbox_actions.create(
         eff_date: eff_date,
         action_type: :add_cash,
@@ -28,9 +28,11 @@ class AddCashToLockbox
         err_message = "Lockbox transaction not created: #{lockbox_transaction.errors.full_messages.join(', ')}"
         fail!(err_message)
       end
+
+      lockbox_action
     end
 
-    if result
+    if lockbox_action
       LockboxActionMailer
         .with(lockbox_partner: lockbox_partner, lockbox_action: lockbox_action)
         .add_cash_email
