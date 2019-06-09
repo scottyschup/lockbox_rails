@@ -30,6 +30,7 @@ gem 'bootsnap', '>= 1.4.1', require: false
 
 gem 'devise', '~> 4.6.2'
 gem 'font-awesome-rails'
+gem 'bootstrap', '~> 4.3.1'
 
 gem 'money-rails', '~>1.12'
 
