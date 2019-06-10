@@ -2,30 +2,29 @@ $devise-background: #d1e4fa;
 $mobile-width: 600px;
 $color-primary: #4385c4;
 
+html, body {
+  height: 100%;
+}
+
 .devise {
   background: $devise-background;
   overflow: auto;
-  display: flex;
+  /*display: flex;*/
   top: 0;
   margin: 0 auto;
-  @media only screen and (min-width: $mobile-width) {
+  min-height: 100%;
+/*  @media only screen and (min-width: $mobile-width) {
     width: 600px;
     height: 100%;
     border-left: 5px solid #4e85c4;
     border-right: 5px solid #4e85c4;
-  }
+  }*/
   .devise-form {
-    padding: 3rem;
     width: 400px;
-    margin: 0 auto;
+    margin: 6em auto;
+    height: 100%;
     input {
       width: 100%;
-    }
-    .usa-form-note.left {
-      float: left;
-    }
-    .usa-form-note {
-      clear: none;
     }
     .horizontal-rule {
       width: 100%;
@@ -58,4 +57,9 @@ $color-primary: #4385c4;
       margin-top: 10px;
     }
   }
+}
+
+.forgot {
+  margin-top: -100px;
+  /*background-color: yellow;*/
 }

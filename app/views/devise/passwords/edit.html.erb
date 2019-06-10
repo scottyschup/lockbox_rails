@@ -1,32 +1,32 @@
 <h2><%= resource.password.present? ? "Change" : "Set" %> your password</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), class: 'usa-form', html: { method: :put }) do |f| %>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), class: 'form', html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
 
   <% # The user should be able to set a name the first time they confirm the account, but not if they request a subsequent password reset %>
   <% unless @resource&.has_signed_in? %>
-    <div class="field">
+    <div class="form-group">
       <%= f.label :name %><br />
-      <%= f.text_field :name %>
+      <%= f.text_field :name, class: 'form-control' %>
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :password, "New password" %><br />
     <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em><br />
     <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
+    <%= f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password" %>
+    <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password", class: 'btn btn-primary' %>
   </div>
 <% end %>
 
