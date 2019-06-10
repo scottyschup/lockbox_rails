@@ -1,4 +1,14 @@
 #dashboard-lockbox-partners {
+  max-width: 600px;
+  margin: 0 auto;
+  h2 {
+    margin: 30px auto;
+  }
+  .header-btns{
+    .btn-primary {
+      height: 50px;
+    }
+  }
   .lockbox-partner {
     background: #f2f2f2;
     margin-bottom: 20px;
@@ -20,6 +30,12 @@
         text-decoration: none;
         color: inherit;
       }
+    }
+
+    a:hover {
+      color: white;
+      border: 1px solid darken($color-primary, 10%);
+      background-color: darken($color-primary, 10%);
     }
 
     p {
@@ -48,7 +64,7 @@
   }
 }
 
-.usa-button.view-full {
+.btn-primary.view-full {
   max-width: none;
   width: 100%;
   margin-top: 20px;
@@ -56,12 +72,12 @@
   text-align: left;
 }
 
-.usa-button.view-half {
+.btn-primary.view-half {
   max-width: none;
   width: 48%;
   margin-top: 20px;
-  border-radius: 0;
-  text-align: left;
+  text-align: center;
+  line-height: 35px;
 }
 
 .horizontal-rule {
