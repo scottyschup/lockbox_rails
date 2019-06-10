@@ -4,8 +4,11 @@
   <% if current_user.partner? %>
     <%= render partial: 'dashboard/lockbox_partner', object: @lockbox_partner, as: :lockbox_partner %>
   <% else %>
-    <%= link_to 'File a support request', new_support_request_path, class: 'btn btn-primary' %>
-    <%= link_to 'Create new lockbox partner', new_lockbox_partner_path, class: 'btn btn-primary' %>
+    <div class="row header-btns">
+      <%= link_to 'File a support request', new_support_request_path, class: 'btn btn-primary col-5' %>
+      <div class="col-1"></div>
+      <%= link_to 'Create new lockbox partner', new_lockbox_partner_path, class: 'btn btn-primary col-5' %>
+    </div>
     <hr />
     <div id="dashboard-lockbox-partners">
       <%= render partial: 'dashboard/admin_dash', collection: @lockbox_partners, as: :lockbox_partner%>
