@@ -1,9 +1,8 @@
 <div class="container">
-  <h2>Welcome, <%= current_user.name %>!</h2>
-
-  <% if current_user.partner? %>
+    <% if current_user.partner? %>
     <%= render partial: 'dashboard/lockbox_partner', object: @lockbox_partner, as: :lockbox_partner %>
   <% else %>
+    <h2>Welcome, <%= current_user.name %>!</h2>
     <div class="row header-btns">
       <%= link_to 'File a support request', new_support_request_path, class: 'btn btn-primary col-5' %>
       <div class="col-1"></div>
