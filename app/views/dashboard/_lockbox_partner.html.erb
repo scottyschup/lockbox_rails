@@ -5,10 +5,8 @@
     </p>
   </div>
   <h3>
-    <%= lockbox_partner.name %><span class="pull-right">$ <%= lockbox_partner.balance %></span>
+    <%= lockbox_partner.name %><span class="float-right">$<%= lockbox_partner.balance %></span>
   </h3>
-
-  <hr/>
 
   <div class="lockbox-activity">
     <table class="table table-no-border">
@@ -30,7 +28,11 @@
             <td><%= action.status %></td>
             <td><%= action.support_request&.name_or_alias %></td>
             <td><%= action.amount %></td>
-            <td>See details [LINK]</td>
+            <td>
+              <% if action.support_request %>
+                <%= link_to 'View details ->', support_request_path(action.support_request) %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>

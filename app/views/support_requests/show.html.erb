@@ -1,16 +1,18 @@
-<div>
-  <p><%= @support_request&.lockbox_partner&.address %></p>
-  <h2><%= @support_request&.lockbox_partner&.name %> <span class="pull-right"><%= @support_request&.lockbox_partner&.balance %></span></h2>
-</div>
-<hr />
-<div>
-  <h3>Support Request for <%= @support_request.client_ref_id %> <span class="pull-right"><%= @support_request.status %></span></h3>
-  <%= @support_request&.client_ref_id %>
-  <%= @support_request&.name_or_alias %>
-  <%= @support_request&.urgency_flag %>
-  <%= @support_request&.amount %>
+<div class="container">
+  <div>
+    <p><%= @support_request&.lockbox_partner&.address %></p>
+    <h2><%= @support_request&.lockbox_partner&.name %> <span class="pull-right"><%= @support_request&.lockbox_partner&.balance %></span></h2>
+  </div>
+  <hr />
+  <div>
+    <h3>Support Request for <%= @support_request.client_ref_id %> <span class="pull-right"><%= @support_request.status %></span></h3>
+    <%= @support_request&.client_ref_id %>
+    <%= @support_request&.name_or_alias %>
+    <%= @support_request&.urgency_flag %>
+    <%= @support_request&.amount %>
 
-  <% @support_request.lockbox_action.breakdown.each do |item| %>
-    <p><%= item[:amount] %> for <%= item[:category] %></p>
-  <% end %>
+    <% @support_request.lockbox_action.breakdown.each do |item| %>
+      <p><%= item[:amount] %> for <%= item[:category] %></p>
+    <% end %>
+  </div>
 </div>

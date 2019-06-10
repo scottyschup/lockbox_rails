@@ -6,8 +6,6 @@
     <%= @lockbox_partner.name %><span class="pull-right">$ <%= @lockbox_partner.balance %></span>
   </h3>
 
-  <hr />
-
   <div class="lockbox-activity">
     <table class="table">
       <thead>
@@ -28,7 +26,13 @@
             <td><%= action.status %></td>
             <td><%= action.support_request&.name_or_alias %></td>
             <td><%= action.amount %></td>
-            <td>Placeholder Link to Case</td>
+            <td>
+              <% if action.support_request %>
+                <%= link_to support_request_path(action.support_request) do %>
+                  View details <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                <% end %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>

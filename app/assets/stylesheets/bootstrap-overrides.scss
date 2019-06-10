@@ -1,5 +1,9 @@
-body, h1, h2, h3, h4, h5, h6, p, a, input, label {
+body, h1, h2, h3, h4, h5, h6, p, a, input, label, table {
   font-family: $helvetica;
+}
+
+a {
+  color: $color-primary;
 }
 
 .btn-primary {
@@ -9,5 +13,14 @@ body, h1, h2, h3, h4, h5, h6, p, a, input, label {
   &:hover{
     background-color: #fff;
     color: $color-primary;
+  }
+}
+
+.table {
+  margin-top: 20px;
+  border-top: solid 2px black;
+  thead {
+    background-color: #dee2e6;
+    border-top: solid 2px black;
   }
 }
