@@ -1,10 +1,12 @@
 <div>
-  <div class="form-group">
-    <%= label_tag 'lockbox_action[lockbox_transactions][][amount]', 'Amount' %>
-    <%= text_field_tag 'lockbox_action[lockbox_transactions][][amount]', '', type: 'number', step: "0.01", class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= label_tag 'lockbox_action[lockbox_transactions][][category]', 'Support Type' %>
-    <%= select_tag 'lockbox_action[lockbox_transactions][][category]', options_for_select(expense_category_select_options), prompt: '', class: 'form-control' %>
+  <div class="row">
+    <div class="form-group col-4">
+      <%= label_tag 'lockbox_action[lockbox_transactions][][amount]', 'Amount' %>
+      <%= text_field_tag 'lockbox_action[lockbox_transactions][][amount]', '', type: 'number', step: "0.01", class: 'form-control' %>
+    </div>
+    <div class="form-group col-5">
+      <%= label_tag 'lockbox_action[lockbox_transactions][][category]', 'Support Type' %>
+      <%= select_tag 'lockbox_action[lockbox_transactions][][category]', options_for_select(expense_category_select_options), prompt: '', class: 'form-control' %>
+    </div>
   </div>
 </div>
