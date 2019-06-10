@@ -1,21 +1,22 @@
-<div class="lockbox-partner clearfix">
+<div class="lockbox-partner container clearfix">
   <div>
     <p>
       <strong>City</strong>
     </p>
   </div>
   <h3>
-    <%= lockbox_partner.name %><span class="pull-right">$ <%= lockbox_partner.balance %></span>
+    <%= lockbox_partner.name %><span class="float-right">$ <%= lockbox_partner.balance %></span>
   </h3>
 
   <hr/>
 
   <div class="lockbox-activity">
-    <table class="usa-table-borderless">
+    <table class="table table-no-border">
       <tbody>
         <% lockbox_partner.historical_actions.each do |action| %>
-          <tr>
-            <th scope="row"><%= action.eff_date %></th>
+          <% support_request_class = action.support_request ? 'support-request' : '' %>
+          <tr class=<%= support_request_class %>>
+            <td><%= action.eff_date %></th>
             <td><%= action.action_type.humanize %></td>
             <td><%= action.status %></td>
             <td><%= action.support_request&.name_or_alias %></td>
@@ -28,5 +29,5 @@
 
   <%= link_to 'View Lockbox Partner Details',
               lockbox_partner_path(lockbox_partner),
-              class: 'usa-button view-full' %>
+              class: 'btn btn-primary' %>
 </div>

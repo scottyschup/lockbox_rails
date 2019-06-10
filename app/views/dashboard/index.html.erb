@@ -1,13 +1,11 @@
-<div>
-  <h2 class="text-info text-center">
-    Welcome,
-    <%= current_user.name %>!</h2>
+<div class="container">
+  <h2>Welcome, <%= current_user.name %>!</h2>
 
   <% if current_user.partner? %>
     <%= render partial: 'dashboard/lockbox_partner', object: @lockbox_partner, as: :lockbox_partner %>
   <% else %>
-    <%= link_to 'File a support request', new_support_request_path, class: 'usa-button view-half' %>
-    <%= link_to 'Create new lockbox partner', new_lockbox_partner_path, class: 'usa-button view-half' %>
+    <%= link_to 'File a support request', new_support_request_path, class: 'btn btn-primary' %>
+    <%= link_to 'Create new lockbox partner', new_lockbox_partner_path, class: 'btn btn-primary' %>
     <hr />
     <div id="dashboard-lockbox-partners">
       <%= render partial: 'dashboard/admin_dash', collection: @lockbox_partners, as: :lockbox_partner%>

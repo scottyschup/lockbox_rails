@@ -1,0 +1,32 @@
+header#main-header {
+  margin-bottom: 20px;
+  background-color: $color-primary;
+  background-color: #1E78BE;
+  font-family: $font-sans;
+  height: 50px;
+  vertical-align: middle;
+  width: 100vw;
+  #nav-title {
+    font-weight: bolder;
+  }
+  .navbar {
+    height: 100%;
+    margin: 0 auto;
+    max-width: 1040px;
+    padding: 0 3rem;
+  }
+  a,
+  a:visited {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3em;
+  }
+  button {
+    background-color: transparent;
+  }
+
+  nav {
+    color: white;
+    display: none;
+  }
+}
