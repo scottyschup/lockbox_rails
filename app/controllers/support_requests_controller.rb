@@ -8,9 +8,8 @@ class SupportRequestsController < ApplicationController
   def create
     result = CreateSupportRequest.call(params: all_support_request_params)
     if result.success?
-      # @support_request = result.value
-      # # TODO redirect to support_requests#show, which doesn't exist yet
-      redirect_to :root
+      @support_request = result.value
+      redirect_to support_request_path(@support_request)
     else
       render partial: 'shared/error', locals: { key: 'alert', value: result.failure }
     end
