@@ -20,7 +20,9 @@ LOCKBOX_PARTNERS = [
 
 LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
   lockbox_partner = LockboxPartner.where(name: partner_name).first_or_create!(
-    address: Faker::Address.full_address,
+    city: Faker::Address.city,
+    state: Faker::Address.state,
+    zip_code: Faker::Address.zip_code,
     phone_number: Faker::PhoneNumber.phone_number
   )
 
