@@ -1,8 +1,11 @@
 FactoryBot.define do
   factory :lockbox_partner do
-    name         { Faker::Company.name }
-    address      { Faker::Address.full_address }
-    phone_number { Faker::PhoneNumber.phone_number }
+    name           { Faker::Company.name }
+    street_address { Faker::Address.street_address }
+    city           { Faker::Address.city }
+    state          { Faker::Address.state }
+    zip_code       { Faker::Address.zip_code }
+    phone_number   { Faker::PhoneNumber.phone_number }
 
     trait :active do
       # The user needs to be confirmed, but currently the user factory does this
