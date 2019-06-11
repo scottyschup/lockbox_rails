@@ -5,7 +5,7 @@
     </p>
   </div>
   <h3>
-    <%= lockbox_partner.name %><span class="float-right">$ <%= lockbox_partner.balance %></span>
+    <%= lockbox_partner.name %><span class="float-right">$<%= lockbox_partner.balance %></span>
   </h3>
 
   <hr/>
@@ -27,7 +27,7 @@
     </table>
   </div>
 
-  <%= link_to 'View Lockbox Partner Details',
-              lockbox_partner_path(lockbox_partner),
-              class: 'btn btn-primary' %>
+  <%= link_to lockbox_partner_path(lockbox_partner), class: 'btn btn-primary view-full' do %>
+    View Lockbox Partner Details<span class="float-right"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+  <% end %>
 </div>

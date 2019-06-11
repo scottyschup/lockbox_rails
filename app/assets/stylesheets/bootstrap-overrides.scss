@@ -1,5 +1,10 @@
-body, h1, h2, h3, h4, h5, h6, p, a, input, label, table {
+body, p, a, input, label {
   font-family: $helvetica;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $georgia;
+  font-weight: bold;
 }
 
 a {

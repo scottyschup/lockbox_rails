@@ -9,10 +9,12 @@ html, body {
 .devise {
   background: $devise-background;
   overflow: auto;
-  /*display: flex;*/
+  display: flex;
   top: 0;
   margin: 0 auto;
   min-height: 100%;
+
+  /* TODO DEAL WITH THE MEDIA QUERIES */
 /*  @media only screen and (min-width: $mobile-width) {
     width: 600px;
     height: 100%;
@@ -57,9 +59,4 @@ html, body {
       margin-top: 10px;
     }
   }
-}
-
-.forgot {
-  margin-top: -100px;
-  /*background-color: yellow;*/
 }
