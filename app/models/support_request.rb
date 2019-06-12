@@ -23,6 +23,10 @@ class SupportRequest < ApplicationRecord
     lockbox_action.amount
   end
 
+  def pickup_date
+    lockbox_action.eff_date
+  end
+
   private
 
   def populate_client_ref_id

@@ -1,18 +1,43 @@
 <div class="container">
-  <div>
-    <p><%= @support_request&.lockbox_partner&.address %></p>
+  <div class="lockbox-partner-header">
+    <p><%= @support_request&.lockbox_partner&.city %><span class="pull-right"><a href="TODO">View All Activity</a></span></p>
     <h2><%= @support_request&.lockbox_partner&.name %> <span class="pull-right"><%= @support_request&.lockbox_partner&.balance %></span></h2>
   </div>
-  <hr />
-  <div>
-    <h3>Support Request for <%= @support_request.client_ref_id %> <span class="pull-right"><%= @support_request.status %></span></h3>
-    <%= @support_request&.client_ref_id %>
-    <%= @support_request&.name_or_alias %>
-    <%= @support_request&.urgency_flag %>
-    <%= @support_request&.amount %>
-
-    <% @support_request.lockbox_action.breakdown.each do |item| %>
-      <p><%= item[:amount] %> for <%= item[:category] %></p>
-    <% end %>
+  <div class="header-separator"></div>
+    <div class="support-request-container">
+      <div class="support-request-header">
+        <h3>Support Request for <%= @support_request.name_or_alias %> <span class="pull-right"><%= @support_request.status %></span></h3>
+        <% if @support_request.urgency_flag %>
+          TODO MAKE ALERT
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <strong>Pickup Date</strong>
+          <%= @support_request&.pickup_date %>
+        </div>
+        <div class="col-3">
+          <strong>Amount</strong>
+          $<%= @support_request&.amount %>
+        </div>
+        <div class="col-3">
+          <strong>Breakdown</strong>
+          <% @support_request.lockbox_action.breakdown.each do |item| %>
+            <p><%= item[:amount] %> for <%= item[:category] %></p>
+          <% end %>
+        </div>
+        <div class="col-3">
+          <strong>Client Ref ID</strong>
+          <%= @support_request&.client_ref_id %>
+        </div>
+      </div>
+      <div class="">
+        THE BUTTONS
+      </div>
+      </div>
+      <div class="">
+        NOTES TABLE
+      </div>
+    </div>
   </div>
 </div>
