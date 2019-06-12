@@ -4,7 +4,7 @@
   h2 {
     margin: 30px auto;
   }
-  .header-btns{
+  .header-btns {
     .btn-primary {
       height: 50px;
     }
@@ -121,4 +121,28 @@
 
 hr {
   border-width: 2px;
+}
+
+.partner-tabs {
+  display: flex;
+  justify-content: space-between;
+  height: 2.5rem;
+  margin-top: 0;
+}
+
+.partner-tabs > li {
+  list-style-type: none;
+  color: white;
+  font-weight: 400;
+  text-align: center;
+  align-self: center;
+  position: relative;
+  height: 100%;
+  width: 49.8%;
+  top: 5px;
+  background-color: #194180;
+}
+
+.partner-tabs > li:hover {
+  cursor: pointer;
 }
