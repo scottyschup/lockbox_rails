@@ -21,7 +21,6 @@ class AddCashToLockbox
       end
 
       lockbox_transaction = lockbox_action.lockbox_transactions.create(
-        eff_date: eff_date,
         amount_cents: amount_cents,
         balance_effect: LockboxTransaction::CREDIT
       )
