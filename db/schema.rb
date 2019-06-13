@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_09_192617) do
+ActiveRecord::Schema.define(version: 2019_06_11_035717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,10 @@ ActiveRecord::Schema.define(version: 2019_06_09_192617) do
     t.string "phone_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "street_address"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
   end
 
   create_table "lockbox_transactions", force: :cascade do |t|

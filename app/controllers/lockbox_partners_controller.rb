@@ -19,6 +19,8 @@ class LockboxPartnersController < ApplicationController
   private
 
   def lockbox_params
-    params.require(:lockbox_partner).permit(:name, :address, :phone_number)
+    params.require(:lockbox_partner)
+          .permit(:name, :phone_number, :street_address,
+                  :city, :state, :zip_code)
   end
 end
