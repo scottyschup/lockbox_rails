@@ -1,12 +1,12 @@
 <div class="container">
   <div class="lockbox-partner-header">
-    <p><%= @support_request&.lockbox_partner&.city %><span class="pull-right"><a href="TODO">View All Activity</a></span></p>
-    <h2><%= @support_request&.lockbox_partner&.name %> <span class="pull-right"><%= @support_request&.lockbox_partner&.balance %></span></h2>
+    <strong><%= @support_request&.lockbox_partner&.city %></strong><span class="float-right"><a href="TODO">View All Activity</a></span>
+    <h2><%= @support_request&.lockbox_partner&.name %> <span class="float-right"><%= @support_request&.lockbox_partner&.balance %></span></h2>
   </div>
   <div class="header-separator"></div>
     <div class="support-request-container">
       <div class="support-request-header">
-        <h3>Support Request for <%= @support_request.name_or_alias %> <span class="pull-right"><%= @support_request.status %></span></h3>
+        <h3>Support Request for <%= @support_request.name_or_alias %> <span class="float-right"><%= @support_request.status %></span></h3>
         <% if @support_request.urgency_flag %>
           TODO MAKE ALERT
         <% end %>
@@ -14,30 +14,26 @@
       <div class="row">
         <div class="col-3">
           <strong>Pickup Date</strong>
-          <%= @support_request&.pickup_date %>
+          <p><%= @support_request&.pickup_date %></p>
         </div>
         <div class="col-3">
           <strong>Amount</strong>
-          $<%= @support_request&.amount %>
+          <p>$<%= @support_request&.amount %></p>
         </div>
         <div class="col-3">
           <strong>Breakdown</strong>
           <% @support_request.lockbox_action.breakdown.each do |item| %>
-            <p><%= item[:amount] %> for <%= item[:category] %></p>
+            <div><%= item[:amount] %> for <%= item[:category] %></div>
           <% end %>
         </div>
         <div class="col-3">
           <strong>Client Ref ID</strong>
-          <%= @support_request&.client_ref_id %>
+          <div><%= @support_request&.client_ref_id %></div>
         </div>
       </div>
-      <div class="">
-        THE BUTTONS
-      </div>
-      </div>
-      <div class="">
-        NOTES TABLE
-      </div>
+
+      <%= link_to 'Edit Support Request', new_support_request_path, class: 'btn btn-primary' %>
+      <%= link_to 'Add Note', new_lockbox_partner_path, class: 'btn btn-secondary' %>
     </div>
   </div>
 </div>

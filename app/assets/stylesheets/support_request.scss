@@ -1,7 +1,23 @@
+.support-request-header {
+  margin: 30px auto;
+}
+
 .support-request-container {
   color: black;
   width: 75%;
   margin: 10px auto;
+  .btn {
+    margin: 20px auto;
+    margin-right: 20px;
+    width: 25%;
+  }
+  .row {
+    div {
+      p {
+        font-size: 2em;
+      }
+    }
+  }
 }
 
 #support-request-form {

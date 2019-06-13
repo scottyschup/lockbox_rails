@@ -64,6 +64,16 @@
   }
 }
 
+.btn-secondary {
+  background-color: white;
+  border: $color-primary solid 2px;
+  color: $color-primary;
+  &:hover {
+    background-color: $color-primary;
+    color: white;
+  }
+}
+
 .btn-primary.view-full {
   max-width: none;
   width: 100%;
