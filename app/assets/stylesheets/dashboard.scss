@@ -72,6 +72,7 @@
   background-color: white;
   border: $color-primary solid 2px;
   color: $color-primary;
+  font-weight: bold;
   &:hover {
     border: darken($color-primary, 15%) solid 2px;
     color: darken($color-primary, 15%);
