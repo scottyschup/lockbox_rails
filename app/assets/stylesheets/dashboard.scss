@@ -64,13 +64,18 @@
   }
 }
 
+.btn-primary:hover {
+  border: $color-primary solid 2px;
+}
+
 .btn-secondary {
   background-color: white;
   border: $color-primary solid 2px;
   color: $color-primary;
   &:hover {
-    background-color: $color-primary;
-    color: white;
+    border: darken($color-primary, 15%) solid 2px;
+    color: darken($color-primary, 15%);
+    background-color: white;
   }
 }
 
@@ -83,6 +88,15 @@
 }
 
 .btn-primary.view-half {
+  max-width: none;
+  width: 48%;
+  margin-top: 20px;
+  text-align: center;
+  line-height: 35px;
+}
+
+.btn-secondary.view-half {
+  font-weight: bolder;
   max-width: none;
   width: 48%;
   margin-top: 20px;

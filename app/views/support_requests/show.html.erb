@@ -21,13 +21,13 @@
           <p>$<%= @support_request&.amount %></p>
         </div>
         <div class="col-3">
-          <strong>Breakdown</strong>
+          <strong>Amount Breakdown</strong>
           <% @support_request.lockbox_action.breakdown.each do |item| %>
             <div><%= item[:amount] %> for <%= item[:category] %></div>
           <% end %>
         </div>
         <div class="col-3">
-          <strong>Client Ref ID</strong>
+          <strong>Client ID</strong>
           <div><%= @support_request&.client_ref_id %></div>
         </div>
       </div>
