@@ -34,6 +34,11 @@
 
       <%= link_to 'Edit Support Request', new_support_request_path, class: 'btn btn-primary' %>
       <%= link_to 'Add Note', new_lockbox_partner_path, class: 'btn btn-secondary' %>
+
+      <%= render partial: 'notes/notes_log', locals: { support_request: @support_request } %>
+      <div class="pagination">
+
+      </div>
     </div>
   </div>
 </div>

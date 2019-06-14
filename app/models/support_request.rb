@@ -27,6 +27,16 @@ class SupportRequest < ApplicationRecord
     lockbox_action.eff_date
   end
 
+  Note = Struct.new(:eff_date, :author, :content)
+
+  def notes
+    [
+      Note.new(Date.yesterday-3, 'Some Author', 'Her ya go with some note content'),
+      Note.new(Date.yesterday-2, 'Somebody', 'Her ya go with some note content'),
+      Note.new(Date.current, 'Another person', 'Her ya go with some note content')
+    ]
+  end
+
   private
 
   def populate_client_ref_id
