@@ -15,12 +15,12 @@ describe AddCashToLockbox do
     AddCashToLockbox.call(
       lockbox_partner: lockbox_partner,
       eff_date: eff_date,
-      amount_cents: amount_cents
+      amount: amount
     )
   end
 
   context 'when the params are valid' do
-    let(:amount_cents) { 10_000 }
+    let(:amount) { Money.new(1000) }
 
     it "creates one lockbox action" do
       expect{add_cash}.to change(LockboxAction, :count).by(1)
@@ -40,7 +40,7 @@ describe AddCashToLockbox do
     it "creates the lockbox transaction with the correct attributes" do
       lockbox_transaction = add_cash.value.lockbox_transactions.first
       expect(lockbox_transaction.eff_date).to eq(eff_date)
-      expect(lockbox_transaction.amount_cents).to eq(amount_cents)
+      expect(lockbox_transaction.amount).to eq(amount)
       expect(lockbox_transaction.balance_effect).to eq(LockboxTransaction::CREDIT)
     end
 
@@ -55,7 +55,7 @@ describe AddCashToLockbox do
   end
 
   context 'when the params are invalid' do
-    let(:amount_cents) { "this is not a number" }
+    let(:amount) { "this is not a number" }
 
     it "does not create a lockbox action" do
       expect{add_cash}.not_to change(LockboxAction, :count)

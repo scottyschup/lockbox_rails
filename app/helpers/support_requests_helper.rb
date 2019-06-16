@@ -3,6 +3,10 @@ module SupportRequestsHelper
     LockboxTransaction::EXPENSE_CATEGORIES.map { |c| [c.capitalize, c] }
   end
 
+  def lockbox_partner_select_options
+    LockboxPartner.order(:name).pluck(:name, :id)
+  end
+
   def active_lockbox_partner_select_options
     LockboxPartner.active.order(:name).pluck(:name, :id)
   end
