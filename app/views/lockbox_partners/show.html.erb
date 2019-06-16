@@ -5,6 +5,7 @@
     <h2><%= @lockbox_partner.name %> <span class="float-right"><%= @lockbox_partner.balance %></span></h2>
   </div>
   <div class="support-request-container">
+    <%= link_to "Add Cash", new_lockbox_partner_add_cash_path(@lockbox_partner), class: "btn btn-primary" %>
     <div class="lockbox-activity">
       <table class="table">
         <thead>
