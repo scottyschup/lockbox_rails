@@ -11,6 +11,11 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: lockbox_rails_test
           RAILS_ENV: test
+      - image: circleci/node:10.16-jessie-browsers-legacy
+        # environment:
+        #   PGHOST: 127.0.0.1
+        #   PGUSER: lockbox_rails_test
+        #   RAILS_ENV: test
       - image: postgres:11.2
         environment:
           POSTGRES_USER: lockbox_rails_test
@@ -91,4 +96,3 @@ workflows:
           filters:
             branches:
               only: master
-
