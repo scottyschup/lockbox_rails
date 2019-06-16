@@ -9,7 +9,7 @@
       <div class="support-request-header">
         <h3>Support Request for <%= @support_request.name_or_alias %> <span class="float-right"><%= @support_request.status %></span></h3>
         <% if @support_request.urgency_flag %>
-          TODO MAKE ALERT
+          TODO MAKE ALERT - https://github.com/MidwestAccessCoalition/lockbox_rails/issues/119
         <% end %>
       </div>
       <div class="row">
@@ -37,7 +37,8 @@
       <%= link_to 'Add Note', new_lockbox_partner_path, class: 'btn btn-secondary' %>
 
       <%= render partial: 'notes/notes_log', locals: { support_request: @support_request } %>
-      <div class="pagination">
+      <div class="support-request-nav">
+        TODO MAKE THIS NAV - https://github.com/MidwestAccessCoalition/lockbox_rails/issues/121
       </div>
     </div>
   </div>
