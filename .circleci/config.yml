@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.2
+      - image: circleci/ruby:2.6.2-node
         environment:
           PGHOST: 127.0.0.1
           PGUSER: lockbox_rails_test
@@ -16,7 +16,6 @@ jobs:
           POSTGRES_USER: lockbox_rails_test
           POSTGRES_DB: lockbox_rails_test
           POSTGRES_PASSWORD: ""
-      - image: circleci/node:lts
 
     working_directory: ~/repo
 
