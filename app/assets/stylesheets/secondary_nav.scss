@@ -1,0 +1,25 @@
+.partner-tabs {
+  display: flex;
+  justify-content: space-between;
+  height: 2rem;
+  margin-top: 0;
+}
+
+.partner-tabs > a {
+  list-style-type: none;
+  color: white;
+  font-weight: 400;
+  font-family: 0.7rem;
+  text-align: center;
+  padding: 2.5px;
+  align-self: center;
+  position: relative;
+  height: 100%;
+  width: 49.8%;
+  top: 5px;
+  background-color: #194180;
+}
+
+.partner-tabs > a:hover {
+  cursor: pointer;
+}
