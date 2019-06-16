@@ -3,7 +3,7 @@ require 'verbalize'
 class AddCashToLockbox
   include Verbalize::Action
 
-  input :lockbox_partner, :eff_date, :amount_cents
+  input :lockbox_partner, :eff_date, :amount
 
   def call
     err_message = nil
@@ -21,7 +21,7 @@ class AddCashToLockbox
       end
 
       lockbox_transaction = lockbox_action.lockbox_transactions.create(
-        amount_cents: amount_cents,
+        amount: amount,
         balance_effect: LockboxTransaction::CREDIT
       )
 

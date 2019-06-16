@@ -5,6 +5,7 @@
   <h3>
     <%= @lockbox_partner.name %><span class="pull-right">$ <%= @lockbox_partner.balance %></span>
   </h3>
+  <%= link_to "Add Cash", new_lockbox_partner_add_cash_path(@lockbox_partner), class: "btn btn-primary" %>
 
   <hr />
 
