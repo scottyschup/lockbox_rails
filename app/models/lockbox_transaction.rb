@@ -19,4 +19,8 @@ class LockboxTransaction < ApplicationRecord
     FOOD       = 'food',
     ADJUSTMENT = 'adjustment'
   ].freeze
+
+  def eff_date
+    lockbox_action.eff_date
+  end
 end
