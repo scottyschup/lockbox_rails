@@ -19,9 +19,6 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     @support_request = SupportRequest.find(params[:id])
   end
 
-  def index
-  end
-
   private
 
   def all_support_request_params
