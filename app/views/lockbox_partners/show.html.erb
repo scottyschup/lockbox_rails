@@ -1,41 +1,41 @@
 <div class="container">
-  <div>
-    <p><strong><%= @lockbox_partner.city %></strong></p>
+  <div class="lockbox-partner-header">
+    <strong><%= @lockbox_partner.city %></strong>
+    <%= link_to 'Back to dashboard', lockbox_partners_path, class: 'float-right' %>
+    <h2><%= @lockbox_partner.name %> <span class="float-right"><%= @lockbox_partner.balance %></span></h2>
   </div>
-  <h3>
-    <%= @lockbox_partner.name %><span class="pull-right">$ <%= @lockbox_partner.balance %></span>
-  </h3>
-
-  <div class="lockbox-activity">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Activity</th>
-          <th>Status</th>
-          <th>Client</th>
-          <th>Amount</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @lockbox_partner.historical_actions.each do |action| %>
+  <div class="support-request-container">
+    <div class="lockbox-activity">
+      <table class="table">
+        <thead>
           <tr>
-            <td><%= action.eff_date %></td>
-            <td><%= action.action_type.humanize %></td>
-            <td><%= action.status %></td>
-            <td><%= action.support_request&.name_or_alias %></td>
-            <td><%= action.amount %></td>
-            <td>
-              <% if action.support_request %>
-                <%= link_to support_request_path(action.support_request) do %>
-                  View details <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                <% end %>
-              <% end %>
-            </td>
+            <th>Date</th>
+            <th>Activity</th>
+            <th>Status</th>
+            <th>Client</th>
+            <th>Amount</th>
+            <th>Actions</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @lockbox_partner.historical_actions.each do |action| %>
+            <tr>
+              <td><%= action.eff_date %></td>
+              <td><%= action.action_type.humanize %></td>
+              <td><%= action.status %></td>
+              <td><%= action.support_request&.name_or_alias %></td>
+              <td><%= action.amount %></td>
+              <td>
+                <% if action.support_request %>
+                  <%= link_to support_request_path(action.support_request) do %>
+                    View details <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
