@@ -16,6 +16,7 @@ jobs:
           POSTGRES_USER: lockbox_rails_test
           POSTGRES_DB: lockbox_rails_test
           POSTGRES_PASSWORD: ""
+      - image: circleci/node:lts
 
     working_directory: ~/repo
 
@@ -91,4 +92,3 @@ workflows:
           filters:
             branches:
               only: master
-
