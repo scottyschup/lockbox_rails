@@ -24,7 +24,7 @@
       <div class="support_case_transactions">
         <div class="entries">
           <% 3.times do %>
-            <%= render partial: 'lockbox_transaction_form' %>
+            <%= render partial: 'lockbox_partners/support_requests/lockbox_transaction_form' %>
           <% end %>
         </div>
         <%= link_to 'Add more values +', '#', id: 'add_transaction' %>
@@ -37,5 +37,5 @@
     </div>
     <%= f.submit "Submit", class: 'btn btn-primary' %>
   <% end %>
-  <script id="transaction_template" type="text/template"><%= render partial: 'lockbox_transaction_form' %></script>
+  <script id="transaction_template" type="text/template"><%= render partial: 'lockbox_partners/support_requests/lockbox_transaction_form' %></script>
 </div>
