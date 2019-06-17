@@ -25,10 +25,6 @@ class LockboxPartners::SupportRequestsController < ApplicationController
 
   private
 
-  def set_lockbox_partner
-    @lockbox_partner = LockboxPartner.find(params[:lockbox_partner_id])
-  end
-
   def all_support_request_params
     support_request_params
       .merge(lockbox_action: lockbox_action_params)
