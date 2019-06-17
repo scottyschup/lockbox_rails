@@ -4,5 +4,10 @@ FactoryBot.define do
     email        { Faker::Internet.email }
     password     { 'superstrongpassword12345' }
     confirmed_at { Time.current }
+    role         { 'admin' }
+
+    trait :partner_user do
+      role { 'partner' }
+    end
   end
 end

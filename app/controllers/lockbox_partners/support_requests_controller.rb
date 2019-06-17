@@ -1,7 +1,9 @@
 require './lib/create_support_request'
 
 class LockboxPartners::SupportRequestsController < ApplicationController
+
   def new
+    @lockbox_partner = LockboxPartner.find(params[:lockbox_partner_id])
     @support_request = current_user.support_requests.build
   end
 
@@ -20,6 +22,10 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   end
 
   private
+
+  def set_lockbox_partner
+    @lockbox_partner = LockboxPartner.find(params[:lockbox_partner_id])
+  end
 
   def all_support_request_params
     support_request_params

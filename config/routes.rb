@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resources :support_requests, only: [:new, :create]
+  get 'support_requests/new', to: 'lockbox_partners/support_requests#new'
 
   root to: 'dashboard#index'
 
