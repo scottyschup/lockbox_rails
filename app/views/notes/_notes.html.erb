@@ -8,13 +8,7 @@
       </tr>
     </thead>
     <tbody>
-      <% support_request.notes.each do |note| %>
-        <tr>
-          <td><%= note.eff_date %></td>
-          <td><%= note.author %></td>
-          <td><%= note.content %></td>
-        </tr>
-      <% end %>
+      <%= render notable.notes %>
     </tbody>
   </table>
 </div>

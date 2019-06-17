@@ -16,7 +16,7 @@ class SupportRequestsController < ApplicationController
   end
 
   def show
-    @support_request = SupportRequest.find(params[:id])
+    @support_request = SupportRequest.includes(:notes).find(params[:id])
   end
 
   def index
