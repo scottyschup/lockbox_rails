@@ -1,42 +1,41 @@
-<div class="container">
-  <div class="lockbox-partner-header">
-    <strong><%= @lockbox_partner.city %></strong>
-    <%= link_to 'Back to dashboard', lockbox_partners_path, class: 'float-right' %>
-    <h2><%= @lockbox_partner.name %> <span class="float-right"><%= @lockbox_partner.balance %></span></h2>
-  </div>
-  <div class="support-request-container">
-    <%= link_to "Add Cash", new_lockbox_partner_add_cash_path(@lockbox_partner), class: "btn btn-primary" %>
-    <div class="lockbox-activity">
-      <table class="table">
-        <thead>
+<div class="lockbox-partner-header">
+  <strong><%= @lockbox_partner.city %></strong>
+  <%= link_to 'Back to dashboard', lockbox_partners_path, class: 'float-right' %>
+  <h2><%= @lockbox_partner.name %> <span class="float-right"><%= @lockbox_partner.balance %></span></h2>
+</div>
+<div class="support-request-container">
+  <%= link_to "Add Cash", new_lockbox_partner_add_cash_path(@lockbox_partner), class: "btn btn-primary" %>
+  <%= link_to "Invite User", new_lockbox_partner_user_path(@lockbox_partner), class: "btn btn-primary" %>
+  <div class="lockbox-activity">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Activity</th>
+          <th>Status</th>
+          <th>Client</th>
+          <th>Amount</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @lockbox_partner.historical_actions.each do |action| %>
           <tr>
-            <th>Date</th>
-            <th>Activity</th>
-            <th>Status</th>
-            <th>Client</th>
-            <th>Amount</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @lockbox_partner.historical_actions.each do |action| %>
-            <tr>
-              <td><%= action.eff_date %></td>
-              <td><%= action.action_type.humanize %></td>
-              <td><%= action.status %></td>
-              <td><%= action.support_request&.name_or_alias %></td>
-              <td><%= action.amount %></td>
-              <td>
-                <% if action.support_request %>
-                  <%= link_to support_request_path(action.support_request) do %>
-                    View details <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                  <% end %>
+            <td><%= action.eff_date %></td>
+            <td><%= action.action_type.humanize %></td>
+            <td><%= action.status %></td>
+            <td><%= action.support_request&.name_or_alias %></td>
+            <td><%= action.amount %></td>
+            <td>
+              <% if action.support_request %>
+                <%= link_to support_request_path(action.support_request) do %>
+                  View details <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                 <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
