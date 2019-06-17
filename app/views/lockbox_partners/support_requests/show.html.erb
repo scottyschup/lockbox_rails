@@ -1,7 +1,7 @@
 <div class="container">
   <div class="lockbox-partner-header">
     <strong><%= @support_request&.lockbox_partner&.city %></strong>
-    <%= link_to 'View All Activity', lockbox_partner_path(@support_request.lockbox_partner), class: 'float-right' %>
+    <%= link_to 'View All Activity', lockbox_partners_path, class: 'float-right' %>
     <h2><%= @support_request&.lockbox_partner&.name %> <span class="float-right"><%= @support_request&.lockbox_partner&.balance %></span></h2>
   </div>
   <div class="header-separator"></div>

@@ -5,10 +5,11 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  root to: 'dashboard#index'
+  get 'lockbox_partners', to: 'dashboard#index'
+
   match 'support_requests/new', to: 'lockbox_partners/support_requests#new', via: [:get]
   resource :support_requests, only: [:create]
-
-  root to: 'dashboard#index'
 
   resources :lockbox_partners, only: [:new, :create, :show] do
     scope module: 'lockbox_partners' do
