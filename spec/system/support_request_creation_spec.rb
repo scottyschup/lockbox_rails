@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Support Request Creation", type: :system do
-  let!(:lockbox_partner) { FactoryBot.create(:lockbox_partner, :active) }
+  let!(:lockbox_partner) { FactoryBot.create(:lockbox_partner, :active, name: 'Gorillas R Us') }
   let!(:user)            { FactoryBot.create(:user) }
 
   before do
@@ -14,8 +14,8 @@ RSpec.describe "Support Request Creation", type: :system do
     fill_in 'Pick-up Date', with: Date.current
     fill_in 'Client Alias',  with: 'McGee'
     fill_in 'Client Reference ID', with: 'b358250'
-    select lockbox_partner.name, from: 'Lockbox partner'
 
+    page.all(:option, lockbox_partner.name).first.select_option
     page.all(:fillable_field, 'Amount').each {|e| e.set(13.37)}
     page.all(:option, 'Gas').each(&:select_option)
 
