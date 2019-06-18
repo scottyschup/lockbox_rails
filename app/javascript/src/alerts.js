@@ -1,12 +1,15 @@
-const fadeAlert = () => {
-  const alerts = Array.from(document.getElementsByClassName('fade'));
-  alerts.forEach(alert => (alert.style.maxHeight = '0'));
-};
+// const fadeAlert = () => {
+//   const alerts = Array.from(document.getElementsByClassName('fade'));
+//   alerts.forEach(alert => (alert.style.maxHeight = '0'));
+// };
 
 const setupAlerts = () => {
-  window.setTimeout(fadeAlert, 3000);
+  // window.setTimeout(fadeAlert, 3000);
   document.addEventListener('ajax:success', response => {
-    document.getElementById('errors').innerHTML = response.detail[0];
+    const data = response.detail[0];
+    if (data.error) {
+      document.getElementById('errors').innerHTML = data.error;
+    }
   });
 };
 

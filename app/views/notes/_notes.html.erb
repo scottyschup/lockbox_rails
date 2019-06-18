@@ -1,3 +1,9 @@
+<%= form_with model: Note.new, url: [notable, :notes], id: 'new-note-form' do |f| %>
+  <%= f.submit 'Save Note', class: 'btn btn-primary' %>
+  <div class="textarea">
+    <%= f.text_area :text %>
+  </div>
+<% end %>
 <div class="notes-log">
   <table class="table">
     <thead>
