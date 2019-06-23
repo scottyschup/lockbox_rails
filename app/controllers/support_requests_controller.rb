@@ -1,8 +1,6 @@
 require './lib/create_support_request'
 
 class SupportRequestsController < ApplicationController
-  def index; end
-
   def show
     @support_request = SupportRequest.includes(:notes).find(params[:id])
   end

@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 2019_06_17_045740) do
 
   create_table "lockbox_partners", force: :cascade do |t|
     t.string "name"
-    t.string "address"
     t.string "phone_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
