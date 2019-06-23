@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   resources :lockbox_partners, only: [:new, :create, :show] do
     scope module: 'lockbox_partners' do
       resources :users, only: [:new, :create]
-      resources :support_requests, only: [:new, :create, :show]
+      resources :support_requests, only: [:new, :create, :show] do
+        resources :notes, only: [:create]
+      end
       resource :add_cash, only: [:new, :create], controller: 'add_cash'
     end
   end

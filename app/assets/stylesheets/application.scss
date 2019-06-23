@@ -14,7 +14,7 @@
  */
 
 // DEPENDENCIES
-@import 'bootstrap';
+@import 'bootstrap/scss/bootstrap';
 @import 'font-awesome';
 @import 'devise';
 
@@ -26,3 +26,4 @@
 @import 'temp';
 @import 'lockbox_activity';
 @import 'support_request';
+@import 'notes';

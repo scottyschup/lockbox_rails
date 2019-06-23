@@ -8,7 +8,12 @@ class SupportRequestsController < LockboxPartners::SupportRequestsController
       @support_request = result.value
       redirect_to lockbox_partner_support_request_path(@support_request.lockbox_partner, @support_request)
     else
-      render partial: 'shared/error', locals: { key: 'alert', value: result.failure }
+      render json: {
+        error: render_to_string(
+          partial: 'shared/error',
+          locals: { key: 'alert', value: result.failure }
+        )
+      }
     end
   end
 
