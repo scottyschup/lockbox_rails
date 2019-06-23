@@ -1,0 +1,20 @@
+<%= form_with model: Note.new, url: [notable, :notes], id: 'new-note-form' do |f| %>
+  <%= f.submit 'Save Note', class: 'btn btn-primary' %>
+  <div class="textarea">
+    <%= f.text_area :text %>
+  </div>
+<% end %>
+<div class="notes-log">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Commentor</th>
+        <th>Note</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render notable.notes %>
+    </tbody>
+  </table>
+</div>

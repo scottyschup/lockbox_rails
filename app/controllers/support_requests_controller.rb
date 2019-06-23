@@ -1,6 +1,10 @@
 require './lib/create_support_request'
 
 class SupportRequestsController < ApplicationController
+  def show
+    @support_request = SupportRequest.includes(:notes).find(params[:id])
+  end
+
   def new
     @support_request = current_user.support_requests.build
   end
@@ -11,15 +15,13 @@ class SupportRequestsController < ApplicationController
       @support_request = result.value
       redirect_to support_request_path(@support_request)
     else
-      render partial: 'shared/error', locals: { key: 'alert', value: result.failure }
+      render json: {
+        error: render_to_string(
+          partial: 'shared/error',
+          locals: { key: 'alert', value: result.failure }
+        )
+      }
     end
-  end
-
-  def show
-    @support_request = SupportRequest.find(params[:id])
-  end
-
-  def index
   end
 
   private
