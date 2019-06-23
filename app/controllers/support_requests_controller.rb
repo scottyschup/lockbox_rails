@@ -3,7 +3,6 @@ require './lib/create_support_request'
 class SupportRequestsController < LockboxPartners::SupportRequestsController
 
   def create
-    # binding.pry
     result = CreateSupportRequest.call(params: all_support_request_params)
     if result.success?
       @support_request = result.value

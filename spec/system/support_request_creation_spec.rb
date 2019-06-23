@@ -6,6 +6,10 @@ RSpec.describe "Support Request Creation", type: :system do
 
   before do
     login_as(user, :scope => :user)
+    puts "\n\n\n\n\n"
+    puts 'HEYYYYYY'
+    puts ENV['RAILS_ENV']
+    puts "\n\n\n\n\n"
   end
 
   it 'can file a support request from main dashboard' do
