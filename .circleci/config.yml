@@ -16,6 +16,7 @@ jobs:
           POSTGRES_USER: lockbox_rails_test
           POSTGRES_DB: lockbox_rails_test
           POSTGRES_PASSWORD: ""
+          RAILS_ENV: test
 
     working_directory: ~/repo
 
