@@ -43,14 +43,14 @@ jobs:
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
       - run:
-        name: Yarn
-        command: |
-          yarn install
+          name: Yarn
+          command: |
+            yarn install
 
       - run:
-        name: Boot up server
-        command: |
-          NODE_ENV=test bundle exec rails webpacker:compile
+          name: Boot up server
+          command: |
+            NODE_ENV=test bundle exec rails webpacker:compile
 
       - save_cache:
           paths:
