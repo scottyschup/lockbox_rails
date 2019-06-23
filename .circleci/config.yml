@@ -11,12 +11,14 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: lockbox_rails_test
           RAILS_ENV: test
+          NODE_ENV: test
       - image: postgres:11.2
         environment:
           POSTGRES_USER: lockbox_rails_test
           POSTGRES_DB: lockbox_rails_test
           POSTGRES_PASSWORD: ""
           RAILS_ENV: test
+          NODE_ENV: test
 
     working_directory: ~/repo
 
