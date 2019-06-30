@@ -1,6 +1,13 @@
 require './lib/create_support_request'
 
-class SupportRequestsController < ApplicationController
+class LockboxPartners::SupportRequestsController < ApplicationController
+
+  def new
+    if params[:lockbox_partner_id]
+      @lockbox_partner = LockboxPartner.find(params[:lockbox_partner_id])
+    end
+    @support_request = current_user.support_requests.build
+  end
 
   def create
     result = CreateSupportRequest.call(params: all_support_request_params)
@@ -17,12 +24,17 @@ class SupportRequestsController < ApplicationController
     end
   end
 
+  def show
+    @support_request = SupportRequest.includes(:notes).find(params[:id])
+  end
+
   private
 
   def all_support_request_params
     support_request_params
       .merge(lockbox_action: lockbox_action_params)
       .merge(user_id: current_user.id)
+      .merge(lockbox_partner_id: params[:lockbox_partner_id])
   end
 
   def support_request_params
@@ -43,5 +55,4 @@ class SupportRequestsController < ApplicationController
       ]
     )
   end
-
 end

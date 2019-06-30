@@ -6,6 +6,7 @@
   </div>
   <div class="support-request-container">
     <%= link_to "Add Cash", new_lockbox_partner_add_cash_path(@lockbox_partner), class: "btn btn-primary" %>
+    <%= link_to "New Support Request", new_lockbox_partner_support_request_path(@lockbox_partner), class: "btn btn-primary" %>
     <div class="lockbox-activity">
       <table class="table">
         <thead>
@@ -28,7 +29,7 @@
               <td><%= action.amount %></td>
               <td>
                 <% if action.support_request %>
-                  <%= link_to support_request_path(action.support_request) do %>
+                  <%= link_to lockbox_partner_support_request_path(action.support_request) do %>
                     View details <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                   <% end %>
                 <% end %>
