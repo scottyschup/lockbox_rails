@@ -1,4 +1,12 @@
 <div class="lockbox-partner clearfix">
+  <% if lockbox_partner.reconciliation_needed? %>
+    <div class="alert alert-danger clearfix">
+      <h4 class="alert-heading">Reconciliation Due</h4>
+      <%= link_to "Reconcile budget", new_lockbox_partner_reconciliation_path(lockbox_partner), class: 'btn btn-danger float-right' %>
+      <p class="float-left">It's been <%= days_since_last_reconciliation %> days since the lockbox has been reconciled. Please count the cash in the box and record the total.</p>
+    </div>
+  <% end %>
+
   <div>
     <p>
       <strong><%= lockbox_partner.city %></strong>
