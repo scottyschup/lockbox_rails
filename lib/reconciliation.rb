@@ -46,12 +46,4 @@ class Reconciliation
 
     result ? result : fail!(err_message)
   end
-
-  def neutral_reconciliation
-    LockboxAction.create(
-      action_type: LockboxAction::RECONCILE,
-      eff_date: Date.current,
-      status: LockboxAction::COMPLETED
-    )
-  end
 end
