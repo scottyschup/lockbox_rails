@@ -7,8 +7,9 @@ class LockboxPartners::ReconciliationController < ApplicationController
   end
 
   def create
+    amount = Monetize.parse(reconciliation_params[:amount])
     action = Reconciliation.call(
-      amount: reconciliation_params[:amount],
+      amount: amount,
       lockbox_partner: @lockbox_partner
     )
     if action.succeeded?

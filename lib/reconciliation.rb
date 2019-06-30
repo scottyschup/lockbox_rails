@@ -6,8 +6,9 @@ class Reconciliation
   input :lockbox_partner, :amount
 
   def call
+    # The :amount input is the actual amount of money in the lockbox and must be
+    # a Money object
     expected_amount = lockbox_partner.balance(exclude_pending: true)
-    actual_amount = Money.new(amount, "USD")
     err_message = nil
 
     result = ActiveRecord::Base.transaction do
@@ -22,8 +23,8 @@ class Reconciliation
         raise ActiveRecord::Rollback
       end
 
-      if actual_amount != expected_amount
-        difference = expected_amount - actual_amount
+      if amount != expected_amount
+        difference = expected_amount - amount
         balance_effect = if difference.positive?
           LockboxTransaction::CREDIT
         else
@@ -42,8 +43,6 @@ class Reconciliation
       end
       lockbox_action
     end
-
-    binding.pry
 
     result ? result : fail!(err_message)
   end
