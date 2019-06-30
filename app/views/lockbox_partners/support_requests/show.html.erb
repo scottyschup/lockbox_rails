@@ -33,10 +33,10 @@
         </div>
       </div>
 
-      <%= link_to 'Edit Support Request', new_support_request_path, class: 'btn btn-primary' %>
+      <%= link_to 'Edit Support Request', 'TODO', class: 'btn btn-primary' %>
       <%= link_to 'Add Note', '#', class: 'btn btn-secondary', id: 'new-note' %>
 
-      <%= render partial: 'notes/notes', locals: { notable: @support_request } %>
+      <%= render partial: 'lockbox_partners/notes/notes', locals: { notable: @support_request } %>
 
       <div class="support-request-nav">
         TODO MAKE THIS NAV - https://github.com/MidwestAccessCoalition/lockbox_rails/issues/121

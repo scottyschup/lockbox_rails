@@ -5,15 +5,18 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resources :support_requests, only: [:new, :create, :show] do
-    resources :notes, only: [:create]
-  end
-
   root to: 'dashboard#index'
+  get 'lockbox_partners', to: 'dashboard#index'
+
+  match 'support_requests/new', to: 'lockbox_partners/support_requests#new', via: [:get]
+  resource :support_requests, only: [:create]
 
   resources :lockbox_partners, only: [:new, :create, :show] do
     scope module: 'lockbox_partners' do
       resources :users, only: [:new, :create]
+      resources :support_requests, only: [:new, :create, :show] do
+        resources :notes, only: [:create]
+      end
       resource :add_cash, only: [:new, :create], controller: 'add_cash'
     end
   end
