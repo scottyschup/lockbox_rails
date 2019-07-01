@@ -23,17 +23,16 @@
   background-color: #194180;
   border-right: solid 1px white;
   &:hover {
-    text-decoration: underline;
-    // background-color: darken(#194180, )
+    background-color: darken(#194180, 5%);
+    // TODO implement the arrows on hover and on active
+    // @extend .arrow-down
+  }
+  &:active {
+    background-color: darken(#194180, 5%);
   }
   &:last {
     border-right: none;
   }
-}
-
-.secondary-nav-tabs > a:hover {
-  text-decoration: underline;
-  // cursor: pointer;
 }
 
 .secondary-nav-tabs > a:not([href]):not([tabindex]) {
