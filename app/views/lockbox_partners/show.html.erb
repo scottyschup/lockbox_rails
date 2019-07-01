@@ -1,8 +1,6 @@
 <div class="container">
-  <%= render 'header', object: @lockbox_partner, as: :lockbox_partner %>
+  <%= render partial: 'header', locals: { lockbox_partner: @lockbox_partner } %>
   <div class="support-request-container">
-    <%= link_to "Add Cash", new_lockbox_partner_add_cash_path(@lockbox_partner), class: "btn btn-primary" %>
-    <%= link_to "New Support Request", new_lockbox_partner_support_request_path(@lockbox_partner), class: "btn btn-primary" %>
     <div class="lockbox-activity">
       <table class="table">
         <thead>
