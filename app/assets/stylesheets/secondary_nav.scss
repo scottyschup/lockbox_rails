@@ -1,27 +1,42 @@
 .secondary-nav-tabs {
   display: flex;
-  justify-content: space-between;
   height: 2rem;
   margin: 0 auto;
-  margin-top: -5px;
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 50px;
+  curson: pointer;
 }
 
 .secondary-nav-tabs > a {
+  text-decoration: none;
   list-style-type: none;
   color: white;
-  font-weight: 400;
-  font-size: 0.7rem;
+  font-weight: bolder;
+  font-size: small;
   text-align: center;
-  padding: 2.5px;
+  padding: 5px;
   align-self: center;
   position: relative;
   height: 100%;
   width: 49.8%;
   top: 5px;
   background-color: #194180;
+  border-right: solid 1px white;
+  &:hover {
+    text-decoration: underline;
+    // background-color: darken(#194180, )
+  }
+  &:last {
+    border-right: none;
+  }
 }
 
 .secondary-nav-tabs > a:hover {
-  cursor: pointer;
+  text-decoration: underline;
+  // cursor: pointer;
+}
+
+.secondary-nav-tabs > a:not([href]):not([tabindex]) {
+  color: white;
+  margin-top: -3px;
 }
