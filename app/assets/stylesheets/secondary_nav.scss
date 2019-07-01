@@ -1,15 +1,17 @@
-.partner-tabs {
+.secondary-nav-tabs {
   display: flex;
   justify-content: space-between;
   height: 2rem;
-  margin-top: 0;
+  margin: 0 auto;
+  margin-top: -5px;
+  margin-bottom: 20px;
 }
 
-.partner-tabs > a {
+.secondary-nav-tabs > a {
   list-style-type: none;
   color: white;
   font-weight: 400;
-  font-family: 0.7rem;
+  font-size: 0.7rem;
   text-align: center;
   padding: 2.5px;
   align-self: center;
@@ -20,6 +22,6 @@
   background-color: #194180;
 }
 
-.partner-tabs > a:hover {
+.secondary-nav-tabs > a:hover {
   cursor: pointer;
 }

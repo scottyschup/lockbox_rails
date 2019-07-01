@@ -30,7 +30,7 @@
             <td><%= action.amount %></td>
             <td>
               <% if action.support_request %>
-                <%= link_to 'View details ->', support_request_path(action.support_request) %>
+                <%= link_to 'View details ->', lockbox_partner_support_request_path(lockbox_partner, action.support_request) %>
               <% end %>
             </td>
           </tr>
