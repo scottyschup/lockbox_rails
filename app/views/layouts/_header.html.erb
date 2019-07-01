@@ -3,7 +3,7 @@
     <%= render "layouts/nav_bar" %>
     <%= render "layouts/nav_menu" %>
   </div>
-  <% if @lockbox_partner %>
+  <% if @lockbox_partner&.id %>
     <%= render 'layouts/secondary_nav' %>
   <% end %>
 </header>

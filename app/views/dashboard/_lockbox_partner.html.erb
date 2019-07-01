@@ -1,5 +1,5 @@
 <div class="lockbox-partner clearfix">
-  <%= render partial: 'lockbox_partners/header', object: @lockbox_partner, as: :lockbox_partner %>
+  <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
   <div class="lockbox-activity">
       <table class="table">
         <thead>
