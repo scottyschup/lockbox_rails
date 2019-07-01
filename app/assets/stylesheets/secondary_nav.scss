@@ -20,15 +20,16 @@
   height: 100%;
   width: 49.8%;
   top: 5px;
-  background-color: #194180;
+  background-color: $darker-blue;
   border-right: solid 1px white;
+  margin-top: -1px;
   &:hover {
     background-color: darken(#194180, 5%);
     // TODO implement the arrows on hover and on active
     // @extend .arrow-down
   }
   &:active {
-    background-color: darken(#194180, 5%);
+    background-color: darken($darker-blue, 5%);
   }
   &:last {
     border-right: none;
@@ -37,5 +38,4 @@
 
 .secondary-nav-tabs > a:not([href]):not([tabindex]) {
   color: white;
-  margin-top: -3px;
 }

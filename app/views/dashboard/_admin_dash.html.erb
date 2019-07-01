@@ -1,13 +1,5 @@
 <div class="lockbox-partner container clearfix">
-  <div>
-    <p>
-      <strong><%= lockbox_partner.city %></strong>
-    </p>
-  </div>
-  <h3>
-    <%= lockbox_partner.name %><span class="float-right">$<%= lockbox_partner.balance %></span>
-  </h3>
-
+  <%= render partial: 'lockbox_partners/header', object: @lockbox_partner, as: :lockbox_partner %>
   <div class="lockbox-activity">
     <table class="table table-no-border">
       <tbody>
