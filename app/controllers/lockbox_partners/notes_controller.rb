@@ -1,4 +1,4 @@
-class NotesController < ApplicationController
+class LockboxPartners::NotesController < ApplicationController
   before_action :find_commentable, only: %w[create]
 
   def create

@@ -3,12 +3,27 @@ require 'verbalize'
 class CreateSupportRequest
   include Verbalize::Action
 
+  # This is what params input looks like
+  #
+  # lockbox_partner_id: Integer
+  # name_or_alias: String
+  # user_id: Integer
+  # client_ref_id: String
+  # lockbox_action: [
+  #   {
+  #     eff_date: Date,
+  #     lockbox_transactions: [
+  #       { amount: Money, category: String }
+  #     ]
+  #   }
+  # ]
   input :params
 
   def call
     ActiveRecord::Base.transaction do
       support_req = SupportRequest.create(
         lockbox_partner_id: params[:lockbox_partner_id],
+        client_ref_id: params[:client_ref_id],
         name_or_alias: params[:name_or_alias],
         user_id: params[:user_id]
       )
