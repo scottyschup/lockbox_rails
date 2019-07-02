@@ -1,12 +1,6 @@
 <div class="container">
-  <div class="lockbox-partner-header">
-    <strong><%= @lockbox_partner.city %></strong>
-    <%= link_to 'Back to dashboard', lockbox_partners_path, class: 'float-right' %>
-    <h2><%= @lockbox_partner.name %> <span class="float-right"><%= @lockbox_partner.balance %></span></h2>
-  </div>
+  <%= render partial: 'header', locals: { lockbox_partner: @lockbox_partner } %>
   <div class="support-request-container">
-    <%= link_to "Add Cash", new_lockbox_partner_add_cash_path(@lockbox_partner), class: "btn btn-primary" %>
-    <%= link_to "New Support Request", new_lockbox_partner_support_request_path(@lockbox_partner), class: "btn btn-primary" %>
     <div class="lockbox-activity">
       <table class="table">
         <thead>
