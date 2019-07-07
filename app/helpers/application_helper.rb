@@ -2,9 +2,9 @@ module ApplicationHelper
   def flash_class(level)
     case level
     when 'notice'
-      'usa-alert usa-alert-success fade'
+      'alert alert-success fade show'
     when 'alert'
-      'usa-alert usa-alert-error fade'
+      'alert alert-danger fade show'
     end
   end
 end

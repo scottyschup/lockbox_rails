@@ -1,13 +1,14 @@
-<div>
-  <h2 class="text-info text-center"> Welcome, <%= current_user.name %>!</h2>
-</div>
-<%= link_to 'File a support request', new_support_request_path, class: 'usa-button view-half' %>
-<%= link_to 'Create new lockbox partner', new_lockbox_partner_path, class: 'usa-button view-half' %>
-<hr />
-<div>
-  <h4>Lockbox Partners (<%= @lockbox_partners.length %>)</h4>
-  <div id="dashboard-lockbox-partners">
-    <%= render partial: 'dashboard/lockbox_partner', collection: @lockbox_partners %>
-  </div>
-  <div class="horizontal-rule"></div>
+<div class="container">
+    <% if current_user.partner? %>
+    <%= render partial: 'dashboard/lockbox_partner', object: @lockbox_partner, as: :lockbox_partner %>
+  <% else %>
+    <div id="dashboard-lockbox-partners">
+      <h2>Welcome, <%= current_user.name %>!</h2>
+      <%= link_to 'File a support request', support_requests_new_path, class: 'btn btn-primary view-half' %>
+      <%= link_to 'Create new lockbox partner', new_lockbox_partner_path, class: 'btn btn-secondary view-half float-right' %>
+      <div class="horizontal-rule"></div>
+      <p><strong>Current View:</strong>  Lockbox Partners (<%= @lockbox_partners.count %>)</p>
+      <%= render partial: 'dashboard/admin_dash', collection: @lockbox_partners, as: :lockbox_partner%>
+    </div>
+  <% end %>
 </div>

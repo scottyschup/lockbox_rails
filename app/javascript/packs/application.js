@@ -7,4 +7,7 @@ require('@rails/ujs').start();
 require('turbolinks').start();
 require('@rails/activestorage').start();
 require('channels');
-require('uswds');
+require('bootstrap');
+require('../src/alerts');
+require('../src/transactions');
+require('../src/notes');

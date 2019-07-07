@@ -1,0 +1,31 @@
+<div class="lockbox-partner container clearfix">
+  <div>
+    <p>
+      <strong><%= lockbox_partner.city %></strong>
+    </p>
+  </div>
+  <h3>
+    <%= lockbox_partner.name %><span class="float-right">$<%= lockbox_partner.balance %></span>
+  </h3>
+
+  <div class="lockbox-activity">
+    <table class="table table-no-border">
+      <tbody>
+        <% lockbox_partner.historical_actions.each do |action| %>
+          <% support_request_class = action.support_request ? 'support-request' : '' %>
+          <tr class=<%= support_request_class %>>
+            <td><%= action.eff_date %></th>
+            <td><%= action.action_type.humanize %></td>
+            <td><%= action.status %></td>
+            <td><%= action.support_request&.name_or_alias %></td>
+            <td><%= action.amount %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <%= link_to lockbox_partner_path(lockbox_partner), class: 'btn btn-primary view-full' do %>
+    View Lockbox Partner Details<span class="float-right"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+  <% end %>
+</div>

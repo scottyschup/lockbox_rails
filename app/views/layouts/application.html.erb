@@ -11,15 +11,15 @@
   </head>
 
   <body>
-    <%= render 'layouts/navbar' %>
-    <div class="usa-grid">
-      <% flash.each do |key, value| %>
-        <div class="<%= flash_class(key) %>" role="alert">
-          <div class="usa-alert-body">
-            <p class="usa-alert-text"><%= value %></p>
+    <%= render 'layouts/header' %>
+    <div class="container main-content">
+      <div id="errors">
+        <% flash.each do |key, value| %>
+          <div class="fade">
+            <%= render partial: 'shared/error', locals: { key: key, value: value } %>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
       <%= yield %>
     </div>
   </body>

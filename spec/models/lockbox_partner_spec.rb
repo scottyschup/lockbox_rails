@@ -18,7 +18,6 @@ describe LockboxPartner, type: :model do
       ).tap do |action|
         action.lockbox_transactions.create!(
           amount_cents: 1000_00,
-          eff_date: start_date,
           balance_effect: 'credit'
         )
       end
@@ -32,7 +31,6 @@ describe LockboxPartner, type: :model do
       ).tap do |lb_action|
         amount_breakdown.each do |amt_cents|
           lb_action.lockbox_transactions.create!(
-            eff_date: date,
             amount_cents: amt_cents,
             balance_effect: 'debit'
           )
@@ -218,7 +216,7 @@ describe LockboxPartner, type: :model do
       it 'returns an array of lockbox transactions in reverse chronological order' do
         expect(lockbox_partner_1.historical_actions).to match([newer_lb_action, older_lb_action])
       end
-    end    
+    end
   end
 
   describe '#active?' do

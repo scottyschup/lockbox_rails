@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class LockboxTransaction < ApplicationRecord
   monetize :amount_cents
 
   belongs_to :lockbox_action
 
   BALANCE_EFFECTS = [
-    DEBIT  = :debit,
-    CREDIT = :credit
+    DEBIT  = 'debit',
+    CREDIT = 'credit'
   ].freeze
 
   EXPENSE_CATEGORIES = [
@@ -17,4 +19,8 @@ class LockboxTransaction < ApplicationRecord
     FOOD       = 'food',
     ADJUSTMENT = 'adjustment'
   ].freeze
+
+  def eff_date
+    lockbox_action.eff_date
+  end
 end

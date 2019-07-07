@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_22_052048) do
+ActiveRecord::Schema.define(version: 2019_06_17_045740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,14 +29,16 @@ ActiveRecord::Schema.define(version: 2019_04_22_052048) do
 
   create_table "lockbox_partners", force: :cascade do |t|
     t.string "name"
-    t.string "address"
     t.string "phone_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "street_address"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
   end
 
   create_table "lockbox_transactions", force: :cascade do |t|
-    t.date "eff_date"
     t.string "balance_effect"
     t.string "category"
     t.integer "amount_cents"
@@ -52,7 +54,9 @@ ActiveRecord::Schema.define(version: 2019_04_22_052048) do
     t.string "notable_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
     t.index ["notable_type", "notable_id"], name: "index_notes_on_notable_type_and_notable_id"
+    t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
   create_table "support_requests", force: :cascade do |t|
@@ -89,6 +93,7 @@ ActiveRecord::Schema.define(version: 2019_04_22_052048) do
     t.bigint "lockbox_partner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "role"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["lockbox_partner_id"], name: "index_users_on_lockbox_partner_id"

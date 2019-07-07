@@ -1,4 +1,14 @@
 #dashboard-lockbox-partners {
+  max-width: 600px;
+  margin: 0 auto;
+  h2 {
+    margin: 30px auto;
+  }
+  .header-btns {
+    .btn-primary {
+      height: 50px;
+    }
+  }
   .lockbox-partner {
     background: #f2f2f2;
     margin-bottom: 20px;
@@ -20,6 +30,12 @@
         text-decoration: none;
         color: inherit;
       }
+    }
+
+    a:hover {
+      color: white;
+      border: 1px solid darken($color-primary, 10%);
+      background-color: darken($color-primary, 10%);
     }
 
     p {
@@ -48,7 +64,23 @@
   }
 }
 
-.usa-button.view-full {
+.btn-primary:hover {
+  border: $color-primary solid 2px;
+}
+
+.btn-secondary {
+  background-color: white;
+  border: $color-primary solid 2px;
+  color: $color-primary;
+  font-weight: bold;
+  &:hover {
+    border: darken($color-primary, 15%) solid 2px;
+    color: darken($color-primary, 15%);
+    background-color: white;
+  }
+}
+
+.btn-primary.view-full {
   max-width: none;
   width: 100%;
   margin-top: 20px;
@@ -56,12 +88,21 @@
   text-align: left;
 }
 
-.usa-button.view-half {
+.btn-primary.view-half {
   max-width: none;
   width: 48%;
   margin-top: 20px;
-  border-radius: 0;
-  text-align: left;
+  text-align: center;
+  line-height: 35px;
+}
+
+.btn-secondary.view-half {
+  font-weight: bolder;
+  max-width: none;
+  width: 48%;
+  margin-top: 20px;
+  text-align: center;
+  line-height: 35px;
 }
 
 .horizontal-rule {
@@ -105,4 +146,18 @@
 
 hr {
   border-width: 2px;
+}
+
+.lockbox-partner-header {
+  margin: 0px auto;
+  margin-top: 50px;
+}
+
+.header-separator {
+  margin: 0 auto;
+  height: 15px;
+  border-bottom: 4px solid dimgray;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }

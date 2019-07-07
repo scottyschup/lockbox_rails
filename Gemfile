@@ -30,8 +30,11 @@ gem 'bootsnap', '>= 1.4.1', require: false
 
 gem 'devise', '~> 4.6.2'
 gem 'font-awesome-rails'
+gem 'bootstrap', '~> 4.3.1'
 
 gem 'money-rails', '~>1.12'
+
+gem 'verbalize', '~> 2.2'
 
 # TODO -- before we go live, should move this back to test/dev bundle
 # For test data generation
@@ -72,7 +75,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  gem 'webdrivers', '~> 4.0'
 
   # This is used in CI
   gem 'rspec_junit_formatter', '~> 0.4.1'

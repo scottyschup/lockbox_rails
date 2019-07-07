@@ -1,36 +1,29 @@
+require './lib/create_support_request'
+
 class SupportRequestsController < ApplicationController
-  def new
-    @support_request = current_user.support_requests.build
-    # We won't actually be calling any methods on the following two objects;
-    # they're here so that the form helpers and params will work. This could
-    # probably be refactored to make it cleaner
-    @lockbox_action = @support_request.lockbox_actions.build
-    @lockbox_transaction = @lockbox_action.lockbox_transactions.build
-  end
 
   def create
-    # TODO -- REFACTOR THIS
-    # LockboxAction.create_support_request(all_params)
-    @support_request = current_user.support_requests.new(support_request_params)
-    result = ActiveRecord::Base.transaction do
-      @support_request.save!
-      action_and_transaction_params = lockbox_action_params.merge(
-        cost_breakdown: [lockbox_transaction_params]
-      )
-      @lockbox_action = @support_request.lockbox_actions
-                                        .create_with_transactions(
-        :support_client, action_and_transaction_params
-      )
-    end
-    if result
-      # TODO redirect to support_requests#show, which doesn't exist yet
-      redirect_to :root
+    result = CreateSupportRequest.call(params: all_support_request_params)
+    if result.success?
+      @support_request = result.value
+      redirect_to lockbox_partner_support_request_path(@support_request.lockbox_partner, @support_request)
     else
-      render :new
+      render json: {
+        error: render_to_string(
+          partial: 'shared/error',
+          locals: { key: 'alert', value: result.failure }
+        )
+      }
     end
   end
 
   private
+
+  def all_support_request_params
+    support_request_params
+      .merge(lockbox_action: lockbox_action_params)
+      .merge(user_id: current_user.id)
+  end
 
   def support_request_params
     params.require(:support_request).permit(
@@ -43,13 +36,12 @@ class SupportRequestsController < ApplicationController
 
   def lockbox_action_params
     params.require(:lockbox_action).permit(
-      :eff_date
+      :eff_date,
+      lockbox_transactions: [
+        :amount,
+        :category
+      ]
     )
   end
 
-  def lockbox_transaction_params
-    params.require(:lockbox_transaction).permit(
-      :amount_cents, :category
-    )
-  end
 end
