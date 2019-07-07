@@ -1,0 +1,13 @@
+<div class="container">
+  <div class='secondary-nav-tabs'>
+    <% if current_user.admin? %>
+      <%= link_to 'All activity', lockbox_partner_path(@lockbox_partner) %>
+      <%= link_to 'File a support request', new_lockbox_partner_support_request_path(@lockbox_partner) %>
+      <%= link_to 'Add cash to lockbox', new_lockbox_partner_add_cash_path(@lockbox_partner) %>
+      <%= link_to 'Manage lockbox partner', new_lockbox_partner_user_path(@lockbox_partner) %>
+    <% else %>
+      <%= link_to 'Action Needed', lockbox_partner_path(@lockbox_partner) %>
+      <%= link_to 'All Activity', lockbox_partner_path(@lockbox_partner) %>
+    <% end %>
+  </div>
+</div>

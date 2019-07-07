@@ -1,0 +1,41 @@
+.secondary-nav-tabs {
+  display: flex;
+  height: 2rem;
+  margin: 0 auto;
+  margin-top: 5px;
+  margin-bottom: 50px;
+  curson: pointer;
+}
+
+.secondary-nav-tabs > a {
+  text-decoration: none;
+  list-style-type: none;
+  color: white;
+  font-weight: bolder;
+  font-size: small;
+  text-align: center;
+  padding: 5px;
+  align-self: center;
+  position: relative;
+  height: 100%;
+  width: 49.8%;
+  top: 5px;
+  background-color: $darker-blue;
+  border-right: solid 1px white;
+  margin-top: -1px;
+  &:hover {
+    background-color: darken(#194180, 5%);
+    // TODO implement the arrows on hover and on active
+    // @extend .arrow-down
+  }
+  &:active {
+    background-color: darken($darker-blue, 5%);
+  }
+  &:last {
+    border-right: none;
+  }
+}
+
+.secondary-nav-tabs > a:not([href]):not([tabindex]) {
+  color: white;
+}

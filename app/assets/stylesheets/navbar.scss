@@ -1,11 +1,13 @@
-header#main-header {
+header {
   margin-bottom: 20px;
-  background-color: $color-primary;
   background-color: #1E78BE;
   font-family: $font-sans;
   height: 50px;
   vertical-align: middle;
   width: 100vw;
+  #main-header{
+    background-color: $color-primary;
+  }
   #nav-title {
     font-weight: bolder;
   }
