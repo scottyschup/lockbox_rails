@@ -1,14 +1,3 @@
-<style>
-  table * {
-    border-left: solid black 1px;
-    border-bottom: solid black 1px;
-    padding: 10px;
-  }
-  th {
-    background-color: grey;
-    color: white;
-  }
-</style>
 # MAC Lockbox
 
 The MAC lockbox is a system for tracking MAC cash at partners across the Midwest. For a detailed list of app functionality, see [docs/roadmap.md](https://github.com/MidwestAccessCoalition/lockbox_rails/blob/master/docs/roadmap.md)
