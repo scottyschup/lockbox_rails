@@ -42,7 +42,6 @@ class LockboxPartner < ApplicationRecord
   end
 
   def reconciliation_needed?
-    return true
     return false unless persisted?
     reconciliation_interval_start <= RECONCILIATION_INTERVAL.days.ago
   end
