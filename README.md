@@ -97,7 +97,7 @@ bundle exec rails webpacker:install
 ```sh
 # Start the dev Webpack server
 yarn # if necessary
-./bin/webpack-dev-server
+./bin/webpack --watch --colors --progress
 # Open a new terminal pane/tab/window
 bundle install # if necessary
 bundle exec rails s
