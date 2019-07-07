@@ -26,7 +26,7 @@ class Reconciliation
       end
 
       if amount != expected_amount
-        difference = expected_amount - amount
+        difference = amount - expected_amount
         balance_effect = if difference.positive?
           LockboxTransaction::CREDIT
         else
