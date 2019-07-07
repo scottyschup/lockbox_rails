@@ -257,4 +257,77 @@ describe LockboxPartner, type: :model do
       end
     end
   end
+
+  describe '#reconciliation_needed?' do
+    subject { lockbox_partner.reconciliation_needed? }
+
+    context 'when the lockbox has been reconciled before' do
+      let(:lockbox_partner) { create(:lockbox_partner, :active) }
+
+      let!(:reconciliation_action) do
+        create(
+          :lockbox_action,
+          :reconciliation,
+          lockbox_partner: lockbox_partner,
+          eff_date: reconciliation_date
+        )
+      end
+
+      context 'when the lockbox was last reconciled within the reconciliation interval' do
+        let(:reconciliation_date) do
+          (LockboxPartner::RECONCILIATION_INTERVAL - 1).days.ago
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context 'when the lockbox was last reconciled outside the reconciliation interval' do
+        let(:reconciliation_date) do
+          LockboxPartner::RECONCILIATION_INTERVAL.days.ago
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when the lockbox has not been reconciled before' do
+      let(:lockbox_partner) do
+        create(:lockbox_partner, :active)
+      end
+
+      context 'when there is a completed cash addition' do
+        let!(:add_cash_action) do
+          create(
+            :lockbox_action,
+            :add_cash,
+            :completed,
+            lockbox_partner: lockbox_partner,
+            eff_date: add_cash_date
+          )
+        end
+
+        context 'when the initial cash addition was within the reconciliation interval' do
+          let(:add_cash_date) { (LockboxPartner::RECONCILIATION_INTERVAL - 1).days.ago }
+
+          it { is_expected.to be false }
+        end
+
+        context 'when the initial cash addition was outside the reconciliation interval' do
+          let(:add_cash_date) { LockboxPartner::RECONCILIATION_INTERVAL.days.ago }
+
+          it { is_expected.to be true }
+        end
+      end
+
+      context 'when there is no completed cash addition' do
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'when the lockbox has not been saved' do
+      let(:lockbox_partner) { build(:lockbox_partner) }
+
+      it { is_expected.to be false }
+    end
+  end
 end

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         resources :notes, only: [:create]
       end
       resource :add_cash, only: [:new, :create], controller: 'add_cash'
+      resource :reconciliation, only: [:new, :create], controller: 'reconciliation'
     end
   end
 end
