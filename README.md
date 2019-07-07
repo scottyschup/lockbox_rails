@@ -13,7 +13,7 @@
 
 The MAC lockbox is a system for tracking MAC cash at partners across the Midwest. For a detailed list of app functionality, see [docs/roadmap.md](https://github.com/MidwestAccessCoalition/lockbox_rails/blob/master/docs/roadmap.md)
 
-## Local Dev Evnironment
+## Local Dev Environment
 ### Requirements
 Technical requirements for this project. See below for step-by-step first-time setup.
 
@@ -26,7 +26,7 @@ Technical requirements for this project. See below for step-by-step first-time s
 | Node | v11.14.0 |
 
 ### Environment Setup
-First off, you'll want to clone this repo:
+Clone the repo:
 ```sh
 git clone git@github.com:MidwestAccessCoalition/lockbox_rails
 # Or if you don't have an SSH key setup with Github:
@@ -36,7 +36,8 @@ git clone git@github.com:MidwestAccessCoalition/lockbox_rails
 This setup assumes you are using [Homebrew](https://brew.sh/) on a Mac. For other environments, reach out to [@bintLopez](https://github.com/BintLopez) (Nicole).
 
 #### Ruby
-If you don't have a Ruby version manager, you'll want to install `rbenv`. If you already have `rbenv` or `rvm` installed, skip this step. **DO NOT INSTALL BOTH RVM AND RBENV ON THE SAME MACHINE**.
+If you don't have a Ruby version manager, you'll want to install `rbenv`. If you already have `rbenv` or `rvm` installed, skip this step.  
+**DO NOT INSTALL BOTH RVM AND RBENV ON THE SAME MACHINE**.
 
 To find out if they're already installed, in a terminal run `which rbenv rvm`. If they're both "not found" or there's no output at all, install `rbenv`.
 ```sh
@@ -82,16 +83,30 @@ _If you have issues at this step, see this [PostrgreSQL Setup](https://github.co
 
 #### Mailcatcher
 ```sh
+# This is done outside of the Gemfile because it is an
+# external tool used outside of the app environment.
 gem install mailcatcher
+```
+
+#### Webpack
+```sh
+bundle exec rails webpacker:install
+```
+
+### Local Development
+```sh
+# Start the dev Webpack server
+./bin/webpack-dev-server
+# Open a new terminal pane/tab/window
+bundle exec rails s
+# If testing email sending functionality, start mailcatcher
 mailcatcher # This will run on localhost:1080
 ```
 
-#### Node/NPM/Yarn
-```sh
-brew install nvm
-nvm install 11.14.0
-nvm use 11.14.0
-```
+Ports in use:
+* 3000: main site
+* 3035: Webpack dev server
+* 1080: Mailcatcher
 
 ### Login
 Username: `cats@test.com`<br>
