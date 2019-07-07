@@ -27,15 +27,10 @@ class Reconciliation
 
       if amount != expected_amount
         difference = amount - expected_amount
-        balance_effect = if difference.positive?
-          LockboxTransaction::CREDIT
-        else
-          LockboxTransaction::DEBIT
-        end
 
         lockbox_transaction = lockbox_action.lockbox_transactions.create!(
           amount: difference,
-          balance_effect: balance_effect
+          balance_effect: balance_effect(difference)
         )
 
         unless lockbox_transaction.valid?
@@ -47,5 +42,11 @@ class Reconciliation
     end
 
     result ? result : fail!(err_message)
+  end
+
+  private
+
+  def balance_effect(difference)
+    difference.positive? ? LockboxTransaction::CREDIT : LockboxTransaction::DEBIT
   end
 end
