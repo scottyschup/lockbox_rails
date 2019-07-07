@@ -1,17 +1,15 @@
 <div class="lockbox-partner clearfix">
   <% if lockbox_partner.reconciliation_needed? %>
-    <div class="alert alert-danger container">
-      <div class="row">
-        <div class="col-1">
-          <i class="material-icons md-36">error</i>
-        </div>
-        <div class="col-8">
-          <h4 class="alert-heading">Reconciliation Due</h4>
-          <div>It's been <%= days_since_last_reconciliation %> days since the lockbox has been reconciled. Please count the cash in the box and record the total.</div>
-        </div>
-        <div class="col-3">
-          <%= link_to "Reconcile budget", new_lockbox_partner_reconciliation_path(lockbox_partner), class: 'btn btn-danger' %>
-        </div>
+    <div class="alert alert-danger d-flex">
+      <div class="p-2">
+        <i class="material-icons md-36">error</i>
+      </div>
+      <div class="p-2 flex-grow-1">
+        <h4 class="alert-heading">Reconciliation Due</h4>
+        <div>It's been <%= days_since_last_reconciliation %> days since the lockbox has been reconciled. Please count the cash in the box and record the total.</div>
+      </div>
+      <div class="p-2">
+        <%= link_to "Reconcile budget", new_lockbox_partner_reconciliation_path(lockbox_partner), class: 'btn btn-danger' %>
       </div>
     </div>
   <% end %>
