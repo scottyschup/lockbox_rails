@@ -49,7 +49,7 @@ class LockboxPartner < ApplicationRecord
   def reconciliation_interval_start
     # If the lockbox has never been reconciled, start counting from the date it
     # was created
-    last_reconciled_at || created_at
+    (last_reconciled_at || created_at).to_date
   end
 
   def last_reconciled_at
