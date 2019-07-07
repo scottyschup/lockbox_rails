@@ -6,8 +6,10 @@ class Reconciliation
   input :lockbox_partner, :amount
 
   def call
-    # The :amount input is the actual amount of money in the lockbox and must be
-    # a Money object
+    # The :amount input is the actual amount of money in the lockbox. We should
+    # handle conversion to Money outside of this class, to avoid making
+    # assumptions about the form
+    fail!("Amount is invalid") unless amount.is_a?(Money)
     expected_amount = lockbox_partner.balance(exclude_pending: true)
     err_message = nil
 
