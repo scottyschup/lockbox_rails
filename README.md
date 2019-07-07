@@ -111,5 +111,10 @@ Ports in use:
 * 1080: Mailcatcher
 
 ### Login
-Username: `cats@test.com`<br>
+**Admin**
+Username: `cats@test.com`  
 Password: `password1234`
+
+**Lockbox Partner**
+Username: `fluffy@catsclinic.com`  
+Password: `heytherefancypants4321`
