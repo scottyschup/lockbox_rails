@@ -27,8 +27,6 @@ RSpec.describe "Support Request Creation", type: :system do
     fill_in "note_text", with: "Here's some fine & fancy note text!"
 
     click_button "Save Note"
-
-    expect{ click_button "Save Note" }.to change{ support_request.notes.count }.by(1)
     assert_selector "td", text: "Here's some fine & fancy note text!"
   end
 
@@ -50,8 +48,6 @@ RSpec.describe "Support Request Creation", type: :system do
     fill_in "note_text", with: "Here's some fine & fancy note text!"
 
     click_button "Save Note"
-
-    expect{ click_button "Save Note" }.to change{ support_request.notes.count }.by(1)
     assert_selector "td", text: "Here's some fine & fancy note text!"
   end
 end
