@@ -1,3 +1,5 @@
+$color-primary-alert: #e1f3f8;
+
 body, p, a, input, label {
   font-family: $font-sans;
 }
@@ -30,7 +32,18 @@ a {
   }
 }
 
+.alert {
+  border-radius: 0;
+  border: 0;
+  padding: 0.25rem 0.75rem;
+}
+
 .alert-primary {
-  background-color: #e1f3f8;
+  border-left: 5px solid #01bfe7;
+  background-color: $color-primary-alert;
   color: black;
+}
+
+.alert-primary-icon {
+  font-size: x-large;
 }
