@@ -43,13 +43,15 @@ class LockboxPartner < ApplicationRecord
 
   def reconciliation_needed?
     return false unless persisted?
+    return false unless !!reconciliation_interval_start
     reconciliation_interval_start <= RECONCILIATION_INTERVAL.days.ago
   end
 
   def reconciliation_interval_start
-    # If the lockbox has never been reconciled, start counting from the date it
-    # was created
-    (last_reconciled_at || created_at).to_date
+    # If the lockbox has never been reconciled, start counting from the date of
+    # the first cash addition
+    start_date = last_reconciled_at || initial_cash_addition_date
+    start_date&.to_date
   end
 
   def last_reconciled_at
@@ -57,5 +59,15 @@ class LockboxPartner < ApplicationRecord
                    .order(eff_date: :desc)
                    .first
                    &.eff_date
+  end
+
+  def initial_cash_addition_date
+    lockbox_actions
+      .where(
+        action_type: LockboxAction::ADD_CASH, status: LockboxAction::COMPLETED
+      )
+      .order(:eff_date)
+      .first
+      &.eff_date
   end
 end

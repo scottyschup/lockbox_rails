@@ -264,7 +264,7 @@ describe LockboxPartner, type: :model do
     context 'when the lockbox has been reconciled before' do
       let(:lockbox_partner) { create(:lockbox_partner, :active) }
 
-      let!(:lockbox_action) do
+      let!(:reconciliation_action) do
         create(
           :lockbox_action,
           :reconciliation,
@@ -292,19 +292,35 @@ describe LockboxPartner, type: :model do
 
     context 'when the lockbox has not been reconciled before' do
       let(:lockbox_partner) do
-        create(:lockbox_partner, :active, created_at: created_at)
+        create(:lockbox_partner, :active)
       end
 
-      context 'when the lockbox was created within the reconciliation interval' do
-        let(:created_at) { (LockboxPartner::RECONCILIATION_INTERVAL - 1).days.ago }
+      context 'when there is a completed cash addition' do
+        let!(:add_cash_action) do
+          create(
+            :lockbox_action,
+            :add_cash,
+            :completed,
+            lockbox_partner: lockbox_partner,
+            eff_date: add_cash_date
+          )
+        end
 
+        context 'when the initial cash addition was within the reconciliation interval' do
+          let(:add_cash_date) { (LockboxPartner::RECONCILIATION_INTERVAL - 1).days.ago }
+
+          it { is_expected.to be false }
+        end
+
+        context 'when the initial cash addition was outside the reconciliation interval' do
+          let(:add_cash_date) { LockboxPartner::RECONCILIATION_INTERVAL.days.ago }
+
+          it { is_expected.to be true }
+        end
+      end
+
+      context 'when there is no completed cash addition' do
         it { is_expected.to be false }
-      end
-
-      context 'when the lockbox was created outside the reconciliation interval' do
-        let(:created_at) { LockboxPartner::RECONCILIATION_INTERVAL.days.ago }
-
-        it { is_expected.to be true }
       end
     end
 
