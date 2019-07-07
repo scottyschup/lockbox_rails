@@ -32,7 +32,8 @@ RSpec.describe "Support Request Actions", type: :system do
     click_link "Add Note"
     fill_in "note_text", with: "Here's some fine & fancy note text!"
 
-    expect{ click_button "Save Note" }.to change{ support_request.notes.count }.by(1)
+    # Sleep for 1 second to avoid a race condition in slower environments (e.g., CircleCI)
+    expect{ click_button "Save Note"; sleep(1) }.to change{ support_request.notes.count }.by(1)
   end
 
 end
