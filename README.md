@@ -96,8 +96,10 @@ bundle exec rails webpacker:install
 ### Local Development
 ```sh
 # Start the dev Webpack server
+yarn # if necessary
 ./bin/webpack-dev-server
 # Open a new terminal pane/tab/window
+bundle install # if necessary
 bundle exec rails s
 # If testing email sending functionality, start mailcatcher
 mailcatcher # This will run on localhost:1080
