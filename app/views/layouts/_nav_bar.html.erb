@@ -1,8 +1,26 @@
-<nav class="navbar d-flex" role="navigation">
-  <a href="/" class="navbar-brand flex-item" title="Home" aria-label="Home">
-    💸 <span id="nav-title">Lockbox</span>
-  </a>
-  <button class="flex-item" aria-label="menu">
-    <%= fa_icon "bars" %>
-  </button>
+<nav class="navbar navbar-default d-flex" role="navigation">
+  <div class="container-fluid">
+    <a href="/" class="navbar-brand flex-item" title="Home" aria-label="Home">
+      💸 <span id="nav-title">Lockbox</span>
+    </a>
+    <button type="button" class="navbar-toggle collapsed flex-item" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <%= fa_icon "bars" %>
+      <%= fa_icon "times" %>
+    </button>
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <div class="container">
+      <%= link_to(destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-white') do %>
+        <span>Log Out</span>
+      <% end %>
+      <%= link_to(edit_user_registration_path, class: 'btn btn-primary btn-invert') do %>
+        <span>Account Settings</span>
+      <% end %>
+      <p>Quick Actions</p>
+      <p>These will be some quick actions</p>
+      <p>These will be some quick actions</p>
+      <p>These will be some quick actions</p>
+    </div>
+  </div>
 </nav>
