@@ -3,7 +3,7 @@ class LockboxPartner < ApplicationRecord
   has_many :lockbox_actions
 
   # Number of days since last reconciliation when clinic user will be prompted
-  # to reconcile the lockbox. TODO make this configurable
+  # to reconcile the lockbox. TODO make this configurable (issue #138)
   RECONCILIATION_INTERVAL = 30
 
   scope :active, -> { with_active_user.with_initial_cash }
