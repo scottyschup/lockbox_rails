@@ -1,4 +1,4 @@
-class NotesController < ApplicationController
+class LockboxPartners::NotesController < ApplicationController
   before_action :find_commentable, only: %w[create]
 
   def create
@@ -6,7 +6,7 @@ class NotesController < ApplicationController
     if @note.save
       render json: {
         note: render_to_string(
-          partial: 'notes/note',
+          partial: 'lockbox_partners/notes/note',
           locals: {
             note: @note
           }
@@ -32,7 +32,10 @@ class NotesController < ApplicationController
   end
 
   def find_commentable
-    resource, id = request.path.split('/')[1, 2]
+    # We need the last two penultimate pieces of the path
+    # It's safe to assume that the most specific piece of the path
+    # is the commentable item
+    resource, id = request.path.split('/').last(3)
     begin
       @commentable = resource.singularize.classify.constantize.find(id)
     rescue ActiveRecord::RecordNotFound
