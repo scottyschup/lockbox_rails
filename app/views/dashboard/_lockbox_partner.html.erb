@@ -7,7 +7,7 @@
         </div>
         <div class="col-8">
           <h4 class="alert-heading">Reconciliation Due</h4>
-          <p>It's been <%= days_since_last_reconciliation %> days since the lockbox has been reconciled. Please count the cash in the box and record the total.</p>
+          <div>It's been <%= days_since_last_reconciliation %> days since the lockbox has been reconciled. Please count the cash in the box and record the total.</div>
         </div>
         <div class="col-3">
           <%= link_to "Reconcile budget", new_lockbox_partner_reconciliation_path(lockbox_partner), class: 'btn btn-danger' %>
