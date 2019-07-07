@@ -2,6 +2,10 @@ class LockboxPartner < ApplicationRecord
   has_many :users
   has_many :lockbox_actions
 
+  # Number of days since last reconciliation when clinic user will be prompted
+  # to reconcile the lockbox. TODO make this configurable (issue #138)
+  RECONCILIATION_INTERVAL = 30
+
   scope :active, -> { with_active_user.with_initial_cash }
   scope :with_active_user, -> { joins(:users).merge(User.confirmed) }
 
@@ -35,5 +39,35 @@ class LockboxPartner < ApplicationRecord
 
   def historical_actions
     @all_actions ||= lockbox_actions.order(eff_date: :desc)
+  end
+
+  def reconciliation_needed?
+    return false unless persisted?
+    return false unless !!reconciliation_interval_start
+    reconciliation_interval_start <= RECONCILIATION_INTERVAL.days.ago
+  end
+
+  def reconciliation_interval_start
+    # If the lockbox has never been reconciled, start counting from the date of
+    # the first cash addition
+    start_date = last_reconciled_at || initial_cash_addition_date
+    start_date&.to_date
+  end
+
+  def last_reconciled_at
+    lockbox_actions.where(action_type: LockboxAction::RECONCILE)
+                   .order(eff_date: :desc)
+                   .first
+                   &.eff_date
+  end
+
+  def initial_cash_addition_date
+    lockbox_actions
+      .where(
+        action_type: LockboxAction::ADD_CASH, status: LockboxAction::COMPLETED
+      )
+      .order(:eff_date)
+      .first
+      &.eff_date
   end
 end
