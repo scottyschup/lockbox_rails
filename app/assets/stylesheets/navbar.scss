@@ -1,10 +1,11 @@
 header {
-  margin-bottom: 20px;
+  margin: 0;
   background-color: $color-primary;
   font-family: $font-sans;
   color: white;
   #nav-title {
     font-weight: bolder;
+    color: white;
   }
   a,
   a:visited {
@@ -44,5 +45,11 @@ header {
     background: $color-primary;
     color: white;
     border: 2px solid white;
+  }
+}
+
+.container.secondary-nav {
+  .secondary-nav-tabs {
+    margin-top: 0;
   }
 }

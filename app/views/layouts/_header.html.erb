@@ -2,7 +2,5 @@
   <div id="main-header">
     <%= render "layouts/nav_bar" %>
   </div>
-  <% if @lockbox_partner&.id %>
-    <%= render 'layouts/secondary_nav' %>
-  <% end %>
 </header>
+<%= render 'layouts/secondary_nav' if @lockbox_partner&.id %>
