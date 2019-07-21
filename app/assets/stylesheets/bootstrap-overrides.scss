@@ -1,3 +1,5 @@
+$color-primary-alert: #e1f3f8;
+
 body, p, a, input, label {
   font-family: $font-sans;
 }
@@ -28,4 +30,22 @@ a {
     background-color: #dee2e6;
     border-top: solid 2px black;
   }
+}
+
+.alert {
+  border-radius: 0;
+  border: 0;
+  margin: 20px 0;
+  padding: 0.25rem 0.75rem;
+}
+
+.alert-primary {
+  border-left: 5px solid #01bfe7;
+  background-color: $color-primary-alert;
+  color: black;
+  line-height: 2;
+}
+
+.alert-primary-icon {
+  font-size: x-large;
 }
