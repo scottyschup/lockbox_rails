@@ -7,7 +7,11 @@ Rails.application.configure do
   config.cache_classes = false
 
   # Do not eager load code on boot.
-  config.eager_load = false
+  if ARGV.include?('erd')
+    Zeitwerk::Loader.eager_load_all
+  else
+    config.eager_load = false
+  end
 
   # Show full error reports.
   config.consider_all_requests_local = true

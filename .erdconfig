@@ -1,0 +1,20 @@
+attributes:
+  - content
+  - foreign_key
+  - inheritance
+disconnected: true
+filename: erd
+filetype: pdf
+indirect: true
+inheritance: false
+markup: true
+notation: simple
+polymorphism: true
+sort: true
+warn: true
+title: Lockbox Schema
+exclude: null
+only: null
+prepend_primary: false
+cluster: false
+splines: spline
