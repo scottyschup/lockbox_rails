@@ -1,3 +1,8 @@
+$secondary-hover: darken(#194180, 5%);
+$secondary-active: darken($darker-blue, 5%);
+$secondary-tab: $darker-blue;
+$secondary-active-tab: #1f5593;
+
 .secondary-nav {
   .secondary-nav-tabs {
     display: flex;
@@ -13,26 +18,27 @@
     position: relative;
     height: 100%;
     width: 49.8%;
-    background-color: $darker-blue;
+    background-color: $secondary-tab;
     border-right: solid 1px white;
     &:last-child {
       border-right: none;
     }
     &:hover {
-      background-color: darken(#194180, 5%);
-      // TODO implement the arrows on hover and on active
-      // @extend .arrow-down
+      background-color: $secondary-hover;
     }
     &:active {
-      background-color: darken($darker-blue, 5%);
+      background-color: $secondary-active;
     }
     &:last {
       border-right: none;
     }
+    &.active-tab {
+      background-color: $secondary-active-tab;
+    }
     &.active-tab:after {
       content: ' ';
       border: 10px solid transparent;
-      border-top: 10px solid darken($darker-blue, 5%);
+      border-top: 10px solid $secondary-active-tab;
       border-left: 10px solid transparent;
       display: inline-block;
       height: 0;

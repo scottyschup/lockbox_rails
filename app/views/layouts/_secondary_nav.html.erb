@@ -1,25 +1,31 @@
 <div class="secondary-nav">
   <div class='secondary-nav-tabs'>
     <% if current_user.admin? %>
-      <div class="secondary-tab active-tab">
-        <%= link_to 'All activity', lockbox_partner_path(@lockbox_partner) %>
-      </div>
-      <div class="secondary-tab">
-        <%= link_to 'File a support request', new_lockbox_partner_support_request_path(@lockbox_partner) %>
-      </div>
-      <div class="secondary-tab">
-        <%= link_to 'Add cash to lockbox', new_lockbox_partner_add_cash_path(@lockbox_partner) %>
-      </div>
-      <div class="secondary-tab">
-        <%= link_to 'Manage lockbox partner', new_lockbox_partner_user_path(@lockbox_partner) %>
-      </div>
+      <%= render partial: 'layouts/secondary_tab', locals: {
+        tab_name: 'All activity',
+        tab_path: lockbox_partner_path(@lockbox_partner)
+      } %>
+      <%= render partial: 'layouts/secondary_tab', locals: {
+        tab_name: 'File a support request',
+        tab_path: new_lockbox_partner_support_request_path(@lockbox_partner)
+      } %>
+      <%= render partial: 'layouts/secondary_tab', locals: {
+        tab_name: 'Add cash to lockbox',
+        tab_path: new_lockbox_partner_add_cash_path(@lockbox_partner)
+      } %>
+      <%= render partial: 'layouts/secondary_tab', locals: {
+        tab_name: 'Manage lockbox partner',
+        tab_path: new_lockbox_partner_user_path(@lockbox_partner)
+      } %>
     <% else %>
-      <div class="secondary-tab">
-        <%= link_to 'Action Needed', lockbox_partner_path(@lockbox_partner) %>
-      </div>
-      <div class="secondary-tab">
-        <%= link_to 'All Activity', lockbox_partner_path(@lockbox_partner) %>
-      </div>
+      <%= render partial: 'layouts/secondary_tab', locals: {
+        tab_name: 'Action Needed',
+        tab_path: lockbox_partner_path(@lockbox_partner)
+      } %>
+      <%= render partial: 'layouts/secondary_tab', locals: {
+        tab_name: 'All Activity',
+        tab_path: lockbox_partner_path(@lockbox_partner)
+      } %>
     <% end %>
   </div>
 </div>
