@@ -6,16 +6,19 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.2-node
+      - image: circleci/ruby:2.6.2-node-browsers
         environment:
           PGHOST: 127.0.0.1
           PGUSER: lockbox_rails_test
           RAILS_ENV: test
+          NODE_ENV: test
       - image: postgres:11.2
         environment:
           POSTGRES_USER: lockbox_rails_test
           POSTGRES_DB: lockbox_rails_test
           POSTGRES_PASSWORD: ""
+          RAILS_ENV: test
+          NODE_ENV: test
 
     working_directory: ~/repo
 
@@ -30,14 +33,6 @@ jobs:
             - v1-dependencies-
 
       - run:
-          name: Install Latest Browsers
-          command: |
-            wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-            sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-            sudo apt-get update && sudo apt-get upgrade firefox
-            sudo apt-get install google-chrome-stable
-
-      - run:
           name: install latest bundler
           command: |
             gem install bundler
@@ -46,6 +41,16 @@ jobs:
           name: install dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - run:
+          name: Yarn
+          command: |
+            yarn install
+
+      - run:
+          name: Boot up server
+          command: |
+            NODE_ENV=test bundle exec rails webpacker:compile
 
       - save_cache:
           paths:
@@ -70,6 +75,7 @@ jobs:
               --out /tmp/test-results/rspec.xml \
               --format progress \
               $TEST_FILES
+          timeout: 2400
 
       # collect reports
       - store_test_results:

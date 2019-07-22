@@ -2,6 +2,7 @@ class SupportRequest < ApplicationRecord
   belongs_to :lockbox_partner
   belongs_to :user
   has_many :lockbox_actions
+  has_many :notes, as: :notable
 
   validates :client_ref_id, presence: true
   validates :name_or_alias, presence: true
@@ -25,16 +26,6 @@ class SupportRequest < ApplicationRecord
 
   def pickup_date
     lockbox_action.eff_date
-  end
-
-  Note = Struct.new(:eff_date, :author, :content)
-
-  def notes
-    [
-      Note.new(Date.yesterday-3, 'Some Author', 'Her ya go with some note content'),
-      Note.new(Date.yesterday-2, 'Somebody', 'Her ya go with some note content'),
-      Note.new(Date.current, 'Another person', 'Her ya go with some note content')
-    ]
   end
 
   private

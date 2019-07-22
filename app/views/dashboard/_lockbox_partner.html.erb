@@ -1,41 +1,49 @@
 <div class="lockbox-partner clearfix">
-  <div>
-    <p>
-      <strong><%= lockbox_partner.city %></strong>
-    </p>
-  </div>
-  <h3>
-    <%= lockbox_partner.name %><span class="float-right">$<%= lockbox_partner.balance %></span>
-  </h3>
-
+  <% if @lockbox_partner.reconciliation_needed? %>
+    <div class="alert alert-danger d-flex">
+      <div class="p-2">
+        <i class="fa fa-exclamation-circle alert-primary-icon" aria-hidden="true"></i>
+      </div>
+      <div class="p-2 flex-grow-1">
+        <h4 class="alert-heading">Reconciliation Due</h4>
+        <div>It's been <%= days_since_last_reconciliation %> days since the lockbox has been reconciled. Please count the cash in the box and record the total.</div>
+      </div>
+      <div class="p-2">
+        <%= link_to "Reconcile budget", new_lockbox_partner_reconciliation_path(lockbox_partner), class: 'btn btn-danger' %>
+      </div>
+    </div>
+  <% end %>
+  <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
   <div class="lockbox-activity">
-    <table class="table table-no-border">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Activity</th>
-          <th>Status</th>
-          <th>Client</th>
-          <th>Amount</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% lockbox_partner.historical_actions.each do |action| %>
+      <table class="table">
+        <thead>
           <tr>
-            <td><%= action.eff_date %></td>
-            <td><%= action.action_type.humanize %></td>
-            <td><%= action.status %></td>
-            <td><%= action.support_request&.name_or_alias %></td>
-            <td><%= action.amount %></td>
-            <td>
-              <% if action.support_request %>
-                <%= link_to 'View details ->', support_request_path(action.support_request) %>
-              <% end %>
-            </td>
+            <th>Date</th>
+            <th>Activity</th>
+            <th>Status</th>
+            <th>Client</th>
+            <th>Amount</th>
+            <th>Actions</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody>
+          <% @lockbox_partner.historical_actions.each do |action| %>
+            <tr>
+              <td><%= action.eff_date %></td>
+              <td><%= action.action_type.humanize %></td>
+              <td><%= action.status %></td>
+              <td><%= action.support_request&.name_or_alias %></td>
+              <td><%= action.amount %></td>
+              <td>
+                <% if action.support_request %>
+                  <%= link_to lockbox_partner_support_request_path(@lockbox_partner, action.support_request) do %>
+                    View details <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 </div>

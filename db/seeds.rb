@@ -63,5 +63,9 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
         balance_effect: LockboxTransaction::DEBIT
       )
     end
+
+    3.times do
+      sup_req.notes.create(user: User.last, text: Faker::Lorem.sentence)
+    end
   end
 end

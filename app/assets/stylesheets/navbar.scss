@@ -1,32 +1,59 @@
-header#main-header {
-  margin-bottom: 20px;
+header {
+  margin: 0;
   background-color: $color-primary;
-  background-color: #1E78BE;
   font-family: $font-sans;
-  height: 50px;
-  vertical-align: middle;
-  width: 100vw;
+  color: white;
   #nav-title {
     font-weight: bolder;
-  }
-  .navbar {
-    height: 100%;
-    margin: 0 auto;
-    max-width: 1040px;
-    padding: 0 3rem;
-  }
-  a,
-  a:visited {
     color: white;
-    text-decoration: none;
-    font-size: 1.3em;
   }
-  button {
+  p {
+    margin-bottom: 0;
+    a,
+    a:visited {
+      color: white;
+      text-decoration: none;
+      font-size: 0.8em;
+    }
+  }
+  button.navbar-toggle {
     background-color: transparent;
-  }
-
-  nav {
+    border: none;
     color: white;
-    display: none;
+    &.collapsed .fa-times {
+      display: none;
+    }
+    &:not(.collapsed) .fa-bars {
+      display: none;
+    }
+  }
+  .container {
+    width: 80%;
+  }
+  .btn {
+    display: block;
+    float: right;
+    clear: right;
+    border: 2px solid $color-primary;
+    background: white;
+    color: $color-primary;
+    width: 200px;
+    margin-bottom: 30px;
+  }
+  .btn-white:hover {
+    background: $color-primary;
+    color: white;
+    border: 2px solid white;
+  }
+  .btn-invert {
+    background: $color-primary;
+    color: white;
+    border: 2px solid white;
+  }
+}
+
+.container.secondary-nav {
+  .secondary-nav-tabs {
+    margin-top: 0;
   }
 }

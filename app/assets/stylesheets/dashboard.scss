@@ -4,7 +4,7 @@
   h2 {
     margin: 30px auto;
   }
-  .header-btns{
+  .header-btns {
     .btn-primary {
       height: 50px;
     }
@@ -148,7 +148,13 @@ hr {
   border-width: 2px;
 }
 
+.lockbox-partner-header {
+  margin: 0px auto;
+  margin-top: 50px;
+}
+
 .header-separator {
+  margin: 0 auto;
   height: 15px;
   border-bottom: 4px solid dimgray;
   text-align: center;

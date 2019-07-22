@@ -1,0 +1,62 @@
+$secondary-hover: darken(#194180, 5%);
+$secondary-active: darken($darker-blue, 5%);
+$secondary-tab: $darker-blue;
+$secondary-active-tab: #1f5593;
+
+.secondary-nav {
+  .secondary-nav-tabs {
+    display: flex;
+    height: 2rem;
+    margin: 0 auto;
+    curson: pointer;
+  }
+
+  .secondary-tab {
+    text-align: center;
+    padding: 5px;
+    align-self: center;
+    position: relative;
+    height: 100%;
+    width: 49.8%;
+    background-color: $secondary-tab;
+    border-right: solid 1px white;
+    &:last-child {
+      border-right: none;
+    }
+    &:hover {
+      background-color: $secondary-hover;
+    }
+    &:active {
+      background-color: $secondary-active;
+    }
+    &:last {
+      border-right: none;
+    }
+    &.active-tab {
+      background-color: $secondary-active-tab;
+    }
+    &.active-tab:after {
+      content: ' ';
+      border: 10px solid transparent;
+      border-top: 10px solid $secondary-active-tab;
+      border-left: 10px solid transparent;
+      display: inline-block;
+      height: 0;
+      width: 0;
+      top: 2rem;
+      position: absolute;
+      left: 45%;
+    }
+    a {
+      width: 100%;
+      color: white;
+      text-decoration: none;
+      font-weight: bolder;
+      font-size: small;
+    }
+  }
+}
+
+.secondary-nav-tabs > a:not([href]):not([tabindex]) {
+  color: white;
+}

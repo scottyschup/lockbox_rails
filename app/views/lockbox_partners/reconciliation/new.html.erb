@@ -1,0 +1,17 @@
+<div class="container">
+  <%= form_for :reconciliation, class: "form", url: lockbox_partner_reconciliation_path do |f| %>
+    <h2>Reconcile budget</h2>
+    <p>Please count the cash in the lockbox and record the actual cash value.</p>
+    <% if current_user.admin? %>
+      <div class="form-group">
+        <%= f.label "Partner Clinic" %>
+        <%= f.select :lockbox_partner_id, options_for_select(lockbox_partner_select_options, @lockbox_partner.id), {}, class: 'form-control' %>
+      </div>
+    <% end %>
+    <div class="form-group">
+      <%= f.label "Physical cash in lockbox" %>
+      <%= f.text_field :amount, type: "number", step: "0.01", class: "form-control" %>
+    </div>
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  <% end %>
+</div>

@@ -1,4 +1,6 @@
-<header id="main-header" role="banner">
-  <%= render "layouts/nav_bar" %>
-  <%= render "layouts/nav_menu" %>
+<header role="banner">
+  <div id="main-header">
+    <%= render "layouts/nav_bar" %>
+  </div>
 </header>
+<%= render 'layouts/secondary_nav' if @lockbox_partner&.id %>

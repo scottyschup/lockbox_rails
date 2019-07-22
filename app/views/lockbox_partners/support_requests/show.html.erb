@@ -1,29 +1,22 @@
-<div class="lockbox-partner-header">
-  <strong><%= @support_request&.lockbox_partner&.city %></strong>
-  <%= link_to 'View All Activity', lockbox_partner_path(@support_request.lockbox_partner), class: 'float-right' %>
-  <h2><%= @support_request&.lockbox_partner&.name %> <span class="float-right"><%= @support_request&.lockbox_partner&.balance %></span></h2>
-</div>
-<div class="header-separator"></div>
-  <div class="support-request-container">
-    <div class="support-request-header">
-      <h3>Support Request for <%= @support_request.name_or_alias %> <span class="float-right"><%= @support_request.status %></span></h3>
-      <% if @support_request.urgency_flag %>
-        TODO MAKE ALERT - https://github.com/MidwestAccessCoalition/lockbox_rails/issues/119
-      <% end %>
-    </div>
-    <div class="row">
-      <div class="col-3">
-        <strong>Pickup Date</strong>
-        <p><%= @support_request&.pickup_date %></p>
-      </div>
-      <div class="col-3">
-        <strong>Amount</strong>
-        <p>$<%= @support_request&.amount %></p>
-      </div>
-      <div class="col-3">
-        <strong>Amount Breakdown</strong>
-        <% @support_request.lockbox_action.breakdown.each do |item| %>
-          <div><%= item[:amount] %> for <%= item[:category] %></div>
+<div class="container">
+  <div class="lockbox-partner-header">
+    <strong><%= @support_request&.lockbox_partner&.city %></strong>
+    <%= link_to 'View All Activity', lockbox_partner_path(@support_request.lockbox_partner), class: 'float-right' %>
+    <h2><%= @support_request&.lockbox_partner&.name %> <span class="float-right"><%= @support_request&.lockbox_partner&.balance %></span></h2>
+  </div>
+  <div class="header-separator"></div>
+    <div class="support-request-container">
+      <div class="support-request-header">
+        <h3>Support Request for <%= @support_request.name_or_alias %> <span class="float-right"><%= @support_request.status %></span></h3>
+        <% if @support_request.urgency_flag %>
+          <div class="alert alert-primary d-flex">
+            <div class="p-2">
+              <i class="fa fa-info-circle alert-primary-icon" aria-hidden="true"></i>
+            </div>
+            <div class="p-2 flex-grow-1">
+              <span><%= @support_request.urgency_flag %></span>
+            </div>
+          </div>
         <% end %>
       </div>
       <div class="col-3">
@@ -32,12 +25,14 @@
       </div>
     </div>
 
-    <%= link_to 'Edit Support Request', 'TODO', class: 'btn btn-primary' %>
-    <%= link_to 'Add Note', 'TODO', class: 'btn btn-secondary' %>
+      <%= link_to 'Edit Support Request', 'TODO', class: 'btn btn-primary' %>
+      <%= link_to 'Add Note', '#', class: 'btn btn-secondary', id: 'new-note' %>
 
-    <%= render partial: 'notes/notes_log', locals: { support_request: @support_request } %>
-    <div class="support-request-nav">
-      TODO MAKE THIS NAV - https://github.com/MidwestAccessCoalition/lockbox_rails/issues/121
+      <%= render partial: 'lockbox_partners/notes/notes', locals: { notable: @support_request } %>
+
+      <div class="support-request-nav">
+        TODO MAKE THIS NAV - https://github.com/MidwestAccessCoalition/lockbox_rails/issues/121
+      </div>
     </div>
   </div>
 </div>

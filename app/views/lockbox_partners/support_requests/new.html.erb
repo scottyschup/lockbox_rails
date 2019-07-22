@@ -1,5 +1,6 @@
-<div id="support-request-form">
-  <%= form_with model: @support_request, url: submit_url(@lockbox_partner), class: 'form' do |f| %>
+<div id="support-request-form" class="container">
+  <% form_post_path = @lockbox_partner ? lockbox_partner_support_requests_path(@lockbox_partner) : support_requests_path %>
+  <%= form_with model: @support_request, url: form_post_path, class: 'form' do |f| %>
     <h2>File a support request</h2>
     <div class="form-group">
       <%= label_tag 'lockbox_action[eff_date]', 'Pick-up Date' %>

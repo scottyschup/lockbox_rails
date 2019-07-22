@@ -1,0 +1,19 @@
+#new-note-form {
+  display: none;
+  .textarea {
+    overflow: hidden;
+    width: auto;
+    padding-right: 10px;
+    textarea {
+      width: 100%;
+    }
+  }
+  input[type='submit'] {
+    float: right;
+    margin: 0;
+  }
+}
+
+.notes-log .table {
+  border-top: 0px;
+}

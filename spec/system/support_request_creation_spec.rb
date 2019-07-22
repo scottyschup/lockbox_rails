@@ -22,6 +22,12 @@ RSpec.describe "Support Request Creation", type: :system do
     click_button "Submit"
 
     assert_selector "h3", text: "Support Request for"
+
+    click_link "Add Note"
+    fill_in "note_text", with: "Here's some fine & fancy note text!"
+
+    click_button "Save Note"
+    assert_selector "td", text: "Here's some fine & fancy note text!"
   end
 
   it 'can file a support request from a lockbox dashboard' do
@@ -37,5 +43,11 @@ RSpec.describe "Support Request Creation", type: :system do
     click_button "Submit"
 
     assert_selector "h3", text: "Support Request for"
+
+    click_link "Add Note"
+    fill_in "note_text", with: "Here's some fine & fancy note text!"
+
+    click_button "Save Note"
+    assert_selector "td", text: "Here's some fine & fancy note text!"
   end
 end
