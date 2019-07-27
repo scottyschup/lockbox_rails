@@ -65,7 +65,7 @@ brew services start postgresql
 Setup DB:
 ```sh
 # From project root:
-rake db:setup # runs `rake db:create db:schema:load db:seed
+bundle exec rake db:setup # runs `rake db:create db:schema:load db:seed
 ```
 
 _If you have issues at this step, see this [PostrgreSQL Setup](https://github.com/MidwestAccessCoalition/jane_point_oh/blob/master/docs/db_setup.md) doc. But while going through it, wherever you see the string `admin_app`, replace it with `lockbox_rails`. (This includes instances like `admin_app_development` => `lockbox_rails_development`.)_
