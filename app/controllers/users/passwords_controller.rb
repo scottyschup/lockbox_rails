@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Users::PasswordsController < Devise::PasswordsController
+  layout "application"
+
   # GET /resource/password/new
   # def new
   #   super
@@ -42,6 +44,6 @@ class Users::PasswordsController < Devise::PasswordsController
   def update_password_params
     # Devise does not use these params to update the password itself, hence
     # the absence of password and password_confirmation
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:name, :email)
   end
 end

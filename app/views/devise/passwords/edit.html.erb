@@ -1,14 +1,28 @@
-<h2><%= resource.password.present? ? "Change" : "Set" %> your password</h2>
+<% if @resource&.has_signed_in? %>
+  <h2><%= resource.password.present? ? "Change" : "Set" %> your password</h2>
+<% else %>
+  <h2>Account Creation</h2>
+  <p>
+    Welcome to Lockbox! Please fill out the form below to create your account.
+  </p>
+  <p>
+    Got an account already? <%= link_to "Please log in here.", new_user_session_path %>
+  </p>
+<% end %>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), class: 'form', html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
 
-  <% # The user should be able to set a name the first time they confirm the account, but not if they request a subsequent password reset %>
+  <% # The user should be able to set a name and email address the first time they confirm the account, but not if they request a subsequent password reset %>
   <% unless @resource&.has_signed_in? %>
     <div class="form-group">
       <%= f.label :name %><br />
       <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :email %><br />
+      <%= f.text_field :email, class: 'form-control' %>
     </div>
   <% end %>
 
@@ -26,7 +40,11 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password", class: 'btn btn-primary' %>
+    <% if @resource&.has_signed_in? %>
+      <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password", class: 'btn btn-primary' %>
+    <% else %>
+      <%= f.submit "Submit", class: 'btn btn-primary' %>
+    <% end %>
   </div>
 <% end %>
 
