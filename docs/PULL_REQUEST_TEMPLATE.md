@@ -1,22 +1,22 @@
 Open a PR and fill out the template later!
 
 
-# Changelog
+## Changelog
 - What did you do (high level bullet points)?
 
 
-# Link to issue:  
+## Link to issue:  
 Fixes issue #N/A
 
 
-# Steps for QA/Special Notes:
+## Steps for QA/Special Notes:
 - N/A
 
-# Relevant Screenshots (super important for UI tasks!): 
-N/A
+## Relevant Screenshots: 
+- super important for UI tasks!
 
 
-# Are you ready for review?:
+## Are you ready for review?:
 
 - [ ] Added relevant tests
 - [ ] Linked PR to the issue
