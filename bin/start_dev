@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby -w
+
+use_mailcatcher = true if ARGV.delete "-m"
+port = nil
+
+if ARGV.length == 1
+  port = ARGV.shift
+elsif ARGV.length > 1
+  $stdout.puts "Too many arguments; please optionally specify PORT and/or use the `-m` flag to start mailcatcher"
+  $stdout.puts "Arguments received: #{ARGV}.join(\"\n\")"
+end
+
+begin
+  yarn_pid = spawn("yarn")
+  webpack_pid = spawn("./bin/webpack --watch --colors --progress") &&
+  bundle_pid = spawn("bundle install")
+
+  unless port
+    port = 3000
+    msg = "Defaulting to port => 3000"
+  end
+  $stdout.puts(msg || "Starting on port #{port}")
+  rails_pid = spawn("bundle exec rails s -p #{port}")
+
+rescue StandardError => err
+  $stderr.puts "There was an error during the install process:\n#{err}"
+  $stderr.puts "Pids:\n\tyarn: #{yarn_pid}\n\twebpack: #{webpack_pid}\n\trails: #{rails_pid}"
+  exit
+end
+
+if use_mailcatcher
+  $stdout.puts "Starting mailcatcher"
+  `mailcatcher`
+end
