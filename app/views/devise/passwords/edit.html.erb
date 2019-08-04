@@ -1,4 +1,4 @@
-<% if @resource&.has_signed_in? %>
+<% if @existing_user&.has_signed_in? %>
   <h2><%= resource.password.present? ? "Change" : "Set" %> your password</h2>
 <% else %>
   <h2>Account Creation</h2>
@@ -15,14 +15,14 @@
   <%= f.hidden_field :reset_password_token %>
 
   <% # The user should be able to set a name and email address the first time they confirm the account, but not if they request a subsequent password reset %>
-  <% unless @resource&.has_signed_in? %>
+  <% unless @existing_user&.has_signed_in? %>
     <div class="form-group">
       <%= f.label :name %><br />
-      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.text_field :name, class: 'form-control', value: @existing_user.name %>
     </div>
     <div class="form-group">
       <%= f.label :email %><br />
-      <%= f.text_field :email, class: 'form-control' %>
+      <%= f.text_field :email, class: 'form-control', value: @existing_user.email %>
     </div>
   <% end %>
 
@@ -40,7 +40,7 @@
   </div>
 
   <div class="actions">
-    <% if @resource&.has_signed_in? %>
+    <% if @existing_user&.has_signed_in? %>
       <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password", class: 'btn btn-primary' %>
     <% else %>
       <%= f.submit "Submit", class: 'btn btn-primary' %>

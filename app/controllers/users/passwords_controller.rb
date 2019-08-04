@@ -15,9 +15,10 @@ class Users::PasswordsController < Devise::PasswordsController
 
   # GET /resource/password/edit?reset_password_token=abcdef
   def edit
-    @resource = resource_class.find_by(
-      reset_password_token: params[:reset_password_token]
+    token = Devise.token_generator.digest(
+      self, :reset_password_token, params[:reset_password_token]
     )
+    @existing_user = User.find_by(reset_password_token: token)
     super
   end
 
