@@ -15,6 +15,10 @@ class Users::PasswordsController < Devise::PasswordsController
 
   # GET /resource/password/edit?reset_password_token=abcdef
   def edit
+    # Defining @existing_user is a hack to prefill the form with the
+    # preset name and email for newly created clinic users. The variable
+    # can't be named @user or @resource as the super call will assign
+    # a newly initialized User to those variables.
     token = Devise.token_generator.digest(
       self, :reset_password_token, params[:reset_password_token]
     )
