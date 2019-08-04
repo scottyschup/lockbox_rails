@@ -18,7 +18,7 @@
   <% unless @existing_user&.has_signed_in? %>
     <div class="form-group">
       <%= f.label :name %><br />
-      <%= f.text_field :name, class: 'form-control', value: @existing_user.name %>
+      <%= f.text_field :name, class: 'form-control' %>
     </div>
     <div class="form-group">
       <%= f.label :email %><br />
