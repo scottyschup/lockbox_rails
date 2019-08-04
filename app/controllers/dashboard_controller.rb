@@ -6,4 +6,7 @@ class DashboardController < ApplicationController
       @lockbox_partners = LockboxPartner.all
     end
   end
+
+  def onboarding_success
+  end
 end
