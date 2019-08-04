@@ -94,6 +94,11 @@ bundle exec rails s
 mailcatcher # This will run on localhost:1080
 ```
 
+OR, since that's a lot, just run
+```
+bin/start_dev # Takes optional args: Rails port argument (default 3000); `-m` to use mailcatcher
+```
+
 Ports in use:
 * 3000: main site
 * 3035: Webpack dev server
