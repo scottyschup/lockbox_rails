@@ -13,6 +13,9 @@
       <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
     </div>
 
+    <a title="Forgot your password?" href="<%= new_password_path(resource_name) %>"
+        class="forgot">Forgot your password?</a>
+
     <div>
       <% if devise_mapping.rememberable? -%>
         <div class="form-group">
@@ -26,9 +29,4 @@
 
     <%= f.submit "Log in", class: 'btn btn-primary btn-lg w-100' %>
   </fieldset>
-
-  <div class="pt-3 text-center">
-    <a title="Forgot your password?" href="<%= new_password_path(resource_name) %>"
-      class="forgot">Forgot your password?</a>
-  </div>
 <% end %>
