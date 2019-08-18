@@ -24,3 +24,30 @@
     padding: 20px;
   }
 }
+
+.support-request-nav {
+  width: 100%;
+}
+.support-request-nav-list {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.support-request-nav-item {
+  background-color: $grey;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  padding: 20px;
+  display: inline;
+  flex: 1 auto;
+  &:last-of-type {
+    border-right: none;
+  }
+}
+.support-request-nav-link {
+  font-weight: 800;
+  &:hover {
+    text-decoration: none;
+  }
+}
