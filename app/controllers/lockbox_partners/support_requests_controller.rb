@@ -25,8 +25,9 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   end
 
   def show
-    @support_request = SupportRequest.includes(:notes).find(params[:id])
     @lockbox_partner = @support_request.lockbox_partner
+    @support_request = SupportRequest.includes(:notes).find(params[:id])
+    @support_requests = @lockbox_partner.support_requests # For SR nav bar
   end
 
   private
@@ -38,15 +39,6 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       .merge(lockbox_partner_id: params[:lockbox_partner_id])
   end
 
-  def support_request_params
-    params.require(:support_request).permit(
-      :client_ref_id,
-      :name_or_alias,
-      :urgency_flag,
-      :lockbox_partner_id
-    )
-  end
-
   def lockbox_action_params
     params.require(:lockbox_action).permit(
       :eff_date,
@@ -54,6 +46,15 @@ class LockboxPartners::SupportRequestsController < ApplicationController
         :amount,
         :category
       ]
+    )
+  end
+
+  def support_request_params
+    params.require(:support_request).permit(
+      :client_ref_id,
+      :name_or_alias,
+      :urgency_flag,
+      :lockbox_partner_id
     )
   end
 end
