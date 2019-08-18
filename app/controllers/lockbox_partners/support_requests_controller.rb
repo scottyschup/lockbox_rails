@@ -25,9 +25,9 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   end
 
   def show
-    @lockbox_partner = @support_request.lockbox_partner
     @support_request = SupportRequest.includes(:notes).find(params[:id])
-    @support_requests = @lockbox_partner.support_requests # For SR nav bar
+    @lockbox_partner = @support_request.lockbox_partner
+    @support_requests = @lockbox_partner.support_requests.sort_by :created_at # For SR nav bar
   end
 
   private
