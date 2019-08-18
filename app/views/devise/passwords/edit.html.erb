@@ -1,46 +1,48 @@
-<% if @existing_user&.has_signed_in? %>
-  <h2><%= resource.password.present? ? "Change" : "Set" %> your password</h2>
-<% else %>
-  <h2>Account Creation</h2>
-  <p>
-    Welcome to Lockbox! Please fill out the form below to create your account.
-  </p>
-<% end %>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), class: 'form', html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
-
-  <% # The user should be able to set a name the first time they confirm the account, but not if they request a subsequent password reset %>
-  <% unless @existing_user&.has_signed_in? %>
-    <div class="form-group">
-      <%= f.label :name %><br />
-      <%= f.text_field :name, class: 'form-control' %>
-    </div>
-    <div class="form-group">
-      <%= f.label :email %><br />
-      <%= f.text_field :email, class: 'form-control', value: @existing_user.email, disabled: true %>
-    </div>
+<div class="account-creation-form-container">
+  <% if @existing_user&.has_signed_in? %>
+    <h2><%= resource.password.present? ? "Change" : "Set" %> your password</h2>
+  <% else %>
+    <h2>Account Creation</h2>
+    <p>
+      Welcome to Lockbox! Please fill out the form below to create your account.
+    </p>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control' %>
-  </div>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), class: 'form', html: { method: :put }) do |f| %>
+    <%= devise_error_messages! %>
+    <%= f.hidden_field :reset_password_token %>
 
-  <div class="form-group">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
-  </div>
-
-  <div class="actions">
-    <% if @existing_user&.has_signed_in? %>
-      <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password", class: 'btn btn-primary' %>
-    <% else %>
-      <%= f.submit "Submit", class: 'btn btn-primary' %>
+    <% # The user should be able to set a name the first time they confirm the account, but not if they request a subsequent password reset %>
+    <% unless @existing_user&.has_signed_in? %>
+      <div class="form-group">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email %><br />
+        <%= f.text_field :email, class: 'form-control', value: @existing_user.email, disabled: true %>
+      </div>
     <% end %>
-  </div>
-<% end %>
+
+    <div class="form-group">
+      <%= f.label :password, "New password" %><br />
+      <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+      <% end %>
+      <%= f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, "Confirm new password" %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+    </div>
+
+    <div class="actions">
+      <% if @existing_user&.has_signed_in? %>
+        <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password", class: 'btn btn-primary' %>
+      <% else %>
+        <%= f.submit "Submit", class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
