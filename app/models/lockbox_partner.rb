@@ -14,6 +14,10 @@ class LockboxPartner < ApplicationRecord
     joins(:lockbox_actions).merge(LockboxAction.completed_cash_additions)
   end
 
+  def pending_support_requests
+    @pending_support_requests ||= SupportRequest.pending_for_partner(lockbox_partner_id: self.id)
+  end
+
   def balance(exclude_pending: false)
     relevant_transactions_for_balance(exclude_pending: exclude_pending).inject(Money.zero) do |balance, action|
       case action.balance_effect

@@ -12,6 +12,12 @@ class SupportRequest < ApplicationRecord
   # Sometimes the UUID will already have been created elsewhere, and sometimes not
   before_validation :populate_client_ref_id
 
+  def self.pending_for_partner(lockbox_partner_id:)
+    LockboxAction.where.not(support_request_id: nil)
+      .where(lockbox_partner_id: lockbox_partner_id, status: LockboxAction::PENDING)
+      .map(&:support_request)
+  end
+
   def lockbox_action
     @lockbox_action ||= lockbox_actions.last
   end
