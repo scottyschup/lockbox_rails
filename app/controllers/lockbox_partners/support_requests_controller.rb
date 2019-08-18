@@ -1,6 +1,7 @@
 require './lib/create_support_request'
 
 class LockboxPartners::SupportRequestsController < ApplicationController
+  before_action :require_admin_user, only: [:edit, :update]
 
   def new
     if params[:lockbox_partner_id]

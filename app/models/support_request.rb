@@ -28,6 +28,10 @@ class SupportRequest < ApplicationRecord
     lockbox_action.eff_date
   end
 
+  def editable_status?
+    lockbox_action.editable_status?
+  end
+
   private
 
   def populate_client_ref_id

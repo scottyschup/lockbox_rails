@@ -40,7 +40,9 @@
         </div>
       </div>
 
-      <%= link_to 'Edit Support Request', 'TODO', class: 'btn btn-primary' %>
+      <% if current_user.admin? %>
+        <%= link_to 'Edit Support Request', edit_lockbox_partner_support_request_path(@support_request.lockbox_partner, @support_request), class: 'btn btn-primary', disabled: !@support_request.editable_status? %>
+      <% end %>
       <%= link_to 'Add Note', '#', class: 'btn btn-secondary', id: 'new-note' %>
 
       <%= render partial: 'lockbox_partners/notes/notes', locals: { notable: @support_request } %>

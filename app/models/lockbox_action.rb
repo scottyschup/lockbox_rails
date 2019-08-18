@@ -21,6 +21,10 @@ class LockboxAction < ApplicationRecord
     CANCELED  = 'canceled'
   ].freeze
 
+  EDITABLE_STATUSES = [
+    'pending'
+  ].freeze
+
   ACTION_TYPES = [
     ADD_CASH = 'add_cash',
     RECONCILE = 'reconcile',
@@ -100,6 +104,10 @@ class LockboxAction < ApplicationRecord
 
   def canceled?
     status == CANCELED
+  end
+
+  def editable_status?
+    EDITABLE_STATUSES.include?(status)
   end
 
   def cancel!
