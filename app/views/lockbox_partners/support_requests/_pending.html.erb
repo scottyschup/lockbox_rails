@@ -13,18 +13,18 @@
     <div class="content">
       <div class="row">
         <div class="col-sm-3">
-          01:20pm, 9/10/19
+          <%= support_request.most_recent_note&.created_at %>
         </div>
         <div class="col-sm-3">
-          [Commenter name]
+          <%= support_request.most_recent_note&.author %>
         </div>
         <div class="col-sm-6">
-          ohai there here is some content for a sweet lil note. yay 4 notes! don't u love them?
+          <%= support_request.most_recent_note&.text %>
         </div>
       </div>
     </div>
   </div>
   <div class="content">
     <a href="">View all notes <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-  f</div>
+  </div>
 </div>
