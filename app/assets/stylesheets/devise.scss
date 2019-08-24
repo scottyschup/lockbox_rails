@@ -25,9 +25,6 @@ html, body {
     width: 400px;
     margin: 6em auto;
     height: 100%;
-    input {
-      width: 100%;
-    }
     .horizontal-rule {
       width: 100%;
       height: 15px;
@@ -59,4 +56,9 @@ html, body {
       margin-top: 10px;
     }
   }
+}
+
+.account-creation-form-container {
+  padding-left: 20px;
+  padding-right: 20px;
 }
