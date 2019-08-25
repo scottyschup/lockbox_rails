@@ -4,7 +4,10 @@ class Note < ApplicationRecord
   validates :text, presence: true
 
   def author
-    return user.name if user
-    "System Generated"
+    if user
+      user.name || "User #{user.id}"
+    else
+      "System Generated"
+    end
   end
 end

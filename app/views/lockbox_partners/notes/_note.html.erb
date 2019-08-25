@@ -1,5 +1,5 @@
 <tr>
   <td><%= note.created_at.strftime('%Y/%m/%d %I:%M %p') %></td>
-  <td>User <%= note.user.id %></td>
+  <td><%= note.author %></td>
   <td><%= note.text %></td>
 </tr>

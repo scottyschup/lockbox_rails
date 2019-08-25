@@ -18,10 +18,6 @@ class SupportRequest < ApplicationRecord
       .map(&:support_request)
   end
 
-  # def lockbox_action
-  #   @lockbox_action ||= lockbox_actions.last
-  # end
-
   def status
     lockbox_action.status
   end
