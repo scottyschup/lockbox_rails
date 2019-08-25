@@ -6,41 +6,13 @@
   </div>
   <div class="header-separator"></div>
     <div class="support-request-container">
-      <div class="support-request-header">
-        <h3>Support Request for <%= @support_request.name_or_alias %> <span class="float-right"><%= @support_request.status %></span></h3>
-        <% if @support_request.urgency_flag %>
-          <div class="alert alert-primary d-flex">
-            <div class="p-2">
-              <i class="fa fa-info-circle alert-primary-icon" aria-hidden="true"></i>
-            </div>
-            <div class="p-2 flex-grow-1">
-              <span><%= @support_request.urgency_flag %></span>
-            </div>
-          </div>
-        <% end %>
-      </div>
-      <div class="row">
-        <div class="col-3">
-          <strong>Pickup Date</strong>
-          <p><%= @support_request&.pickup_date %></p>
-        </div>
-        <div class="col-3">
-          <strong>Amount</strong>
-          <p>$<%= @support_request&.amount %></p>
-        </div>
-        <div class="col-3">
-          <strong>Amount Breakdown</strong>
-          <% @support_request.lockbox_action.breakdown.each do |item| %>
-            <div><%= item[:amount] %> for <%= item[:category] %></div>
-          <% end %>
-        </div>
-        <div class="col-3">
-          <strong>Client ID</strong>
-          <div><%= @support_request&.client_ref_id %></div>
-        </div>
-      </div>
+      <% if current_user.admin? %>
+        <%= render partial: 'details_admin', locals: { support_request: @support_request } %>
+        <%= link_to 'Edit Support Request', 'TODO', class: 'btn btn-primary' %>
+      <% else %>
+        <%= render partial: 'details_partner', locals: { support_request: @support_request } %>
+      <% end %>
 
-      <%= link_to 'Edit Support Request', 'TODO', class: 'btn btn-primary' %>
       <%= link_to 'Add Note', '#', class: 'btn btn-secondary', id: 'new-note' %>
 
       <%= render partial: 'lockbox_partners/notes/notes', locals: { notable: @support_request } %>
