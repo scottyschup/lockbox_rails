@@ -61,23 +61,31 @@
 
     <div class="support-request-nav">
       <nav class="support-request-nav-list">
-        <!-- Previous SR -->
+        <!-- Newer SR -->
         <div class="support-request-nav-item">
-          <a href="#" class="support-request-nav-link">
-            <i class="fa fa-arrow-left" aria-hidden="true"></i>
-            Newer Support Request
-          </a>
+          <% if @newer_support_request.nil? %>
+            <span>Newer Support Request</span>
+          <% else %>
+            <a href="<%= @newer_request_path %>" class="support-request-nav-link">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+              Newer Support Request
+            </a>
+          <% end %>
         </div>
         <!-- All SRs -->
         <div class="support-request-nav-item">
-          <%= link_to "View All Activity", "#", class: "support-request-nav-link" %>
+          <%= link_to "View All Activity", lockbox_partner_path(@lockbox_partner), class: "support-request-nav-link" %>
         </div>
-        <!-- Next SR -->
+        <!-- Older SR -->
         <div class="support-request-nav-item">
-          <a href="#" class="support-request-nav-link">
-            Older Support Request
-            <i class="fa fa-arrow-right" aria-hidden="true"></i>
-          </a>
+          <% if @older_support_request.nil? %>
+            <span>Older Support Request</span>
+          <% else %>
+            <a href="<%= @older_request_path %>" class="support-request-nav-link">
+              Older Support Request
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          <% end %>
         </div>
       </nav>
     </div>

@@ -12,23 +12,56 @@ class SupportRequest < ApplicationRecord
   # Sometimes the UUID will already have been created elsewhere, and sometimes not
   before_validation :populate_client_ref_id
 
-  def lockbox_action
-    @lockbox_action ||= lockbox_actions.last
-  end
-
-  def status
-    lockbox_action.status
+  def all_support_requests_for_partner
+    @all_support_requests_for_partner ||= self
+      .class
+      .where(lockbox_partner: lockbox_partner)
+      .sort { |x, y| y.eff_date <=> x.eff_date }
   end
 
   def amount
     lockbox_action.amount
   end
 
-  def pickup_date
+  def eff_date
     lockbox_action.eff_date
+  end
+  alias_method :pickup_date, :eff_date
+
+  def lockbox_action
+    @lockbox_action ||= lockbox_actions.last
+  end
+
+  def newer_request_by_partner
+    return nil unless newer_idx
+    all_support_requests_for_partner[newer_idx]
+  end
+
+  def older_request_by_partner
+    return nil unless older_idx
+    all_support_requests_for_partner[older_idx]
+  end
+
+  def status
+    lockbox_action.status
   end
 
   private
+
+  def index_in_support_requests_collection
+    all_support_requests_for_partner.find_index self
+  end
+
+  def newer_idx
+    idx = index_in_support_requests_collection
+    @newer_idx ||= idx > 0 ? idx - 1 : nil
+  end
+
+  def older_idx
+    idx = index_in_support_requests_collection
+    max_idx = all_support_requests_for_partner.count - 1
+    @older_idx ||= idx < max_idx ? idx + 1 : nil
+  end
 
   def populate_client_ref_id
     self.client_ref_id = SecureRandom.uuid if client_ref_id.blank?
