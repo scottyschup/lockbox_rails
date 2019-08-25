@@ -1,14 +1,5 @@
 <div class="support-request-header">
   <p><b><%= @support_request.pickup_date %> - <%= @support_request.name_or_alias %> - <%= @support_request&.client_ref_id %></b></p>
   <h3>Support Request:  $<%= @support_request.amount %> <span class="float-right"><%= @support_request.status %></span></h3>
-  <% if @support_request.urgency_flag %>
-    <div class="alert alert-primary d-flex">
-      <div class="p-2">
-        <i class="fa fa-info-circle alert-primary-icon" aria-hidden="true"></i>
-      </div>
-      <div class="p-2 flex-grow-1">
-        <span><%= @support_request.urgency_flag %></span>
-      </div>
-    </div>
-  <% end %>
+  <%= render partial: 'flag', locals: { support_request: @support_request } %>
 </div>
