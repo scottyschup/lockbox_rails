@@ -31,7 +31,9 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   end
 
   def edit
-    @support_request = SupportRequest.includes(:notes).find(params[:id])
+    @support_request = SupportRequest
+      .includes(:notes, :lockbox_transactions)
+      .find(params[:id])
     @lockbox_partner = @support_request.lockbox_partner
   end
 
