@@ -36,11 +36,16 @@
     background-color: $medium-dark-gray;
   }
   .notes {
-    border-bottom: black solid 1px;
     margin: 10px;
     margin-top: 0px;
   }
   a.btn-primary {
     color: white;
+  }
+  a.btn-primary.view-full {
+    border: none;
+    &:hover {
+      background-color: $darker-blue;
+    }
   }
 }
