@@ -9,14 +9,12 @@ class CreateSupportRequest
   # name_or_alias: String
   # user_id: Integer
   # client_ref_id: String
-  # lockbox_action: [
-  #   {
-  #     eff_date: Date,
-  #     lockbox_transactions: [
-  #       { amount: Money, category: String }
-  #     ]
-  #   }
-  # ]
+  # lockbox_action: {
+  #   eff_date: Date,
+  #   lockbox_transactions: [
+  #     { amount: Money, category: String }
+  #   ]
+  # }
   input :params
 
   def call
