@@ -1,7 +1,7 @@
 class SupportRequest < ApplicationRecord
   belongs_to :lockbox_partner
   belongs_to :user
-  has_many :lockbox_actions
+  has_one :lockbox_action
   has_many :notes, as: :notable
 
   validates :client_ref_id, presence: true
@@ -18,9 +18,9 @@ class SupportRequest < ApplicationRecord
       .map(&:support_request)
   end
 
-  def lockbox_action
-    @lockbox_action ||= lockbox_actions.last
-  end
+  # def lockbox_action
+  #   @lockbox_action ||= lockbox_actions.last
+  # end
 
   def status
     lockbox_action.status

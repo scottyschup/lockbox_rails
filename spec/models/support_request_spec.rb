@@ -4,7 +4,7 @@ require './lib/create_support_request'
 describe SupportRequest, type: :model do
   it { is_expected.to belong_to(:lockbox_partner) }
   it { is_expected.to belong_to(:user) }
-  it { is_expected.to have_many(:lockbox_actions) }
+  it { is_expected.to have_one(:lockbox_action) }
   it { is_expected.to have_many(:notes) }
 
   it { is_expected.to validate_presence_of(:name_or_alias) }
