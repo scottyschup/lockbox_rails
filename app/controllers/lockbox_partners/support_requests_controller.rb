@@ -62,6 +62,10 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       :name_or_alias,
       :urgency_flag,
       :lockbox_partner_id,
+      lockbox_actions_attributes: [
+        :id,
+        :eff_date
+      ],
       lockbox_transactions_attributes: [
         :id,
         :amount,

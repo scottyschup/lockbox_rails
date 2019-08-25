@@ -3,10 +3,12 @@
     <h2>
       Edit support request
     </h2>
-    <div class="form-group">
-      <%= label_tag 'lockbox_action[eff_date]', 'Pick-up Date' %>
-      <%= date_field_tag 'lockbox_action[eff_date]', nil, class: 'form-control' %>
-    </div>
+    <%= f.fields_for :lockbox_actions do |la| %>
+      <div class="form-group">
+        <%= la.label :eff_date, 'Pick-up Date' %>
+        <%= la.date_field :eff_date, class: 'form-control' %>
+      </div>
+    <% end %>
     <% if @lockbox_partner.nil? %>
       <div class="form-group">
         <%= f.label :lockbox_partner %>
