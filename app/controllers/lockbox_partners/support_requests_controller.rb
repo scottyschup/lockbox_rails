@@ -35,6 +35,12 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     @lockbox_partner = @support_request.lockbox_partner
   end
 
+  def update
+    @support_request = SupportRequest.includes(:notes).find(params[:id])
+    @lockbox_partner = @support_request.lockbox_partner
+    binding.pry
+  end
+
   private
 
   def all_support_request_params
