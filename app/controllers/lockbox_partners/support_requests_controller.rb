@@ -3,6 +3,7 @@ require './lib/create_support_request'
 class LockboxPartners::SupportRequestsController < ApplicationController
 
   def new
+    ensure_admin_only!
     if params[:lockbox_partner_id]
       @lockbox_partner = LockboxPartner.find(params[:lockbox_partner_id])
     end
@@ -10,6 +11,7 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   end
 
   def create
+    ensure_admin_only!
     result = CreateSupportRequest.call(params: all_support_request_params)
     if result.success?
       @support_request = result.value

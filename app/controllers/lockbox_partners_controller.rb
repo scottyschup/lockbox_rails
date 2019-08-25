@@ -1,4 +1,6 @@
 class LockboxPartnersController < ApplicationController
+  before_action :ensure_admin_only!
+
   def new
     @lockbox_partner = LockboxPartner.new
   end

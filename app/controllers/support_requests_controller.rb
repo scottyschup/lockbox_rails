@@ -1,6 +1,7 @@
 require './lib/create_support_request'
 
 class SupportRequestsController < ApplicationController
+  before_action :ensure_admin_only!
 
   def create
     result = CreateSupportRequest.call(params: all_support_request_params)
