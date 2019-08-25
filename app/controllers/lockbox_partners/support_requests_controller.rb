@@ -40,7 +40,11 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   def update
     @support_request = SupportRequest.includes(:notes).find(params[:id])
     @lockbox_partner = @support_request.lockbox_partner
-    binding.pry
+    if @support_request.update(support_request_params)
+      redirect_to lockbox_partner_support_request_path(@support_request)
+    else
+      render 'edit'
+    end
   end
 
   private
@@ -57,7 +61,12 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       :client_ref_id,
       :name_or_alias,
       :urgency_flag,
-      :lockbox_partner_id
+      :lockbox_partner_id,
+      lockbox_transactions_attributes: [
+        :id,
+        :amount,
+        :category
+      ]
     )
   end
 
