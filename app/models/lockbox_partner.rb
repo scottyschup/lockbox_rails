@@ -5,6 +5,7 @@ class LockboxPartner < ApplicationRecord
   # Number of days since last reconciliation when clinic user will be prompted
   # to reconcile the lockbox. TODO make this configurable (issue #138)
   RECONCILIATION_INTERVAL = 30
+  MINIMUM_ACCEPTABLE_BALANCE = Money.new(30000)
 
   scope :active, -> { with_active_user.with_initial_cash }
   scope :with_active_user, -> { joins(:users).merge(User.confirmed) }
@@ -24,6 +25,10 @@ class LockboxPartner < ApplicationRecord
       end
       balance
     end
+  end
+
+  def low_balance?
+    balance < MINIMUM_ACCEPTABLE_BALANCE
   end
 
   def relevant_transactions_for_balance(exclude_pending: false)
