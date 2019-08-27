@@ -1,5 +1,6 @@
 class DashboardController < ApplicationController
   def index
+    flash[:notice] = "This is a test"
     if current_user.partner?
       @lockbox_partner = current_user.lockbox_partner
     else
