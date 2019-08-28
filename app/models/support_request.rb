@@ -12,10 +12,9 @@ class SupportRequest < ApplicationRecord
   # Sometimes the UUID will already have been created elsewhere, and sometimes not
   before_validation :populate_client_ref_id
 
-  def self.pending_for_partner(lockbox_partner_id:)
-    LockboxAction.where.not(support_request_id: nil)
-      .where(lockbox_partner_id: lockbox_partner_id, status: LockboxAction::PENDING)
-      .map(&:support_request)
+  LockboxAction::STATUSES.each do |status|
+    scope status, -> { joins(:lockbox_action).where("lockbox_actions.status": status) }
+    scope "#{status}_for_partner", ->(lockbox_partner_id:) { joins(:lockbox_action).where(lockbox_partner_id: lockbox_partner_id, "lockbox_actions.status": status) }
   end
 
   def status
