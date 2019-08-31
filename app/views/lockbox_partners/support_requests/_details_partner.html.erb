@@ -1,0 +1,5 @@
+<div class="support-request-header">
+  <p><b><%= @support_request.pickup_date %> - <%= @support_request.name_or_alias %> - <%= @support_request&.client_ref_id %></b></p>
+  <h3>Support Request:  $<%= @support_request.amount %> <span class="float-right"><%= @support_request.status %></span></h3>
+  <%= render partial: 'flag', locals: { support_request: @support_request } %>
+</div>

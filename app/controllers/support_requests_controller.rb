@@ -3,6 +3,12 @@ require './lib/create_support_request'
 class SupportRequestsController < ApplicationController
   before_action :ensure_admin_only!
 
+  before_action :require_admin, except: [:create]
+
+  def index
+    @support_requests = SupportRequest.pending.order("created_at desc")
+  end
+
   def create
     result = CreateSupportRequest.call(params: all_support_request_params)
     if result.success?

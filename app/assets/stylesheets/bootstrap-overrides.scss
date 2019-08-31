@@ -1,10 +1,19 @@
 $color-primary-alert: #e1f3f8;
 
-body, p, a, input, label {
+body,
+p,
+a,
+input,
+label {
   font-family: $font-sans;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: $font-sans;
   font-weight: bold;
 }
@@ -17,7 +26,7 @@ a {
   font-weight: bolder;
   background-color: $color-primary;
   border: 1.5px solid $color-primary;
-  &:hover{
+  &:hover {
     background-color: #fff;
     color: $color-primary;
   }
@@ -32,20 +41,26 @@ a {
   }
 }
 
+.support-request-header {
+  .alert {
+    border-radius: 0;
+    border: 0;
+    margin: 20px 0;
+    padding: 0.25rem 0.75rem;
+  }
+
+  .alert-primary {
+    border-left: 5px solid #01bfe7;
+    background-color: $color-primary-alert;
+    color: black;
+    line-height: 2;
+  }
+
+  .alert-primary-icon {
+    font-size: x-large;
+  }
+}
+
 .alert {
-  border-radius: 0;
-  border: 0;
-  margin: 20px 0;
-  padding: 0.25rem 0.75rem;
-}
-
-.alert-primary {
-  border-left: 5px solid #01bfe7;
-  background-color: $color-primary-alert;
-  color: black;
-  line-height: 2;
-}
-
-.alert-primary-icon {
-  font-size: x-large;
+  margin-top: 1rem;
 }
