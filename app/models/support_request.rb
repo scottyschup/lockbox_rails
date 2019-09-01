@@ -41,8 +41,6 @@ class SupportRequest < ApplicationRecord
     lockbox_action.editable_status?
   end
 
-  end
-
   private
 
   def populate_client_ref_id
