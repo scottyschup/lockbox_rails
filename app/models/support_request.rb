@@ -4,7 +4,8 @@ class SupportRequest < ApplicationRecord
   has_many :lockbox_actions
   accepts_nested_attributes_for :lockbox_actions
   has_many :lockbox_transactions, through: :lockbox_actions
-  accepts_nested_attributes_for :lockbox_transactions
+  accepts_nested_attributes_for :lockbox_transactions, reject_if: :all_blank,
+    allow_destroy: true
   has_many :notes, as: :notable
 
   validates :client_ref_id, presence: true
