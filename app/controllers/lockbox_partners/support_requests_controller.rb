@@ -31,7 +31,6 @@ class LockboxPartners::SupportRequestsController < ApplicationController
 
   def update_status
     @support_request = SupportRequest.find(params[:support_request_id])
-    @lockbox_partner = @support_request.lockbox_partner
     status = update_status_params[:status]
     if @support_request.lockbox_action.update(status: status)
       flash[:notice] = "Status updated to #{status}"

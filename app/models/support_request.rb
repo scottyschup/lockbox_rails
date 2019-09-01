@@ -41,12 +41,6 @@ class SupportRequest < ApplicationRecord
     LockboxAction::STATUSES - [status]
   end
 
-  def update_status_path(params)
-    params = { lockbox_partner_id: lockbox_partner_id, support_request_id: id }.merge(params)
-    Rails.application.routes.url_helpers
-      .lockbox_partner_support_request_update_status_path(params)
-  end
-
   private
 
   def populate_client_ref_id

@@ -7,7 +7,12 @@
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
     <% support_request.status_options.each do |option| %>
-      <%= link_to option.capitalize, support_request.update_status_path(status: option),
+      <%= link_to option.capitalize,
+        lockbox_partner_support_request_update_status_path(
+          support_request_id: support_request.id,
+          lockbox_partner_id: support_request.lockbox_partner_id,
+          status: option
+        ),
         class: 'dropdown-item', method: 'post' %>
     <% end %>
   </div>
