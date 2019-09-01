@@ -8,6 +8,7 @@ require('turbolinks').start();
 require('@rails/activestorage').start();
 require('channels');
 require('bootstrap');
+require('cocoon-js');
 require('../src/alerts');
 require('../src/transactions');
 require('../src/notes');
