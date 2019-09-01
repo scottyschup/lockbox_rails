@@ -2,8 +2,8 @@ class SupportRequest < ApplicationRecord
   belongs_to :lockbox_partner
   belongs_to :user
   has_one :lockbox_action
-  accepts_nested_attributes_for :lockbox_actions
-  has_many :lockbox_transactions, through: :lockbox_actions
+  accepts_nested_attributes_for :lockbox_action
+  has_many :lockbox_transactions, through: :lockbox_action
   accepts_nested_attributes_for :lockbox_transactions, reject_if: :all_blank,
     allow_destroy: true
   has_many :notes, as: :notable

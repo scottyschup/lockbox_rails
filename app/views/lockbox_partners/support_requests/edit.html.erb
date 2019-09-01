@@ -3,7 +3,7 @@
     <h2>
       Edit support request
     </h2>
-    <%= f.fields_for :lockbox_actions do |la| %>
+    <%= f.fields_for :lockbox_action do |la| %>
       <div class="form-group">
         <%= la.label :eff_date, 'Pick-up Date' %>
         <%= la.date_field :eff_date, class: 'form-control' %>
