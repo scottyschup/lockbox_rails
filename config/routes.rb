@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'onboarding_success', to: 'dashboard#onboarding_success'
 
   match 'support_requests/new', to: 'lockbox_partners/support_requests#new', via: [:get]
-  resource :support_requests, only: [:create]
+  resources :support_requests, only: [:index, :create]
 
   resources :lockbox_partners, only: [:new, :create, :show] do
     scope module: 'lockbox_partners' do

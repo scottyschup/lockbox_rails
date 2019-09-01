@@ -12,14 +12,12 @@
 
   <body>
     <%= render 'layouts/header' %>
+    <div class="container" id="errors">
+      <% flash.each do |key, value| %>
+        <%= render partial: 'shared/error', locals: { key: key, value: value } %>
+      <% end %>
+    </div>
     <div class="container main-content">
-      <div id="errors">
-        <% flash.each do |key, value| %>
-          <div class="fade">
-            <%= render partial: 'shared/error', locals: { key: key, value: value } %>
-          </div>
-        <% end %>
-      </div>
       <%= yield %>
     </div>
   </body>
