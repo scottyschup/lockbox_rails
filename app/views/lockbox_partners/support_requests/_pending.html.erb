@@ -1,10 +1,7 @@
 <div class="pending-request">
   <div class="header">
     <div class="content">
-      <div class="float-right">
-        <p>Update Status</p>
-        <a class="btn btn-primary btn-large"><%= support_request.status %> <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-      </div>
+      <%= render partial: 'lockbox_partners/support_requests/status_dropdown', locals: { support_request: support_request, label: true } %>
       <p><b><%= support_request.pickup_date %> - <%= support_request.name_or_alias %></b></p>
       <h3>Support Request:  $<%= support_request.amount %></h3>
     </div>

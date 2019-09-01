@@ -1,0 +1,14 @@
+<div class="dropdown float-right">
+  <% if label %>
+    <p>Update Status</p>
+  <% end %>
+  <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%= support_request.status.capitalize %>
+  </a>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <% support_request.status_options.each do |option| %>
+      <%= link_to option.capitalize, support_request.update_status_path(status: option),
+        class: 'dropdown-item', method: 'post' %>
+    <% end %>
+  </div>
+</div>
