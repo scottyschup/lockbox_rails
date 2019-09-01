@@ -37,7 +37,7 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     else
       flash[:error] = "Failed to update status"
     end
-    redirect_to lockbox_partner_support_request_path(id: @support_request.id)
+    redirect_back(fallback_location: lockbox_partner_support_request_path(id: @support_request.id))
   end
 
   private
