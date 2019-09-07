@@ -153,6 +153,37 @@ hr {
   margin-top: 50px;
 }
 
+.lockbox-partner-header .semibold-weight {
+  font-weight: 600;
+}
+
+.lockbox-partner-header .fa-arrow-left {
+  margin-right: 5px;
+  padding-top: 5px;
+  font-size: 12px;
+  vertical-align: text-top;
+}
+
+.lockbox-partner-header h2 .normal-weight {
+  font-weight: 400;
+}
+
+.lockbox-partner-header .header-address {
+  display: inline-block;
+  width: 30%;
+}
+
+.lockbox-partner-header .header-phone {
+  display: inline-block;
+  vertical-align: top;
+  width: 20%;
+  text-align: right;
+}
+
+.lockbox-partner-header hr {
+  background-color: #000;
+}
+
 .header-separator {
   margin: 0 auto;
   height: 15px;
