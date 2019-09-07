@@ -29,9 +29,8 @@ class LockboxAction < ApplicationRecord
 
   scope :excluding_statuses, -> (*statuses) { where.not(status: statuses) }
 
-  scope :completed_cash_additions, -> do
-    where(status: COMPLETED, action_type: ADD_CASH)
-  end
+  scope :pending_cash_additions,   -> { where(status: PENDING,   action_type: ADD_CASH) }
+  scope :completed_cash_additions, -> { where(status: COMPLETED, action_type: ADD_CASH) }
 
   # action_type should correspond with ACTION_TYPES
   def self.create_with_transactions(action_type, params)
@@ -59,7 +58,7 @@ class LockboxAction < ApplicationRecord
           balance_effect = if expected_amount > params[:amount_cents]
             LockboxTransaction::DEBIT
           else
-            LockboxTransaction::CREDIT
+           LockboxTransaction::CREDIT
           end
 
           lockbox_action.lockbox_transactions.create!(
