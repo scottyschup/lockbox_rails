@@ -2,8 +2,9 @@
   <%= render partial: 'lockbox_partners/alerts', locals: { lockbox_partner: @lockbox_partner } %>
   <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
   <div class="lockbox-activity">
-    <% @lockbox_partner.pending_support_requests.each do |support_request| %>
-      <%= render partial: 'lockbox_partners/support_requests/pending', locals: { support_request: support_request }%>
+    <% unless @lockbox_partner.pending_support_requests.present? %>
+      <p class="text-center">There are no support requests in your queue. You're caught up with everything!</p>
     <% end %>
+    <%= render partial: 'lockbox_partners/support_requests/pending', collection: @lockbox_partner.pending_support_requests, as: :support_request %>
   </div>
 </div>
