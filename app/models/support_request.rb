@@ -37,6 +37,10 @@ class SupportRequest < ApplicationRecord
     @most_recent_note ||= notes.last
   end
 
+  def status_options
+    LockboxAction::STATUSES - [status]
+  end
+
   private
 
   def populate_client_ref_id

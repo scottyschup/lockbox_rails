@@ -29,6 +29,17 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     @lockbox_partner = @support_request.lockbox_partner
   end
 
+  def update_status
+    @support_request = SupportRequest.find(params[:support_request_id])
+    status = update_status_params[:status]
+    if @support_request.lockbox_action.update(status: status)
+      flash[:notice] = "Status updated to #{status}"
+    else
+      flash[:error] = "Failed to update status"
+    end
+    redirect_back(fallback_location: lockbox_partner_support_request_path(id: @support_request.id))
+  end
+
   private
 
   def all_support_request_params
@@ -45,6 +56,10 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       :urgency_flag,
       :lockbox_partner_id
     )
+  end
+
+  def update_status_params
+    params.permit(:status)
   end
 
   def lockbox_action_params
