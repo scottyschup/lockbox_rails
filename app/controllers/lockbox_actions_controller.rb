@@ -1,0 +1,23 @@
+class LockboxActionsController < ApplicationController
+  before_action :find_lockbox_action, only: [:update]
+
+  def update
+    if @lockbox_action.update(update_params)
+      flash[:notice] = "Success!"
+      redirect_to lockbox_partners_path
+    else
+      flash[:error] = "Sorry, there was a problem."
+      redirect_to lockbox_partners_path
+    end
+  end
+
+  private
+
+  def find_lockbox_action
+    @lockbox_action = LockboxAction.find(params[:id])
+  end
+
+  def update_params
+    params.require(:lockbox_action).permit(:status)
+  end
+end

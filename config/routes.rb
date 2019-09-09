@@ -24,4 +24,6 @@ Rails.application.routes.draw do
       resource :reconciliation, only: [:new, :create], controller: 'reconciliation'
     end
   end
+
+  resources :lockbox_actions
 end
