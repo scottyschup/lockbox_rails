@@ -37,6 +37,10 @@ class SupportRequest < ApplicationRecord
     lockbox_action.eff_date
   end
 
+  def most_recent_note
+    @most_recent_note ||= notes.last
+  end
+
   def editable_status?
     lockbox_action.editable_status?
   end
