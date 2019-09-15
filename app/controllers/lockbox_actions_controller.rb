@@ -7,7 +7,7 @@ class LockboxActionsController < ApplicationController
       flash[:notice] = "Success!"
       redirect_to lockbox_partners_path
     else
-      flash[:error] = "Sorry, there was a problem."
+      flash[:alert] = "Sorry, there was a problem."
       redirect_to lockbox_partners_path
     end
   end
