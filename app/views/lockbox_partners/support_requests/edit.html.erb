@@ -24,17 +24,19 @@
       <%= f.label :client_ref_id, 'Client Reference ID' %>
       <%= f.text_field :client_ref_id, class: 'form-control' %>
     </div>
-    <div class="form-group">
-      <%= f.label :amount_breakdown %>
-      <div class="support_case_transactions">
-        <div class="entries">
-          <%= f.fields_for :lockbox_transactions do |lt| %>
-            <%= render partial: 'existing_lockbox_transaction_form', locals: { lt: lt } %>
-          <% end %>
+    <%= f.fields_for :lockbox_action, @support_request.lockbox_action do |la| %>
+      <div class="form-group">
+        <%= la.label :amount_breakdown %>
+        <div class="support_case_transactions">
+          <div class="entries">
+            <%= la.fields_for :lockbox_transactions do |lt| %>
+              <%= render partial: 'lockbox_transaction_fields', locals: { lt: lt } %>
+            <% end %>
+            <%= link_to_add_association 'Add more values +', la, :lockbox_transactions, locals: { lt: lt }  %>
+          </div>
         </div>
-        <%= link_to_add_association 'Add more values +', f, :lockbox_transactions %>
       </div>
-    </div>
+    <% end %>
     <legend id="total">Total: $0.00</legend>
     <div class="form-group">
       <%= f.label :urgency_flag %>
