@@ -1,5 +1,6 @@
 class LockboxActionsController < ApplicationController
   before_action :find_lockbox_action, only: [:update]
+  before_action :require_ownership
 
   def update
     if @lockbox_action.update(update_params)
@@ -19,5 +20,11 @@ class LockboxActionsController < ApplicationController
 
   def update_params
     params.require(:lockbox_action).permit(:status)
+  end
+
+  def require_ownership
+    if !current_user.admin? && current_user.lockbox_partner != @lockbox_action.lockbox_partner
+      return redirect_to root_path
+    end
   end
 end
