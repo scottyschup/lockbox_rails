@@ -112,15 +112,15 @@ describe LockboxPartners::SupportRequestsController do
   end
 
   describe '#update' do
-    before do
-      allow(support_request).to receive(:update)
+    let(:new_name) { SecureRandom.hex(8) }
 
+    before do
       sign_in(user)
       patch :update, params: {
         lockbox_partner_id: authorized_lockbox_partner.id,
         id: support_request.id,
         support_request: {
-          name_or_alias: 'foo'
+          name_or_alias: new_name
         }
       }
     end
@@ -132,6 +132,10 @@ describe LockboxPartners::SupportRequestsController do
       it "redirects to root path" do
         expect(response).to redirect_to(root_path)
       end
+
+      it "does not update the support request" do
+        expect(support_request.reload.name_or_alias).not_to eq(new_name)
+      end
     end
 
     context "when the user is an admin" do
@@ -142,6 +146,10 @@ describe LockboxPartners::SupportRequestsController do
         expect(response).to redirect_to(
           lockbox_partner_support_request_path(support_request)
         )
+      end
+
+      it "updates the support request" do
+        expect(support_request.reload.name_or_alias).to eq(new_name)
       end
     end
   end
