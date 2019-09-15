@@ -1,7 +1,6 @@
 require './lib/create_support_request'
 
 class SupportRequestsController < ApplicationController
-
   before_action :require_admin, except: [:create]
 
   def index

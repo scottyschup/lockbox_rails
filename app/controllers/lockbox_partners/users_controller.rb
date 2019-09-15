@@ -1,5 +1,5 @@
 class LockboxPartners::UsersController < ApplicationController
-  before_action :set_lockbox_partner
+  before_action :set_lockbox_partner, :require_admin_or_ownership
 
   def new
     @user = @lockbox_partner.users.new

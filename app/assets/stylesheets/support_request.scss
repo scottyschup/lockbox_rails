@@ -14,10 +14,15 @@
 .support-request-container {
   color: black;
   margin: 10px auto;
+  margin-top: 0;
   .btn {
     margin: 20px auto;
     margin-right: 20px;
     width: 25%;
+  }
+  .dropdown-toggle {
+    margin: 0;
+    width: 160px;
   }
   .row {
     div {
