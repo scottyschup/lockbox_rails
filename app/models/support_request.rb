@@ -1,7 +1,7 @@
 class SupportRequest < ApplicationRecord
   belongs_to :lockbox_partner
   belongs_to :user
-  has_one :lockbox_action
+  has_many :lockbox_actions, through: :lockbox_partner
   has_many :notes, as: :notable
 
   validates :client_ref_id, presence: true
@@ -19,6 +19,8 @@ class SupportRequest < ApplicationRecord
   LockboxAction::STATUSES.each do |status|
     scope status, -> { joins(:lockbox_action).where("lockbox_actions.status": status) }
     scope "#{status}_for_partner", ->(lockbox_partner_id:) { joins(:lockbox_action).where(lockbox_partner_id: lockbox_partner_id, "lockbox_actions.status": status) }
+  end
+
   def all_support_requests_for_partner
     @all_support_requests_for_partner ||= self
       .class
@@ -39,6 +41,10 @@ class SupportRequest < ApplicationRecord
     @lockbox_action ||= lockbox_actions.last
   end
 
+  def most_recent_note
+    @most_recent_note ||= notes.last
+  end
+
   def newer_request_by_partner
     return nil unless newer_idx
     all_support_requests_for_partner[newer_idx]
@@ -53,6 +59,10 @@ class SupportRequest < ApplicationRecord
     lockbox_action.status
   end
 
+  def status_options
+    LockboxAction::STATUSES - [status]
+  end
+
   private
 
   def index_in_support_requests_collection
@@ -64,21 +74,11 @@ class SupportRequest < ApplicationRecord
     @newer_idx ||= idx > 0 ? idx - 1 : nil
   end
 
-  def most_recent_note
-    @most_recent_note ||= notes.last
-  end
-
   def older_idx
     idx = index_in_support_requests_collection
     max_idx = all_support_requests_for_partner.count - 1
     @older_idx ||= idx < max_idx ? idx + 1 : nil
   end
-
-  def status_options
-    LockboxAction::STATUSES - [status]
-  end
-
-  private
 
   def populate_client_ref_id
     self.client_ref_id = SecureRandom.uuid if client_ref_id.blank?

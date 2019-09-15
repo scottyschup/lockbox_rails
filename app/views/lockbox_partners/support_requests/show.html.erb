@@ -3,7 +3,8 @@
   <div class="lockbox-partner-header">
     <strong><%= @support_request&.lockbox_partner&.city %></strong>
     <%= link_to lockbox_partner_path(@support_request.lockbox_partner), class: 'float-right' do %>
-      <i class="fa fa-long-arrow-left" aria-hidden="true"></i> View All Activity
+      <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+      View All Activity
     <% end %>
     <h2>
       <%= @support_request&.lockbox_partner&.name %>
