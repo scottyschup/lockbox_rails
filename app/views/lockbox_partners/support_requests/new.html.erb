@@ -1,9 +1,11 @@
 <div class="container">
-  <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
   <% unless @lockbox_partner.nil? || @lockbox_partner.active? %>
     <p class="text-center">Lockbox partner not yet active. There must be an active user and a completed cash addition.</p>
   <% else %>
     <div id="support-request-form" class="container">
+      <% if @lockbox_partner %>
+        <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
+      <% end %>
       <% form_post_path = @lockbox_partner ? lockbox_partner_support_requests_path(@lockbox_partner) : support_requests_path %>
       <%= form_with model: @support_request, url: form_post_path, class: 'form' do |f| %>
         <h2>File a support request</h2>
