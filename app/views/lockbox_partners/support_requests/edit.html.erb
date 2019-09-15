@@ -30,9 +30,9 @@
         <div class="support_case_transactions">
           <div class="entries">
             <%= la.fields_for :lockbox_transactions do |lt| %>
-              <%= render partial: 'lockbox_transaction_fields', locals: { lt: lt } %>
+              <%= render partial: 'lockbox_transaction_fields', locals: { f: lt } %>
+              <%= link_to_add_association 'Add more values +', la, :lockbox_transactions  %>
             <% end %>
-            <%= link_to_add_association 'Add more values +', la, :lockbox_transactions, locals: { lt: lt }  %>
           </div>
         </div>
       </div>

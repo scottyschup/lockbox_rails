@@ -64,13 +64,13 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       :lockbox_partner_id,
       lockbox_action_attributes: [
         :id,
-        :eff_date
-      ],
-      lockbox_transactions_attributes: [
-        :id,
-        :amount,
-        :category,
-        :_destroy # Virtual attribute used to delete records
+        :eff_date,
+        lockbox_transactions_attributes: [
+          :id,
+          :amount,
+          :category,
+          :_destroy # Virtual attribute used to delete records
+        ]
       ]
     )
   end
