@@ -13,7 +13,7 @@
   </div>
 <% end %>
 
-<% if lockbox_partner.awaiting_infusion? %>
+<% if lockbox_partner.cash_addition_confirmation_pending? %>
   <% lockbox_partner.lockbox_actions.pending_cash_additions.each do |cash_action| %>
     <div class="alert alert-warning d-flex">
       <div class="p-2">

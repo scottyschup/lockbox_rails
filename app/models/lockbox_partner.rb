@@ -35,7 +35,7 @@ class LockboxPartner < ApplicationRecord
     balance < MINIMUM_ACCEPTABLE_BALANCE
   end
 
-  def awaiting_infusion?
+  def cash_addition_confirmation_pending?
     lockbox_actions.pending_cash_additions.any?
   end
 
