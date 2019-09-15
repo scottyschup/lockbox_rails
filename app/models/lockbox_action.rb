@@ -58,7 +58,7 @@ class LockboxAction < ApplicationRecord
           balance_effect = if expected_amount > params[:amount_cents]
             LockboxTransaction::DEBIT
           else
-           LockboxTransaction::CREDIT
+            LockboxTransaction::CREDIT
           end
 
           lockbox_action.lockbox_transactions.create!(
