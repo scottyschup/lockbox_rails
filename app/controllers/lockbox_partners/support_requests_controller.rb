@@ -1,8 +1,7 @@
 require './lib/create_support_request'
 
 class LockboxPartners::SupportRequestsController < ApplicationController
-  before_action :set_support_request_and_lockbox_partner, only: [:show]
-  before_action :ensure_admin_only!
+  before_action :require_admin, except: [:show]
 
   def new
     if params[:lockbox_partner_id]
@@ -29,14 +28,10 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   def show
     @support_request = SupportRequest.includes(:notes).find(params[:id])
     @lockbox_partner = @support_request.lockbox_partner
+    require_admin_or_ownership
   end
 
   private
-
-  def set_support_request_and_lockbox_partner
-    @support_request = SupportRequest.includes(:notes).find(params[:id])
-    @lockbox_partner = @support_request&.lockbox_partner
-  end
 
   def all_support_request_params
     support_request_params

@@ -1,7 +1,7 @@
 require 'reconciliation'
 
 class LockboxPartners::ReconciliationController < ApplicationController
-  before_action :set_lockbox_partner, :ensure_admin_only!
+  before_action :set_lockbox_partner, :require_admin_or_ownership
 
   def new
   end
