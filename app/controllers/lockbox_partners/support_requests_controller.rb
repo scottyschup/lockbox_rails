@@ -1,6 +1,7 @@
 require './lib/create_support_request'
 
 class LockboxPartners::SupportRequestsController < ApplicationController
+  before_action :require_admin, except: [:show, :update_status]
 
   def new
     if params[:lockbox_partner_id]
@@ -27,10 +28,14 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   def show
     @support_request = SupportRequest.includes(:notes).find(params[:id])
     @lockbox_partner = @support_request.lockbox_partner
+    require_admin_or_ownership
   end
 
   def update_status
     @support_request = SupportRequest.find(params[:support_request_id])
+    @lockbox_partner = @support_request.lockbox_partner
+    require_admin_or_ownership
+
     status = update_status_params[:status]
     if @support_request.lockbox_action.update(status: status)
       flash[:notice] = "Status updated to #{status}"
