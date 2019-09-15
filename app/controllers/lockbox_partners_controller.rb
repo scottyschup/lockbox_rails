@@ -1,4 +1,6 @@
 class LockboxPartnersController < ApplicationController
+  before_action :require_admin, except: [:show]
+
   def new
     @lockbox_partner = LockboxPartner.new
   end
@@ -14,6 +16,7 @@ class LockboxPartnersController < ApplicationController
 
   def show
     @lockbox_partner = LockboxPartner.find(params[:id])
+    require_admin_or_ownership
   end
 
   private

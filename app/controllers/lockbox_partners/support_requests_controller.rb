@@ -1,6 +1,7 @@
 require './lib/create_support_request'
 
 class LockboxPartners::SupportRequestsController < ApplicationController
+  before_action :require_admin, except: [:show, :update_status]
 
   def new
     if params[:lockbox_partner_id]
@@ -43,6 +44,21 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     @older_request_path = if @older_support_request
       lockbox_partner_support_request_path(@lockbox_partner, @older_support_request)
     end
+    require_admin_or_ownership
+  end
+
+  def update_status
+    @support_request = SupportRequest.find(params[:support_request_id])
+    @lockbox_partner = @support_request.lockbox_partner
+    require_admin_or_ownership
+
+    status = update_status_params[:status]
+    if @support_request.lockbox_action.update(status: status)
+      flash[:notice] = "Status updated to #{status}"
+    else
+      flash[:error] = "Failed to update status"
+    end
+    redirect_back(fallback_location: lockbox_partner_support_request_path(id: @support_request.id))
   end
 
   private
@@ -52,6 +68,19 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       .merge(lockbox_action: lockbox_action_params)
       .merge(user_id: current_user.id)
       .merge(lockbox_partner_id: params[:lockbox_partner_id])
+  end
+
+  def support_request_params
+    params.require(:support_request).permit(
+      :client_ref_id,
+      :name_or_alias,
+      :urgency_flag,
+      :lockbox_partner_id
+    )
+  end
+
+  def update_status_params
+    params.permit(:status)
   end
 
   def lockbox_action_params

@@ -11,3 +11,4 @@ require('bootstrap');
 require('../src/alerts');
 require('../src/transactions');
 require('../src/notes');
+require('../src/url_switching_select');

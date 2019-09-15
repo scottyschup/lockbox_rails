@@ -1,0 +1,28 @@
+<div class="pending-request">
+  <div class="header">
+    <div class="content">
+      <%= render partial: 'lockbox_partners/support_requests/status_dropdown', locals: { support_request: support_request, label: true } %>
+      <p><b><%= support_request.pickup_date %> - <%= support_request.name_or_alias %></b></p>
+      <h3>Support Request:  $<%= support_request.amount %></h3>
+    </div>
+  </div>
+  <div class="notes">
+    <div class="content">
+      <div class="row">
+        <div class="col-sm-3">
+          <%= support_request.most_recent_note&.created_at %>
+        </div>
+        <div class="col-sm-3">
+          <%= support_request.most_recent_note&.author %>
+        </div>
+        <div class="col-sm-6">
+          <%= support_request.most_recent_note&.text %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= link_to lockbox_partner_support_request_path(support_request.lockbox_partner, support_request), class: 'btn btn-primary view-full' do %>
+    View Details<span class="float-right"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+  <% end %>
+</div>

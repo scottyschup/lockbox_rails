@@ -1,7 +1,7 @@
 class SupportRequest < ApplicationRecord
   belongs_to :lockbox_partner
   belongs_to :user
-  has_many :lockbox_actions
+  has_one :lockbox_action
   has_many :notes, as: :notable
 
   validates :client_ref_id, presence: true
@@ -12,6 +12,13 @@ class SupportRequest < ApplicationRecord
   # Sometimes the UUID will already have been created elsewhere, and sometimes not
   before_validation :populate_client_ref_id
 
+  # for grepability:
+  # scope :pending
+  # scope :completed
+  # scope :canceled
+  LockboxAction::STATUSES.each do |status|
+    scope status, -> { joins(:lockbox_action).where("lockbox_actions.status": status) }
+    scope "#{status}_for_partner", ->(lockbox_partner_id:) { joins(:lockbox_action).where(lockbox_partner_id: lockbox_partner_id, "lockbox_actions.status": status) }
   def all_support_requests_for_partner
     @all_support_requests_for_partner ||= self
       .class
@@ -57,11 +64,21 @@ class SupportRequest < ApplicationRecord
     @newer_idx ||= idx > 0 ? idx - 1 : nil
   end
 
+  def most_recent_note
+    @most_recent_note ||= notes.last
+  end
+
   def older_idx
     idx = index_in_support_requests_collection
     max_idx = all_support_requests_for_partner.count - 1
     @older_idx ||= idx < max_idx ? idx + 1 : nil
   end
+
+  def status_options
+    LockboxAction::STATUSES - [status]
+  end
+
+  private
 
   def populate_client_ref_id
     self.client_ref_id = SecureRandom.uuid if client_ref_id.blank?

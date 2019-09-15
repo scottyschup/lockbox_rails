@@ -1,3 +1,12 @@
+#support-requests-index {
+  max-width: 600px;
+  margin: 0 auto;
+
+  h2 {
+    margin: 30px auto;
+  }
+}
+
 .support-request-header {
   margin: 30px auto;
 }
@@ -9,6 +18,10 @@
     margin: 20px auto;
     margin-right: 20px;
     width: 25%;
+  }
+  .dropdown-toggle {
+    margin: 0;
+    width: 160px;
   }
   .row {
     div {
@@ -25,6 +38,28 @@
   }
 }
 
+.pending-request {
+  background-color: $light-gray;
+  margin: 20px 0px;
+  border-radius: 0px;
+  .content {
+    padding: 10px 20px;
+  }
+  .header {
+    background-color: $medium-dark-gray;
+  }
+  .notes {
+    margin: 10px;
+    margin-top: 0px;
+  }
+  a.btn-primary {
+    color: white;
+  }
+  a.btn-primary.view-full {
+    border: none;
+    &:hover {
+      background-color: $darker-blue;
+    }
 .support-request-nav {
   width: 100%;
 }

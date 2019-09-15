@@ -1,4 +1,5 @@
 require 'rails_helper'
+require './lib/add_cash_to_lockbox'
 
 describe LockboxPartner, type: :model do
   it { is_expected.to have_many(:users) }
@@ -328,6 +329,19 @@ describe LockboxPartner, type: :model do
       let(:lockbox_partner) { build(:lockbox_partner) }
 
       it { is_expected.to be false }
+    end
+  end
+
+  describe 'low_balance?' do
+    it 'is true when the balance is below $300' do
+      lockbox_partner = FactoryBot.create(:lockbox_partner)
+      
+      low_amount = LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE - Money.new(100)
+      AddCashToLockbox.call(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: low_amount)
+      expect(lockbox_partner).to be_low_balance
+
+      AddCashToLockbox.call(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: Money.new(100))
+      expect(lockbox_partner).not_to be_low_balance
     end
   end
 end

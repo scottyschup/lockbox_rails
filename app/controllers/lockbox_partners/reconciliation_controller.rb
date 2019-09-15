@@ -1,7 +1,7 @@
 require 'reconciliation'
 
 class LockboxPartners::ReconciliationController < ApplicationController
-  before_action :set_lockbox_partner, :require_ownership
+  before_action :set_lockbox_partner, :require_admin_or_ownership
 
   def new
   end
@@ -27,11 +27,5 @@ class LockboxPartners::ReconciliationController < ApplicationController
 
   def reconciliation_params
     params.require(:reconciliation).permit(:amount)
-  end
-
-  def require_ownership
-    if !current_user.admin? && current_user.lockbox_partner != @lockbox_partner
-      return redirect_to root_path
-    end
   end
 end
