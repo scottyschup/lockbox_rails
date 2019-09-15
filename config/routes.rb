@@ -25,5 +25,5 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :lockbox_actions
+  resources :lockbox_actions, only: [:update]
 end
