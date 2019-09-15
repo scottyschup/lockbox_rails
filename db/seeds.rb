@@ -51,7 +51,7 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
       lockbox_partner: lockbox_partner,
       user: User.first
     ).tap do |sup_req|
-      action = sup_req.lockbox_actions.create!(
+      action = lockbox_partner.lockbox_actions.create!(
         eff_date: Date.current + (1..10).to_a.sample.days,
         action_type: LockboxAction::SUPPORT_CLIENT,
         lockbox_partner: lockbox_partner

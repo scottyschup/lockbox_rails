@@ -1,7 +1,7 @@
 class SupportRequest < ApplicationRecord
   belongs_to :lockbox_partner
   belongs_to :user
-  has_many :lockbox_actions, through: :lockbox_partner
+  has_one :lockbox_action
   has_many :notes, as: :notable
 
   validates :client_ref_id, presence: true
@@ -36,10 +36,6 @@ class SupportRequest < ApplicationRecord
     lockbox_action.eff_date
   end
   alias_method :pickup_date, :eff_date
-
-  def lockbox_action
-    @lockbox_action ||= lockbox_actions.last
-  end
 
   def most_recent_note
     @most_recent_note ||= notes.last
