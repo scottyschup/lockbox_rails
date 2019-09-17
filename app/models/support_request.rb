@@ -2,6 +2,10 @@ class SupportRequest < ApplicationRecord
   belongs_to :lockbox_partner
   belongs_to :user
   has_one :lockbox_action
+  accepts_nested_attributes_for :lockbox_action
+  has_many :lockbox_transactions, through: :lockbox_action
+  accepts_nested_attributes_for :lockbox_transactions, reject_if: :all_blank,
+    allow_destroy: true
   has_many :notes, as: :notable
 
   validates :client_ref_id, presence: true
@@ -35,6 +39,10 @@ class SupportRequest < ApplicationRecord
 
   def most_recent_note
     @most_recent_note ||= notes.last
+  end
+
+  def editable_status?
+    lockbox_action.editable_status?
   end
 
   def status_options

@@ -6,6 +6,9 @@ class LockboxAction < ApplicationRecord
   has_many :lockbox_transactions, dependent: :destroy
   has_many :notes, as: :notable
 
+  accepts_nested_attributes_for :lockbox_transactions, reject_if: :all_blank,
+    allow_destroy: true
+
   validates :eff_date, presence: true
   validates :support_request_id, presence: true, if: -> { action_type == 'support_client' }
   validate :validate_partner_is_active,
@@ -19,6 +22,10 @@ class LockboxAction < ApplicationRecord
     PENDING   = 'pending',
     COMPLETED = 'completed',
     CANCELED  = 'canceled'
+  ].freeze
+
+  EDITABLE_STATUSES = [
+    'pending'
   ].freeze
 
   ACTION_TYPES = [
@@ -99,6 +106,10 @@ class LockboxAction < ApplicationRecord
 
   def canceled?
     status == CANCELED
+  end
+
+  def editable_status?
+    EDITABLE_STATUSES.include?(status)
   end
 
   def cancel!
