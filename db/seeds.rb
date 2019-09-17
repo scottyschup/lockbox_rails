@@ -62,7 +62,8 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
     categories.each do |category|
       action.lockbox_transactions.create!(
         amount_cents: (1_00..60_00).to_a.sample,
-        balance_effect: LockboxTransaction::DEBIT
+        balance_effect: LockboxTransaction::DEBIT,
+        category: category
       )
     end
 
