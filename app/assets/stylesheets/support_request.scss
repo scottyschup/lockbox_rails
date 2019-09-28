@@ -1,3 +1,5 @@
+$note-form-color: #d6d7d9;
+
 #support-requests-index {
   max-width: 600px;
   margin: 0 auto;
@@ -28,11 +30,11 @@
       }
     }
     .tab.selected {
-      background: silver;
+      background: $note-form-color;
     }
   }
   #new-note-form {
-    background: silver;
+    background: $note-form-color;
     .container {
       padding: 20px;
     }
@@ -59,9 +61,15 @@
   }
   #note-success {
     display: none;
-    background: silver;
+    background: $note-form-color;
     .container {
       padding: 20px;
+    }
+    i {
+      color: #17a729;
+    }
+    a {
+      text-decoration: underline;
     }
   }
 

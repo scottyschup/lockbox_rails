@@ -11,8 +11,12 @@
 <% end %>
 <div id="note-success">
   <div class="container">
-    <p class="font-weight-bold">New note created:</p>
+    <p class="font-weight-bold">
+      <%= fa_icon "check-circle" %>
+      New note created:
+    </p>
     <p id="note-text"></p>
+    <p><a href="#" id="edit-note">Edit note</a> or <a href="#" id="success-new-note">add a new one</a>.</p>
   </div>
 </div>
 <div class="notes-log">

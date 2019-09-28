@@ -35,6 +35,9 @@ const highlightTopNote = () => {
 const clearNoteForm = () => {
   $('#new-note-form').slideUp(250);
   $('#new-note-form textarea').val('');
+};
+
+const removeSelection = () => {
   $('#new-note')
     .parent()
     .removeClass('selected');
@@ -46,6 +49,8 @@ const handleNoteResponse = response => {
     addNewNote(data.note);
     clearNoteForm();
     displayNoteSuccess(data.text);
+  } else {
+    console.log(data);
   }
 };
 
@@ -60,6 +65,13 @@ const setupNotes = () => {
     $('#cancel-note').on('click', event => {
       event.preventDefault();
       clearNoteForm();
+      removeSelection();
+      hideNoteSuccess();
+    });
+    $('#success-new-note').on('click', event => {
+      event.preventDefault();
+      clearNoteForm();
+      openNoteForm();
       hideNoteSuccess();
     });
     document.removeEventListener('ajax:success', handleNoteResponse);
