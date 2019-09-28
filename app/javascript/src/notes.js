@@ -1,5 +1,6 @@
 const addNewNote = note => {
   $('tbody').prepend(note);
+  highlightTopNote();
 };
 
 const openNoteForm = () => {
@@ -8,6 +9,27 @@ const openNoteForm = () => {
     .parent()
     .addClass('selected');
   $('#new-note-form textarea').focus();
+};
+
+const displayNoteSuccess = text => {
+  $('#note-success #note-text').text(text);
+  $('#note-success').slideDown(250);
+};
+
+const hideNoteSuccess = () => {
+  $('#note-success').slideUp(250);
+  clearHighlights();
+};
+
+const clearHighlights = () => {
+  $('.notes-log tbody tr').removeClass('green');
+};
+
+const highlightTopNote = () => {
+  clearHighlights();
+  $('.notes-log tbody tr')
+    .first()
+    .addClass('green');
 };
 
 const clearNoteForm = () => {
@@ -23,6 +45,7 @@ const handleNoteResponse = response => {
   if (data.note) {
     addNewNote(data.note);
     clearNoteForm();
+    displayNoteSuccess(data.text);
   }
 };
 
@@ -32,10 +55,12 @@ const setupNotes = () => {
     $('#new-note').on('click', event => {
       event.preventDefault();
       openNoteForm();
+      hideNoteSuccess();
     });
     $('#cancel-note').on('click', event => {
       event.preventDefault();
       clearNoteForm();
+      hideNoteSuccess();
     });
     document.removeEventListener('ajax:success', handleNoteResponse);
     document.addEventListener('ajax:success', handleNoteResponse);

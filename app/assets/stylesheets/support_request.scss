@@ -22,6 +22,7 @@
       display: inline-block;
       text-decoration: none;
       padding: 17px;
+      width: 250px;
       .btn {
         width: 100%;
       }
@@ -54,6 +55,13 @@
         vertical-align: middle;
         line-height: 39px;
       }
+    }
+  }
+  #note-success {
+    display: none;
+    background: silver;
+    .container {
+      padding: 20px;
     }
   }
 

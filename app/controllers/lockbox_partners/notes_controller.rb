@@ -10,7 +10,8 @@ class LockboxPartners::NotesController < ApplicationController
           locals: {
             note: @note
           }
-        )
+        ),
+        text: @note.text
       }
     else
       render json: {
