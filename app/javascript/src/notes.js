@@ -4,6 +4,9 @@ const handleNoteResponse = response => {
     $('tbody').prepend(data.note);
     $('#new-note-form').slideUp(250);
     $('#new-note-form textarea').val('');
+    $('#new-note')
+      .parent()
+      .removeClass('selected');
   }
 };
 
@@ -13,7 +16,8 @@ const setupNotes = () => {
     const newNoteButton = $('#new-note');
     newNoteButton.on('click', event => {
       event.preventDefault();
-      const newNoteForm = $('#new-note-form').slideDown(250);
+      $('#new-note-form').slideDown(250);
+      newNoteButton.parent().addClass('selected');
     });
     document.removeEventListener('ajax:success', handleNoteResponse);
     document.addEventListener('ajax:success', handleNoteResponse);
