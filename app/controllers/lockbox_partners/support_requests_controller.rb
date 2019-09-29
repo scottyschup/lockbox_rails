@@ -9,7 +9,7 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     end
     @support_request = current_user.support_requests.build
     @form_post_path = if @lockbox_partner
-      support_requests_path_for_lockbox_partner
+      lockbox_partner_support_requests_path @lockbox_partner
     else
       support_requests_path
     end
