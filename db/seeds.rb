@@ -20,8 +20,9 @@ LOCKBOX_PARTNERS = [
 
 LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
   lockbox_partner = LockboxPartner.where(name: partner_name).first_or_create!(
+    street_address: Faker::Address.street_address,
     city: Faker::Address.city,
-    state: Faker::Address.state,
+    state: Faker::Address.state_abbr,
     zip_code: Faker::Address.zip_code,
     phone_number: Faker::PhoneNumber.phone_number
   )
@@ -62,7 +63,8 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
       categories.each do |category|
         action.lockbox_transactions.create!(
           amount_cents: (1_00..60_00).to_a.sample,
-          balance_effect: LockboxTransaction::DEBIT
+          balance_effect: LockboxTransaction::DEBIT,
+          category: category
         )
       end
 

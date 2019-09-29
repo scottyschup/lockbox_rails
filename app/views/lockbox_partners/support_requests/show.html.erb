@@ -1,4 +1,5 @@
 <div class="container">
+<<<<<<< HEAD
 
   <div class="lockbox-partner-header">
     <strong><%= @support_request&.lockbox_partner&.city %></strong>
@@ -24,10 +25,23 @@
         <%= render partial: 'details_partner', locals: { support_request: @support_request } %>
         <%= link_to 'Add Note', '#', class: 'btn btn-primary', id: 'new-note' %>
       <% end %>
+=======
+  <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
+  <div class="support-request-container">
+    <% if current_user.admin? %>
+      <%= render partial: 'details_admin', locals: { support_request: @support_request } %>
+      <%= link_to 'Edit Support Request', edit_lockbox_partner_support_request_path(@support_request.lockbox_partner, @support_request), class: 'btn btn-primary', disabled: !@support_request.editable_status? %>
+      <%= link_to 'Add Note', '#', class: 'btn btn-secondary', id: 'new-note' %>
+    <% else %>
+      <%= render partial: 'details_partner', locals: { support_request: @support_request } %>
+      <%= link_to 'Add Note', '#', class: 'btn btn-primary', id: 'new-note' %>
+    <% end %>
+>>>>>>> master
 
     <%= render partial: 'lockbox_partners/notes/notes', locals: { notable: @support_request } %>
 
     <div class="support-request-nav">
+<<<<<<< HEAD
       <nav class="support-request-nav-list">
         <!-- Newer SR -->
         <div class="support-request-nav-item">
@@ -56,6 +70,9 @@
           <% end %>
         </div>
       </nav>
+=======
+      TODO MAKE THIS NAV - https://github.com/MidwestAccessCoalition/lockbox_rails/issues/121
+>>>>>>> master
     </div>
 
   </div>

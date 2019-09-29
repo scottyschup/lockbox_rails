@@ -61,6 +61,23 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     redirect_back(fallback_location: lockbox_partner_support_request_path(id: @support_request.id))
   end
 
+  def edit
+    @support_request = SupportRequest
+      .includes(:notes, :lockbox_transactions)
+      .find(params[:id])
+    @lockbox_partner = @support_request.lockbox_partner
+  end
+
+  def update
+    @support_request = SupportRequest.includes(:notes).find(params[:id])
+    @lockbox_partner = @support_request.lockbox_partner
+    if @support_request.update(support_request_params)
+      redirect_to lockbox_partner_support_request_path(@support_request)
+    else
+      render 'edit'
+    end
+  end
+
   private
 
   def all_support_request_params
@@ -75,7 +92,17 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       :client_ref_id,
       :name_or_alias,
       :urgency_flag,
-      :lockbox_partner_id
+      :lockbox_partner_id,
+      lockbox_action_attributes: [
+        :id,
+        :eff_date,
+        lockbox_transactions_attributes: [
+          :id,
+          :amount,
+          :category,
+          :_destroy # Virtual attribute used to delete records
+        ]
+      ]
     )
   end
 
