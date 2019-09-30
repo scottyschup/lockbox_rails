@@ -5,6 +5,35 @@ describe LockboxPartner, type: :model do
   it { is_expected.to have_many(:users) }
   it { is_expected.to have_many(:lockbox_actions) }
 
+  def add_cash(partner, date)
+    LockboxAction.create!(
+      action_type:     'add_cash',
+      status:          'pending',
+      eff_date:        date,
+      lockbox_partner: partner
+    ).tap do |action|
+      action.lockbox_transactions.create!(
+        amount_cents: 1000_00,
+        balance_effect: 'credit'
+      )
+    end
+  end
+
+  def pending_request_on(partner, date, amount_breakdown)
+    partner.lockbox_actions.create!(
+      action_type: 'client_support',
+      status:      'pending',
+      eff_date:    date,
+    ).tap do |lb_action|
+      amount_breakdown.each do |amt_cents|
+        lb_action.lockbox_transactions.create!(
+          amount_cents: amt_cents,
+          balance_effect: 'debit'
+        )
+      end
+    end
+  end
+
   describe '#cash_addition_confirmation_pending?' do
     it "is true if the partner has a pending cash addition" do
       lp = FactoryBot.create(:lockbox_partner)
@@ -23,41 +52,11 @@ describe LockboxPartner, type: :model do
   end
 
   describe '#balance' do
-    let(:lockbox) { FactoryBot.create(:lockbox_partner) }
-
+    let(:lockbox)    { FactoryBot.create(:lockbox_partner) }
     let(:start_date) { Date.current - 2.months }
 
-    def add_cash(date)
-      LockboxAction.create!(
-        action_type:     'add_cash',
-        status:          'pending',
-        eff_date:        start_date,
-        lockbox_partner: lockbox
-      ).tap do |action|
-        action.lockbox_transactions.create!(
-          amount_cents: 1000_00,
-          balance_effect: 'credit'
-        )
-      end
-    end
-
-    def pending_request_on(date, amount_breakdown)
-      lockbox.lockbox_actions.create!(
-        action_type: 'client_support',
-        status:      'pending',
-        eff_date:    date,
-      ).tap do |lb_action|
-        amount_breakdown.each do |amt_cents|
-          lb_action.lockbox_transactions.create!(
-            amount_cents: amt_cents,
-            balance_effect: 'debit'
-          )
-        end
-      end
-    end
-
     context 'have only added cash but no support requests yet' do
-      let(:add_cash_action) { add_cash(start_date) }
+      let(:add_cash_action) { add_cash(lockbox, start_date) }
 
       context 'when the add cash is pending' do
         it 'returns 0' do
@@ -78,12 +77,12 @@ describe LockboxPartner, type: :model do
 
     context 'add cash, multiple pending & completed actions' do
       before do
-        add_cash(start_date).complete!
-        pending_request_on(start_date + 1.week,  [20_00, 50_00]).complete!
-        pending_request_on(start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
-        pending_request_on(start_date + 3.weeks, [100_00]).complete!
-        pending_request_on(Date.current - 1.week, [30_00])
-        pending_request_on(Date.current + 3.days, [45_00, 15_00, 10_00])
+        add_cash(lockbox, start_date).complete!
+        pending_request_on(lockbox, start_date + 1.week,  [20_00, 50_00]).complete!
+        pending_request_on(lockbox, start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
+        pending_request_on(lockbox, start_date + 3.weeks, [100_00]).complete!
+        pending_request_on(lockbox, Date.current - 1.week, [30_00])
+        pending_request_on(lockbox, Date.current + 3.days, [45_00, 15_00, 10_00])
       end
 
       it 'returns the correct balance -- $665' do
@@ -99,16 +98,16 @@ describe LockboxPartner, type: :model do
 
     context 'add cash, multiple pending, completed, and canceled actions' do
       before do
-        add_cash(start_date).complete!
-        pending_request_on(start_date + 1.week,  [20_00, 50_00]).complete!
-        pending_request_on(start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
-        pending_request_on(start_date + 3.weeks, [100_00]).complete!
-        pending_request_on(start_date + 4.weeks, [75_00, 20_00]).cancel!
-        pending_request_on(Date.current - 2.weeks, [85_00, 10_00]).complete!
-        pending_request_on(Date.current - 10.days, [100_00]).complete!
-        pending_request_on(Date.current - 1.week, [30_00]).cancel!
-        pending_request_on(Date.current + 3.days, [45_00, 15_00, 10_00])
-        pending_request_on(Date.current + 5.days, [50_00, 15_00])
+        add_cash(lockbox, start_date).complete!
+        pending_request_on(lockbox, start_date + 1.week,  [20_00, 50_00]).complete!
+        pending_request_on(lockbox, start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
+        pending_request_on(lockbox, start_date + 3.weeks, [100_00]).complete!
+        pending_request_on(lockbox, start_date + 4.weeks, [75_00, 20_00]).cancel!
+        pending_request_on(lockbox, Date.current - 2.weeks, [85_00, 10_00]).complete!
+        pending_request_on(lockbox, Date.current - 10.days, [100_00]).complete!
+        pending_request_on(lockbox, Date.current - 1.week, [30_00]).cancel!
+        pending_request_on(lockbox, Date.current + 3.days, [45_00, 15_00, 10_00])
+        pending_request_on(lockbox, Date.current + 5.days, [50_00, 15_00])
       end
 
       it 'returns the correct balance -- $435' do
@@ -124,17 +123,17 @@ describe LockboxPartner, type: :model do
 
     context 'multiple add cash events and a variety of transactions' do
       before do
-        add_cash(start_date).complete!
-        pending_request_on(start_date + 1.week,  [20_00, 50_00]).complete!
-        pending_request_on(start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
-        pending_request_on(start_date + 3.weeks, [100_00]).complete!
-        pending_request_on(start_date + 4.weeks, [75_00, 20_00]).cancel!
-        pending_request_on(Date.current - 2.weeks, [85_00, 10_00]).complete!
-        pending_request_on(Date.current - 10.days, [100_00]).complete!
-        pending_request_on(Date.current - 1.week, [30_00]).cancel!
-        add_cash(Date.yesterday).complete!
-        pending_request_on(Date.current + 3.days, [45_00, 15_00, 10_00])
-        pending_request_on(Date.current + 5.days, [50_00, 15_00])
+        add_cash(lockbox, start_date).complete!
+        pending_request_on(lockbox, start_date + 1.week,  [20_00, 50_00]).complete!
+        pending_request_on(lockbox, start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
+        pending_request_on(lockbox, start_date + 3.weeks, [100_00]).complete!
+        pending_request_on(lockbox, start_date + 4.weeks, [75_00, 20_00]).cancel!
+        pending_request_on(lockbox, Date.current - 2.weeks, [85_00, 10_00]).complete!
+        pending_request_on(lockbox, Date.current - 10.days, [100_00]).complete!
+        pending_request_on(lockbox, Date.current - 1.week, [30_00]).cancel!
+        add_cash(lockbox, Date.yesterday).complete!
+        pending_request_on(lockbox, Date.current + 3.days, [45_00, 15_00, 10_00])
+        pending_request_on(lockbox, Date.current + 5.days, [50_00, 15_00])
       end
 
       it 'returns the correct balance -- $1435' do
@@ -150,20 +149,20 @@ describe LockboxPartner, type: :model do
 
     context 'With transactions on the current date' do
       before do
-        add_cash(start_date).complete!
-        pending_request_on(start_date + 1.week,  [20_00, 50_00]).complete!
-        pending_request_on(start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
-        pending_request_on(start_date + 3.weeks, [100_00]).complete!
-        pending_request_on(start_date + 4.weeks, [75_00, 20_00]).cancel!
-        pending_request_on(Date.current - 2.weeks, [85_00, 10_00]).complete!
-        pending_request_on(Date.current - 10.days, [100_00]).complete!
-        pending_request_on(Date.current - 1.week, [30_00]).cancel!
-        add_cash(Date.yesterday)
-        pending_request_on(Date.current, [10_00, 30_00])
-        pending_request_on(Date.current, [35_00, 45_00]).complete!
-        pending_request_on(Date.current, [70_00, 50_00, 30_00]).cancel!
-        pending_request_on(Date.current + 3.days, [45_00, 15_00, 10_00])
-        pending_request_on(Date.current + 5.days, [50_00, 15_00])
+        add_cash(lockbox, start_date).complete!
+        pending_request_on(lockbox, start_date + 1.week,  [20_00, 50_00]).complete!
+        pending_request_on(lockbox, start_date + 2.weeks, [30_00, 20_00, 15_00]).complete!
+        pending_request_on(lockbox, start_date + 3.weeks, [100_00]).complete!
+        pending_request_on(lockbox, start_date + 4.weeks, [75_00, 20_00]).cancel!
+        pending_request_on(lockbox, Date.current - 2.weeks, [85_00, 10_00]).complete!
+        pending_request_on(lockbox, Date.current - 10.days, [100_00]).complete!
+        pending_request_on(lockbox, Date.current - 1.week, [30_00]).cancel!
+        add_cash(lockbox, Date.yesterday)
+        pending_request_on(lockbox, Date.current, [10_00, 30_00])
+        pending_request_on(lockbox, Date.current, [35_00, 45_00]).complete!
+        pending_request_on(lockbox, Date.current, [70_00, 50_00, 30_00]).cancel!
+        pending_request_on(lockbox, Date.current + 3.days, [45_00, 15_00, 10_00])
+        pending_request_on(lockbox, Date.current + 5.days, [50_00, 15_00])
       end
 
       it 'returns the correct balance -- $1315' do
@@ -182,33 +181,31 @@ describe LockboxPartner, type: :model do
     let(:partner_1) { FactoryBot.create(:lockbox_partner) }
     let(:partner_2) { FactoryBot.create(:lockbox_partner) }
 
-    def create_action_txn(partner, status)
-      LockboxAction.create!(
-        lockbox_partner: partner,
-        status: status,
-        eff_date: Date.current,
-        action_type: LockboxAction::ADD_CASH # using add cash b/c client support has extra validations
-      ).tap do |action|
-        action.lockbox_transactions.create!(
-          balance_effect: LockboxTransaction::CREDIT,
-          amount_cents: 1000_00
-        )
-      end
-    end
+    let!(:pending_add_cash)                { add_cash(partner_1, Date.yesterday) }
+    let!(:completed_add_cash)              { add_cash(partner_1, Date.yesterday).tap{|a| a.complete!} }
+    let!(:diff_partner_completed_add_cash) { add_cash(partner_2, Date.yesterday).tap{|a| a.complete!} }
 
-    let!(:canceled_action_txn)     { create_action_txn(partner_1, LockboxAction::CANCELED) }
-    let!(:pending_action_txn)      { create_action_txn(partner_1, LockboxAction::PENDING) }
-    let!(:diff_partner_action_txn) { create_action_txn(partner_2, LockboxAction::COMPLETED) }
-    let!(:completed_action_txn)    { create_action_txn(partner_1, LockboxAction::COMPLETED) }
+    let!(:canceled_support)                { pending_request_on(partner_1, Date.yesterday, [10_00]).tap{|a| a.cancel!} }
+    let!(:pending_support)                 { pending_request_on(partner_1, Date.yesterday, [10_00]) }
+    let!(:diff_partner_pending_support)    { pending_request_on(partner_2, Date.yesterday, [10_00]) }
+    let!(:completed_support)               { pending_request_on(partner_1, Date.yesterday, [10_00]).tap{|a| a.complete!} }
+    let!(:diff_partner_completed_support)  { pending_request_on(partner_2, Date.yesterday, [10_00]).tap{|a| a.complete!} }
 
     it 'returns pending and completed transactions for that lockbox partner' do
-      expected_results = [ pending_action_txn.lockbox_transactions, completed_action_txn.lockbox_transactions ].flatten
+      expected_results = [
+        completed_add_cash.lockbox_transactions,
+        pending_support.lockbox_transactions,
+        completed_support.lockbox_transactions
+      ].flatten
       expect(partner_1.relevant_transactions_for_balance).to match(expected_results)
     end
 
     context 'when exclude_pending: true' do
       it 'returns only completed transactions for that lockbox partner' do
-        expected_results = completed_action_txn.lockbox_transactions
+        expected_results = [
+          completed_add_cash.lockbox_transactions,
+          completed_support.lockbox_transactions
+        ].flatten
         expect(partner_1.relevant_transactions_for_balance(exclude_pending: true)).to match(expected_results)
       end
     end
@@ -352,10 +349,10 @@ describe LockboxPartner, type: :model do
       lockbox_partner = FactoryBot.create(:lockbox_partner)
 
       low_amount = LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE - Money.new(100)
-      AddCashToLockbox.call(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: low_amount)
+      AddCashToLockbox.call!(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: low_amount).complete!
       expect(lockbox_partner).to be_low_balance
 
-      AddCashToLockbox.call(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: Money.new(100))
+      AddCashToLockbox.call!(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: Money.new(100)).complete!
       expect(lockbox_partner).not_to be_low_balance
     end
   end
