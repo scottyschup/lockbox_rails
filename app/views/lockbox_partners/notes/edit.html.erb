@@ -1,0 +1,16 @@
+<tr data-id="<%= @note.id %>">
+  <td><%= @note.created_at.strftime('%Y/%m/%d %I:%M %p') %></td>
+  <td><%= @note.author %></td>
+  <td>
+    <%= form_for @note, url: lockbox_partner_support_request_note_path(@note), id: 'new-note-form', remote: true do |f| %>
+      <div class="textarea">
+        <%= f.text_area :text %>
+      </div>
+      <div class="buttons">
+        <%= f.submit 'Save Note', class: 'btn btn-primary' %>
+        <a href="#" class="cancel-note">Cancel</a>
+      </div>
+    <% end %>
+  </td>
+  <td class="font-weight-bold"><a href="#" class="edit-note disabled">Edit <%= fa_icon "arrow-right" %></a></td>
+</tr>

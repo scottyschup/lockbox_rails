@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       resources :users, only: [:new, :create]
       resources :support_requests, except: [:index, :destroy] do
         post 'update_status', to: 'support_requests#update_status', as: 'update_status'
-        resources :notes, only: [:create]
+        resources :notes, only: [:create, :show, :edit, :update]
       end
       resource :add_cash, only: [:new, :create], controller: 'add_cash'
       resource :reconciliation, only: [:new, :create], controller: 'reconciliation'

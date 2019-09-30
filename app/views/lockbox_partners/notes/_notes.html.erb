@@ -13,10 +13,10 @@
   <div class="container">
     <p class="font-weight-bold">
       <%= fa_icon "check-circle" %>
-      New note created:
+      <span id="note-event">New note created</span>:
     </p>
     <p id="note-text"></p>
-    <p><a href="#" id="edit-note">Edit note</a> or <a href="#" id="success-new-note">add a new one</a>.</p>
+    <p><a href="#" id="success-edit-note">Edit note</a> or <a href="#" id="success-new-note">add a new one</a>.</p>
   </div>
 </div>
 <div class="notes-log">
@@ -26,10 +26,11 @@
         <th>Date</th>
         <th>Commentor</th>
         <th>Note</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <%= render notable.notes %>
+      <%= render notable.notes.order(created_at: :desc) %>
     </tbody>
   </table>
 </div>
