@@ -57,23 +57,21 @@ describe LockboxPartner, type: :model do
     end
 
     context 'have only added cash but no support requests yet' do
-      before { add_cash(start_date) }
+      let(:add_cash_action) { add_cash(start_date) }
 
-      it 'returns the amount of the initial cashbox deposit' do
-        expect(lockbox.balance).to eq(1000.to_money)
-      end
-
-      context 'excluding pending' do
+      context 'when the add cash is pending' do
         it 'returns 0' do
+          expect(lockbox.balance).to eq(Money.zero)
           expect(lockbox.balance(exclude_pending: true)).to eq(Money.zero)
         end
+      end
 
-        context 'add cash was completed' do
-          before { add_cash(start_date).complete! }
+      context 'when the add cash action is completed' do
+        before { add_cash_action.complete! }
 
-          it 'returns the 1000' do
-            expect(lockbox.balance(exclude_pending: true)).to eq(1000.to_money)
-          end
+        it 'returns the amount of the initial cashbox deposit' do
+          expect(lockbox.balance).to eq(1000.to_money)
+          expect(lockbox.balance(exclude_pending: true)).to eq(1000.to_money)
         end
       end
     end
@@ -134,7 +132,7 @@ describe LockboxPartner, type: :model do
         pending_request_on(Date.current - 2.weeks, [85_00, 10_00]).complete!
         pending_request_on(Date.current - 10.days, [100_00]).complete!
         pending_request_on(Date.current - 1.week, [30_00]).cancel!
-        add_cash(Date.yesterday)
+        add_cash(Date.yesterday).complete!
         pending_request_on(Date.current + 3.days, [45_00, 15_00, 10_00])
         pending_request_on(Date.current + 5.days, [50_00, 15_00])
       end
@@ -144,8 +142,8 @@ describe LockboxPartner, type: :model do
       end
 
       context 'excluding pending transactions' do
-        it 'returns the correct balance -- $570' do
-          expect(lockbox.balance(exclude_pending: true)).to eq(570.to_money)
+        it 'returns the correct balance -- $1570' do
+          expect(lockbox.balance(exclude_pending: true)).to eq(1570.to_money)
         end
       end
     end
@@ -169,7 +167,7 @@ describe LockboxPartner, type: :model do
       end
 
       it 'returns the correct balance -- $1315' do
-        expect(lockbox.balance(exclude_pending: false)).to eq(1315.to_money)
+        expect(lockbox.balance(exclude_pending: false)).to eq(315.to_money)
       end
 
       context 'excluding pending transactions' do
@@ -352,7 +350,7 @@ describe LockboxPartner, type: :model do
   describe 'low_balance?' do
     it 'is true when the balance is below $300' do
       lockbox_partner = FactoryBot.create(:lockbox_partner)
-      
+
       low_amount = LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE - Money.new(100)
       AddCashToLockbox.call(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: low_amount)
       expect(lockbox_partner).to be_low_balance
