@@ -10,12 +10,12 @@
   <% end %>
 
   <div class="field form-group">
-    <%= f.label :current_password %><br />
+    <%= f.label :current_password %>
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
 
   <div class="field form-group">
-    <%= f.label :password, "New Password" %><br />
+    <%= f.label :password, "New Password" %>
     <% if @minimum_password_length %>
       <em><%= @minimum_password_length %> characters minimum</em>
       <br />
@@ -24,7 +24,7 @@
   </div>
 
   <div class="field form-group">
-    <%= f.label :password_confirmation, "Re-enter Password" %><br />
+    <%= f.label :password_confirmation, "Re-enter Password" %>
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 

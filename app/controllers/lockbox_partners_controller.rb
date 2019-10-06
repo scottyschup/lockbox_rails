@@ -1,8 +1,12 @@
 class LockboxPartnersController < ApplicationController
-  before_action :require_admin, except: [:show]
+  before_action :set_lockbox_partner, except: [:new, :create]
+  before_action :require_admin_or_ownership, only: [:edit, :update]
 
   def new
     @lockbox_partner = LockboxPartner.new
+  end
+
+  def edit
   end
 
   def create
@@ -14,8 +18,15 @@ class LockboxPartnersController < ApplicationController
     end
   end
 
+  def update
+    if @lockbox_partner.update(lockbox_params)
+      redirect_to @lockbox_partner, notice: 'Contact information was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
   def show
-    @lockbox_partner = LockboxPartner.find(params[:id])
     require_admin_or_ownership
   end
 
@@ -25,5 +36,9 @@ class LockboxPartnersController < ApplicationController
     params.require(:lockbox_partner)
           .permit(:name, :phone_number, :street_address,
                   :city, :state, :zip_code)
+  end
+
+  def set_lockbox_partner
+    @lockbox_partner = LockboxPartner.find(params[:id])
   end
 end
