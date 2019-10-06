@@ -35,7 +35,7 @@ class SupportRequest < ApplicationRecord
   def amount
     lockbox_action.amount
   end
-  
+
   def editable_status?
     lockbox_action.editable_status?
   end
