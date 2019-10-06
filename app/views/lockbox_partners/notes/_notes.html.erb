@@ -1,9 +1,24 @@
 <%= form_with model: Note.new, url: lockbox_partner_support_request_notes_path(notable.lockbox_partner, notable), id: 'new-note-form' do |f| %>
-  <%= f.submit 'Save Note', class: 'btn btn-primary' %>
-  <div class="textarea">
-    <%= f.text_area :text %>
+  <div class="container">
+    <div class="textarea">
+      <%= f.text_area :text %>
+    </div>
+    <div class="buttons">
+      <%= f.submit 'Save Note', class: 'btn btn-primary' %>
+      <a href="#" id="cancel-note">Cancel</a>
+    </div>
   </div>
 <% end %>
+<div id="note-success">
+  <div class="container">
+    <p class="font-weight-bold">
+      <%= fa_icon "check-circle" %>
+      <span id="note-event">New note created</span>:
+    </p>
+    <p id="note-text"></p>
+    <p><a href="#" id="success-edit-note">Edit note</a> or <a href="#" id="success-new-note">add a new one</a>.</p>
+  </div>
+</div>
 <div class="notes-log">
   <table class="table">
     <thead>
@@ -11,10 +26,11 @@
         <th>Date</th>
         <th>Commentor</th>
         <th>Note</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <%= render notable.notes %>
+      <%= render notable.notes.order(created_at: :desc) %>
     </tbody>
   </table>
 </div>

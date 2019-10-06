@@ -16,4 +16,27 @@
 
 .notes-log .table {
   border-top: 0px;
+  tr.green {
+    background: #e7f4e5;
+  }
+  a.disabled {
+    color: gray;
+    pointer-events: none;
+  }
+  tr {
+    textarea {
+      width: 100%;
+    }
+    .buttons {
+      height: 39px;
+      * {
+        float: right;
+        margin-left: 20px;
+      }
+      a {
+        vertical-align: middle;
+        line-height: 39px;
+      }
+    }
+  }
 }

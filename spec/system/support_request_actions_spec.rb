@@ -24,7 +24,7 @@ RSpec.describe "Support Request Actions", type: :system do
     login_as(user, :scope => :user)
   end
 
-  xit 'successfully view, edit, and add notes to a support request' do
+  it 'successfully view, edit, and add notes to a support request' do
     visit "/lockbox_partners/#{lockbox_partner.id}/support_requests/#{support_request.id}"
     assert_selector "h3", text: "Support Request for Leafy Greens"
     click_link "Add Note"
@@ -32,6 +32,9 @@ RSpec.describe "Support Request Actions", type: :system do
 
     # Sleep for 1 second to avoid a race condition in slower environments (e.g., CircleCI)
     expect{ click_button "Save Note"; sleep(1) }.to change{ support_request.notes.count }.by(1)
+    click_link "Edit note"
+    fill_in "note_text", with: "foobar"
+    expect{ click_button "Save Note"; sleep(1) }.to change { support_request.notes.last.text }.to("foobar")
   end
 
 end
