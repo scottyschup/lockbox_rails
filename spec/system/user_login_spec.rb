@@ -1,0 +1,33 @@
+require 'rails_helper'
+
+RSpec.describe "Support Request Creation", type: :system do
+  let!(:lockbox_partner) { FactoryBot.create(:lockbox_partner, :active, name: 'Gorillas R Us') }
+  let!(:user)            { FactoryBot.create(:user, password: 'g00seONtheLOO$E!') }
+
+  it 'a user can successfully log in' do
+    visit "/users/sign_in"
+    assert_selector "h2", text: "Log in"
+
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "monkeybrains"
+    click_button "Log in"
+    assert_selector "h2", text: "Log in"
+
+    fill_in "Email", with: user.email
+    fill_in "Password", with: 'g00seONtheLOO$E!'
+    click_button "Log in"
+    assert_selector "h2", text: "Welcome, #{user.name}!"
+  end
+
+  it 'a user can successfully reset their password' do
+    visit "/users/sign_in"
+    click_link "Forgot your password?"
+    assert_selector "h2", text: "Send password reset instructions"
+    fill_in "Email", with: user.email
+    expect { click_button "Send" }.to change{ ActionMailer::Base.deliveries.count }.by(1)
+    email = ActionMailer::Base.deliveries.last
+    expect(email.subject).to eq("Reset password instructions")
+    expect(email.to.first).to eq(user.email)
+    assert_selector "div", text: "You will receive an email with instructions on how to reset your password in a few minutes."
+  end
+end

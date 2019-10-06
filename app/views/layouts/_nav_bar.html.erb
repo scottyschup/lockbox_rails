@@ -3,30 +3,34 @@
     <a href="/" class="navbar-brand flex-item" title="Home" aria-label="Home">
       💸 <span id="nav-title">Lockbox</span>
     </a>
-    <button type="button" class="navbar-toggle collapsed flex-item" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-      <span class="sr-only">Toggle navigation</span>
-      <% if current_user.admin? %>
-        <%= fa_icon "bars" %>
-        <%= fa_icon "times" %>
-      <% else %>
-        <%= fa_icon "cog" %>
-      <% end %>
-    </button>
+    <% if current_user %>
+      <button type="button" class="navbar-toggle collapsed flex-item" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <% if current_user.admin? %>
+          <%= fa_icon "bars" %>
+          <%= fa_icon "times" %>
+        <% else %>
+          <%= fa_icon "cog" %>
+        <% end %>
+      </button>
+    <% end %>
   </div>
-  <div id="navbar" class="navbar-collapse collapse">
-    <div class="container">
-      <%= link_to(destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-white') do %>
-        <span>Log Out</span>
-      <% end %>
-      <%= link_to(edit_user_registration_path, class: 'btn btn-primary btn-invert') do %>
-        <span>Account Settings</span>
-      <% end %>
-      <% if current_user.admin? %>
-        <p>Quick Actions</p>
-        <p><a href="<%= lockbox_partners_path %>">View all lockboxes</a></p>
-        <p><a href="<%= support_requests_new_path %>">File a support request</a></p>
-        <p><a href="<%= new_lockbox_partner_path %>">Add a new lockbox partner</a></p>
-      <% end %>
+  <% if current_user %>
+    <div id="navbar" class="navbar-collapse collapse">
+      <div class="container">
+        <%= link_to(destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-white') do %>
+          <span>Log Out</span>
+        <% end %>
+        <%= link_to(edit_user_registration_path, class: 'btn btn-primary btn-invert') do %>
+          <span>Account Settings</span>
+        <% end %>
+        <% if current_user.admin? %>
+          <p>Quick Actions</p>
+          <p><a href="<%= lockbox_partners_path %>">View all lockboxes</a></p>
+          <p><a href="<%= support_requests_new_path %>">File a support request</a></p>
+          <p><a href="<%= new_lockbox_partner_path %>">Add a new lockbox partner</a></p>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </nav>
