@@ -1,5 +1,6 @@
 class LockboxPartners::NotesController < ApplicationController
   before_action :find_commentable, only: %w[create]
+  before_action :find_note, except: [:create]
 
   def create
     @note = @commentable.notes.build(note_params.merge(user_id: current_user.id))
@@ -10,7 +11,40 @@ class LockboxPartners::NotesController < ApplicationController
           locals: {
             note: @note
           }
+        ),
+        text: @note.text
+      }
+    else
+      render json: {
+        error: render_to_string(
+          partial: 'shared/error',
+          locals: {
+            key: 'alert',
+            value: @note.errors.full_messages.join(', ')
+          }
         )
+      }
+    end
+  end
+
+  def show
+    render partial: 'lockbox_partners/notes/note', locals: { note: @note }
+  end
+
+  def edit
+    render 'lockbox_partners/notes/edit', layout: false
+  end
+
+  def update
+    if @note.update(note_params)
+      render json: {
+        note: render_to_string(
+          partial: 'lockbox_partners/notes/note',
+          locals: {
+            note: @note
+          }
+        ),
+        text: @note.text
       }
     else
       render json: {
@@ -28,7 +62,7 @@ class LockboxPartners::NotesController < ApplicationController
   private
 
   def note_params
-    params.require(:note).permit(:text)
+    params.require(:note).permit(:id, :text)
   end
 
   def find_commentable
@@ -41,5 +75,9 @@ class LockboxPartners::NotesController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       return head :bad_request
     end
+  end
+
+  def find_note
+    @note = Note.find(params[:id])
   end
 end
