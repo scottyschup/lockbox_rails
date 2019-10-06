@@ -55,7 +55,7 @@ describe CreateSupportRequest do
     end
 
     before do
-      AddCashToLockbox.call(lockbox_partner: low_balance_lockbox_partner, eff_date: 1.day.ago, amount: LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE)
+      AddCashToLockbox.call!(lockbox_partner: low_balance_lockbox_partner, eff_date: 1.day.ago, amount: LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE).complete!
     end
 
     it 'goes to the finance team when balance is below $300' do
@@ -82,7 +82,7 @@ describe CreateSupportRequest do
     it 'is not sent when the balance remains above $300' do
       ENV['LOW_BALANCE_ALERT_EMAIL'] ||= 'lowbalance@alert.com'
 
-      AddCashToLockbox.call(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE + Money.new(15000))
+      AddCashToLockbox.call!(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE + Money.new(15000)).complete!
 
       params[:lockbox_action][:lockbox_transactions][0][:amount] = 100
       expect { CreateSupportRequest.call(params: params) }
