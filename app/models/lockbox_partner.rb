@@ -2,6 +2,9 @@ class LockboxPartner < ApplicationRecord
   has_many :users
   has_many :lockbox_actions
 
+  validates :name, presence: true
+  validates :phone_number, presence: true
+
   # Number of days since last reconciliation when clinic user will be prompted
   # to reconcile the lockbox. TODO make this configurable (issue #138)
   RECONCILIATION_INTERVAL = 30

@@ -19,13 +19,19 @@
         <span>Log Out</span>
       <% end %>
       <%= link_to(edit_user_registration_path, class: 'btn btn-primary btn-invert') do %>
-        <span>Account Settings</span>
+        <span>Update Password</span>
       <% end %>
       <% if current_user.admin? %>
         <p>Quick Actions</p>
         <p><a href="<%= lockbox_partners_path %>">View all lockboxes</a></p>
         <p><a href="<%= support_requests_new_path %>">File a support request</a></p>
         <p><a href="<%= new_lockbox_partner_path %>">Add a new lockbox partner</a></p>
+      <% elsif lp = current_user.lockbox_partner %>
+        <h2><%= lp.name %></h2>
+        <p><%= lp.street_address %></p>
+        <p><%= lp.city %>, <%= lp.state %> <%= lp.zip_code %></p>
+        <p><%= lp.phone_number %></p>
+        <p><%= link_to "Edit Contact Information", edit_lockbox_partner_path(lp), class: "edit_contact_info btn btn-primary btn-invert" %></p>
       <% end %>
     </div>
   </div>
