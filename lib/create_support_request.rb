@@ -25,6 +25,7 @@ class CreateSupportRequest
         lockbox_partner_id: params[:lockbox_partner_id],
         client_ref_id: params[:client_ref_id],
         name_or_alias: params[:name_or_alias],
+        urgency_flag: params[:urgency_flag],
         user_id: params[:user_id]
       )
 
