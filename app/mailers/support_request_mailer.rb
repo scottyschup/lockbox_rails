@@ -7,6 +7,6 @@ class SupportRequestMailer < ApplicationMailer
 
     subject = "A new Support Request was sent to #{@support_request.lockbox_partner.name}"
 
-    mail(to: email_addresses, subject: subject, bcc: @support_request.creator.email)
+    mail(to: email_addresses, subject: subject, bcc: @support_request.user.email)
   end
 end
