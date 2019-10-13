@@ -27,11 +27,11 @@
     <%= f.fields_for :lockbox_action, @support_request.lockbox_action do |la| %>
       <div class="form-group">
         <%= la.label :amount_breakdown %>
-        <div class="support_case_transactions">
-          <div class="entries">
-            <%= la.fields_for :lockbox_transactions do |lt| %>
-              <%= render partial: 'lockbox_transaction_fields', locals: { f: lt } %>
-            <% end %>
+        <div id="lockbox_transactions">
+          <%= la.fields_for :lockbox_transactions do |lt| %>
+            <%= render 'lockbox_transaction_fields', f: lt %>
+          <% end %>
+          <div class="links">
             <%= link_to_add_association 'Add more values +', la, :lockbox_transactions  %>
           </div>
         </div>

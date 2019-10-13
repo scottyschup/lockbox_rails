@@ -1,0 +1,44 @@
+<div class="container">
+  <%= form_for @lockbox_partner, html: { class: 'form' } do |f| %>
+    <% if @lockbox_partner.errors.any? %>
+      <div id="error_explanation">
+        <h2>
+          <%= @lockbox_partner.errors.count %> error prohibited this user from being saved:
+        </h2>
+        <ul>
+          <% @lockbox_partner.errors.full_messages.each do |error_message| %>
+            <li><%= error_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <h2>Update Contact Information</h2>
+
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :street_address %>
+      <%= f.text_field :street_address, class: 'form-control'  %>
+    </div>
+    <div class="form-group">
+      <%= f.label :city %>
+      <%= f.text_field :city, class: 'form-control'  %>
+    </div>
+    <div class="form-group">
+      <%= f.label :state %>
+      <%= f.text_field :state, class: 'form-control'  %>
+    </div>
+    <div class="form-group">
+      <%= f.label :zip_code %>
+      <%= f.text_field :zip_code, class: 'form-control'  %>
+    </div>
+    <div class="form-group">
+      <%= f.label :phone_number %>
+      <%= f.text_field :phone_number, class: 'form-control'  %>
+    </div>
+    <%= f.submit 'Update Contact Information', class: 'btn btn-primary' %>
+  <% end %>
+</div>
