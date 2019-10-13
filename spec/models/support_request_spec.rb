@@ -98,4 +98,35 @@ describe SupportRequest, type: :model do
       expect(results).not_to include(canceled_wrong_partner)
     end
   end
+
+  describe "#creator" do
+    subject { SupportRequest.new }
+
+    let(:user) { instance_double(User) }
+
+    let(:record_trail) do
+      instance_double(PaperTrail::RecordTrail, originator: originator)
+    end
+
+    before do
+      allow(subject).to receive(:paper_trail).and_return(record_trail)
+      allow(User).to receive(:find).and_return(user)
+    end
+
+    context "when the originator is nil" do
+      let(:originator) { nil }
+
+      it "returns nil" do
+        expect(subject.creator).to be_nil
+      end
+    end
+
+    context "when the originator is not nil" do
+      let(:originator) { "1" }
+
+      it "returns the user who created the request" do
+        expect(subject.creator).to eq(user)
+      end
+    end
+  end
 end

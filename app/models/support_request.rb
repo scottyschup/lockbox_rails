@@ -51,6 +51,11 @@ class SupportRequest < ApplicationRecord
     LockboxAction::STATUSES - [status]
   end
 
+  def creator
+    creator_id = paper_trail.originator
+    creator_id.present? ? User.find(creator_id) : nil
+  end
+
   private
 
   def populate_client_ref_id
