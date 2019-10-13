@@ -1,6 +1,8 @@
 class LockboxPartnersController < ApplicationController
   before_action :set_lockbox_partner, except: [:new, :create]
-  before_action :require_admin_or_ownership, only: [:edit, :update]
+
+  before_action :require_admin, only: [:new, :create]
+  before_action :require_admin_or_ownership, only: [:show, :edit, :update]
 
   def new
     @lockbox_partner = LockboxPartner.new
@@ -12,7 +14,7 @@ class LockboxPartnersController < ApplicationController
   def create
     @lockbox_partner = LockboxPartner.new(lockbox_params)
     if @lockbox_partner.save
-      redirect_to '/', notice: 'Lockbox Partner was successfully created.'
+      redirect_to @lockbox_partner, notice: 'Lockbox Partner was successfully created.'
     else
       render :new
     end
