@@ -19,6 +19,10 @@ class LockboxPartners::UsersController < ApplicationController
     end
   end
 
+  def index
+    @user = @lockbox_partner.users.new
+  end
+
   private
 
   def set_lockbox_partner

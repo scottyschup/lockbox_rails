@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :lockbox_partners, only: [:new, :create, :show] do
     scope module: 'lockbox_partners' do
-      resources :users, only: [:new, :create]
+      resources :users, only: [:new, :create, :index]
       resources :support_requests, except: [:index, :destroy] do
         post 'update_status', to: 'support_requests#update_status', as: 'update_status'
         resources :notes, only: [:create, :show, :edit, :update]
