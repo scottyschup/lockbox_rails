@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   match 'support_requests/new', to: 'lockbox_partners/support_requests#new', via: [:get]
   resources :support_requests, only: [:index, :create]
 
-  resources :lockbox_partners, only: [:new, :create, :show] do
+  resources :lockbox_partners, only: [:new, :create, :show, :edit, :update] do
     scope module: 'lockbox_partners' do
       resources :users, only: [:new, :create]
       resources :support_requests, except: [:index, :destroy] do
