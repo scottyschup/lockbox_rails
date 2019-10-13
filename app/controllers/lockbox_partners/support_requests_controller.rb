@@ -34,7 +34,7 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     @support_request = SupportRequest.includes(:notes).find(params[:id])
     @lockbox_partner = @support_request.lockbox_partner
 
-    # For SR nav bar
+    # For support request nav bar
     @newer_support_request = @support_request.newer_request_by_partner
     @newer_request_path = if @newer_support_request
       lockbox_partner_support_request_path(@lockbox_partner, @newer_support_request)
