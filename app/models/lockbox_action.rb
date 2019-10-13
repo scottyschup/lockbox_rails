@@ -126,6 +126,14 @@ class LockboxAction < ApplicationRecord
     end
   end
 
+  def credit?
+    lockbox_transactions.first&.balance_effect == LockboxTransaction::CREDIT
+  end
+
+  def debt?
+    lockbox_transactions.first&.balance_effect == LockboxTransaction::DEBIT
+  end
+
   private
 
   def inherit_lockbox_partner_id
