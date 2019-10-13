@@ -27,6 +27,10 @@ class User < ApplicationRecord
     !!last_sign_in_at
   end
 
+  def status
+    "placeholder"
+  end
+
   private
 
   def password_required?

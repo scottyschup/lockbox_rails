@@ -1,7 +1,34 @@
 <div class="container">
   <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
-  <%= render partial: 'new', locals: { lockbox_partner: @lockbox_partner } %>
+  <%= render partial: 'new', locals: { lockbox_partner: @lockbox_partner, new_user: @new_user } %>
+  <hr />
   <div class="all-users">
-    <h2>Manage users</h2>
+    <h3>Manage users</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date Added</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.created_at.to_date %></td>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td>
+              <%= user.status %>
+            </td>
+            <td>
+              PLACEHOLDER
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

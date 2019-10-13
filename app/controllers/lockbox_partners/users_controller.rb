@@ -12,15 +12,16 @@ class LockboxPartners::UsersController < ApplicationController
     if @user.save
       flash.clear
       flash[:notice] = "New user created for Lockbox Partner #{@lockbox_partner.name}"
-      redirect_to lockbox_partner_path(@lockbox_partner)
+      redirect_to lockbox_partner_users_path(@lockbox_partner)
     else
       flash[:alert] = @user.errors.full_messages.join(', ')
-      render :new
+      render :index
     end
   end
 
   def index
-    @user = @lockbox_partner.users.new
+    @new_user = @lockbox_partner.users.new
+    @users = @lockbox_partner.users.all
   end
 
   private
