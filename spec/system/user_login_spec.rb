@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Support Request Creation", type: :system do
+RSpec.describe "User Login Flow", type: :system do
   let!(:lockbox_partner) { FactoryBot.create(:lockbox_partner, :active, name: 'Gorillas R Us') }
   let!(:user)            { FactoryBot.create(:user, password: 'g00seONtheLOO$E!') }
 
