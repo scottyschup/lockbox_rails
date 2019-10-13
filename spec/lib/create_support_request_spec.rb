@@ -76,7 +76,7 @@ describe CreateSupportRequest do
       ENV['LOW_BALANCE_ALERT_EMAIL'] = nil
 
       expect { CreateSupportRequest.call(params: low_balance_params) }
-        .not_to change{ActionMailer::Base.deliveries.length}
+        .to change{ActionMailer::Base.deliveries.length}.by(1)
     end
 
     it 'is not sent when the balance remains above $300' do
@@ -86,7 +86,7 @@ describe CreateSupportRequest do
 
       params[:lockbox_action][:lockbox_transactions][0][:amount] = 100
       expect { CreateSupportRequest.call(params: params) }
-        .not_to change{ActionMailer::Base.deliveries.length}
+        .to change{ActionMailer::Base.deliveries.length}.by(1)
     end
   end
 end
