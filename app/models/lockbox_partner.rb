@@ -1,6 +1,7 @@
 class LockboxPartner < ApplicationRecord
   has_many :users
   has_many :lockbox_actions
+  has_many :support_requests, dependent: :destroy
 
   validates :name, presence: true
   validates :phone_number, presence: true

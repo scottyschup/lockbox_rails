@@ -23,8 +23,10 @@
               <td><%= action.support_request&.name_or_alias %></td>
               <td>
                 <% if action.support_request %>
-                  <%= link_to lockbox_partner_support_request_path(@lockbox_partner, action.support_request) do %>
-                    View details <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                  <% path = lockbox_partner_support_request_path(action.lockbox_partner, action.support_request) %>
+                  <%= link_to path do %>
+                    View details
+                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                   <% end %>
                 <% end %>
               </td>

@@ -2,10 +2,10 @@
   <div id="support-requests-index">
     <h2>Welcome, <%= current_user.name %>!</h2>
     <%= link_to 'File a support request', support_requests_new_path, class: 'btn btn-primary view-half' %>
-      <%= link_to 'Create new lockbox partner', new_lockbox_partner_path, class: 'btn btn-secondary view-half float-right' %>
+    <%= link_to 'Create new lockbox partner', new_lockbox_partner_path, class: 'btn btn-secondary view-half float-right' %>
     <div class="horizontal-rule"></div>
     <p>
-    <strong>Current View:</strong> 
+    <strong>Current View:</strong>
     <%= render 'shared/url_switching_select', options: [
       ['Lockbox Partners', root_path],
       ['Pending Support Requests', support_requests_path]
@@ -30,7 +30,8 @@
             <td><%= support_request.lockbox_partner.name %></td>
             <td>
               <%= link_to [support_request.lockbox_partner, support_request] do %>
-                View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                View Details
+                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
               <% end %>
             </td>
           </tr>

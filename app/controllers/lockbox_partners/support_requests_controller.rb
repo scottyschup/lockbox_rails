@@ -8,6 +8,11 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       @lockbox_partner = LockboxPartner.find(params[:lockbox_partner_id])
     end
     @support_request = current_user.support_requests.build
+    @form_post_path = if @lockbox_partner
+      lockbox_partner_support_requests_path @lockbox_partner
+    else
+      support_requests_path
+    end
   end
 
   def create
@@ -28,6 +33,17 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   def show
     @support_request = SupportRequest.includes(:notes).find(params[:id])
     @lockbox_partner = @support_request.lockbox_partner
+
+    # For support request nav bar
+    @newer_support_request = @support_request.newer_request_by_partner
+    @newer_request_path = if @newer_support_request
+      lockbox_partner_support_request_path(@lockbox_partner, @newer_support_request)
+    end
+
+    @older_support_request = @support_request.older_request_by_partner
+    @older_request_path = if @older_support_request
+      lockbox_partner_support_request_path(@lockbox_partner, @older_support_request)
+    end
     require_admin_or_ownership
   end
 
@@ -101,6 +117,15 @@ class LockboxPartners::SupportRequestsController < ApplicationController
         :amount,
         :category
       ]
+    )
+  end
+
+  def support_request_params
+    params.require(:support_request).permit(
+      :client_ref_id,
+      :name_or_alias,
+      :urgency_flag,
+      :lockbox_partner_id
     )
   end
 end

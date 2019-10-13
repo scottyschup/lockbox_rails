@@ -1,5 +1,6 @@
 <div class="support-request-header">
-  <%= render partial: 'status_dropdown', locals: { support_request: @support_request, label: false } %>
+  <% locals =  { support_request: @support_request, label: false } %>
+  <%= render partial: 'status_dropdown', locals: locals %>
   <h3>Support Request for <%= @support_request.name_or_alias %></h3>
   <%= render partial: 'flag', locals: { support_request: @support_request } %>
 </div>
