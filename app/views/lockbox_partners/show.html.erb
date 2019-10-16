@@ -15,7 +15,7 @@
         </thead>
         <tbody>
           <% @lockbox_partner.historical_actions.each do |action| %>
-            <tr>
+            <tr class=<%= action.status %>>
               <td><%= action.eff_date %></td>
               <td><%= action.action_type.humanize %></td>
               <td><%= action.status %></td>
