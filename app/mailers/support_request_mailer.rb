@@ -5,7 +5,13 @@ class SupportRequestMailer < ApplicationMailer
     email_addresses = @support_request.lockbox_partner.users.confirmed.pluck(:email)
     return if email_addresses.empty?
 
-    subject = "A new Support Request was sent to #{@support_request.lockbox_partner.name}"
+    urgency_flag_prefix = if @support_request.urgency_flag.present?
+      "#{@support_request.urgency_flag} - "
+    else
+      ""
+    end
+
+    subject = "#{urgency_flag_prefix}MAC Cash Box Withdrawal Request"
 
     mail(to: email_addresses, subject: subject, bcc: @support_request.user.email)
   end
