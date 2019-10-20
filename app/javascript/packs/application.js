@@ -10,6 +10,6 @@ require('channels');
 require('bootstrap');
 require('cocoon-js');
 require('../src/alerts');
-require('../src/transactions');
 require('../src/notes');
+require('../src/transactions');
 require('../src/url_switching_select');
