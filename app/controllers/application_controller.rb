@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!, :set_paper_trail_whodunnit
+  before_action :authenticate_user!
 
   def require_admin
     unless current_user&.admin?

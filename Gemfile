@@ -36,11 +36,7 @@ gem 'money-rails', '~>1.12'
 
 gem 'verbalize', '~> 2.2'
 
-# Utilities to support nested forms
 gem 'cocoon'
-
-# Model audit trails
-gem 'paper_trail'
 
 # TODO -- before we go live, should move this back to test/dev bundle
 # For test data generation
