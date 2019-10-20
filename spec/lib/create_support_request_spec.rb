@@ -88,7 +88,10 @@ describe CreateSupportRequest do
     it 'goes to the finance team when balance is below $300' do
       ENV['LOW_BALANCE_ALERT_EMAIL'] ||= 'lowbalance@alert.com'
 
-      result = CreateSupportRequest.call(params: low_balance_params)
+      result = nil
+
+      expect { result = CreateSupportRequest.call(params: low_balance_params) }
+        .to change{ActionMailer::Base.deliveries.length}.by(2)
       expected_dollar_value = (LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE - Money.new(100)).to_s
 
       mail = ActionMailer::Base.deliveries.last
@@ -98,6 +101,9 @@ describe CreateSupportRequest do
       expect(mail.parts.detect{|p| p.mime_type == "text/plain"}.body.raw_source).to include expected_dollar_value
       expect(mail.parts.detect{|p| p.mime_type == "text/html"}.body.raw_source).to include expected_dollar_value
     end
+
+    # The deliveries count will still change by 1 because the creation alert was
+    # still sent
 
     it "doesn't blow up when email is missing" do
       ENV['LOW_BALANCE_ALERT_EMAIL'] = nil
