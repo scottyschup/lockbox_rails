@@ -18,7 +18,14 @@
             <td><%= action.action_type.humanize %></td>
             <td><%= action.status %></td>
             <td><%= action.support_request&.name_or_alias %></td>
-            <td><%= action.amount %></td>
+            <td>
+              <% if action.credit? %>
+                +
+              <% elsif action.debit? %>
+                -
+              <% end %>
+              <%= action.amount %>
+            </td>
           </tr>
         <% end %>
       </tbody>
