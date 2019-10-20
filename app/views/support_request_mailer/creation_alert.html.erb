@@ -1,0 +1,32 @@
+<h1>
+  Lockbox request for <%= @support_request.lockbox_partner.name %>
+</h1>
+<p>
+  View full lockbox request details here: <%= lockbox_partner_support_request_url(@support_request.lockbox_partner, @support_request) %>
+</p>
+<ul>
+  <li>
+    <% if @support_request.client_ref_id.present? %>
+      Client reference ID: <%= @support_request.client_ref_id %>
+    <% end %>
+  </li>
+  <li>
+    Pickup date: <%= @support_request.pickup_date.strftime("%A, %B %d, %Y") %>
+  </li>
+  <li>
+    Total amount: <%= @support_request.amount.format %>
+    <ul>
+      <% @support_request.lockbox_transactions.each do |transaction| %>
+        <li>
+          <%= transaction.amount.format %> for <%= transaction.category %>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+  <li>
+    MAC coordinator: <%= @support_request.user.name %>
+  </li>
+</ul>
+<p>
+  More details and most recent status here: <%= lockbox_partner_support_request_url(@support_request.lockbox_partner, @support_request) %>
+</p>
