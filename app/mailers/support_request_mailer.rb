@@ -13,6 +13,6 @@ class SupportRequestMailer < ApplicationMailer
 
     subject = "#{urgency_flag_prefix}MAC Cash Box Withdrawal Request"
 
-    mail(to: email_addresses, subject: subject, bcc: @support_request.user.email)
+    mail(to: email_addresses, subject: subject, cc: @support_request.user.email)
   end
 end

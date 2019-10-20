@@ -14,7 +14,7 @@
     Pickup date: <%= @support_request.pickup_date.strftime("%A, %B %d, %Y") %>
   </li>
   <li>
-    Amount breakdown:
+    Total amount: <%= @support_request.amount.format %>
     <ul>
       <% @support_request.lockbox_transactions.each do |transaction| %>
         <li>
@@ -22,9 +22,6 @@
         </li>
       <% end %>
     </ul>
-  </li>
-  <li>
-    Total amount: <%= @support_request.amount.format %>
   </li>
   <li>
     MAC coordinator: <%= @support_request.user.name %>
