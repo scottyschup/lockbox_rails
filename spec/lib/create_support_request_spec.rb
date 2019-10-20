@@ -33,6 +33,33 @@ describe CreateSupportRequest do
     expect(result.value).to be_an_instance_of(SupportRequest)
   end
 
+  it "creates a note" do
+    expect{CreateSupportRequest.call(params: params)}
+      .to change{Note.count}
+      .by(1)
+  end
+
+  context "partner notification email" do
+    let(:delivery) do
+      instance_double(
+        ActionMailer::Parameterized::MessageDelivery,
+        deliver_now: nil
+      )
+    end
+
+    let(:mailer) { double(creation_alert: delivery) }
+
+    before do
+      allow(SupportRequestMailer).to receive(:with).and_return(mailer)
+
+      CreateSupportRequest.call(params: params)
+    end
+
+    it "sends the email" do
+      expect(delivery).to have_received(:deliver_now)
+    end
+  end
+
   describe "low balance alert" do
     let(:low_balance_lockbox_partner) { FactoryBot.create(:lockbox_partner, :active) }
     let(:low_balance_params) do

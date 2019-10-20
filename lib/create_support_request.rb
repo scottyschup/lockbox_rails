@@ -67,6 +67,6 @@ class CreateSupportRequest
     SupportRequestMailer
       .with(support_request: support_request)
       .creation_alert
-      .deliver
+      .deliver_now
   end
 end
