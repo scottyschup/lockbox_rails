@@ -130,7 +130,7 @@ class LockboxAction < ApplicationRecord
     lockbox_transactions.first&.balance_effect == LockboxTransaction::CREDIT
   end
 
-  def debt?
+  def debit?
     lockbox_transactions.first&.balance_effect == LockboxTransaction::DEBIT
   end
 

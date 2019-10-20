@@ -21,7 +21,7 @@
             <td>
               <% if action.credit? %>
                 +
-              <% elsif action.debt? %>
+              <% elsif action.debit? %>
                 -
               <% end %>
               <%= action.amount %>
