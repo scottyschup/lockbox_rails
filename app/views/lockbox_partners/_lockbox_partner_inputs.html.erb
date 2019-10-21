@@ -12,10 +12,10 @@
 </div>
 <div class="form-group">
   <%= f.label :state %>
-  <%= f.text_field :state,
+  <%= f.select :state,
+    options_for_select(us_states),
+    {},
     class: 'form-control',
-    minlength: 2,
-    maxlength: 2,
     required: true
   %>
 </div>
@@ -25,6 +25,7 @@
     class: 'form-control',
     minlength: 5,
     maxlength: 5,
+    pattern: "[0-9]{5}",
     required: true
   %>
 </div>
@@ -34,7 +35,7 @@
     class: 'form-control',
     minlength: 10,
     maxlength: 10,
-    pattern: "[\d]{10}",
+    pattern: "[0-9]{10}",
     placeholder: "Format: 3124567890",
     required: true
   %>

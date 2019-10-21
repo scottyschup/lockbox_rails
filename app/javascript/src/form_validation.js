@@ -1,11 +1,13 @@
 const addPristineToInputs = () => {
-  const inputs = document.getElementsByTagName("input");
+  const inputs = document.querySelectorAll("input, select");
   for (let i = 0; i < inputs.length; i++) {
     let input = inputs[i];
-    input.classList.add("pristine");
-    input.addEventListener("blur", () => {
-      event.currentTarget.classList.remove("pristine");
-    });
+    if (input.value === "") {
+      input.classList.add("pristine");
+      input.addEventListener("blur", () => {
+        event.currentTarget.classList.remove("pristine");
+      });
+    }
   }
 }
 
