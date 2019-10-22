@@ -1,27 +1,53 @@
 <div class="container">
-  <div class="lockbox-partner-header">
-    <strong><%= @support_request&.lockbox_partner&.city %></strong>
-    <%= link_to lockbox_partner_path(@support_request.lockbox_partner), class: 'float-right' do %>
-      <i class="fa fa-long-arrow-left" aria-hidden="true"></i> View All Activity
-    <% end %>
-    <h2><%= @support_request&.lockbox_partner&.name %> <span class="float-right"><%= @support_request&.lockbox_partner&.balance %></span></h2>
-  </div>
-  <div class="header-separator"></div>
-    <div class="support-request-container">
-      <% if current_user.admin? %>
-        <%= render partial: 'details_admin', locals: { support_request: @support_request } %>
-        <%= link_to 'Edit Support Request', 'TODO', class: 'btn btn-primary' %>
-        <%= link_to 'Add Note', '#', class: 'btn btn-secondary', id: 'new-note' %>
-      <% else %>
-        <%= render partial: 'details_partner', locals: { support_request: @support_request } %>
-        <%= link_to 'Add Note', '#', class: 'btn btn-primary', id: 'new-note' %>
-      <% end %>
+  <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
 
-      <%= render partial: 'lockbox_partners/notes/notes', locals: { notable: @support_request } %>
-
-      <div class="support-request-nav">
-        TODO MAKE THIS NAV - https://github.com/MidwestAccessCoalition/lockbox_rails/issues/121
+  <div class="support-request-container">
+    <% if current_user.admin? %>
+      <%= render partial: 'details_admin', locals: { support_request: @support_request } %>
+      <div class="tabs">
+        <div class="tab"><%= link_to 'Edit Support Request', edit_lockbox_partner_support_request_path(@support_request.lockbox_partner, @support_request), class: 'btn btn-primary', disabled: !@support_request.editable_status? %></div>
+        <div class="tab"><%= link_to 'Add Note', '#', class: 'btn btn-secondary', id: 'new-note' %></div>
       </div>
+    <% else %>
+      <%= render partial: 'details_partner', locals: { support_request: @support_request } %>
+      <ul class="tabs">
+        <li class="tab"><%= link_to 'Add Note', '#', class: 'btn btn-primary', id: 'new-note' %></li>
+      </ul>
+    <% end %>
+
+    <%= render partial: 'lockbox_partners/notes/notes', locals: { notable: @support_request } %>
+
+    <div class="support-request-nav">
+      <nav class="support-request-nav-list">
+        <!-- Newer SR -->
+        <div class="support-request-nav-item">
+          <% if @newer_support_request.nil? %>
+            <span>Newer Support Request</span>
+          <% else %>
+            <a href="<%= @newer_request_path %>" class="support-request-nav-link">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+              Newer Support Request
+            </a>
+          <% end %>
+        </div>
+        <!-- All SRs -->
+        <div class="support-request-nav-item">
+          <%= link_to "View All Activity", lockbox_partner_path(@lockbox_partner), class: "support-request-nav-link" %>
+        </div>
+        <!-- Older SR -->
+        <div class="support-request-nav-item">
+          <% if @older_support_request.nil? %>
+            <span>Older Support Request</span>
+          <% else %>
+            <a href="<%= @older_request_path %>" class="support-request-nav-link">
+              Older Support Request
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          <% end %>
+        </div>
+      </nav>
     </div>
+
   </div>
+
 </div>

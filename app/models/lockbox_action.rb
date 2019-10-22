@@ -6,6 +6,9 @@ class LockboxAction < ApplicationRecord
   has_many :lockbox_transactions, dependent: :destroy
   has_many :notes, as: :notable
 
+  accepts_nested_attributes_for :lockbox_transactions, reject_if: :all_blank,
+    allow_destroy: true
+
   validates :eff_date, presence: true
   validates :support_request_id, presence: true, if: -> { action_type == 'support_client' }
   validate :validate_partner_is_active,
@@ -21,6 +24,10 @@ class LockboxAction < ApplicationRecord
     CANCELED  = 'canceled'
   ].freeze
 
+  EDITABLE_STATUSES = [
+    'pending'
+  ].freeze
+
   ACTION_TYPES = [
     ADD_CASH = 'add_cash',
     RECONCILE = 'reconcile',
@@ -29,9 +36,8 @@ class LockboxAction < ApplicationRecord
 
   scope :excluding_statuses, -> (*statuses) { where.not(status: statuses) }
 
-  scope :completed_cash_additions, -> do
-    where(status: COMPLETED, action_type: ADD_CASH)
-  end
+  scope :pending_cash_additions,   -> { where(status: PENDING,   action_type: ADD_CASH) }
+  scope :completed_cash_additions, -> { where(status: COMPLETED, action_type: ADD_CASH) }
 
   # action_type should correspond with ACTION_TYPES
   def self.create_with_transactions(action_type, params)
@@ -102,6 +108,10 @@ class LockboxAction < ApplicationRecord
     status == CANCELED
   end
 
+  def editable_status?
+    EDITABLE_STATUSES.include?(status)
+  end
+
   def cancel!
     update!(status: CANCELED)
   end
@@ -114,6 +124,14 @@ class LockboxAction < ApplicationRecord
     lockbox_transactions.map do |txn|
       { amount: txn.amount, category: txn.category }
     end
+  end
+
+  def credit?
+    lockbox_transactions.first&.balance_effect == LockboxTransaction::CREDIT
+  end
+
+  def debit?
+    lockbox_transactions.first&.balance_effect == LockboxTransaction::DEBIT
   end
 
   private

@@ -7,10 +7,11 @@
     "@rails/ujs": "^6.0.0-alpha",
     "@rails/webpacker": "^4.0.7",
     "bootstrap": "^4.3.1",
+    "cocoon-js": "^0.0.5",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
-    "snyk": "^1.192.3",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "snyk": "^1.231.0"
   },
   "version": "0.1.0",
   "devDependencies": {

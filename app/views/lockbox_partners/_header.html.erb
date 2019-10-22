@@ -5,11 +5,20 @@
       <i class="fa fa-arrow-left" aria-hidden="true"></i>Back to dashboard
     <% end %>
   <% end %>
-  <h2><%= lockbox_partner.name %> <span class="float-right normal-weight">$<%= lockbox_partner.balance %></span></h2>
+<<<<<<< HEAD
+<h2>
+  <%= lockbox_partner.name %>
+  <span class="float-right normal-weight">
+    $<%= lockbox_partner.balance %>
+  </span>
+</h2>
 
-  <div>
+  <div class="lockbox-partner-info">
     <div class="header-address">
-      <%= lockbox_partner.street_address %>
+      <% if lockbox_partner.street_address %>
+        <%= lockbox_partner.street_address %>
+        <br>
+      <% end %>
       <%= lockbox_partner.city %>, <%= lockbox_partner.state %> <%= lockbox_partner.zip_code %>
     </div>
     <div class="header-phone">

@@ -1,39 +1,3 @@
-#support-requests-index {
-  max-width: 600px;
-  margin: 0 auto;
-
-  h2 {
-    margin: 30px auto;
-  }
-}
-
-.support-request-header {
-  margin: 30px auto;
-}
-
-.support-request-container {
-  color: black;
-  margin: 10px auto;
-  .btn {
-    margin: 20px auto;
-    margin-right: 20px;
-    width: 25%;
-  }
-  .row {
-    div {
-      p {
-        font-size: 2em;
-      }
-    }
-  }
-}
-
-#support-request-form {
-  .form {
-    padding: 20px 0;
-  }
-}
-
 .pending-request {
   background-color: $light-gray;
   margin: 20px 0px;
@@ -56,5 +20,125 @@
     &:hover {
       background-color: $darker-blue;
     }
+  }
+}
+$note-form-color: #d6d7d9;
+
+#support-requests-index {
+  max-width: 600px;
+  margin: 0 auto;
+
+  h2 {
+    margin: 30px auto;
+  }
+}
+
+#support-request-form {
+  .form {
+    padding: 20px 0;
+  }
+}
+
+.support-request-header {
+  margin: 30px auto;
+}
+
+.support-request-container {
+  color: black;
+  margin: 10px auto;
+  margin-top: 0;
+  .tabs {
+    padding: 0;
+    margin: 0;
+    .tab {
+      display: inline-block;
+      text-decoration: none;
+      padding: 17px;
+      width: 250px;
+      .btn {
+        width: 100%;
+      }
+    }
+    .tab.selected {
+      background: $note-form-color;
+    }
+  }
+  #new-note-form {
+    background: $note-form-color;
+    .container {
+      padding: 20px;
+    }
+    .textarea {
+      width: 500px;
+      textarea {
+        height: 180px;
+      }
+    }
+    .buttons {
+      width: 500px;
+      height: 39px;
+      padding: 10px;
+      * {
+        display: inline-block;
+        float: right;
+        margin-left: 20px;
+      }
+      a {
+        vertical-align: middle;
+        line-height: 39px;
+      }
+    }
+  }
+  #note-success {
+    display: none;
+    background: $note-form-color;
+    .container {
+      padding: 20px;
+    }
+    i {
+      color: #17a729;
+    }
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  .dropdown-toggle {
+    margin: 0;
+    width: 160px;
+  }
+  .row {
+    div {
+      p {
+        font-size: 2em;
+      }
+    }
+  }
+}
+
+.support-request-nav {
+  width: 100%;
+}
+.support-request-nav-list {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.support-request-nav-item {
+  background-color: $gray;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  padding: 20px;
+  display: inline;
+  flex: 1 auto;
+  &:last-of-type {
+    border-right: none;
+  }
+}
+.support-request-nav-link {
+  font-weight: 800;
+  &:hover {
+    text-decoration: none;
   }
 }

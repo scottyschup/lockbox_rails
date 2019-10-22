@@ -1,0 +1,11 @@
+<div class="nested-fields row">
+  <div class="field form-group col-4">
+    <%= f.label :amount %>
+    <%= f.text_field :amount, type: 'number', step: "0.01", class: 'form-control' %>
+  </div>
+  <div class="field form-group col-5" >
+    <%= f.label :category, 'Support Type' %>
+    <%= f.select :category, options_for_select(expense_category_select_options, selected: f.object.category), include_blank: true, prompt: '', class: 'form-control'  %>
+  </div>
+  <%= link_to_remove_association "X", f %>
+</div>

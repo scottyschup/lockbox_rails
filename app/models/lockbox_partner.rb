@@ -1,6 +1,10 @@
 class LockboxPartner < ApplicationRecord
   has_many :users
   has_many :lockbox_actions
+  has_many :support_requests, dependent: :destroy
+
+  validates :name, presence: true
+  validates :phone_number, presence: true
 
   # Number of days since last reconciliation when clinic user will be prompted
   # to reconcile the lockbox. TODO make this configurable (issue #138)
@@ -35,10 +39,18 @@ class LockboxPartner < ApplicationRecord
     balance < MINIMUM_ACCEPTABLE_BALANCE
   end
 
+  def cash_addition_confirmation_pending?
+    lockbox_actions.pending_cash_additions.any?
+  end
+
   def relevant_transactions_for_balance(exclude_pending: false)
     excluded_statuses = [ LockboxAction::CANCELED ]
     excluded_statuses << LockboxAction::PENDING if exclude_pending
-    lockbox_action_ids = LockboxAction.where(lockbox_partner: self).excluding_statuses(excluded_statuses).pluck(:id)
+    actions = LockboxAction.where(lockbox_partner: self).excluding_statuses(excluded_statuses)
+    lockbox_action_ids = actions.map do |action|
+      next if action.pending? && action.action_type == LockboxAction::ADD_CASH
+      action.id
+    end.compact
     LockboxTransaction.where(lockbox_action_id: lockbox_action_ids)
   end
 

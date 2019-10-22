@@ -1,9 +1,18 @@
 .table-no-border {
-  th, td {
+  th,
+  td {
     border: none;
   }
 }
 
 .support-request {
   color: $color-primary;
+}
+
+.lockbox-activity > p {
+  margin: 40px 0;
+}
+
+tr.canceled {
+  font-style: italic;
 }

@@ -1,6 +1,6 @@
 class Note < ApplicationRecord
   belongs_to :notable, polymorphic: true
-  belongs_to :user
+  belongs_to :user, optional: true
   validates :text, presence: true
 
   def author
