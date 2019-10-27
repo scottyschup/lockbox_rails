@@ -29,7 +29,7 @@ class Reconciliation
         difference = amount - expected_amount
 
         lockbox_transaction = lockbox_action.lockbox_transactions.create!(
-          amount: difference,
+          amount: difference.abs,
           balance_effect: balance_effect(difference)
         )
 
