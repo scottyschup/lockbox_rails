@@ -30,7 +30,7 @@ describe Reconciliation do
         .and_return(Monetize.parse('1000.00'))
     end
 
-    context 'when the amount is less than lockbox balance' do
+    context 'when the actual counted amount is less than the expected lockbox balance' do
       let(:amount) { Money.new(900_00) }
 
       it 'creates one lockbox action' do
