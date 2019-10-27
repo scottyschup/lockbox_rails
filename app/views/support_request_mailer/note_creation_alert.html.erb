@@ -1,5 +1,5 @@
 <h1>
-  A new note was added to Support Request #<%= @support_request.id %>
+  A new note was added to Support Request #<%= @support_request.id %> (pick-up date: <%= @support_request.pickup_date %>)
 </h1>
 <p>
   View the note here: <%= lockbox_partner_support_request_url(@support_request.lockbox_partner, @support_request) %>
