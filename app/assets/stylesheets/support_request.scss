@@ -35,6 +35,15 @@ $note-form-color: #d6d7d9;
   tbody * {
     cursor: pointer;
   }
+
+  tbody tr:hover {
+    background: #f1f1f1;
+  }
+
+  .blue-amount {
+    color: $darker-blue;
+    text-decoration: underline;
+  }
 }
 
 #support-request-form {

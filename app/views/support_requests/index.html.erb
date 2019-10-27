@@ -27,7 +27,7 @@
             <td><%= support_request.created_at.to_date %></td>
             <td><%= support_request.status.capitalize %></td>
             <td><%= support_request.lockbox_partner.name %></td>
-            <td>$<%= support_request.amount.to_s %></td>
+            <td class="blue-amount">$<%= support_request.amount.to_s %></td>
             <td>Coordinator Name</td>
           </tr>
         <% end %>
