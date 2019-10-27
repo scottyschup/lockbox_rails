@@ -11,29 +11,24 @@
       ['Pending Support Requests', support_requests_path]
     ], selected_value: support_requests_path %>
     </p>
-    <table class="table">
+    <table class="table" id="supportRequestsTable">
       <thead>
         <tr>
           <th>Date</th>
           <th>Status</th>
-          <th>Amount</th>
           <th>Partner</th>
-          <th>Action</th>
+          <th>Amount</th>
+          <th>Coordinator</th>
         </tr>
       </thead>
       <tbody>
         <% @support_requests.each do |support_request| %>
-          <tr>
+          <tr data-support-request-url="<%= lockbox_partner_support_request_path(support_request.lockbox_partner, support_request) %>">
             <td><%= support_request.created_at.to_date %></td>
             <td><%= support_request.status.capitalize %></td>
-            <td>$<%= support_request.amount.to_s %></td>
             <td><%= support_request.lockbox_partner.name %></td>
-            <td>
-              <%= link_to [support_request.lockbox_partner, support_request] do %>
-                View Details
-                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-              <% end %>
-            </td>
+            <td>$<%= support_request.amount.to_s %></td>
+            <td>Coordinator Name</td>
           </tr>
         <% end %>
       </tbody>

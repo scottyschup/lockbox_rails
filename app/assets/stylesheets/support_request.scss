@@ -25,11 +25,15 @@
 $note-form-color: #d6d7d9;
 
 #support-requests-index {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
 
   h2 {
     margin: 30px auto;
+  }
+
+  tbody * {
+    cursor: pointer;
   }
 }
 

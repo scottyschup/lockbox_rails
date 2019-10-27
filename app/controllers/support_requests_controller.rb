@@ -4,7 +4,7 @@ class SupportRequestsController < ApplicationController
   before_action :require_admin, except: [:create]
 
   def index
-    @support_requests = SupportRequest.pending.order("created_at desc")
+    @support_requests = SupportRequest.includes(:lockbox_partner).pending.order("created_at desc")
   end
 
   def create
