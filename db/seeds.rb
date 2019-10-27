@@ -24,7 +24,7 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
     city: Faker::Address.city,
     state: Faker::Address.state_abbr,
     zip_code: Faker::Address.zip_code,
-    phone_number: Faker::PhoneNumber.phone_number
+    phone_number: (2..9).to_a.sample.to_s + Faker::Base.numerify('#########')
   )
 
   User.where(email: partner_user_email).first_or_create!(
