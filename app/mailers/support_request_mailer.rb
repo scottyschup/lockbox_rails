@@ -1,9 +1,6 @@
 class SupportRequestMailer < ApplicationMailer
   def creation_alert
     @support_request = params[:support_request]
-
-    return if partner_user_emails.empty?
-
     urgency_flag_prefix = if @support_request.urgency_flag.present?
       "#{@support_request.urgency_flag} - "
     else
@@ -45,5 +42,10 @@ class SupportRequestMailer < ApplicationMailer
       .users
       .confirmed
       .pluck(:email)
+    if @partner_user_emails.empty?
+      raise ArgumentError, "Attempted to alert users for "\
+        "#{@support_request.lockbox_partner.name}, but none exist"
+    end
+    @partner_user_emails
   end
 end
