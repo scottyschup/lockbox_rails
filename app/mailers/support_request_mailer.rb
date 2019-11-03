@@ -28,6 +28,7 @@ class SupportRequestMailer < ApplicationMailer
     coordinator_emails = [@support_request.user.email, @note.user.email].uniq
     # If a coordinator creates the note, email the partner users and CC the
     # coordinator(s). If a partner user creates it, do the reverse
+    binding.pry
     to_emails, cc_emails = if @note.user.admin?
       [partner_user_emails, coordinator_emails]
     else
