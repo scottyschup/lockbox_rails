@@ -24,6 +24,22 @@ describe SupportRequestMailer, type: :model do
       expect(email.subject).to eq(expected_subject)
     end
 
+    context "when there are no confirmed partner users" do
+      let(:lockbox_partner) { FactoryBot.create(:lockbox_partner) }
+
+      it "raises an exception" do
+        expect{email}.to raise_error(ArgumentError)
+      end
+    end
+
+    context "when the note does not belong to a support request" do
+      let(:support_request) { FactoryBot.create(:lockbox_action) }
+
+      it "raises an exception" do
+        expect{email}.to raise_error(ArgumentError)
+      end
+    end
+
     context "when an admin user creates the note" do
       it "sends the email to the lockbox partner's users" do
         expect(email.to).to eq(support_request.lockbox_partner.users.pluck(:email))
