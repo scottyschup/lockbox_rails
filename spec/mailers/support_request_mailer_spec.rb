@@ -1,16 +1,64 @@
 require 'rails_helper'
 
-describe SupportRequestMailer, type: :model do
-  describe "#note_creation_alert" do
-    let(:admin_user) { FactoryBot.create(:user) }
-    let(:lockbox_partner) { FactoryBot.create(:lockbox_partner, :active) }
+describe SupportRequestMailer, type: :mailer do
+  let(:admin_user) { FactoryBot.create(:user) }
+  let(:lockbox_partner) { FactoryBot.create(:lockbox_partner, :active) }
 
-    let(:support_request) do
-      FactoryBot.create(
-        :support_request, :pending, lockbox_partner: lockbox_partner
-      )
+  let(:support_request) do
+    FactoryBot.create(
+      :support_request, :pending, lockbox_partner: lockbox_partner
+    )
+  end
+
+  describe "#creation_alert" do
+    let(:email) do
+      described_class
+        .with(support_request: support_request)
+        .creation_alert
+        .deliver_now
     end
 
+    context "when there is no urgency flag" do
+      it "has the expected subject line" do
+        expect(email.subject).to eq("MAC Cash Box Withdrawal Request")
+      end
+    end
+
+    context "when there is an urgency flag" do
+      let(:support_request) do
+        FactoryBot.create(
+          :support_request,
+          :pending,
+          lockbox_partner: lockbox_partner,
+          urgency_flag: "Super Urgent"
+        )
+      end
+
+      it "has the expected subject line" do
+        expect(email.subject).to eq(
+          "Super Urgent - MAC Cash Box Withdrawal Request"
+        )
+      end
+    end
+
+    it "sends the email to the lockbox partner's confirmed users" do
+      expect(email.to).to eq(support_request.lockbox_partner.users.pluck(:email))
+    end
+
+    it "CCs the admin user who created the support request" do
+      expect(email.cc).to eq([support_request.user.email])
+    end
+
+    context "when there are no confirmed partner users" do
+      let(:lockbox_partner) { FactoryBot.create(:lockbox_partner) }
+
+      it "raises an exception" do
+        expect{email}.to raise_error(ArgumentError)
+      end
+    end
+  end
+
+  describe "#note_creation_alert" do
     let(:note) do
       FactoryBot.create(:note, user: admin_user, notable: support_request)
     end
