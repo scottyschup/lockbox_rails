@@ -25,12 +25,12 @@ class SupportRequestMailer < ApplicationMailer
     end
 
     subject = "A new note was added to Support Request ##{@support_request.id}"
-    coordinator_emails = [@support_request.user.email, @note.user.email].uniq
+    coordinator_emails = [@support_request.user.email]
     # If a coordinator creates the note, email the partner users and CC the
     # coordinator(s). If a partner user creates it, do the reverse
-    binding.pry
     to_emails, cc_emails = if @note.user.admin?
-      [partner_user_emails, coordinator_emails]
+      coordinator_emails << @note.user.email
+      [partner_user_emails, coordinator_emails.uniq]
     else
       [coordinator_emails, partner_user_emails]
     end

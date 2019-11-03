@@ -46,7 +46,7 @@ describe SupportRequestMailer, type: :model do
       end
 
       it "sends the email to the support request creator" do
-        expect(email.to).to eq(support_request.user.email)
+        expect(email.to).to eq([support_request.user.email])
       end
 
       it "CCs the lockbox partner's users" do
