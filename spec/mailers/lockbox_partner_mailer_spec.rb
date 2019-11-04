@@ -16,6 +16,9 @@ describe LockboxPartnerMailer, type: :mailer do
     before do
       allow(ENV)
         .to receive(:[])
+        .and_call_original
+      allow(ENV)
+        .to receive(:[])
         .with("LOW_BALANCE_ALERT_EMAIL")
         .and_return(low_balance_alert_email)
     end
@@ -28,6 +31,12 @@ describe LockboxPartnerMailer, type: :mailer do
       expect(email.subject).to eq(
         "[LOW LOCKBOX BALANCE] #{lockbox_partner.name} needs cash"
       )
+    end
+
+    it "alerts the recipient to the low balance" do
+      alert_text = "The lockbox balance at <b>#{lockbox_partner.name}</b> is at " \
+                   "<b>$#{lockbox_partner.balance.to_s}</b>"
+      expect(email.body.encoded).to include(alert_text)
     end
   end
 end
