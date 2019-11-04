@@ -10,7 +10,7 @@ FactoryBot.define do
     trait :active do
       # The user needs to be confirmed, but currently the user factory does this
       # by default
-      users { build_list :user, 1 }
+      users { build_list :user, 1, :partner_user }
       lockbox_actions { build_list :lockbox_action, 1, :add_cash, :completed }
     end
   end
