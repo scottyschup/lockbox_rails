@@ -49,6 +49,28 @@ describe SupportRequestMailer, type: :mailer do
       expect(email.cc).to eq([support_request.user.email])
     end
 
+    context "body" do
+      it "includes the pickup date" do
+        expect(email.body.encoded).to include(
+          support_request.pickup_date.strftime("%A, %B %d, %Y")
+        )
+      end
+
+      it "includes the amount" do
+        expect(email.body.encoded).to include(support_request.amount.format)
+      end
+
+      it "includes the coordinator's name" do
+        expected_name = ERB::Util.html_escape(support_request.user.name)
+        expect(email.body.encoded).to include(expected_name)
+      end
+
+      it "includes a link to the support_request" do
+        path = "/lockbox_partners/#{lockbox_partner.id}/support_requests/#{support_request.id}"
+        expect(email.body.encoded).to include(path)
+      end
+    end
+
     context "when there are no confirmed partner users" do
       let(:lockbox_partner) { FactoryBot.create(:lockbox_partner) }
 
@@ -115,6 +137,17 @@ describe SupportRequestMailer, type: :mailer do
 
       it "CCs the lockbox partner's users" do
         expect(email.cc).to eq(support_request.lockbox_partner.users.pluck(:email))
+      end
+    end
+
+    context "body" do
+      it "includes the support request ID" do
+        expect(email.body.encoded).to include("##{support_request.id}")
+      end
+
+      it "includes a link to the support_request" do
+        path = "/lockbox_partners/#{lockbox_partner.id}/support_requests/#{support_request.id}"
+        expect(email.body.encoded).to include(path)
       end
     end
   end
