@@ -28,7 +28,13 @@ class User < ApplicationRecord
   end
 
   def status
-    "placeholder"
+    return "pending" if confirmed_at.nil?
+    return "locked" if locked_at.present?
+    return "active"
+  end
+
+  def display_name
+    self.name || "User #{id}"
   end
 
   private

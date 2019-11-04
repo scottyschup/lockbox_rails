@@ -7,6 +7,28 @@
   border-radius: 0px;
 }
 
-.form-group > label {
+.form-group > label, .field_with_errors > label {
   font-weight: bolder;
+}
+
+.field input {
+  display: block;
+}
+
+.field_with_errors {
+  display: block;
+}
+
+#error_explanation {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 1rem 1rem 0 1rem;
+  border: solid 1px transparent;
+  border-radius: 0.25rem;
+  margin: 1em 0;
+
+  h2 {
+    font-size: 14px;
+  }
 }

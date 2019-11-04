@@ -4,7 +4,7 @@ class SupportRequestsController < ApplicationController
   before_action :require_admin, except: [:create]
 
   def index
-    @support_requests = SupportRequest.pending.order("created_at desc")
+    @support_requests = SupportRequest.includes(:lockbox_partner, :user).pending.order("created_at desc")
   end
 
   def create
@@ -30,15 +30,6 @@ class SupportRequestsController < ApplicationController
       .merge(user_id: current_user.id)
   end
 
-  def support_request_params
-    params.require(:support_request).permit(
-      :client_ref_id,
-      :name_or_alias,
-      :urgency_flag,
-      :lockbox_partner_id
-    )
-  end
-
   def lockbox_action_params
     params.require(:lockbox_action).permit(
       :eff_date,
@@ -46,6 +37,15 @@ class SupportRequestsController < ApplicationController
         :amount,
         :category
       ]
+    )
+  end
+
+  def support_request_params
+    params.require(:support_request).permit(
+      :client_ref_id,
+      :name_or_alias,
+      :urgency_flag,
+      :lockbox_partner_id
     )
   end
 

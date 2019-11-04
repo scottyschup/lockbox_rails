@@ -33,6 +33,33 @@ describe CreateSupportRequest do
     expect(result.value).to be_an_instance_of(SupportRequest)
   end
 
+  it "creates a note" do
+    expect{CreateSupportRequest.call(params: params)}
+      .to change{Note.count}
+      .by(1)
+  end
+
+  context "partner notification email" do
+    let(:delivery) do
+      instance_double(
+        ActionMailer::Parameterized::MessageDelivery,
+        deliver_now: nil
+      )
+    end
+
+    let(:mailer) { double(creation_alert: delivery) }
+
+    before do
+      allow(SupportRequestMailer).to receive(:with).and_return(mailer)
+
+      CreateSupportRequest.call(params: params)
+    end
+
+    it "sends the email" do
+      expect(delivery).to have_received(:deliver_now)
+    end
+  end
+
   describe "low balance alert" do
     let(:low_balance_lockbox_partner) { FactoryBot.create(:lockbox_partner, :active) }
     let(:low_balance_params) do
@@ -61,7 +88,10 @@ describe CreateSupportRequest do
     it 'goes to the finance team when balance is below $300' do
       ENV['LOW_BALANCE_ALERT_EMAIL'] ||= 'lowbalance@alert.com'
 
-      result = CreateSupportRequest.call(params: low_balance_params)
+      result = nil
+
+      expect { result = CreateSupportRequest.call(params: low_balance_params) }
+        .to change{ActionMailer::Base.deliveries.length}.by(2)
       expected_dollar_value = (LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE - Money.new(100)).to_s
 
       mail = ActionMailer::Base.deliveries.last
@@ -72,11 +102,14 @@ describe CreateSupportRequest do
       expect(mail.parts.detect{|p| p.mime_type == "text/html"}.body.raw_source).to include expected_dollar_value
     end
 
+    # The deliveries count will still change by 1 because the creation alert was
+    # still sent
+
     it "doesn't blow up when email is missing" do
       ENV['LOW_BALANCE_ALERT_EMAIL'] = nil
 
       expect { CreateSupportRequest.call(params: low_balance_params) }
-        .not_to change{ActionMailer::Base.deliveries.length}
+        .to change{ActionMailer::Base.deliveries.length}.by(1)
     end
 
     it 'is not sent when the balance remains above $300' do
@@ -86,7 +119,7 @@ describe CreateSupportRequest do
 
       params[:lockbox_action][:lockbox_transactions][0][:amount] = 100
       expect { CreateSupportRequest.call(params: params) }
-        .not_to change{ActionMailer::Base.deliveries.length}
+        .to change{ActionMailer::Base.deliveries.length}.by(1)
     end
   end
 end

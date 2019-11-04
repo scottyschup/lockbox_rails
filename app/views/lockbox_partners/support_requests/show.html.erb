@@ -1,5 +1,6 @@
 <div class="container">
   <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
+
   <div class="support-request-container">
     <% if current_user.admin? %>
       <%= render partial: 'details_admin', locals: { support_request: @support_request } %>
@@ -17,7 +18,36 @@
     <%= render partial: 'lockbox_partners/notes/notes', locals: { notable: @support_request } %>
 
     <div class="support-request-nav">
-      TODO MAKE THIS NAV - https://github.com/MidwestAccessCoalition/lockbox_rails/issues/121
+      <nav class="support-request-nav-list">
+        <!-- Newer SR -->
+        <div class="support-request-nav-item">
+          <% if @newer_support_request.nil? %>
+            <span>Newer Support Request</span>
+          <% else %>
+            <a href="<%= @newer_request_path %>" class="support-request-nav-link">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+              Newer Support Request
+            </a>
+          <% end %>
+        </div>
+        <!-- All SRs -->
+        <div class="support-request-nav-item">
+          <%= link_to "View All Activity", lockbox_partner_path(@lockbox_partner), class: "support-request-nav-link" %>
+        </div>
+        <!-- Older SR -->
+        <div class="support-request-nav-item">
+          <% if @older_support_request.nil? %>
+            <span>Older Support Request</span>
+          <% else %>
+            <a href="<%= @older_request_path %>" class="support-request-nav-link">
+              Older Support Request
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          <% end %>
+        </div>
+      </nav>
     </div>
+
   </div>
+
 </div>

@@ -25,6 +25,7 @@ class CreateSupportRequest
         lockbox_partner_id: params[:lockbox_partner_id],
         client_ref_id: params[:client_ref_id],
         name_or_alias: params[:name_or_alias],
+        urgency_flag: params[:urgency_flag],
         user_id: params[:user_id]
       )
 
@@ -51,6 +52,8 @@ class CreateSupportRequest
       end
     end
 
+    support_request.record_creation
+    send_creation_alert
     send_low_balance_alert if support_request.lockbox_partner.low_balance?
 
     support_request
@@ -58,5 +61,12 @@ class CreateSupportRequest
 
   def send_low_balance_alert
     LockboxPartnerMailer.with(lockbox_partner: support_request.lockbox_partner).low_balance_alert.deliver
+  end
+
+  def send_creation_alert
+    SupportRequestMailer
+      .with(support_request: support_request)
+      .creation_alert
+      .deliver_now
   end
 end
