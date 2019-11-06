@@ -1,5 +1,7 @@
-<div class="container">
+<%= render partial: 'lockbox_partners/dashboard_header' %>
+<div id="new-lockbox-form" class="container">
   <%= form_for @lockbox_partner, html: { class: 'form' } do |f| %>
+    <h2>Add a new lockbox partner</h2>
     <div class="form-group">
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>

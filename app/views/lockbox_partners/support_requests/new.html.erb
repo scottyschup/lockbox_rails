@@ -1,4 +1,5 @@
 <% if @lockbox_partner.nil? || @lockbox_partner.active? %>
+<%= render partial: 'lockbox_partners/dashboard_header' %>
   <div id="support-request-form">
     <% if @lockbox_partner %>
       <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>

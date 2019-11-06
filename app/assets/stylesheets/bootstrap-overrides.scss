@@ -30,6 +30,21 @@ a {
   }
 }
 
+.btn-active-tab:after {
+  content:'';
+  // display: inline-block;
+  position: relative;
+  top: auto;
+  left: 0;
+  right: 0;
+  margin: 0px 0px 0px 60px;
+  width: 0;
+  height: 0;
+  border-top: solid 10px $color-primary;
+  border-left: solid 10px transparent;
+  border-right: solid 10px transparent;
+}
+
 .table {
   margin-top: 20px;
   thead {
