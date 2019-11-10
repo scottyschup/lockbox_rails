@@ -79,9 +79,10 @@ class SupportRequest < ApplicationRecord
     date = Date.current
     SupportRequestMailer
       .with(
+        date: date,
         original_status: original_status,
-        user: user,
-        date: date
+        support_request: self,
+        user: user
       )
       .status_update_alert
       .deliver_now
