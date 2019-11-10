@@ -75,6 +75,18 @@ class SupportRequest < ApplicationRecord
     notes.create(text: note_text)
   end
 
+  def send_status_update_alert(original_status:, user:)
+    date = Date.current
+    SupportRequestMailer
+      .with(
+        original_status: original_status,
+        user: user,
+        date: date
+      )
+      .status_update_alert
+      .deliver_now
+  end
+
   private
 
   def index_in_support_requests_collection
