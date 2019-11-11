@@ -13,3 +13,4 @@ require('../src/alerts');
 require('../src/notes');
 require('../src/transactions');
 require('../src/url_switching_select');
+require('@babel/polyfill');
