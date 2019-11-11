@@ -24,6 +24,16 @@ class LockboxPartners::UsersController < ApplicationController
     @users = @lockbox_partner.users.all
   end
 
+  def update
+    return if params[:lock_user].nil?
+    @user = User.find(params[:user_id])
+    if params[:lock_user]
+      @user.update(locked_at: Time.current)
+    else
+      @user.update(locked_at: nil)
+    end
+  end
+
   private
 
   def set_lockbox_partner

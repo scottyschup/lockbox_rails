@@ -24,7 +24,7 @@
               <%= user.status %>
             </td>
             <td>
-              PLACEHOLDER
+              <%= render partial: 'lockbox_partners/users/actions', locals: { user: user } %>
             </td>
           </tr>
         <% end %>
