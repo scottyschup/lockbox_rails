@@ -26,11 +26,21 @@ class LockboxPartners::UsersController < ApplicationController
 
   def update
     return if params[:lock_user].nil?
-    @user = User.find(params[:user_id])
+    @user = User.find(params[:id])
     if params[:lock_user]
-      @user.update(locked_at: Time.current)
+      @user.locked_at = Time.current
     else
-      @user.update(locked_at: nil)
+      @user.locked_at = nil
+    end
+
+    if @user.save
+      flash.clear
+      locked_status = @user.locked_at.nil? ? 'unlocked' : 'locked'
+      flash[:notice] = "User account for #{@user.email} has been #{locked_status}."
+      redirect_to lockbox_partner_users_path
+    else
+      flash[:alert] = @user.errors.full_messages.join(', ')
+      redirect_to lockbox_partner_users_path
     end
   end
 

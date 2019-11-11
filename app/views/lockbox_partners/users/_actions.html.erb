@@ -1,5 +1,9 @@
 <% if user.available_action_text == 'Resend Invite' %>
   Placeholder for <%= user.available_action_text %> form
 <% else %>
-  Placeholder for <%= user.available_action_text %> form
+  <% lock_user = user.available_action_text == 'Lock Account' %>
+  <%= form_tag(lockbox_partner_user_path(user.lockbox_partner, user), method: 'put') do %>
+    <%= hidden_field_tag(:lock_user, lock_user) %>
+    <%= submit_tag(user.available_action_text) %>
+  <% end %>
 <% end %>
