@@ -44,7 +44,7 @@ class SupportRequestMailer < ApplicationMailer
     @original_status = params[:original_status]
     @date = params[:date].strftime("%B %d, %Y")
     subject = "#{@support_request.lockbox_partner.name} Support Request " \
-              "#{@support_request.id} - #{@support_request.status}"
+              "##{@support_request.id} - #{@support_request.status}"
     mail(
       to: @support_request.user.email,
       subject: subject

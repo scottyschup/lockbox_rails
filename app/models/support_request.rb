@@ -76,6 +76,9 @@ class SupportRequest < ApplicationRecord
   end
 
   def send_status_update_alert(original_status:, user:)
+    # This likely means the status update was submitted twice. To avoid
+    # confusion, we shouldn't send the email in that case.
+    return if original_status == status
     date = Date.current
     SupportRequestMailer
       .with(
