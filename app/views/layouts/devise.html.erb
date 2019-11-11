@@ -13,7 +13,11 @@
       <div class="devise-form container">
         <div id="errors">
           <% flash.each do |key, value| %>
-            <%= render partial: 'shared/error', locals: { key: key, value: value } %>
+            <% # Only display Devise flash messages that are intended to be displayed, and not those used internally by Devise  %>
+            <% # See https://github.com/plataformatec/devise#configuring-controllers %>
+            <% if ["alert", "notice"].include?(key) %>
+              <%= render partial: 'shared/error', locals: { key: key, value: value } %>
+            <% end %>
           <% end %>
         </div>
         <%= yield %>
