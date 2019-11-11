@@ -13,7 +13,9 @@
       <div class="devise-form container">
         <div id="errors">
           <% flash.each do |key, value| %>
-            <%= render partial: 'shared/error', locals: { key: key, value: value } %>
+            <% if ["alert", "notice"].include?(key) %>
+              <%= render partial: 'shared/error', locals: { key: key, value: value } %>
+            <% end %>
           <% end %>
         </div>
         <%= yield %>
