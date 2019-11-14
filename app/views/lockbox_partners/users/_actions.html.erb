@@ -1,5 +1,5 @@
 <% if user.available_action_text == 'Resend Invite' %>
-  Placeholder for <%= user.available_action_text %> form
+  <%= link_to(user.available_action_text, lockbox_partner_user_resend_invite_path(user.lockbox_partner, user)) %>
 <% else %>
   <% lock_user = user.available_action_text == 'Lock Account' %>
   <%= form_tag(lockbox_partner_user_path(user.lockbox_partner, user), method: 'put') do %>

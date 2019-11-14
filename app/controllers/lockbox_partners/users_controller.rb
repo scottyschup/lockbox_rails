@@ -44,6 +44,12 @@ class LockboxPartners::UsersController < ApplicationController
     end
   end
 
+  def resend_invite
+    @user = User.find(params[:user_id])
+    @user.send_confirmation_instructions
+    redirect_to lockbox_partner_users_path
+  end
+
   private
 
   def set_lockbox_partner
