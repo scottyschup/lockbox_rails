@@ -1,0 +1,13 @@
+.btn-as-link {
+  input {
+    border: none;
+    background-color: inherit;
+    box-shadow: none;
+    color: $color-primary;
+    text-decoration: underline;
+    padding: inherit;
+    &:hover {
+      color: $darker-blue;
+    }
+  }
+}
