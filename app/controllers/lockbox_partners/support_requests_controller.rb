@@ -8,7 +8,7 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       @lockbox_partner = LockboxPartner.find(params[:lockbox_partner_id])
     end
     @support_request = current_user.support_requests.build
-    @form_post_path = if @lockbox_partner
+    @path = if @lockbox_partner
       lockbox_partner_support_requests_path @lockbox_partner
     else
       support_requests_path
@@ -71,6 +71,7 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       .includes(:notes, :lockbox_transactions)
       .find(params[:id])
     @lockbox_partner = @support_request.lockbox_partner
+    @path = lockbox_partner_support_request_path(@support_request)
   end
 
   def update

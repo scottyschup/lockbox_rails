@@ -1,7 +1,7 @@
 <div class="nested-fields row">
   <div class="field form-group col-4" >
     <%= f.label :category, 'Support Type' %>
-    <%= f.select :category, options_for_select(expense_category_select_options, selected: f.object.category), include_blank: true, prompt: '', class: 'form-control'  %>
+    <%= f.select :category, options_for_select(expense_category_select_options, selected: f.object.category), include_blank: true, class: 'form-control'  %>
   </div>
   <div class="field form-group col-3 distance-field" style="<%= "#{'display: none' unless f.object.category == 'gas'}" %>">
     <%= f.label :distance %>
