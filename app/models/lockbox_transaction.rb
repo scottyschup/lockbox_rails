@@ -6,6 +6,7 @@ class LockboxTransaction < ApplicationRecord
   belongs_to :lockbox_action
 
   validates :amount_cents, :numericality => { :greater_than_or_equal_to => 0 }
+  has_paper_trail
 
   BALANCE_EFFECTS = [
     DEBIT  = 'debit',
