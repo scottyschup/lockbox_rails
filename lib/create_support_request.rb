@@ -52,7 +52,6 @@ class CreateSupportRequest
       end
     end
 
-    support_request.record_creation
     send_creation_alert
     send_low_balance_alert if support_request.lockbox_partner.low_balance?
 

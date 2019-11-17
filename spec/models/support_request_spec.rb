@@ -157,4 +157,46 @@ describe SupportRequest, type: :model do
       end
     end
   end
+
+  describe "creating notes on update" do
+    let(:support_request) { FactoryBot.create(:support_request, :pending) }
+
+    it 'adds a note for name/alias change' do
+      expect{ support_request.update(name_or_alias: "name change") }.to change{support_request.notes.count}.by(1)
+      expect(support_request.notes.last.text).to include("The Client Alias for this Support Request was changed")
+    end
+
+    it 'adds a note for client_ref_ID change' do
+      expect{ support_request.update(client_ref_id: "refID change") }.to change{support_request.notes.count}.by(1)
+      expect(support_request.notes.last.text).to include("The Client Reference ID for this Support Request was changed")
+    end
+
+    it 'adds a note for urgency_flag change' do
+      expect{ support_request.update(urgency_flag: "urgency change") }.to change{support_request.notes.count}.by(1)
+      expect(support_request.notes.last.text).to include("The Urgency Flag for this Support Request was changed")
+    end
+
+    it 'adds a note for eff_date change' do
+      expect{
+        support_request.update(lockbox_action_attributes: {id: support_request.lockbox_action.id, eff_date: 1.day.from_now}) }.to change{support_request.notes.count}.by(1)
+      expect(support_request.notes.last.text).to include("The Pickup Date for this Support Request was changed")
+    end
+
+    it 'adds a note when a new transaction is added' do
+      expect{
+        support_request.update(lockbox_action_attributes: {id: support_request.lockbox_action.id, lockbox_transactions_attributes: [{amount: 10.32, category: 'Gas'}]}) }.to change{support_request.notes.count}.by(1)
+      expect(support_request.notes.last.text).to include("The Total Amount for this Support Request was changed")
+      expect(support_request.notes.last.text).to include("$10.32")
+    end
+
+    it 'makes multiple notes for multiple changes' do
+      expect{
+        support_request.update(
+          name_or_alias: "name change 2",
+          urgency_flag: "urgency change 2"
+        )
+      }.to change{support_request.notes.count}.by(2)
+    end
+
+  end
 end

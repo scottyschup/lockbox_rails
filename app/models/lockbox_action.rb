@@ -18,6 +18,8 @@ class LockboxAction < ApplicationRecord
 
   before_save :set_default_status
 
+  after_update :notate_change
+
   STATUSES = [
     PENDING   = 'pending',
     COMPLETED = 'completed',
@@ -135,6 +137,18 @@ class LockboxAction < ApplicationRecord
   end
 
   private
+
+  def notate_change
+    return unless saved_changes.include? "eff_date"
+    return unless support_request
+    values = saved_changes["eff_date"]
+
+    timestamp = Time.now.strftime("%Y-%m-%d at %-I:%M%P")
+
+    text = "The Pickup Date for this Support Request was changed on #{timestamp} from #{values.first} to #{values.last}"
+
+    support_request.notes.create(text: text)
+  end
 
   def inherit_lockbox_partner_id
     if lockbox_partner_id.blank? && support_request&.lockbox_partner_id
