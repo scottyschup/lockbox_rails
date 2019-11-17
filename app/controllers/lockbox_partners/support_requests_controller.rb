@@ -105,6 +105,7 @@ class LockboxPartners::SupportRequestsController < ApplicationController
           :id,
           :amount,
           :category,
+          :distance,
           :_destroy # Virtual attribute used to delete records
         ]
       ]
@@ -125,12 +126,4 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     )
   end
 
-  def support_request_params
-    params.require(:support_request).permit(
-      :client_ref_id,
-      :name_or_alias,
-      :urgency_flag,
-      :lockbox_partner_id
-    )
-  end
 end
