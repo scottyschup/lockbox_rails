@@ -22,7 +22,8 @@ class AddCashToLockbox
 
       lockbox_transaction = lockbox_action.lockbox_transactions.create(
         amount: amount,
-        balance_effect: LockboxTransaction::CREDIT
+        balance_effect: LockboxTransaction::CREDIT,
+        category: 'gas'
       )
 
       unless lockbox_transaction.valid?
