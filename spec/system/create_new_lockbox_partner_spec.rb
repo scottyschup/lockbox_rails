@@ -3,13 +3,10 @@ require './lib/create_support_request'
 include StyleHelper
 
 RSpec.describe "Create new lockbox partner form", type: :system do
+  let!(:user) { FactoryBot.create(:user) }
+
   before do
     driven_by(:poltergeist)
-  end
-
-  let!(:user)            { FactoryBot.create(:user) }
-
-  before do
     login_as(user, :scope => :user)
     visit("/")
     click_link("Create new lockbox partner")
@@ -30,16 +27,18 @@ RSpec.describe "Create new lockbox partner form", type: :system do
   end
 
   context "On submission of blank form" do
+    before do
+      page.find(".btn.btn-primary").click
+    end
 
     it "inputs are no longer pristine" do
-      page.click_on "Add New Partner"
-      page.assert_no_selector(".pristine", count: 7)
+      page.assert_no_selector(".pristine")
     end
 
     describe "all required fields" do
       before do
-        page.click_on "Add New Partner"
-        inputs = page.all("input[required=true]), select[required=true]")
+        # binding.pry
+        inputs = page.find("input[required]), select[required]")
       end
 
       it "are marked as required" do
