@@ -43,4 +43,29 @@ describe User, type: :model do
       end
     end
   end
+
+  describe "#available_action_text" do
+    let(:user) { FactoryBot.create(:user) }
+
+    before do
+      allow(user).to receive(:status).and_return(status)
+    end
+
+    subject { user.available_action_text }
+
+    context 'when status is pending' do
+      let(:status) { 'pending' }
+      it { is_expected.to eq('Resend Invite') }
+    end
+
+    context 'when status is locked' do
+      let(:status) { 'locked' }
+      it { is_expected.to eq('Unlock Account') }
+    end
+
+    context 'when status is active' do
+      let(:status) { 'active' }
+      it { is_expected.to eq('Lock Account') }
+    end
+  end
 end
