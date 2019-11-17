@@ -5,7 +5,7 @@ class LockboxTransaction < ApplicationRecord
 
   belongs_to :lockbox_action
 
-  validates :amount_cents, :numericality => { :greater_than_or_equal_to => 0 }
+  validates :amount_cents, numericality: { greater_than: 0 }
   validates :category, presence: true
 
   BALANCE_EFFECTS = [
