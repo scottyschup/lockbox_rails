@@ -39,6 +39,14 @@ describe CreateSupportRequest do
       .by(1)
   end
 
+  context "if creation of the lockbox action fails" do
+    before { allow(LockboxAction).to receive(:create).and_return(LockboxAction.new) }
+
+    it "does not create a support request" do
+      expect{CreateSupportRequest.call(params: params)}.not_to change(SupportRequest, :count)
+    end
+  end
+
   context "partner notification email" do
     let(:delivery) do
       instance_double(

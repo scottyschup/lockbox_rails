@@ -19,6 +19,8 @@ class CreateSupportRequest
 
   attr_accessor :support_request
 
+  class ValidationError < StandardError; end
+
   def call
     ActiveRecord::Base.transaction do
       self.support_request = SupportRequest.create(
@@ -29,7 +31,9 @@ class CreateSupportRequest
         user_id: params[:user_id]
       )
 
-      fail!(support_request.errors.full_messages.join(', ')) unless support_request.valid?
+      unless support_request.valid? && support_request.persisted?
+        raise ValidationError, support_request.errors.full_messages.join(', ')
+      end
 
       lockbox_action = LockboxAction.create(
         eff_date: params[:lockbox_action][:eff_date],
@@ -39,16 +43,26 @@ class CreateSupportRequest
         support_request: support_request
       )
 
-      fail!(lockbox_action.errors.full_messages.join(', ')) unless lockbox_action.valid?
+      unless lockbox_action.valid? && lockbox_action.persisted?
+        raise ValidationError, lockbox_action.errors.full_messages.join(', ')
+      end
 
       params[:lockbox_action][:lockbox_transactions]
         .select { |lt| lt[:amount] != "" }
         .each do |item|
-        lockbox_action.lockbox_transactions.create(
-          amount:   item[:amount],
-          balance_effect: LockboxTransaction::DEBIT,
-          category:       item[:category]
-        )
+          lockbox_transaction = lockbox_action.lockbox_transactions.create(
+            amount:   item[:amount],
+            balance_effect: LockboxTransaction::DEBIT,
+            category:       item[:category]
+          )
+
+          unless lockbox_transaction.valid? && lockbox_transaction.persisted?
+            raise ValidationError, lockbox_transaction.errors.full_messages.join(', ')
+          end
+        end
+
+      unless lockbox_action.lockbox_transactions.exists?
+        raise ValidationError, "Amount must be greater than $0"
       end
     end
 
@@ -57,6 +71,8 @@ class CreateSupportRequest
     send_low_balance_alert if support_request.lockbox_partner.low_balance?
 
     support_request
+  rescue CreateSupportRequest::ValidationError => err
+    fail!(err.message)
   end
 
   def send_low_balance_alert
