@@ -14,13 +14,14 @@ class LockboxTransaction < ApplicationRecord
   ].freeze
 
   EXPENSE_CATEGORIES = [
-    GAS        = 'gas',
-    PARKING    = 'parking',
-    TRANSIT    = 'transit',
-    CHILDCARE  = 'childcare',
-    MEDICINE   = 'medicine',
-    FOOD       = 'food',
-    ADJUSTMENT = 'adjustment'
+    GAS           = 'gas',
+    PARKING       = 'parking',
+    TRANSIT       = 'transit',
+    CHILDCARE     = 'childcare',
+    MEDICINE      = 'medicine',
+    FOOD          = 'food',
+    ADJUSTMENT    = 'adjustment',
+    CASH_ADDITION = 'cash_addition'
   ].freeze
 
   def eff_date
