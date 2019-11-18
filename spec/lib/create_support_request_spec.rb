@@ -90,6 +90,29 @@ describe CreateSupportRequest do
     end
   end
 
+  context "when one of the lockbox transactions is completely blank" do
+    let(:lockbox_transactions) do
+      [
+        {
+          amount:   42.42,
+          category: "gas"
+        },
+        {
+          amount:   "",
+          category: ""
+        }
+      ]
+    end
+
+    it "succeeds" do
+      expect(subject).to be_success
+    end
+
+    it "does not create a support request" do
+      expect{subject}.to change(SupportRequest, :count).by(1)
+    end
+  end
+
   context "partner notification email" do
     let(:delivery) do
       instance_double(

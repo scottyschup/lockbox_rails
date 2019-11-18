@@ -48,7 +48,7 @@ class CreateSupportRequest
       end
 
       params[:lockbox_action][:lockbox_transactions]
-        .select { |lt| lt[:amount] != "" }
+        .reject { |lt| lt[:amount].blank? && lt[:category].blank? }
         .each do |item|
           lockbox_transaction = lockbox_action.lockbox_transactions.create(
             amount:   item[:amount],
