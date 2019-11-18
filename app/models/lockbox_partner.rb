@@ -26,9 +26,9 @@ class LockboxPartner < ApplicationRecord
   def balance(exclude_pending: false)
     relevant_transactions_for_balance(exclude_pending: exclude_pending).inject(Money.zero) do |balance, action|
       case action.balance_effect
-      when 'credit'
+      when LockboxTransaction::CREDIT
         balance += action.amount
-      when 'debit'
+      when LockboxTransaction::DEBIT
         balance -= action.amount
       end
       balance

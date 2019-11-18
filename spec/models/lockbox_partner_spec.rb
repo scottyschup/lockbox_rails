@@ -14,7 +14,7 @@ describe LockboxPartner, type: :model do
     ).tap do |action|
       action.lockbox_transactions.create!(
         amount_cents: 1000_00,
-        balance_effect: 'credit',
+        balance_effect: LockboxTransaction::CREDIT,
         category: LockboxTransaction::GAS
       )
     end
@@ -29,7 +29,7 @@ describe LockboxPartner, type: :model do
       amount_breakdown.each do |amt_cents|
         lb_action.lockbox_transactions.create!(
           amount_cents: amt_cents,
-          balance_effect: 'debit',
+          balance_effect: LockboxTransaction::DEBIT,
           category: LockboxTransaction::GAS
         )
       end
