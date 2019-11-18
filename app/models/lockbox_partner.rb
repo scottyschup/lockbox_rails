@@ -5,6 +5,7 @@ class LockboxPartner < ApplicationRecord
 
   validates :name, presence: true
   validates :phone_number, presence: true
+  has_paper_trail
 
   # Number of days since last reconciliation when clinic user will be prompted
   # to reconcile the lockbox. TODO make this configurable (issue #138)
