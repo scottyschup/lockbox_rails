@@ -15,6 +15,7 @@ class SupportRequest < ApplicationRecord
 
   # Sometimes the UUID will already have been created elsewhere, and sometimes not
   before_validation :populate_client_ref_id
+  has_paper_trail
 
   # for grepability:
   # scope :pending

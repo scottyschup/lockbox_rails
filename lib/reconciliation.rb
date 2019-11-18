@@ -30,7 +30,8 @@ class Reconciliation
 
         lockbox_transaction = lockbox_action.lockbox_transactions.create!(
           amount: difference.abs,
-          balance_effect: balance_effect(difference)
+          balance_effect: balance_effect(difference),
+          category: LockboxTransaction::ADJUSTMENT
         )
 
         unless lockbox_transaction.valid?

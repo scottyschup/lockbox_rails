@@ -4,8 +4,18 @@ require './lib/add_cash_to_lockbox'
 
 describe CreateSupportRequest do
   let(:mac_user) { FactoryBot.create(:user) }
+
   let(:lockbox_partner) do
     FactoryBot.create(:lockbox_partner, :active)
+  end
+
+  let(:lockbox_transactions) do
+    [
+      {
+        amount:       42.42,
+        category:     "gas"
+      }
+    ]
   end
 
   let(:params) do
@@ -16,27 +26,114 @@ describe CreateSupportRequest do
       lockbox_partner_id: lockbox_partner.id,
       lockbox_action: {
         eff_date:         Date.current,
-        lockbox_transactions: [
-          {
-            amount:       42.42,
-            category:     "gas"
-          }
-        ]
+        lockbox_transactions: lockbox_transactions
       },
       user_id:            mac_user.id,
     }
   end
 
+  subject { CreateSupportRequest.call(params: params) }
+
   it 'works' do
-    result = CreateSupportRequest.call(params: params)
+    result = subject
     expect(result).to be_success
     expect(result.value).to be_an_instance_of(SupportRequest)
   end
 
   it "creates a note" do
-    expect{CreateSupportRequest.call(params: params)}
-      .to change{Note.count}
-      .by(1)
+    expect{subject}.to change{Note.count}.by(1)
+  end
+
+  context "if creation of the lockbox action fails" do
+    before { allow(LockboxAction).to receive(:create).and_return(LockboxAction.new) }
+
+    it "fails" do
+      expect(subject).not_to be_success
+    end
+
+    it "does not create a support request" do
+      expect{subject}.not_to change(SupportRequest, :count)
+    end
+  end
+
+  context "if no lockbox transactions are provided" do
+    let(:lockbox_transactions) { [] }
+
+    it "fails" do
+      expect(subject).not_to be_success
+    end
+
+    it "does not create a support request" do
+      expect{subject}.not_to change(SupportRequest, :count)
+    end
+  end
+
+  context "when one of the lockbox transactions has no category" do
+    let(:lockbox_transactions) do
+      [
+        {
+          amount:   42.42,
+          category: "gas"
+        },
+        {
+          amount:   10.00
+        }
+      ]
+    end
+
+    it "fails" do
+      expect(subject).not_to be_success
+    end
+
+    it "does not create a support request" do
+      expect{subject}.not_to change(SupportRequest, :count)
+    end
+  end
+
+  context "when one of the lockbox transactions has no amount" do
+    let(:lockbox_transactions) do
+      [
+        {
+          amount:   42.42,
+          category: "gas"
+        },
+        {
+          amount:   "",
+          category: "gas"
+        }
+      ]
+    end
+
+    it "fails" do
+      expect(subject).not_to be_success
+    end
+
+    it "does not create a support request" do
+      expect{subject}.not_to change(SupportRequest, :count)
+    end
+  end
+
+  context "when one of the lockbox transactions is completely blank" do
+    let(:lockbox_transactions) do
+      [
+        {
+          amount:   42.42,
+          category: "gas"
+        },
+        {
+          amount:   "",
+          category: ""
+        }
+      ]
+    end
+
+    it "succeeds" do
+      expect(subject).to be_success
+    end
+
+    it "does not create a support request" do
+      expect{subject}.to change(SupportRequest, :count).by(1)
+    end
   end
 
   context "partner notification email" do
