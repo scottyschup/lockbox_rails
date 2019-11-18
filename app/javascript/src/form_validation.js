@@ -2,7 +2,7 @@
 // 2. Add an event listner to remove `.pristine` once an input has been
 // interacted with.
 const addPristineToInputs = () => {
-  const inputs = document.querySelectorAll("input, select");
+  const inputs = document.querySelectorAll("input:not([type=submit]):not([type=hidden]), select");
   for (let i = 0; i < inputs.length; i++) {
     let input = inputs[i];
     if (input.value === "") {
@@ -16,7 +16,7 @@ const addPristineToInputs = () => {
 
 // Remove `.pristine` from all inputs when submit button is clicked.
 const removePristineFromInputs = () => {
-  const inputs = document.querySelectorAll("input, select");
+  const inputs = document.querySelectorAll("input:not([type=submit]):not([type=hidden]), select");
   for (let i = 0; i < inputs.length; i++) {
     let input = inputs[i];
     input.classList.remove("pristine");
