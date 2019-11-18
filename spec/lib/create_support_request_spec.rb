@@ -68,7 +68,7 @@ describe CreateSupportRequest do
     end
   end
 
-  context "when one of the lockbox transactions is invalid" do
+  context "when one of the lockbox transactions has no category" do
     let(:lockbox_transactions) do
       [
         {
@@ -76,7 +76,30 @@ describe CreateSupportRequest do
           category: "gas"
         },
         {
-          amount:   0.00
+          amount:   10.00
+        }
+      ]
+    end
+
+    it "fails" do
+      expect(subject).not_to be_success
+    end
+
+    it "does not create a support request" do
+      expect{subject}.not_to change(SupportRequest, :count)
+    end
+  end
+
+  context "when one of the lockbox transactions has no amount" do
+    let(:lockbox_transactions) do
+      [
+        {
+          amount:   42.42,
+          category: "gas"
+        },
+        {
+          amount:   "",
+          category: "gas"
         }
       ]
     end
