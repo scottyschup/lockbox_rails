@@ -40,7 +40,11 @@ describe LockboxPartnersController do
       post :create, params: {
         lockbox_partner: {
           name: "new partner",
-          phone_number: "5555555556"
+          street_address: "123 some st",
+          city: "City",
+          state: "IL",
+          zip_code: "12345",
+          phone_number: "3125551234"
         }
       }
     end
