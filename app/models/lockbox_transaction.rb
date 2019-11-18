@@ -5,7 +5,8 @@ class LockboxTransaction < ApplicationRecord
 
   belongs_to :lockbox_action
 
-  validates :amount_cents, :numericality => { :greater_than_or_equal_to => 0 }
+  validates :amount_cents, numericality: { greater_than: 0 }
+  validates :category, presence: true
   has_paper_trail
 
   BALANCE_EFFECTS = [
@@ -14,13 +15,14 @@ class LockboxTransaction < ApplicationRecord
   ].freeze
 
   EXPENSE_CATEGORIES = [
-    GAS        = 'gas',
-    PARKING    = 'parking',
-    TRANSIT    = 'transit',
-    CHILDCARE  = 'childcare',
-    MEDICINE   = 'medicine',
-    FOOD       = 'food',
-    ADJUSTMENT = 'adjustment'
+    GAS           = 'gas',
+    PARKING       = 'parking',
+    TRANSIT       = 'transit',
+    CHILDCARE     = 'childcare',
+    MEDICINE      = 'medicine',
+    FOOD          = 'food',
+    ADJUSTMENT    = 'adjustment',
+    CASH_ADDITION = 'cash_addition'
   ].freeze
 
   def eff_date
