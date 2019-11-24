@@ -371,7 +371,7 @@ DEPENDENCIES
   factory_bot_rails (~> 5.0, >= 5.0.1)
   faker!
   font-awesome-rails
-  font_assets
+  font_assets (>= 0.1.14)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   money-rails (~> 1.12)
