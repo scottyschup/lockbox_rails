@@ -3,7 +3,6 @@
     <%= render partial: 'dashboard/lockbox_partner', object: @lockbox_partner, as: :lockbox_partner %>
   <% else %>
     <div id="dashboard-lockbox-partners">
-      <h2>Welcome, <%= current_user.name %>!</h2>
       <%= render partial: 'lockbox_partners/dashboard_header' %>
       <p>
         <strong>Current View:</strong>

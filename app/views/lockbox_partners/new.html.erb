@@ -1,4 +1,5 @@
-<%= render partial: 'lockbox_partners/dashboard_header' %>
+<div id="dashboard-lockbox-partners">
+  <%= render partial: 'lockbox_partners/dashboard_header' %>
 <div id="new-lockbox-form" class="container">
   <%= form_for @lockbox_partner, html: { class: 'form' } do |f| %>
     <h2>Add a new lockbox partner</h2>
@@ -28,4 +29,5 @@
     </div>
     <%= f.submit 'Add New Partner', class: 'btn btn-primary' %>
   <% end %>
+</div>
 </div>
