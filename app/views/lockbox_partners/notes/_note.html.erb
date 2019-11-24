@@ -2,5 +2,11 @@
   <td><%= note.created_at.strftime('%Y/%m/%d %I:%M %p') %></td>
   <td><%= note.author %></td>
   <td><%= note.text %></td>
-  <td class="font-weight-bold"><a href="#" class="edit-note-button">Edit <%= fa_icon "arrow-right" %></a></td>
+  <td class="font-weight-bold">
+    <% if note.user %>
+      <a href="#" class="edit-note-button">
+        Edit <%= fa_icon "arrow-right" %>
+      </a>
+    <% end %>
+  </td>
 </tr>
