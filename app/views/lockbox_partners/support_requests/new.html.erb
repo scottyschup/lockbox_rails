@@ -1,5 +1,7 @@
 <% if @lockbox_partner.nil? || @lockbox_partner.active? %>
   <div id="dashboard-lockbox-partners">
+    <%= link_to 'Back to dashboard', lockbox_partners_path, class: 'float-left' %>
+    <br/>
     <%= render partial: 'lockbox_partners/dashboard_header' %>
     <div id="support-request-form">
       <% if @lockbox_partner %>
