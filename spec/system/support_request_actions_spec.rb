@@ -29,12 +29,13 @@ RSpec.describe "Support Request Actions", type: :system do
     assert_selector "h3", text: "Support Request for Leafy Greens"
     click_link "Add Note"
     fill_in "note_text", with: "Here's some fine & fancy note text!"
-
+    sleep(1)
     # Sleep for 1 second to avoid a race condition in slower environments (e.g., CircleCI)
-    expect{ click_button "Save Note"; sleep(1) }.to change{ support_request.notes.count }.by(1)
+    expect{ find_button("Save Note").click; sleep(1) }.to change{ support_request.notes.count }.by(1)
     click_link "Edit note"
     fill_in "note_text", with: "foobar"
-    expect{ click_button "Save Note"; sleep(1) }.to change { support_request.notes.last.text }.to("foobar")
+    sleep(1)
+    expect{ find_button("Save Note").click; sleep(1) }.to change { support_request.notes.last.text }.to("foobar")
   end
 
 end

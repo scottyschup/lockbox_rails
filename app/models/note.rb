@@ -7,7 +7,7 @@ class Note < ApplicationRecord
 
   def author
     if user
-      user.name || "User #{user.id}"
+      user.display_name
     else
       "System Generated"
     end

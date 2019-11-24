@@ -37,7 +37,7 @@ describe LockboxAction, type: :model do
       FactoryBot.create(:lockbox_action, :support_client).tap do |action|
         action.lockbox_transactions.create(
           amount_cents: 20_00,
-          category: 'gas'
+          category: LockboxTransaction::GAS
         )
         action.lockbox_transactions.create(
           amount_cents: 20_00,
@@ -66,8 +66,10 @@ describe LockboxAction, type: :model do
         subject.cancel!
       end
 
-      it "returns zero" do
+      it "returns zero and creates a version record" do
         expect(subject.amount).to eq(Money.zero)
+        expect(subject.versions.count).to eq 2
+        expect(subject.versions.last.changeset['status']).to eq ["pending", "canceled"]
       end
     end
   end

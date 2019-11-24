@@ -5,6 +5,7 @@ class LockboxPartner < ApplicationRecord
 
   validates :name, presence: true
   validates :phone_number, presence: true
+  has_paper_trail
 
   # Number of days since last reconciliation when clinic user will be prompted
   # to reconcile the lockbox. TODO make this configurable (issue #138)
@@ -26,9 +27,9 @@ class LockboxPartner < ApplicationRecord
   def balance(exclude_pending: false)
     relevant_transactions_for_balance(exclude_pending: exclude_pending).inject(Money.zero) do |balance, action|
       case action.balance_effect
-      when 'credit'
+      when LockboxTransaction::CREDIT
         balance += action.amount
-      when 'debit'
+      when LockboxTransaction::DEBIT
         balance -= action.amount
       end
       balance

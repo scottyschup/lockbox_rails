@@ -6,7 +6,7 @@ FactoryBot.define do
     lockbox_action { build(:lockbox_action) }
 
     trait :for_add_cash do
-      balance_effect { 'credit' }
+      balance_effect { LockboxTransaction::CREDIT }
     end
   end
 end
