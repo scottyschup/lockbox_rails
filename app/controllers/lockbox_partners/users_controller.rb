@@ -12,7 +12,7 @@ class LockboxPartners::UsersController < ApplicationController
     if @user.save
       flash.clear
       flash[:notice] = "New user created for Lockbox Partner #{@lockbox_partner.name}"
-      redirect_to lockbox_partner_users_path(@lockbox_partner)
+      redirect_back(fallback_location: root_path)
     else
       flash[:alert] = @user.errors.full_messages.join(', ')
       render :index
@@ -37,17 +37,17 @@ class LockboxPartners::UsersController < ApplicationController
       flash.clear
       locked_status = @user.locked_at.nil? ? 'unlocked' : 'locked'
       flash[:notice] = "User account for #{@user.email} has been #{locked_status}."
-      redirect_to lockbox_partner_users_path
+      redirect_back(fallback_location: root_path)
     else
       flash[:alert] = @user.errors.full_messages.join(', ')
-      redirect_to lockbox_partner_users_path
+      redirect_back(fallback_location: root_path)
     end
   end
 
   def resend_invite
     @user = User.find(params[:user_id])
     @user.send_confirmation_instructions
-    redirect_to lockbox_partner_users_path
+    redirect_back(fallback_location: root_path)
   end
 
   private
