@@ -41,7 +41,8 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
   ).tap do |action|
     action.lockbox_transactions.create!(
       amount_cents: 1000_00,
-      balance_effect: LockboxTransaction::CREDIT
+      balance_effect: LockboxTransaction::CREDIT,
+      category: LockboxTransaction::CASH_ADDITION
     )
   end
 
