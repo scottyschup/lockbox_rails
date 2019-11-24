@@ -3,8 +3,12 @@ require 'rails_helper'
 describe LockboxPartners::UsersController do
   let(:lockbox_partner) { create(:lockbox_partner, :active) }
   let(:user) { create(:user, role: 'admin', lockbox_partner: lockbox_partner) }
+  let(:back) { "from when I came" }
 
-  before { sign_in(user) }
+  before do
+    sign_in(user)
+    request.env["HTTP_REFERER"] = back
+  end
 
   describe '#create' do
     let(:params) do
@@ -34,7 +38,11 @@ describe LockboxPartners::UsersController do
           .to receive(:[]=)
           .with(:notice, "New user created for Lockbox Partner #{lockbox_partner.name}")
 
-        post :create, params: params
+        expect { post :create, params: params }
+          .to change { lockbox_partner.users.count }
+          .by(1)
+
+        expect(response).to redirect_to(back)
       end
     end
 
@@ -53,7 +61,10 @@ describe LockboxPartners::UsersController do
           .to receive(:[]=)
           .with(:alert, "Email can't be blank")
 
-        post :create, params: erroneous_params
+        expect { post :create, params: erroneous_params }
+          .not_to change { lockbox_partner.users.count }
+
+        expect(response).to render_template(:index)
       end
     end
   end
