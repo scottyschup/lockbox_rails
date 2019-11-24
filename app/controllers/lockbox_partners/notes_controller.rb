@@ -1,6 +1,7 @@
 class LockboxPartners::NotesController < ApplicationController
   before_action :find_commentable, only: %w[create]
   before_action :find_note, except: [:create]
+  before_action :ensure_not_system_created_note, only: [:edit, :update]
 
   def create
     @note = @commentable.notes.build(note_params.merge(user_id: current_user.id))
@@ -79,5 +80,12 @@ class LockboxPartners::NotesController < ApplicationController
 
   def find_note
     @note = Note.find(params[:id])
+  end
+
+  def ensure_not_system_created_note
+    unless @note.user
+      flash[:error] = "You are not authorized to access this page"
+      return redirect_to root_path
+    end
   end
 end
