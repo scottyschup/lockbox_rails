@@ -4,7 +4,11 @@ class LockboxPartner < ApplicationRecord
   has_many :support_requests, dependent: :destroy
 
   validates :name, presence: true
-  validates :phone_number, presence: true
+  validates :street_address, presence: true
+  validates :city, presence: true
+  validates :state, presence: true
+  validates :zip_code, presence: true, format: { with: /[0-9]{5}/ }
+  validates :phone_number, presence: true, format: { with: /[0-9]{10}/ }
   has_paper_trail
 
   # Number of days since last reconciliation when clinic user will be prompted

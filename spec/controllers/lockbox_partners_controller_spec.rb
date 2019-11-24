@@ -40,7 +40,11 @@ describe LockboxPartnersController do
       post :create, params: {
         lockbox_partner: {
           name: "new partner",
-          phone_number: "555-555-5556"
+          street_address: "123 some st",
+          city: "City",
+          state: "IL",
+          zip_code: "12345",
+          phone_number: "3125551234"
         }
       }
     end
@@ -142,7 +146,7 @@ describe LockboxPartnersController do
     before do
       @new_name = authorized_lockbox_partner.name + SecureRandom.uuid
       sign_in(user)
-      put :update, params: { 
+      put :update, params: {
         id: authorized_lockbox_partner.id,
         lockbox_partner: {
           name: @new_name

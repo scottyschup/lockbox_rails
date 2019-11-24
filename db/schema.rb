@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2019_11_17_222848) do
     t.string "city"
     t.string "state"
     t.string "zip_code"
+    t.string "phone_ext"
   end
 
   create_table "lockbox_transactions", force: :cascade do |t|
