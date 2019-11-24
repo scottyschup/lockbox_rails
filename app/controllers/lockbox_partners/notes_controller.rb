@@ -85,7 +85,7 @@ class LockboxPartners::NotesController < ApplicationController
   def ensure_not_system_created_note
     unless @note.user
       flash[:error] = "You are not authorized to access this page"
-      return render status: 401, nothing: true
+      return render status: 401, body: nil
     end
   end
 end
