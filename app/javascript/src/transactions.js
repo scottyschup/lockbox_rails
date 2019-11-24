@@ -76,4 +76,5 @@ const setupMileage = () => {
 document.addEventListener('turbolinks:load', () => {
   setupTotal();
   setupMileage();
+  console.log('transactions');
 });

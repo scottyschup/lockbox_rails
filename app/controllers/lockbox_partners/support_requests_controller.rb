@@ -16,7 +16,11 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   end
 
   def create
-    result = CreateSupportRequest.call(params: all_support_request_params)
+    merged_params = support_request_params.merge(
+      lockbox_partner_id: params[:lockbox_partner_id],
+      user_id: current_user.id
+    )
+    result = CreateSupportRequest.call(params: merged_params)
     if result.success?
       @support_request = result.value
       redirect_to lockbox_partner_support_request_path(@support_request.lockbox_partner, @support_request)
@@ -86,13 +90,6 @@ class LockboxPartners::SupportRequestsController < ApplicationController
 
   private
 
-  def all_support_request_params
-    support_request_params
-      .merge(lockbox_action: lockbox_action_params)
-      .merge(user_id: current_user.id)
-      .merge(lockbox_partner_id: params[:lockbox_partner_id])
-  end
-
   def support_request_params
     params.require(:support_request).permit(
       :client_ref_id,
@@ -115,16 +112,6 @@ class LockboxPartners::SupportRequestsController < ApplicationController
 
   def update_status_params
     params.permit(:status)
-  end
-
-  def lockbox_action_params
-    params.require(:lockbox_action).permit(
-      :eff_date,
-      lockbox_transactions: [
-        :amount,
-        :category
-      ]
-    )
   end
 
 end

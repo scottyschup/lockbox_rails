@@ -3,18 +3,6 @@ require 'verbalize'
 class CreateSupportRequest
   include Verbalize::Action
 
-  # This is what params input looks like
-  #
-  # lockbox_partner_id: Integer
-  # name_or_alias: String
-  # user_id: Integer
-  # client_ref_id: String
-  # lockbox_action: {
-  #   eff_date: Date,
-  #   lockbox_transactions: [
-  #     { amount: Money, category: String }
-  #   ]
-  # }
   input :params
 
   attr_accessor :support_request
@@ -36,7 +24,7 @@ class CreateSupportRequest
       end
 
       lockbox_action = LockboxAction.create(
-        eff_date: params[:lockbox_action][:eff_date],
+        eff_date: params[:lockbox_action_attributes][:eff_date],
         action_type: LockboxAction::SUPPORT_CLIENT,
         status: LockboxAction::PENDING,
         lockbox_partner_id: params[:lockbox_partner_id],
@@ -47,7 +35,7 @@ class CreateSupportRequest
         raise ValidationError, lockbox_action.errors.full_messages.join(', ')
       end
 
-      params[:lockbox_action][:lockbox_transactions]
+      params[:lockbox_action_attributes][:lockbox_transactions_attributes].values
         .reject { |lt| lt[:amount].blank? && lt[:category].blank? }
         .each do |item|
           lockbox_transaction = lockbox_action.lockbox_transactions.create(

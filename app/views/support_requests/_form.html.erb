@@ -1,9 +1,9 @@
 <div id="support-request-form" class="container">
-  <%= form_with model: @support_request, url: path, class: 'form' do |f| %>
+  <%= form_with model: @support_request, url: path, class: 'form', remote: true do |f| %>
     <h2>
       <%= form_action %> support request
     </h2>
-    <%= f.fields_for :lockbox_action do |la| %>
+    <%= f.fields_for :lockbox_action, @support_request.lockbox_action || empty_lockbox_action do |la| %>
       <div class="form-group">
         <%= la.label :eff_date, 'Pick-up Date' %>
         <%= la.date_field :eff_date, class: 'form-control' %>
