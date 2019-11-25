@@ -4,8 +4,8 @@
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
 
-<p> <%= link_to 'Here is a very quick walk-through on how to use the Lockbox app', 'https://docs.google.com/document/d/1bhUsBvOoS8E15s8XPrQMejrZONrp-DuZJ42AjPf2odw/edit?usp=sharing' %>. Please do keep this manual confidential and don't save a copy on your computer, or print it out. The best way to reference the walk-through in the future is to bookmark the link above, or save this email. </p>
+<p> <%= link_to 'Here is a very quick walk-through on how to use the Lockbox app', ENV['LOCKBOX_APP_WALKTHROUGH_LINK'] %>. Please do keep this manual confidential and don't save a copy on your computer, or print it out. The best way to reference the walk-through in the future is to bookmark the link above, or save this email. </p>
 
-<p> If you have any other questions about how to use this app, or about why your account was created, please forward this email with your questions to  <%= mail_to "lockbox@midwestaccesscoalition.org" %> </p>
+<p> If you have any other questions about how to use this app, or about why your account was created, please forward this email with your questions to  <%= mail_to ENV['LOCKBOX_EMAIL'] %> </p>
 
 <p> Thank you for all that you do to provide healthcare for those who need it. </p>
