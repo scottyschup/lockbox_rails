@@ -70,22 +70,48 @@ describe LockboxPartners::UsersController do
   end
 
   describe '#update' do
-    context 'when params does not contain lock_user' do
-      it 'does nothing' do
+    let(:user_to_update) { FactoryBot.create(:user, lockbox_partner: lockbox_partner) }
+    let(:base_params) do
+      {
+        lockbox_partner_id: lockbox_partner.id,
+        id: user_to_update.id
+      }
+    end
 
+    context 'when params does not contain lock_user' do
+      let(:params) { base_params }
+
+      it 'does nothing' do
+        expect { patch :update, params: params }
+          .not_to change { user.locked? }
+        expect(response.status).to eq(400)
       end
     end
 
     context 'when params includes lock_user' do
-      context 'when lock_user is true' do
-        it 'locks the account' do
+      let(:params) { base_params.merge(lock_user: should_lock) }
 
+      context 'when lock_user is true' do
+        let(:should_lock) { true }
+        before { user_to_update.update!(locked_at: nil) }
+
+        it 'locks the account' do
+          expect { patch :update, params: params }
+            .to change { user_to_update.reload.status }
+            .from("active")
+            .to("locked")
         end
       end
 
       context 'when lock_user is false' do
-        it 'unlocks the account' do
+        let(:should_lock) { false }
+        before { user_to_update.update!(locked_at: Time.current) }
 
+        it 'unlocks the account' do
+          expect { patch :update, params: params }
+            .to change { user_to_update.reload.status }
+            .from("locked")
+            .to("active")
         end
       end
     end

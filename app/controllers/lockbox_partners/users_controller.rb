@@ -25,8 +25,9 @@ class LockboxPartners::UsersController < ApplicationController
   end
 
   def update
-    return if params[:lock_user].nil?
+    return render status: 400, body: nil if params[:lock_user].nil?
     @user = User.find(params[:id])
+
     if params[:lock_user]
       @user.locked_at = Time.current
     else
