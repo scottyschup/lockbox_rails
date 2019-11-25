@@ -15,6 +15,7 @@ class SupportRequest < ApplicationRecord
 
   # Sometimes the UUID will already have been created elsewhere, and sometimes not
   before_validation :populate_client_ref_id
+  has_paper_trail
 
   # for grepability:
   # scope :pending
@@ -73,6 +74,22 @@ class SupportRequest < ApplicationRecord
       "at #{created_at.strftime("%I:%M %p %:::z")} " \
       "on #{created_at.strftime("%B %d, %Y")}"
     notes.create(text: note_text)
+  end
+
+  def send_status_update_alert(original_status:, user:)
+    # This likely means the status update was submitted twice. To avoid
+    # confusion, we shouldn't send the email in that case.
+    return if original_status == status
+    date = Date.current
+    SupportRequestMailer
+      .with(
+        date: date,
+        original_status: original_status,
+        support_request: self,
+        user: user
+      )
+      .status_update_alert
+      .deliver_now
   end
 
   private

@@ -3,11 +3,12 @@
 }
 
 .form-control {
-  border: solid 1px black;
+  border: 1px solid black;
   border-radius: 0px;
 }
 
-.form-group > label, .field_with_errors > label {
+.form-group > label,
+.field_with_errors > label {
   font-weight: bolder;
 }
 
@@ -30,5 +31,12 @@
 
   h2 {
     font-size: 14px;
+  }
+}
+
+input,
+select {
+  &:invalid:not(.pristine) {
+    outline: 1px solid red;
   }
 }
