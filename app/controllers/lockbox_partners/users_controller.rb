@@ -25,19 +25,20 @@ class LockboxPartners::UsersController < ApplicationController
   end
 
   def update
-    return render status: 400, body: nil if params[:lock_user].nil?
+    update_action = params[:update_action]
+    return render status: 400, body: nil if update_action.nil?
     @user = User.find(params[:id])
 
-    if params[:lock_user]
+    case update_action
+    when 'lock'
       @user.locked_at = Time.current
-    else
+    when 'unlock'
       @user.locked_at = nil
     end
 
     if @user.save
       flash.clear
-      locked_status = @user.locked_at.nil? ? 'unlocked' : 'locked'
-      flash[:notice] = "User account for #{@user.email} has been #{locked_status}."
+      flash[:notice] = "User account for #{@user.email} has been #{update_action}ed."
       redirect_back(fallback_location: root_path)
     else
       flash[:alert] = @user.errors.full_messages.join(', ')

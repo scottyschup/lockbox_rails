@@ -83,16 +83,16 @@ describe LockboxPartners::UsersController do
 
       it 'does nothing' do
         expect { patch :update, params: params }
-          .not_to change { user.locked? }
+          .not_to change { user_to_update.reload.status }
         expect(response.status).to eq(400)
       end
     end
 
     context 'when params includes lock_user' do
-      let(:params) { base_params.merge(lock_user: should_lock) }
+      let(:params) { base_params.merge(update_action: update_action) }
 
-      context 'when lock_user is true' do
-        let(:should_lock) { true }
+      context 'when locking the account' do
+        let(:update_action) { 'lock' }
         before { user_to_update.update!(locked_at: nil) }
 
         it 'locks the account' do
@@ -100,11 +100,12 @@ describe LockboxPartners::UsersController do
             .to change { user_to_update.reload.status }
             .from("active")
             .to("locked")
+          expect(response).to redirect_to(back)
         end
       end
 
-      context 'when lock_user is false' do
-        let(:should_lock) { false }
+      context 'when unlocking the account' do
+        let(:update_action) { 'unlock' }
         before { user_to_update.update!(locked_at: Time.current) }
 
         it 'unlocks the account' do
@@ -112,14 +113,27 @@ describe LockboxPartners::UsersController do
             .to change { user_to_update.reload.status }
             .from("locked")
             .to("active")
+          expect(response).to redirect_to(back)
         end
       end
     end
   end
 
   describe '#resend_invite' do
+    let(:user_to_invite) { FactoryBot.create(:user, lockbox_partner: lockbox_partner) }
+    let(:params) do
+      {
+        lockbox_partner_id: lockbox_partner.id,
+        user_id: user_to_invite.id
+      }
+    end
     it 'resends account confirmation instructions' do
-
+      expect { get :resend_invite, params: params }
+        .to change { ActionMailer::Base.deliveries.count }
+        .by(1)
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq('Confirmation instructions')
+      expect(mail.to.first).to eq(user_to_invite.email)
     end
   end
 end
