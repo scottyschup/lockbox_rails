@@ -134,6 +134,7 @@ describe LockboxPartners::UsersController do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq('Confirmation instructions')
       expect(mail.to.first).to eq(user_to_invite.email)
+      expect(response).to redirect_to(back)
     end
   end
 end
