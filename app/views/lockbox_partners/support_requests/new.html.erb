@@ -1,6 +1,6 @@
 <% if @lockbox_partner.nil? || @lockbox_partner.active? %>
   <div id="dashboard-lockbox-partners">
-    <%= render partial: 'lockbox_partners/back_to_dashboard' %>
+    <%= render partial: 'lockbox_partners/back_to_dashboard', locals: {:alignment => 'left'} %>
     <br/>
     <%= render partial: 'lockbox_partners/dashboard_header' %>
     <div id="support-request-form">
