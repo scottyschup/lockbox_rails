@@ -1,5 +1,7 @@
 <% if user.available_action_text == 'Resend Invite' %>
-  <%= link_to(user.available_action_text, lockbox_partner_user_resend_invite_path(user.lockbox_partner, user)) %>
+  <%= form_tag(lockbox_partner_user_resend_invite_path(user.lockbox_partner, user), class: 'btn-as-link') do %>
+    <%= submit_tag(user.available_action_text) %>
+  <% end %>
 <% else %>
   <% update_action = user.available_action_text == 'Lock Account' ? 'lock' : 'unlock' %>
   <%= form_tag(lockbox_partner_user_path(user.lockbox_partner, user), method: 'put', class: 'btn-as-link') do %>

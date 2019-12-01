@@ -128,7 +128,7 @@ describe LockboxPartners::UsersController do
       }
     end
     it 'resends account confirmation instructions' do
-      expect { get :resend_invite, params: params }
+      expect { post :resend_invite, params: params }
         .to change { ActionMailer::Base.deliveries.count }
         .by(1)
       mail = ActionMailer::Base.deliveries.last

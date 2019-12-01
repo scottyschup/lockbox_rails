@@ -49,6 +49,7 @@ class LockboxPartners::UsersController < ApplicationController
   def resend_invite
     @user = User.find(params[:user_id])
     @user.send_confirmation_instructions
+    flash[:notice] = "Resent invitation to #{@user.email}."
     redirect_back(fallback_location: root_path)
   end
 
