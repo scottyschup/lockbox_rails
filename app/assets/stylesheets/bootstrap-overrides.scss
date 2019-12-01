@@ -30,14 +30,16 @@ a {
   }
 }
 
-.btn-active-tab:after {
+.btn-active {
+  padding-bottom: 0;
+}
+
+.btn-active:after {
   content:'';
-  // display: inline-block;
+  display: block;
   position: relative;
-  top: auto;
-  left: 0;
-  right: 0;
-  margin: 0px 0px 0px 60px;
+  top: 25%;
+  left: 48%;
   width: 0;
   height: 0;
   border-top: solid 10px $color-primary;

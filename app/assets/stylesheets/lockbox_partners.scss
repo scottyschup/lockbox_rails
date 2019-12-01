@@ -12,6 +12,11 @@
   }
 }
 
+.lockbox-partner-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
 .lockbox-activity {
   table {
     margin-top: 0;
