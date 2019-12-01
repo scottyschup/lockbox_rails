@@ -2,9 +2,15 @@
   <% if label %>
     <p>Update Status</p>
   <% end %>
-  <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <%= link_to '#', id: "dropdownMenuLink", :'data-toggle' => "dropdown", :'aria-haspopup' => true, :'aria-expanded' => false do %>
+    Update Status <i class="fa fa-angle-down"></i>
+  <% end %>
+  <p class="status-label">
     <%= support_request.status.capitalize %>
-  </a>
+  </p>
+  <!-- <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%= support_request.status.capitalize %>
+  </a> -->
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
     <% support_request.status_options.each do |option| %>
       <%= link_to option.capitalize,
