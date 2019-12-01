@@ -17,7 +17,7 @@ class UpdateSupportRequest
   #           _destroy: "false",
   #           id: "7"
   #         },
-  #         "1": {
+  #         1: {
   #           ...
   #         },
   #       }
@@ -42,6 +42,8 @@ class UpdateSupportRequest
 
     if support_request.update(params[:support_request])
       notate_changes
+    else
+      fail!(support_request.errors.full_messages.join(". "))
     end
 
     support_request

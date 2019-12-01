@@ -1,4 +1,5 @@
 require './lib/create_support_request'
+require './lib/update_support_request'
 
 class LockboxPartners::SupportRequestsController < ApplicationController
   before_action :require_admin, except: [:show, :update_status]
@@ -74,12 +75,17 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   end
 
   def update
-    @support_request = SupportRequest.includes(:notes).find(params[:id])
-    @lockbox_partner = @support_request.lockbox_partner
-    if @support_request.update(support_request_params)
+    result = UpdateSupportRequest.call(params: support_request_params)
+
+    if result.success?
+      flash[:notice] = "Support request was successfully updated"
+      @support_request = result.value
+      @lockbox_partner = @support_request.lockbox_partner
       redirect_to lockbox_partner_support_request_path(@support_request)
     else
-      render 'edit'
+      @support_request = SupportRequest.find(params[:id])
+      flash[:alert] = result.to_ary.last
+      redirect_to edit_lockbox_partner_support_request_path(@support_request)
     end
   end
 
@@ -93,19 +99,22 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   end
 
   def support_request_params
-    params.require(:support_request).permit(
-      :client_ref_id,
-      :name_or_alias,
-      :urgency_flag,
-      :lockbox_partner_id,
-      lockbox_action_attributes: [
-        :id,
-        :eff_date,
-        lockbox_transactions_attributes: [
+    params.permit(
+      :id,
+      support_request: [
+        :client_ref_id,
+        :name_or_alias,
+        :urgency_flag,
+        :lockbox_partner_id,
+        lockbox_action_attributes: [
           :id,
-          :amount,
-          :category,
-          :_destroy # Virtual attribute used to delete records
+          :eff_date,
+          lockbox_transactions_attributes: [
+            :id,
+            :amount,
+            :category,
+            :_destroy # Virtual attribute used to delete records
+          ]
         ]
       ]
     )
@@ -125,12 +134,4 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     )
   end
 
-  def support_request_params
-    params.require(:support_request).permit(
-      :client_ref_id,
-      :name_or_alias,
-      :urgency_flag,
-      :lockbox_partner_id
-    )
-  end
 end

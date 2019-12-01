@@ -40,8 +40,7 @@ describe UpdateSupportRequest do
           id: support_request.lockbox_action.id,
           lockbox_transactions_attributes: {
             "0" => {
-              amount: (lockbox_transaction.amount_cents/100.0 + 100).to_s,
-              category: "",
+              amount: (lockbox_transaction.amount_cents/100.0 + 1000).to_s,
               _destroy: "false",
               id: lockbox_transaction.id
             },
@@ -85,6 +84,62 @@ describe UpdateSupportRequest do
       expect(note.text).to include("The Client Reference ID for this Support Request was changed")
       expect(note.text).to include("The Client Alias for this Support Request was changed")
       expect(note.text).to include("The Urgency Flag for this Support Request was changed")
+  end
+
+  it "does not succeed if the support request can't be updated" do
+      result = nil
+      expect{result = UpdateSupportRequest.call(params: {id: support_request.id, support_request: {name_or_alias: ''}})}
+        .to change{Note.count}
+        .by(0)
+
+      expect(result).not_to be_success
+  end
+
+  it "does not succeed if the amount can't be updated" do
+    update_params = {
+      support_request: {
+        lockbox_action_attributes: {
+          id: support_request.lockbox_action.id,
+          lockbox_transactions_attributes: {
+            "0" => {
+              amount: "-100.0",
+              category: "",
+              _destroy: "false",
+              id: lockbox_transaction.id
+            },
+          }
+        },
+      },
+      lockbox_partner_id: support_request.lockbox_partner.id,
+      id: support_request.id
+    }
+
+    result = nil
+    expect{result = UpdateSupportRequest.call(params: update_params)}
+      .to change{Note.count}
+      .by(0)
+
+    expect(result).not_to be_success
+  end
+
+  it "does not succeed if the pickup date can't be updated" do
+    update_params = {
+      support_request: {
+        lockbox_action_attributes: {
+          eff_date: '',
+          id: support_request.lockbox_action.id,
+        },
+      },
+      lockbox_partner_id: support_request.lockbox_partner.id,
+      id: support_request.id
+    }
+
+    result = nil
+    expect{result = UpdateSupportRequest.call(params: update_params)}
+      .to change{Note.count}
+      .by(0)
+
+    expect(result).not_to be_success
   end
 end
 

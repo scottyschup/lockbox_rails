@@ -1,5 +1,8 @@
 <div id="support-request-form" class="container">
-  <%= form_with model: @support_request, url: lockbox_partner_support_request_path(@support_request), class: 'form' do |f| %>
+  <%= form_with model: @support_request, url: lockbox_partner_support_request_path(@support_request, lockbox_partner_id: @support_request.lockbox_partner_id), class: 'form' do |f| %>
+    <% @support_request.errors.full_messages.each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
     <h2>
       Edit support request
     </h2>
