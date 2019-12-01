@@ -10,7 +10,7 @@
   </p>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
     <% support_request.status_options.each do |option| %>
-      <%= link_to option.capitalize,
+      <%= link_to status_display_text(option, support_request),
         lockbox_partner_support_request_update_status_path(
           support_request_id: support_request.id,
           lockbox_partner_id: support_request.lockbox_partner_id,
