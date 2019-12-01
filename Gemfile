@@ -78,8 +78,10 @@ end
 group :test do
   # Adds support for Capybara system testing using Poltergeist
   gem 'capybara', '>= 2.15'
-  gem 'poltergeist'
   gem 'phantomjs', :require => 'phantomjs/poltergeist'
+  gem 'poltergeist'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'webdrivers', '~> 4.0'
 

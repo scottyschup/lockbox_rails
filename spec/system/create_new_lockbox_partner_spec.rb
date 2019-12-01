@@ -2,12 +2,11 @@ require 'rails_helper'
 require './lib/create_support_request'
 include StyleHelper
 
-RSpec.describe "Create new lockbox partner form", type: :system, js_errors: false do
+RSpec.describe "Create new lockbox partner form", type: :system do
   let!(:user) { FactoryBot.create(:user) }
   selector_string = "input:not([type=submit]):not([type=hidden]), select"
 
   before do
-    driven_by(:poltergeist)
     login_as(user, :scope => :user)
     visit("/")
     click_link("Create new lockbox partner")
