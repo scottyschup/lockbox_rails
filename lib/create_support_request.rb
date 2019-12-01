@@ -35,11 +35,16 @@ class CreateSupportRequest
         raise ValidationError, lockbox_action.errors.full_messages.join(', ')
       end
 
+      unless params[:lockbox_action_attributes][:lockbox_transactions_attributes]
+        raise ValidationError, "Must have at least one lockbox transaction"
+      end
+
       params[:lockbox_action_attributes][:lockbox_transactions_attributes].values
         .reject { |lt| lt[:amount].blank? && lt[:category].blank? }
         .each do |item|
           lockbox_transaction = lockbox_action.lockbox_transactions.create(
-            amount:   item[:amount],
+            amount:         item[:amount],
+            distance:       item[:distance],
             balance_effect: LockboxTransaction::DEBIT,
             category:       item[:category]
           )
@@ -47,10 +52,10 @@ class CreateSupportRequest
           unless lockbox_transaction.valid? && lockbox_transaction.persisted?
             raise ValidationError, lockbox_transaction.errors.full_messages.join(', ')
           end
-        end
 
-      unless lockbox_action.lockbox_transactions.exists?
-        raise ValidationError, "Amount must be greater than $0"
+        unless lockbox_action.lockbox_transactions.exists?
+          raise ValidationError, "Amount must be greater than $0"
+        end
       end
     end
 

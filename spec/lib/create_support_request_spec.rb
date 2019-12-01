@@ -10,12 +10,12 @@ describe CreateSupportRequest do
   end
 
   let(:lockbox_transactions) do
-    [
-      {
+    {
+      "0" => {
         amount:       42.42,
         category:     "gas"
       }
-    ]
+    }
   end
 
   let(:params) do
@@ -24,9 +24,9 @@ describe CreateSupportRequest do
       name_or_alias:      "some name",
       urgency_flag:       "urgent",
       lockbox_partner_id: lockbox_partner.id,
-      lockbox_action: {
+      lockbox_action_attributes: {
         eff_date:         Date.current,
-        lockbox_transactions: lockbox_transactions
+        lockbox_transactions_attributes: lockbox_transactions
       },
       user_id:            mac_user.id,
     }
@@ -57,7 +57,7 @@ describe CreateSupportRequest do
   end
 
   context "if no lockbox transactions are provided" do
-    let(:lockbox_transactions) { [] }
+    let(:lockbox_transactions) { nil }
 
     it "fails" do
       expect(subject).not_to be_success
@@ -70,15 +70,15 @@ describe CreateSupportRequest do
 
   context "when one of the lockbox transactions has no category" do
     let(:lockbox_transactions) do
-      [
-        {
+      {
+        "0" => {
           amount:   42.42,
           category: "gas"
         },
-        {
+        "1" => {
           amount:   10.00
         }
-      ]
+      }
     end
 
     it "fails" do
@@ -92,16 +92,16 @@ describe CreateSupportRequest do
 
   context "when one of the lockbox transactions has no amount" do
     let(:lockbox_transactions) do
-      [
-        {
+      {
+        "0": {
           amount:   42.42,
           category: "gas"
         },
-        {
+        "1": {
           amount:   "",
           category: "gas"
         }
-      ]
+      }
     end
 
     it "fails" do
@@ -115,16 +115,16 @@ describe CreateSupportRequest do
 
   context "when one of the lockbox transactions is completely blank" do
     let(:lockbox_transactions) do
-      [
-        {
-          amount:   42.42,
+      {
+        "0": {
+          amount: 42.42,
           category: "gas"
         },
-        {
-          amount:   "",
+        "1": {
+          amount: "",
           category: ""
         }
-      ]
+      }
     end
 
     it "succeeds" do
@@ -165,14 +165,14 @@ describe CreateSupportRequest do
         name_or_alias:      "some name",
         urgency_flag:       "urgent",
         lockbox_partner_id: low_balance_lockbox_partner.id,
-        lockbox_action: {
+        lockbox_action_attributes: {
           eff_date:         Date.current,
-          lockbox_transactions: [
-            {
+          lockbox_transactions_attributes: {
+            "0": {
               amount:       1,
               category:     "gas"
             }
-          ]
+          }
         },
         user_id:            mac_user.id,
       }
@@ -214,7 +214,7 @@ describe CreateSupportRequest do
 
       AddCashToLockbox.call!(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE + Money.new(15000)).complete!
 
-      params[:lockbox_action][:lockbox_transactions][0][:amount] = 100
+      params[:lockbox_action_attributes][:lockbox_transactions_attributes]["0"][:amount] = 100
       expect { CreateSupportRequest.call(params: params) }
         .to change{ActionMailer::Base.deliveries.length}.by(1)
     end

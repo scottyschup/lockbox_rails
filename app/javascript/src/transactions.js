@@ -25,6 +25,10 @@ const computeMileage = () => {
 const rowToGas = row => {
   const distance = $(row).find('.distance-field input');
   const amount = $(row).find('.amount-field input');
+  $(row).addClass('mileage-row');
+  $(row)
+    .find('.amount-field label')
+    .tooltip({ animation: false });
   distance.parent().show();
   distance.val(0);
   amount.val(0);
@@ -35,6 +39,10 @@ const rowToGas = row => {
 const rowFromGas = row => {
   const distance = $(row).find('.distance-field input');
   const amount = $(row).find('.amount-field input');
+  $(row).removeClass('mileage-row');
+  $(row)
+    .find('.amount-field label')
+    .tooltip('disable');
   distance.parent().hide();
   amount.prop('readonly', false);
   amount.focus();
@@ -76,5 +84,5 @@ const setupMileage = () => {
 document.addEventListener('turbolinks:load', () => {
   setupTotal();
   setupMileage();
-  console.log('transactions');
+  $('.mileage-row label').tooltip({ animation: false });
 });
