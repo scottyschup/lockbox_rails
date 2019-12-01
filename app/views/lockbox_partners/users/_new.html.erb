@@ -1,0 +1,18 @@
+<%= form_for @new_user, url: lockbox_partner_users_path(@lockbox_partner), html: { class: "form new-user-form" } do |f| %>
+  <h3>Invite lockbox partner users</h3>
+  <div class=<%= @new_user.errors[:email].present? ? "form-group usa-input-error" : "form-group" %>>
+    <%= f.label :email %>
+    <% if @new_user.errors[:email].present? %>
+      <span class="usa-input-error-message" id="input-error-message" role="alert">
+        Email <%= @new_user.errors[:email].join(', ') %>
+      </span>
+    <% end %>
+    <%= f.text_field :email,
+      class: 'form-control',
+      required: true,
+      type: 'email',
+      pattern:'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$',
+      title: 'valid email address' %>
+  </div>
+  <%= f.submit 'Submit', class: 'btn btn-primary view-full text-center' %>
+<% end %>

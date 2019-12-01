@@ -27,6 +27,18 @@ class User < ApplicationRecord
     !!last_sign_in_at
   end
 
+  def status
+    return "pending" if confirmed_at.nil?
+    return "locked" if locked_at.present?
+    return "active"
+  end
+
+  def available_action_text
+    return "Resend Invite" if status == "pending"
+    return "Unlock Account" if status == "locked"
+    return "Lock Account" if status == "active"
+  end
+
   def display_name
     self.name || "User #{id}"
   end
