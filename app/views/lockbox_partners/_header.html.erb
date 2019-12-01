@@ -1,7 +1,7 @@
 <div class="lockbox-partner-header">
   <strong><%= lockbox_partner.city %></strong>
   <% if current_user.admin? %>
-    <%= link_to 'Back to dashboard', lockbox_partners_path, class: 'float-right' %>
+    <%= render partial: 'lockbox_partners/back_to_dashboard', locals: {:alignment => 'right'} %>
   <% end %>
   <h2>
     <%= lockbox_partner.name %>

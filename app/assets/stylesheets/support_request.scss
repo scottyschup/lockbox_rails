@@ -48,8 +48,17 @@ $note-form-color: #d6d7d9;
 
 #support-request-form {
   .form {
-    padding: 20px;
+    margin: 0px auto;
+    max-width: none;
   }
+}
+
+#new-lockbox-form {
+  .form {
+    margin: 0px auto;
+    max-width: none;
+  }
+  padding: 0
 }
 
 .support-request-header {

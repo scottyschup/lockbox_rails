@@ -30,6 +30,23 @@ a {
   }
 }
 
+.btn-active {
+  padding-bottom: 0;
+}
+
+.btn-active:after {
+  content:'';
+  display: block;
+  position: relative;
+  top: 25%;
+  left: 48%;
+  width: 0;
+  height: 0;
+  border-top: solid 10px $color-primary;
+  border-left: solid 10px transparent;
+  border-right: solid 10px transparent;
+}
+
 .table {
   margin-top: 20px;
   thead {
