@@ -6,41 +6,35 @@ class UpdateSupportRequest
   # This is what params input looks like
   #
   # {
-  #   support_request: {
-  #     lockbox_action_attributes: {
-  #       eff_date: "2019-09-04",
-  #       id: "6",
-  #       lockbox_transactions_attributes: {
-  #         "0": {
-  #           amount: "33.16",
-  #           category: "",
-  #           _destroy: "false",
-  #           id: "7"
-  #         },
-  #         1: {
-  #           ...
-  #         },
-  #       }
-  #     },
-  #     name_or_alias: "Foster",
-  #     client_ref_id: "qwertyuiopp",
-  #     urgency_flag: "one"
+  #   lockbox_action_attributes: {
+  #     eff_date: "2019-09-04",
+  #     id: "6",
+  #     lockbox_transactions_attributes: {
+  #       "0": {
+  #         amount: "33.16",
+  #         category: "",
+  #         _destroy: "false",
+  #         id: "7"
+  #       },
+  #       1: {
+  #         ...
+  #       },
+  #     }
   #   },
-  #   lockbox_partner_id: "3",
-  #   id: "3"
+  #   name_or_alias: "Foster",
+  #   client_ref_id: "qwertyuiopp",
+  #   urgency_flag: "one"
   # }
   #
   # We'll pass it directly to SupportRequest to take advantage of AcceptsNestedAttributes.
-  input :params
+  input :support_request, :params
 
   attr_accessor :support_request, :original_values
 
   def call
-    find_support_request
-
     cache_original_values
 
-    if support_request.update(params[:support_request])
+    if support_request.update(params)
       notate_changes
     else
       fail!(support_request.errors.full_messages.join(". "))
@@ -84,9 +78,4 @@ class UpdateSupportRequest
       urgency_flag: "Urgency Flag",
     )
   end
-
-  def find_support_request
-    self.support_request = SupportRequest.find(params[:id])
-  end
-
 end

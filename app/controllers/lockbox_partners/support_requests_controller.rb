@@ -75,17 +75,16 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   end
 
   def update
-    result = UpdateSupportRequest.call(params: support_request_params)
+    @support_request = SupportRequest.find(params[:id])
+    @lockbox_partner = @support_request.lockbox_partner
+
+    result = UpdateSupportRequest.call(support_request: @support_request, params: support_request_params)
 
     if result.success?
       flash[:notice] = "Support request was successfully updated"
-      @support_request = result.value
-      @lockbox_partner = @support_request.lockbox_partner
       redirect_to lockbox_partner_support_request_path(@support_request)
     else
-      @support_request = SupportRequest.find(params[:id])
-      flash[:alert] = result.to_ary.last
-      redirect_to edit_lockbox_partner_support_request_path(@support_request)
+      render 'edit'
     end
   end
 
@@ -99,22 +98,19 @@ class LockboxPartners::SupportRequestsController < ApplicationController
   end
 
   def support_request_params
-    params.permit(
-      :id,
-      support_request: [
-        :client_ref_id,
-        :name_or_alias,
-        :urgency_flag,
-        :lockbox_partner_id,
-        lockbox_action_attributes: [
+    params.require(:support_request).permit(
+      :client_ref_id,
+      :name_or_alias,
+      :urgency_flag,
+      :lockbox_partner_id,
+      lockbox_action_attributes: [
+        :id,
+        :eff_date,
+        lockbox_transactions_attributes: [
           :id,
-          :eff_date,
-          lockbox_transactions_attributes: [
-            :id,
-            :amount,
-            :category,
-            :_destroy # Virtual attribute used to delete records
-          ]
+          :amount,
+          :category,
+          :_destroy # Virtual attribute used to delete records
         ]
       ]
     )
