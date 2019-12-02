@@ -64,8 +64,12 @@ class SupportRequest < ApplicationRecord
     lockbox_action.status
   end
 
-  def status_options
-    LockboxAction::STATUSES
+  def status_options(include_current: false)
+    if include_current
+      LockboxAction::STATUSES
+    else
+      LockboxAction::STATUSES - status
+    end
   end
 
   def record_creation
