@@ -4,10 +4,11 @@ module LockboxPartnersHelper
   end
 
   def status_display_text(status, support_request)
-    if status == support_request.status
-      (status.capitalize + " <i class='fa fa-check-circle'></i>").html_safe
+    icon_html = if status == support_request.status
+      "<i class='fa fa-check'></i>"
     else
-      status.capitalize
+      "<i class='icon-spacer'></i>"
     end
+    (icon_html + " " + status.capitalize).html_safe
   end
 end
