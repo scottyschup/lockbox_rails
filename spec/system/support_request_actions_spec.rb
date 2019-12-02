@@ -38,4 +38,12 @@ RSpec.describe "Support Request Actions", type: :system do
     expect{ find_button("Save Note").click; sleep(1) }.to change { support_request.notes.last.text }.to("foobar")
   end
 
+  it "successfully change the status of a support request" do
+    visit "/lockbox_partners/#{lockbox_partner.id}/support_requests/#{support_request.id}"
+    click_link "Update Status"
+    click_link "Completed"
+    sleep(1)
+    assert_selector "p.status-label", text: "Completed"
+    expect(support_request.reload.status).to eq("completed")
+  end
 end
