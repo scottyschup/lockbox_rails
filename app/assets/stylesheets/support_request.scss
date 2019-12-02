@@ -120,6 +120,14 @@ $note-form-color: #d6d7d9;
     margin: 0;
     width: 160px;
   }
+  .dropdown-menu {
+    border: 2px solid $color-primary;
+    border-radius: 0;
+    padding: 0;
+  }
+  .dropdown-item {
+    font-weight: bold;
+  }
   .row {
     div {
       p {
