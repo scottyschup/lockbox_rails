@@ -68,7 +68,7 @@ class SupportRequest < ApplicationRecord
     if include_current
       LockboxAction::STATUSES
     else
-      LockboxAction::STATUSES - status
+      LockboxAction::STATUSES - [status]
     end
   end
 
