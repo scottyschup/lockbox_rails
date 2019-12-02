@@ -3,15 +3,10 @@
     <%= render partial: 'lockbox_partners/back_to_dashboard', locals: {:alignment => 'left'} %>
     <br/>
     <%= render partial: 'lockbox_partners/dashboard_header' %>
-    <div id="support-request-form">
-      <% if @lockbox_partner %>
-        <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
-      <% end %>
-      <%= render partial: 'support_requests/form', locals: { path: @path, form_action: "New" } %>
-      <script id="transaction_template" type="text/template">
-        <%= render partial: 'lockbox_partners/support_requests/lockbox_transaction_form' %>
-      </script>
-    </div>
+    <% if @lockbox_partner %>
+      <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
+    <% end %>
+    <%= render partial: 'support_requests/form', locals: { path: @path, form_action: "New" } %>
   </div>
 <% else %>
   <p class="text-center">
