@@ -38,19 +38,6 @@ class SupportRequestMailer < ApplicationMailer
     mail(to: to_emails, subject: subject, cc: cc_emails)
   end
 
-  def status_update_alert
-    @support_request = params[:support_request]
-    @user = params[:user]
-    @original_status = params[:original_status]
-    @date = params[:date].strftime("%B %d, %Y")
-    subject = "#{@support_request.lockbox_partner.name} Support Request " \
-              "##{@support_request.id} - #{@support_request.status}"
-    mail(
-      to: @support_request.user.email,
-      subject: subject
-    )
-  end
-
   private
 
   def partner_user_emails
