@@ -51,6 +51,7 @@ class UpdateSupportRequest
     original_values[:name_or_alias] = support_request.name_or_alias
     original_values[:urgency_flag]  = support_request.urgency_flag
     original_values[:eff_date]      = support_request.eff_date
+    original_values[:status]        = support_request.status
     original_values[:amount]        = support_request.amount
   end
 
@@ -76,6 +77,7 @@ class UpdateSupportRequest
       eff_date: "Pickup Date",
       name_or_alias: "Client Alias",
       urgency_flag: "Urgency Flag",
+      status: "Status",
     )
   end
 end

@@ -53,17 +53,14 @@ class LockboxPartners::SupportRequestsController < ApplicationController
     @lockbox_partner = @support_request.lockbox_partner
     require_admin_or_ownership
 
-    status = update_status_params[:status]
-    original_status = @support_request.status
-    if @support_request.lockbox_action.update(status: status)
-      flash[:notice] = "Status updated to #{status}"
-      @support_request.send_status_update_alert(
-        user: current_user,
-        original_status: original_status
-      )
+    result = UpdateSupportRequest.call(support_request: @support_request, params: {lockbox_action_attributes: {id: @support_request.lockbox_action.id, status: update_status_params[:status]}})
+
+    if result.success?
+      flash[:notice] = "Status updated to #{update_status_params[:status]}"
     else
       flash[:error] = "Failed to update status"
     end
+
     redirect_back(fallback_location: lockbox_partner_support_request_path(id: @support_request.id))
   end
 
