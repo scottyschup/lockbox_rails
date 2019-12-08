@@ -1,7 +1,5 @@
 .lockbox-partner-header {
   margin: 0px auto;
-  margin-top: 50px;
-  border-bottom: solid 2px black;
 
   .lockbox-partner-info {
     p {
@@ -24,6 +22,7 @@
 }
 
 .add-cash-form,
-.new-user-form {
-  padding: 20px;
+.new-user-form,
+.support-request-form {
+  margin-bottom: 50px;
 }
