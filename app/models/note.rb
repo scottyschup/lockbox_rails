@@ -3,7 +3,7 @@ class Note < ApplicationRecord
   belongs_to :user, optional: true
   validates :text, presence: true
 
-  after_create :notify_partner, if: :should_notify_partner?
+  after_create :send_alerts
 
   def author
     if user
@@ -13,14 +13,13 @@ class Note < ApplicationRecord
     end
   end
 
-  private
-
-  def notify_partner
-    SupportRequestMailer.with(note: self).note_creation_alert.deliver_now
+  def system_generated?
+    user_id.blank?
   end
 
-  def should_notify_partner?
-    # Do not send email for system-generated notes (at least for now)
-    !!user && notable.is_a?(SupportRequest)
+  private
+
+  def send_alerts
+    NoteMailer.with(note: self).note_creation_alert.deliver_now
   end
 end

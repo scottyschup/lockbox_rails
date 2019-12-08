@@ -1,0 +1,13 @@
+<h1>
+  A new note was added to <%= @note.notable_type %> #<%= @note.notable_id %>
+</h1>
+
+<p>
+  <%= @note.text %>
+</p>
+
+<% if @note.notable.class == SupportRequest %>
+  <p>
+    View the note here: <%= lockbox_partner_support_request_url(@note.notable.lockbox_partner, @note.notable) %>
+  </p>
+<% end %>
