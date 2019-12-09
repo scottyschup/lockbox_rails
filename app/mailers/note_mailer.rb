@@ -9,16 +9,22 @@ class NoteMailer < ApplicationMailer
       subject = "New note from #{@note.author} on #{@note.notable_type.titleize} ##{@note.notable_id}"
     end
 
-    mail(to: recipients(@note), subject: subject)
+    mail(to: params[:address], subject: subject)
+  end
+
+  def self.deliver_note_creation_alerts(note)
+    recipients(note).collect do |email|
+      NoteMailer.with(note: note, address: email).note_creation_alert.deliver_now
+    end
   end
 
   private
 
-  def recipients(note)
+  def self.recipients(note)
     # MAC users only get emailed about manual notes
     # MAC users don't get emailed about notes they wrote
     users = User.admin.all
-    users -= [@note.user]
+    users -= [note.user]
 
     # Partner users get emailed about all notes
     users.concat(note.notable.try(:lockbox_partner).try(:users))

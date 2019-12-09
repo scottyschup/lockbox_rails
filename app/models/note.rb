@@ -20,6 +20,6 @@ class Note < ApplicationRecord
   private
 
   def send_alerts
-    NoteMailer.with(note: self).note_creation_alert.deliver_now
+    NoteMailer.deliver_note_creation_alerts(self)
   end
 end
