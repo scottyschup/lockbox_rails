@@ -54,6 +54,11 @@ jobs:
           key: cache-yarn-{{ checksum "yarn.lock" }}
 
       - run:
+          name: Webpacker Install
+          command: |
+            NODE_ENV=test bundle exec rails webpacker:install
+
+      - run:
           name: Boot up server
           command: |
             NODE_ENV=test bundle exec rails webpacker:compile
