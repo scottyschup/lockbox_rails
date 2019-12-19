@@ -26,12 +26,12 @@ gem 'jbuilder', '~> 2.9', '>= 2.9.1'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.1', require: false
+gem 'bootsnap', '~> 1.4', '>= 1.4.5'
 
 gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'font-awesome-rails'
 gem 'font_assets', '>= 0.1.14'
-gem 'bootstrap', '~> 4.3.1'
+gem 'bootstrap', '~> 4.4', '>= 4.4.1'
 
 gem 'money-rails', '~>1.12'
 
