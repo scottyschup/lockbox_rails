@@ -1,8 +1,14 @@
-<div class="container">
-  <%= form_for @lockbox_partner, html: { class: 'form' } do |f| %>
-    <%= render partial: "lockbox_partner_inputs", locals: { f: f } %>
-    <%= f.submit 'Add New Partner', class: 'btn btn-primary' %>
-  <% end %>
+<div id="dashboard-lockbox-partners">
+  <%= render partial: 'lockbox_partners/back_to_dashboard', locals: {:alignment => 'left'} %>
+  <br/>
+  <%= render partial: 'lockbox_partners/dashboard_header' %>
+  <div id="new-lockbox-form" class="container">
+    <%= form_for @lockbox_partner, html: { class: 'form' } do |f| %>
+      <h2>Add a new lockbox partner</h2>
+      <%= render partial: "lockbox_partner_inputs", locals: { f: f } %>
+      <%= f.submit 'Add New Partner', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
 </div>
 
 <%= javascript_pack_tag 'forms', 'data-turbolinks-track': 'reload' %>

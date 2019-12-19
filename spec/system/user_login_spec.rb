@@ -28,6 +28,6 @@ RSpec.describe "User Login Flow", type: :system do
     email = ActionMailer::Base.deliveries.last
     expect(email.subject).to eq("Reset password instructions")
     expect(email.to.first).to eq(user.email)
-    assert_selector "div", text: "You will receive an email with instructions on how to reset your password in a few minutes."
+    assert_selector "div", text: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
   end
 end

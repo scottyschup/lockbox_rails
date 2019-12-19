@@ -1,0 +1,10 @@
+<h2>Welcome, <%= current_user.name %>!</h2>
+<div class="lockbox-partner-header">
+  <div class="lockbox-partner-buttons">
+  <% active_class = current_page?(support_requests_new_path) ? 'btn-active' : '' %>
+  <%= link_to 'File a support request', support_requests_new_path, class: "btn #{active_class} btn-primary view-half" %>
+  <% active_class = current_page?(new_lockbox_partner_path) ? 'btn-active' : '' %>
+  <%= link_to 'Add a new lockbox partner', new_lockbox_partner_path, class: "btn #{active_class} btn-secondary view-half" %>
+  </div>
+  <div class="horizontal-rule"/>
+</div>

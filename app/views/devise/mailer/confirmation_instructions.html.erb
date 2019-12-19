@@ -1,5 +1,11 @@
-<p>Welcome <%= @email %>!</p>
+<p> A Lockbox account has been created for you, so that you can access Midwest Access Coalition client requests. BUT! You still have one vital step you must do, to make your account active. </p>
 
-<p>Click the link below to confirm your account and set your password:</p>
+<p> <b>ASAP</b>: Click the link below to confirm your account, and set up your personal password. This will only take about 2 minutes. Please make sure that this password is unique from your other passwords. Password re-use is the #1 way to get hacked!</p>
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<p> <%= link_to 'Here is a very quick walk-through on how to use the Lockbox app', ENV['LOCKBOX_APP_WALKTHROUGH_LINK'] %>. Please reference this manual to familiarize yourself with the Lockbox app. We recommend bookmarking the link above or saving this email for quick access. </p>
+
+<p> If you have any other questions about how to use this app, or about why your account was created, please forward this email with your questions to  <%= mail_to ENV['LOCKBOX_EMAIL'] %> </p>
+
+<p> Thank you for all that you do to provide healthcare for those who need it. <3 <3 <3</p>

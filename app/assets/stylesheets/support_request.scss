@@ -12,9 +12,6 @@
     margin: 10px;
     margin-top: 0px;
   }
-  a.btn-primary {
-    color: white;
-  }
   a.btn-primary.view-full {
     border: none;
     &:hover {
@@ -48,8 +45,17 @@ $note-form-color: #d6d7d9;
 
 #support-request-form {
   .form {
-    padding: 20px;
+    margin: 0px auto;
+    max-width: none;
   }
+}
+
+#new-lockbox-form {
+  .form {
+    margin: 0px auto;
+    max-width: none;
+  }
+  padding: 0
 }
 
 .support-request-header {
@@ -120,12 +126,27 @@ $note-form-color: #d6d7d9;
     margin: 0;
     width: 160px;
   }
+  .dropdown-menu {
+    border: 2px solid $color-primary;
+    border-radius: 0;
+    padding: 0;
+  }
+  .dropdown-item {
+    font-weight: bold;
+  }
   .row {
     div {
       p {
         font-size: 2em;
       }
     }
+  }
+  .status-label {
+    font-size: 1.5em;
+    text-align: right;
+  }
+  .icon-spacer {
+    margin-right: 1.25em;
   }
 }
 
