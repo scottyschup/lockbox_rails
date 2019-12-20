@@ -50,6 +50,11 @@ header {
     color: white;
     border: 2px solid white;
   }
+  #navbar {
+    .container {
+      display: block;
+    }
+  }
 }
 
 .container.secondary-nav {
