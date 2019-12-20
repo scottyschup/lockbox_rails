@@ -3,6 +3,18 @@ require 'verbalize'
 class CreateSupportRequest
   include Verbalize::Action
 
+  # This is what params input looks like
+  #
+  # lockbox_partner_id: Integer
+  # name_or_alias: String
+  # user_id: Integer
+  # client_ref_id: String
+  # lockbox_action_attributes: {
+  #   eff_date: Date,
+  #   lockbox_transactions_attributes: [
+  #     { amount: Money, category: String, distance: Integer }
+  #   ]
+  # }
   input :params
 
   attr_accessor :support_request
