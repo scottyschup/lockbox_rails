@@ -5,7 +5,10 @@ describe LockboxPartners::SupportRequestsController do
   let(:unauthorized_lockbox_partner) { create(:lockbox_partner, :active) }
 
   let(:support_request) do
-    create(:support_request, lockbox_partner: authorized_lockbox_partner)
+    req = create(:support_request, :pending, lockbox_partner: authorized_lockbox_partner)
+    lockbox_transaction = create(:lockbox_transaction)
+    req.lockbox_action.lockbox_transactions = [lockbox_transaction]
+    req
   end
 
   let(:user) { create(:user, role: user_role, lockbox_partner: user_lockbox_partner) }

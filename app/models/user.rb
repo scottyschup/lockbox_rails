@@ -14,6 +14,13 @@ class User < ApplicationRecord
     ADMIN  = 'admin',
     PARTNER = 'partner'
   ].freeze
+  
+  # for grepability:
+  # scope :admin
+  # scope :partner
+  ROLES.each do |role|
+    scope role, -> { where(role: role) }
+  end
 
   def admin?
     role == ADMIN
