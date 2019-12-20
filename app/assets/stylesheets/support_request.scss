@@ -55,7 +55,12 @@ $note-form-color: #d6d7d9;
     margin: 0px auto;
     max-width: none;
   }
-  padding: 0
+  padding: 0;
+}
+
+.mileage-row .amount-field label:after {
+  font-family: 'FontAwesome';
+  content: ' \f05a';
 }
 
 .support-request-header {
@@ -140,6 +145,9 @@ $note-form-color: #d6d7d9;
         font-size: 2em;
       }
     }
+  }
+  .lockbox-activity {
+    margin-top: -30px;
   }
   .status-label {
     font-size: 1.5em;

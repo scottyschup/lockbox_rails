@@ -6,7 +6,7 @@
 require('@rails/ujs').start();
 require('turbolinks').start();
 require('@rails/activestorage').start();
-require('@babel/polyfill');
+require('babel-polyfill');
 require('bootstrap');
 require('channels');
 require('cocoon-js');
