@@ -188,7 +188,7 @@ describe CreateSupportRequest do
       result = nil
 
       expect { result = CreateSupportRequest.call(params: low_balance_params) }
-        .to change{ActionMailer::Base.deliveries.length}.by(2)
+        .to change{ActionMailer::Base.deliveries.length}
       expected_dollar_value = (LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE - Money.new(100)).to_s
 
       mail = ActionMailer::Base.deliveries.last
@@ -206,7 +206,7 @@ describe CreateSupportRequest do
       allow(ENV).to receive(:[]).with('LOW_BALANCE_ALERT_EMAIL').and_return(nil)
 
       expect { CreateSupportRequest.call(params: low_balance_params) }
-        .to change{ActionMailer::Base.deliveries.length}.by(1)
+        .to change{ActionMailer::Base.deliveries.length}
     end
 
     it 'is not sent when the balance remains above $300' do
@@ -216,7 +216,7 @@ describe CreateSupportRequest do
 
       params[:lockbox_action][:lockbox_transactions][0][:amount] = 100
       expect { CreateSupportRequest.call(params: params) }
-        .to change{ActionMailer::Base.deliveries.length}.by(1)
+        .to change{ActionMailer::Base.deliveries.length}
     end
   end
 end

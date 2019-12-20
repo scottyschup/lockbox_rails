@@ -1,8 +1,17 @@
 <div id="support-request-form" class="container">
-  <%= form_with model: @support_request, url: lockbox_partner_support_request_path(@support_request), class: 'form' do |f| %>
+  <%= form_with model: @support_request, url: lockbox_partner_support_request_path(@support_request, lockbox_partner_id: @support_request.lockbox_partner_id), class: 'form', data: {remote: false} do |f| %>
     <h2>
       Edit support request
     </h2>
+    <% if @support_request.errors.any? %>
+      <div class="alert alert-danger error-message">
+        <ul>
+          <% @support_request.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <%= f.fields_for :lockbox_action do |la| %>
       <div class="form-group">
         <%= la.label :eff_date, 'Pick-up Date' %>

@@ -32,6 +32,7 @@ gem 'devise', '~> 4.6.2'
 gem 'font-awesome-rails'
 gem 'font_assets', '>= 0.1.14'
 gem 'bootstrap', '~> 4.3.1'
+gem 'table_print'
 
 gem 'money-rails', '~>1.12'
 
