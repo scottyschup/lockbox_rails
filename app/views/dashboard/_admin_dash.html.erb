@@ -11,7 +11,7 @@
   <div class="lockbox-activity">
     <table class="table table-no-border">
       <tbody>
-        <% lockbox_partner.historical_actions.order(:eff_date).first(3).each do |action| %>
+        <% lockbox_partner.historical_actions.order(:eff_date).last(3).each do |action| %>
           <% support_request_class = action.support_request ? 'support-request ' : '' %>
           <% row_class = support_request_class + action.status %>
           <tr class="<%= row_class %>">
