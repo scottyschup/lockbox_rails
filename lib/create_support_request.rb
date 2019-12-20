@@ -9,10 +9,10 @@ class CreateSupportRequest
   # name_or_alias: String
   # user_id: Integer
   # client_ref_id: String
-  # lockbox_action: {
+  # lockbox_action_attributes: {
   #   eff_date: Date,
-  #   lockbox_transactions: [
-  #     { amount: Money, category: String }
+  #   lockbox_transactions_attributes: [
+  #     { amount: Money, category: String, distance: Integer }
   #   ]
   # }
   input :params
@@ -36,7 +36,7 @@ class CreateSupportRequest
       end
 
       lockbox_action = LockboxAction.create(
-        eff_date: params[:lockbox_action][:eff_date],
+        eff_date: params[:lockbox_action_attributes][:eff_date],
         action_type: LockboxAction::SUPPORT_CLIENT,
         status: LockboxAction::PENDING,
         lockbox_partner_id: params[:lockbox_partner_id],
@@ -47,11 +47,16 @@ class CreateSupportRequest
         raise ValidationError, lockbox_action.errors.full_messages.join(', ')
       end
 
-      params[:lockbox_action][:lockbox_transactions]
+      unless params[:lockbox_action_attributes][:lockbox_transactions_attributes]
+        raise ValidationError, "Must have at least one lockbox transaction"
+      end
+
+      params[:lockbox_action_attributes][:lockbox_transactions_attributes].values
         .reject { |lt| lt[:amount].blank? && lt[:category].blank? }
         .each do |item|
           lockbox_transaction = lockbox_action.lockbox_transactions.create(
-            amount:   item[:amount],
+            amount:         item[:amount],
+            distance:       item[:distance],
             balance_effect: LockboxTransaction::DEBIT,
             category:       item[:category]
           )
@@ -59,10 +64,10 @@ class CreateSupportRequest
           unless lockbox_transaction.valid? && lockbox_transaction.persisted?
             raise ValidationError, lockbox_transaction.errors.full_messages.join(', ')
           end
-        end
 
-      unless lockbox_action.lockbox_transactions.exists?
-        raise ValidationError, "Amount must be greater than $0"
+        unless lockbox_action.lockbox_transactions.exists?
+          raise ValidationError, "Amount must be greater than $0"
+        end
       end
     end
 

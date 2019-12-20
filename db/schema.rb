@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2019_11_17_222848) do
     t.bigint "lockbox_action_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "distance"
     t.index ["lockbox_action_id"], name: "index_lockbox_transactions_on_lockbox_action_id"
   end
 

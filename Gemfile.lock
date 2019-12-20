@@ -43,7 +43,7 @@ GIT
 
 GIT
   remote: https://github.com/stympy/faker.git
-  revision: 233a923509e656f2e42a17a54b4dbd60f18fd85a
+  revision: 54a1bbfc1e7f92f6230dfeefa893e17edfcb3802
   branch: master
   specs:
     faker (2.9.0)
@@ -199,8 +199,12 @@ GEM
       method_source (~> 0.9.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     public_suffix (4.0.1)
-    puma (3.12.2)
+    puma (4.3.1)
+      nio4r (~> 2.0)
     rack (2.0.8)
     rack-proxy (0.6.5)
       rack
@@ -241,7 +245,7 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     regexp_parser (1.6.0)
-    request_store (1.4.1)
+    request_store (1.5.0)
       rack (>= 1.4)
     responders (3.0.0)
       actionpack (>= 5.0)
@@ -282,6 +286,7 @@ GEM
       rubyzip (>= 1.2.2)
     shoulda-matchers (4.1.2)
       activesupport (>= 4.2.0)
+    slop (3.6.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -293,6 +298,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    table_print (1.5.6)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -344,6 +350,7 @@ DEPENDENCIES
   paper_trail
   pg (>= 0.18, < 2.0)
   pry-rails
+  pry-remote
   puma (>= 3.12.2)
   rails (~> 6.0.2)
   rails-controller-testing
@@ -359,6 +366,7 @@ DEPENDENCIES
   shoulda-matchers (~> 4.0, >= 4.0.1)
   spring
   spring-watcher-listen (~> 2.0.0)
+  table_print
   turbolinks (~> 5.2, >= 5.2.1)
   tzinfo-data
   verbalize (~> 2.2)
