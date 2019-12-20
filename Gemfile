@@ -1,22 +1,22 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.2'
+ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.0.beta3'
+gem 'rails', '~> 6.0.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem "puma", ">= 3.12.2"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '>= 4.0.0.rc.3'
+gem 'webpacker', '~> 4.2', '>= 4.2.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+gem 'turbolinks', '~> 5.2', '>= 5.2.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.9', '>= 2.9.1'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -26,13 +26,12 @@ gem 'jbuilder', '~> 2.5'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.1', require: false
+gem 'bootsnap', '~> 1.4', '>= 1.4.5'
 
-gem 'devise', '~> 4.6.2'
+gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'font-awesome-rails'
 gem 'font_assets', '>= 0.1.14'
-gem 'bootstrap', '~> 4.3.1'
-gem 'table_print'
+gem 'bootstrap', '~> 4.4', '>= 4.4.1'
 
 gem 'money-rails', '~>1.12'
 
@@ -53,12 +52,13 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails'
   gem 'pry-remote'
+  gem 'table_print'
 
   # RSpec & testing gems!
 
   # Apparently rspec is not yet ready for rails 6 :(
   # gem 'rspec-rails', '~> 3.8'
-  gem 'rspec-rails', github: 'rspec/rspec-rails', branch: '4-0-dev'
+  gem 'rspec-rails', '~> 4.0.0.beta2'  # gem 'rspec-rails', github: 'rspec/rspec-rails', branch: '4-0-dev'
   gem 'rspec', github: 'rspec/rspec', branch: 'master'
   gem 'rspec-core', github: 'rspec/rspec-core', branch: 'master'
   gem 'rspec-mocks', github: 'rspec/rspec-mocks', branch: 'master'
