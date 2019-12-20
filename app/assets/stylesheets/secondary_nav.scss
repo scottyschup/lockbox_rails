@@ -12,6 +12,10 @@ $secondary-active-tab: #1f5593;
   }
 
   .secondary-tab {
+    color: white;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: small;
     text-align: center;
     padding: 5px;
     align-self: center;
@@ -46,13 +50,6 @@ $secondary-active-tab: #1f5593;
       top: 2rem;
       position: absolute;
       left: 45%;
-    }
-    a {
-      width: 100%;
-      color: white;
-      text-decoration: none;
-      font-weight: bolder;
-      font-size: small;
     }
   }
 }

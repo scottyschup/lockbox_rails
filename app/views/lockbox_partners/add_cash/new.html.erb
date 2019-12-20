@@ -1,12 +1,10 @@
-<div class="container">
-  <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
-  <%= form_for :add_cash, html: { class: "form add-cash-form" }, url: lockbox_partner_add_cash_path do |f| %>
-    <h2>Add Cash to Lockbox</h2>
-    <p>Complete this form when you have put the check in the mail</p>
-    <div class="form-group">
-      <%= f.label "Cash Added" %>
-      <%= f.text_field :amount, type: "number", step: "0.01", class: "form-control" %>
-    </div>
-    <%= f.submit "Submit", class: "btn btn-primary" %>
-  <% end %>
-</div>
+<%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
+<%= form_for :add_cash, html: { class: "form add-cash-form" }, url: lockbox_partner_add_cash_path do |f| %>
+  <h2>Add Cash to Lockbox</h2>
+  <p>Complete this form when you have put the check in the mail</p>
+  <div class="form-group">
+    <%= f.label "Cash Added" %>
+    <%= f.text_field :amount, type: "number", step: "0.01", class: "form-control" %>
+  </div>
+  <%= f.submit "Submit", class: "btn btn-primary" %>
+<% end %>

@@ -5,6 +5,8 @@ describe Note, type: :model do
   it { is_expected.to belong_to(:user).optional }
 
   context "callbacks" do
+    let(:user) { FactoryBot.create(:user) }
+    let(:notable) { FactoryBot.create(:support_request) }
     let(:note) { FactoryBot.build(:note, user: user, notable: notable) }
 
     describe "email alert" do
@@ -17,45 +19,9 @@ describe Note, type: :model do
 
       let(:mailer) { double(note_creation_alert: delivery) }
 
-      before do
-        allow(SupportRequestMailer).to receive(:with).and_return(mailer)
+      it "kicks off email alerts" do
+        expect(NoteMailer).to receive(:with).and_return(mailer)
         note.save
-      end
-
-      context "when the note is not system-generated and belongs to a SupportRequest" do
-        let(:user) { FactoryBot.create(:user) }
-        let(:notable) { FactoryBot.create(:support_request) }
-
-        it "sends an email alert" do
-          expect(delivery).to have_received(:deliver_now)
-        end
-      end
-
-      context "when the note is system-generated and belongs to a SupportRequest" do
-        let(:user) { nil }
-        let(:notable) { FactoryBot.create(:support_request) }
-
-        it "does not send an email alert" do
-          expect(delivery).not_to have_received(:deliver_now)
-        end
-      end
-
-      context "when the note is not system-generated and does not belong to a SupportRequest" do
-        let(:user) { FactoryBot.create(:user) }
-        let(:notable) { FactoryBot.create(:user) }
-
-        it "does not send an email alert" do
-          expect(delivery).not_to have_received(:deliver_now)
-        end
-      end
-
-      context "when the note is system-generated and does not belong to a SupportRequest" do
-        let(:user) { nil }
-        let(:notable) { FactoryBot.create(:user) }
-
-        it "does not send an email alert" do
-          expect(delivery).not_to have_received(:deliver_now)
-        end
       end
     end
   end
