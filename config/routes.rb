@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'lockbox_partners', to: 'dashboard#index'
 
   get 'onboarding_success', to: 'dashboard#onboarding_success'
+  get 'support', to: 'dashboard#support'
 
   match 'support_requests/new', to: 'lockbox_partners/support_requests#new', via: [:get]
   resources :support_requests, only: [:index, :create]
