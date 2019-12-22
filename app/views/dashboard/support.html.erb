@@ -3,16 +3,16 @@
   <p>
     <% if current_user.admin? %>
       If you're having issues in the app, please check out
-      <%= link_to "our FAQ manual", "https://docs.google.com/document/d/1GEq8hbnjmH_4xq1WFgvuVrLMSTU1knjHLrKZyVqKzcY" %>
+      <%= link_to "our FAQ manual", ENV["LOCKBOX_ADMIN_FAQ_LINK"] %>
       first.
     <% else %>
       If you're having issues in the app, please check out
-      <%= link_to "our FAQ manual", "https://docs.google.com/document/d/1GEq8hbnjmH_4xq1WFgvuVrLMSTU1knjHLrKZyVqKzcY" %>
+      <%= link_to "our FAQ manual", ENV["LOCKBOX_PARTNER_FAQ_LINK"] %>
       first.
     <% end %>
   </p>
   <p>
     If you can't find the answer there, you can also email
-    <%= link_to "lockbox@midwestaccesscoalition.org", "mailto:lockbox@midwestaccesscoalition.org" %>.
+    <%= link_to ENV["LOCKBOX_EMAIL"], "mailto:#{ENV["LOCKBOX_EMAIL"]}" %>.
   </p>
 </div>
