@@ -6,6 +6,6 @@ class LockboxActionMailer < ApplicationMailer
     email_addresses = @lockbox_partner.users.confirmed.pluck(:email)
     return if email_addresses.empty?
 
-    mail(to: email_addresses, subject: 'TODO add subject')
+    mail(to: email_addresses, subject: 'Incoming Lockbox Cash in the Mail')
   end
 end
