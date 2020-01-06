@@ -11,7 +11,7 @@ RSpec.describe "Create new lockbox partner form", type: :system do
     click_link("Create new lockbox partner")
   end
 
-  context "On initial page load" do
+  context "on initial page load" do
     it "all inputs are present" do
       page.assert_selector(selector_string, count: 7)
     end
@@ -21,10 +21,23 @@ RSpec.describe "Create new lockbox partner form", type: :system do
     end
   end
 
-  context "On submission of blank form" do
+  context "on submission of blank form" do
     it "inputs are no longer pristine" do
       click_button("Add New Partner")
       page.assert_no_selector(".pristine")
+    end
+  end
+
+  context "on submission of valid form" do
+    it "submission is successful" do
+      fill_in "Name", with: "Jo Momma"
+      fill_in "Street address", with: "123 Main Street"
+      fill_in "City", with: "Chicago"
+      select "Illinois", from: "State"
+      fill_in "Zip code", with: "60601"
+      fill_in "Phone number", with: "3123211234"
+      click_button("Add New Partner")
+      expect(page).to have_content("Lockbox Partner was successfully created.")
     end
   end
 
