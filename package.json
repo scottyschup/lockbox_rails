@@ -5,19 +5,19 @@
     "@rails/actioncable": "^6.0.0-alpha",
     "@rails/activestorage": "^6.0.0-alpha",
     "@rails/ujs": "^6.0.0-alpha",
-    "@rails/webpacker": "^4.0.2",
+    "@rails/webpacker": "4.2.2",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.3.1",
     "cocoon-js": "^0.0.5",
     "datatables.net-bs4": "^1.10.20",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
-    "snyk": "^1.231.0",
+    "snyk": "^1.258.2",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {
-    "webpack-dev-server": "^3.2.1"
+    "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
     "snyk-protect": "snyk protect",

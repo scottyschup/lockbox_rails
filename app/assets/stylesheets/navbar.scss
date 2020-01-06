@@ -50,6 +50,18 @@ header {
     color: white;
     border: 2px solid white;
   }
+  #navbar {
+    .container {
+      display: block;
+    }
+  }
+  .nav-item-right {
+    float: right;
+    clear: right;
+    a {
+      font-size: 1em;
+    }
+  }
 }
 
 .container.secondary-nav {

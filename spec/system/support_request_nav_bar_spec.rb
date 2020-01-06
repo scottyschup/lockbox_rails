@@ -12,11 +12,11 @@ RSpec.describe "Support Request Nav Bar", type: :system do
       user_id: user.id,
       client_ref_id: 'meeps321',
       created_at: 2.days.ago,
-      lockbox_action: {
+      lockbox_action_attributes: {
         eff_date: Date.current,
-        lockbox_transactions: [
-          { amount: 50.to_money, category: LockboxTransaction::GAS }
-        ]
+        lockbox_transactions_attributes: {
+          "0": { amount: 50.to_money, category: LockboxTransaction::GAS }
+        }
       }
     }
     CreateSupportRequest.call!(params: params)
@@ -29,11 +29,11 @@ RSpec.describe "Support Request Nav Bar", type: :system do
       user_id: user.id,
       client_ref_id: 'meeps321',
       created_at: 1.days.ago,
-      lockbox_action: {
+      lockbox_action_attributes: {
         eff_date: Date.current,
-        lockbox_transactions: [
-          { amount: 50.to_money, category: LockboxTransaction::GAS }
-        ]
+        lockbox_transactions_attributes: {
+          "0": { amount: 50.to_money, category: LockboxTransaction::GAS }
+        }
       }
     }
     CreateSupportRequest.call!(params: params)
@@ -46,11 +46,11 @@ RSpec.describe "Support Request Nav Bar", type: :system do
       user_id: user.id,
       client_ref_id: 'meeps321',
       created_at: 3.days.ago,
-      lockbox_action: {
+      lockbox_action_attributes: {
         eff_date: Date.current,
-        lockbox_transactions: [
-          { amount: 50.to_money, category: LockboxTransaction::GAS }
-        ]
+        lockbox_transactions_attributes: {
+          "0": { amount: 50.to_money, category: LockboxTransaction::GAS }
+        }
       }
     }
     CreateSupportRequest.call!(params: params)

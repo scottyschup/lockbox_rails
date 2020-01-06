@@ -10,4 +10,7 @@ class DashboardController < ApplicationController
   def onboarding_success
     @lockbox_partner = current_user.lockbox_partner
   end
+
+  def support
+  end
 end

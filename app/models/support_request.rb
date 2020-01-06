@@ -64,8 +64,12 @@ class SupportRequest < ApplicationRecord
     lockbox_action.status
   end
 
-  def status_options
-    LockboxAction::STATUSES - [status]
+  def status_options(include_current: false)
+    if include_current
+      LockboxAction::STATUSES
+    else
+      LockboxAction::STATUSES - [status]
+    end
   end
 
   def record_creation
@@ -74,22 +78,6 @@ class SupportRequest < ApplicationRecord
       "at #{created_at.strftime("%I:%M %p %:::z")} " \
       "on #{created_at.strftime("%B %d, %Y")}"
     notes.create(text: note_text)
-  end
-
-  def send_status_update_alert(original_status:, user:)
-    # This likely means the status update was submitted twice. To avoid
-    # confusion, we shouldn't send the email in that case.
-    return if original_status == status
-    date = Date.current
-    SupportRequestMailer
-      .with(
-        date: date,
-        original_status: original_status,
-        support_request: self,
-        user: user
-      )
-      .status_update_alert
-      .deliver_now
   end
 
   private

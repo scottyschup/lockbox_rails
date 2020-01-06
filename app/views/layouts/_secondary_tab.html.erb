@@ -1,4 +1,4 @@
 <% tab_class = current_page?(tab_path) ? 'active-tab' : '' %>
-<div class="secondary-tab <%= tab_class %>">
-  <%= link_to tab_name, tab_path %>
-</div>
+<%= link_to tab_path, class: "secondary-tab #{tab_class}" do %>
+  <%= tab_name %>
+<% end %>
