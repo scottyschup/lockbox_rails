@@ -70,9 +70,9 @@ Rails.application.configure do
     :password => ENV['MG_PASSWORD']
   }
 
-  config.action_mailer.default_url_options = { :host => 'https://mac-lockbox.herokuapp.com/' }
-  config.action_mailer.asset_host = 'https://mac-lockbox.herokuapp.com/'
-  config.action_controller.asset_host = 'https://mac-lockbox.herokuapp.com/'
+  config.action_mailer.default_url_options = { :host => ENV['HOST'] }
+  config.action_mailer.asset_host = ENV['HOST']
+  config.action_controller.asset_host = ENV['HOST']
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
