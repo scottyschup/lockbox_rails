@@ -1,7 +1,7 @@
 <div class="<%= 'nested-fields row' + (f.object.category == 'gas' ? ' mileage-row' : '') %>">
   <div class="field form-group col" >
     <%= f.label :category, 'Support Type' %>
-    <%= f.select :category, options_for_select(expense_category_select_options, selected: f.object.category), { include_blank: true }, { class: 'form-control' } %>
+    <%= f.select :category, options_for_select(expense_category_select_options, selected: f.object.category), { include_blank: true }, { class: 'form-control', required: true } %>
   </div>
   <div class="field form-group col-3 distance-field" style="<%= "#{'display: none' unless f.object.category == 'gas'}" %>">
     <%= f.label :distance, "Mileage" %>
