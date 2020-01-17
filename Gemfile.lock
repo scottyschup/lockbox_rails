@@ -161,6 +161,7 @@ GEM
       concurrent-ruby (~> 1.0)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
+    libsqreen (0.3.0.0.3)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -291,6 +292,10 @@ GEM
       faraday (>= 0.7.6, < 1.0)
     shoulda-matchers (4.1.2)
       activesupport (>= 4.2.0)
+    skylight (4.2.1)
+      skylight-core (= 4.2.1)
+    skylight-core (4.2.1)
+      activesupport (>= 4.2.0)
     slop (3.6.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
@@ -303,6 +308,10 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sq_mini_racer (0.2.5.0.1.beta2)
+    sqreen (1.18.3)
+      libsqreen (~> 0.3.0.0)
+      sq_mini_racer (~> 0.2.4.sqreen2)
     table_print (1.5.6)
     thor (1.0.1)
     thread_safe (0.3.6)
@@ -370,8 +379,10 @@ DEPENDENCIES
   selenium-webdriver
   sentry-raven
   shoulda-matchers (~> 4.0, >= 4.0.1)
+  skylight
   spring
   spring-watcher-listen (~> 2.0.0)
+  sqreen (>= 1.16)
   table_print
   turbolinks (~> 5.2, >= 5.2.1)
   tzinfo-data

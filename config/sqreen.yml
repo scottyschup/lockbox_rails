@@ -1,0 +1,2 @@
+app_name: "lockbox_rails"
+token: <%= ENV['SQREEN_TOKEN'] %>
