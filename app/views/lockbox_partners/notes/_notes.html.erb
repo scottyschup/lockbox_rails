@@ -1,7 +1,7 @@
 <%= form_with model: Note.new, url: lockbox_partner_support_request_notes_path(notable.lockbox_partner, notable), id: 'new-note-form' do |f| %>
   <div class="container">
     <div class="textarea">
-      <%= f.text_area :text %>
+      <%= f.text_area :text, required: true %>
     </div>
     <div class="buttons">
       <%= f.submit 'Save Note', class: 'btn btn-primary' %>
@@ -34,3 +34,5 @@
     </tbody>
   </table>
 </div>
+
+<%= javascript_pack_tag 'forms', 'data-turbolinks-track': 'reload' %>
