@@ -42,10 +42,15 @@ gem 'cocoon'
 # Add versions table for logging purposes
 gem 'paper_trail'
 
+gem 'sqreen', '>= 1.16'
+
 # TODO -- before we go live, should move this back to test/dev bundle
 # For test data generation
 gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+
+gem 'sentry-raven'
+gem 'skylight'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

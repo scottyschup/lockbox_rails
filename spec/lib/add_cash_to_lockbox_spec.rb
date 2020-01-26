@@ -2,14 +2,8 @@ require 'rails_helper'
 require './lib/add_cash_to_lockbox'
 
 describe AddCashToLockbox do
-  let(:lockbox_partner) { FactoryBot.create(:lockbox_partner) }
+  let(:lockbox_partner) { FactoryBot.create(:lockbox_partner, :with_active_user) }
   let(:eff_date) { 1.day.from_now.to_date }
-
-  before do
-    allow(LockboxActionMailer).to receive_message_chain(
-      :with, :add_cash_email, :deliver_now
-    )
-  end
 
   def add_cash
     AddCashToLockbox.call(
@@ -45,8 +39,10 @@ describe AddCashToLockbox do
     end
 
     it "emails the lockbox partner's users" do
-      add_cash
-      expect(LockboxActionMailer).to have_received(:with)
+      expect{ add_cash }.to change{ ActionMailer::Base.deliveries.count }.by(1)
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq('Incoming Lockbox Cash in the Mail')
+      expect(mail.body).to include(amount)
     end
 
     it "succeeds" do
@@ -66,8 +62,7 @@ describe AddCashToLockbox do
     end
 
     it "does not email the lockbox partner's users" do
-      add_cash
-      expect(LockboxActionMailer).not_to have_received(:with)
+      expect{ add_cash }.not_to change{ ActionMailer::Base.deliveries.count }
     end
 
     it "fails" do
