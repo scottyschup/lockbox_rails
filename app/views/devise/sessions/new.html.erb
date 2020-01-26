@@ -5,7 +5,11 @@
     <%= devise_error_messages! %>
     <div class="form-group">
       <%= f.label :email %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+      <%= f.email_field :email,
+        autofocus: true,
+        autocomplete: "email",
+        class: 'form-control',
+        required: true %>
     </div>
 
     <div class="form-group">
@@ -23,7 +27,7 @@
             <%= f.check_box :remember_me, class: 'form-check-input' %>
             <%= f.label :remember_me, class: 'form-check-label' %>
           </div>
-        </div>    
+        </div>
       <% end -%>
     </div>
 

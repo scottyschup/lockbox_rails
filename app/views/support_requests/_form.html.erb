@@ -11,7 +11,11 @@
   <% if @lockbox_partner.nil? %>
     <div class="form-group">
       <%= f.label :lockbox_partner %>
-      <%= f.select :lockbox_partner_id, options_for_select(active_lockbox_partner_select_options), {}, class: 'form-control', required: true %>
+      <%= f.select :lockbox_partner_id,
+        options_for_select(active_lockbox_partner_select_options),
+        {},
+        class: 'form-control',
+        required: true %>
     </div>
   <% end %>
   <div class="form-group">

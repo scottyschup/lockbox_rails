@@ -10,7 +10,11 @@
     <% end %>
     <div class="form-group">
       <%= f.label "Physical cash in lockbox" %>
-      <%= f.text_field :amount, type: "number", step: "0.01", class: "form-control", required: true %>
+      <%= f.text_field :amount,
+        type: "number",
+        step: "0.01",
+        class: "form-control",
+        required: true %>
     </div>
     <%= f.submit "Submit", class: "btn btn-primary" %>
   <% end %>
