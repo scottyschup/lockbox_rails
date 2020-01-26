@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_17_222848) do
+ActiveRecord::Schema.define(version: 2019_12_22_223508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,8 +96,10 @@ ActiveRecord::Schema.define(version: 2019_11_17_222848) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "role"
+    t.bigint "invited_by_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
     t.index ["lockbox_partner_id"], name: "index_users_on_lockbox_partner_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
@@ -116,4 +118,5 @@ ActiveRecord::Schema.define(version: 2019_11_17_222848) do
 
   add_foreign_key "lockbox_transactions", "lockbox_actions"
   add_foreign_key "support_requests", "lockbox_partners"
+  add_foreign_key "users", "users", column: "invited_by_id"
 end

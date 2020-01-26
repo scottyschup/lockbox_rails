@@ -1,0 +1,11 @@
+<p> Good news! The Lockbox for <%= @confirmed_user.lockbox_partner.name %> is now active. <%= @confirmed_user.name %> has confirmed their email address.
+
+You can now send cash to this Lockbox. Once they have confirmed that cash is received, you will be able to send Support Requests as well.
+
+Please sign in to the app to send cash to the Lockbox: <%= link_to root_url %> </p>
+
+<p> Thank you! </p>
+
+<p> Midwest Access Coalition </p>
+
+<p> If you have any other questions, please forward this email with your questions to <%= mail_to ENV['LOCKBOX_EMAIL'] %> </p>

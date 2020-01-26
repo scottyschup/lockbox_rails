@@ -9,6 +9,7 @@ class LockboxPartners::UsersController < ApplicationController
     @user = @lockbox_partner.users.new(user_params)
     set_user_password
     set_user_role
+    set_user_inviter
     if @user.save
       flash.clear
       flash[:notice] = "New user created for Lockbox Partner #{@lockbox_partner.name}"
@@ -65,6 +66,10 @@ class LockboxPartners::UsersController < ApplicationController
 
   def set_user_role
     @user.role = User::PARTNER
+  end
+
+  def set_user_inviter
+    @user.inviter = current_user
   end
 
   def user_params

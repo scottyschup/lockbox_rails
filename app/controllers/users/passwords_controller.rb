@@ -35,6 +35,7 @@ class Users::PasswordsController < Devise::PasswordsController
     if resource.sign_in_count > 1
       super(resource)
     else
+      send_user_confirmed_email
       onboarding_success_path
     end
   end
@@ -51,6 +52,13 @@ class Users::PasswordsController < Devise::PasswordsController
   end
 
   private
+
+  def send_user_confirmed_email
+    UserMailer
+      .with(confirmed_user: resource)
+      .user_confirmation_completed
+      .deliver_now
+  end
 
   def set_existing_user
     # Defining @existing_user is a hack to display the preset email for
