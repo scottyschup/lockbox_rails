@@ -1,14 +1,14 @@
 require 'rails_helper'
 require './lib/create_support_request'
 
-RSpec.describe "Create new lockbox partner form", type: :system do
+RSpec.describe "New lockbox partner form", type: :system do
   let!(:user) { FactoryBot.create(:user) }
   selector_string = "input:not([type=submit]):not([type=hidden]), select"
 
   before do
     login_as(user, :scope => :user)
     visit("/")
-    click_link("Create new lockbox partner")
+    click_link("Add a new lockbox partner")
   end
 
   context "on initial page load" do
