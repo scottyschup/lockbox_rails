@@ -1,21 +1,45 @@
 class NoteMailer < ApplicationMailer
 
+  def self.deliver_note_creation_alerts(note)
+    recipients(note).each do |email|
+      NoteMailer.with(note: note, address: email).note_creation_alert.deliver_now
+    end
+  end
+
   def note_creation_alert
     @note = params[:note]
 
-    if @note.system_generated?
-      subject = "New System note on #{@note.notable_type.titleize} ##{@note.notable_id}"
+    if @note.notable_type == "SupportRequest" && @note.notable_action == "create"
+      support_request_creation_alert
+    elsif @note.system_generated?
+      system_annotation_alert
     else
-      subject = "New note from #{@note.author} on #{@note.notable_type.titleize} ##{@note.notable_id}"
+      user_annotation_alert
     end
-
-    mail(to: params[:address], subject: subject)
   end
 
-  def self.deliver_note_creation_alerts(note)
-    recipients(note).collect do |email|
-      NoteMailer.with(note: note, address: email).note_creation_alert.deliver_now
+  def system_annotation_alert
+    subject = "New System note on #{@note.notable_type.titleize} ##{@note.notable_id}"
+    mail(to: params[:address], subject: subject, template_name: "system_annotation_alert")
+  end
+
+  def user_annotation_alert
+    subject = "New note from #{@note.author} on #{@note.notable_type.titleize} ##{@note.notable_id}"
+    mail(to: params[:address], subject: subject, template_name: "user_annotation_alert")
+  end
+
+  def support_request_creation_alert
+    @support_request = @note.notable
+
+    urgency_flag_prefix = if @support_request.urgency_flag.present?
+      "#{@support_request.urgency_flag} - "
+    else
+      ""
     end
+
+    subject = "#{urgency_flag_prefix}MAC Cash Box Withdrawal Request"
+
+    mail(to: params[:address], subject: subject, template_name: "support_request_creation_alert")
   end
 
   private

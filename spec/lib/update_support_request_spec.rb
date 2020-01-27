@@ -81,6 +81,20 @@ describe UpdateSupportRequest do
     expect(Note.last.text).to include("The Status for this Support Request was changed")
   end
 
+  it 'creates a note with notable_action of "update"' do
+    update_params = {
+      lockbox_action_attributes: {
+        status: 'completed',
+        id: support_request.lockbox_action.id,
+      }
+    }
+
+    expect{UpdateSupportRequest.call(support_request: support_request, params: update_params)}
+      .to change{Note.count}
+      .by(1)
+    expect(Note.last.notable_action).to eq("update")
+  end
+
   it 'creates a single note if multiple fields changed' do
     expect{UpdateSupportRequest.call(support_request: support_request, params: {client_ref_id: 'new client ref', name_or_alias: 'new name', urgency_flag: 'new urgency'})}
       .to change{Note.count}
