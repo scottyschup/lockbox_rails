@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  resources :users, only: [:edit, :update]
+
   root to: 'dashboard#index'
   get 'lockbox_partners', to: 'dashboard#index'
 
