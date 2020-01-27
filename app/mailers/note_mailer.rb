@@ -1,7 +1,7 @@
 class NoteMailer < ApplicationMailer
 
   def self.deliver_note_creation_alerts(note)
-    recipients(note).collect do |email|
+    recipients(note).each do |email|
       NoteMailer.with(note: note, address: email).note_creation_alert.deliver_now
     end
   end
