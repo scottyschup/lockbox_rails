@@ -1,5 +1,14 @@
 # Be sure to restart your server when you modify this file.
 
+# We're using the secure_headers gem to handle our CSP
+# https://rubygems.org/gems/secure_headers/versions/6.3.0
+SecureHeaders::Configuration.default
+# default config documentation is here:
+# https://www.rubydoc.info/gems/secure_headers/6.3.0#Default_values
+
+# Below is the Rails auto-generated CSP config in case
+# we want to go back to this from SecureHeaders
+
 # Define an application-wide content security policy
 # For further information see the following documentation
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
