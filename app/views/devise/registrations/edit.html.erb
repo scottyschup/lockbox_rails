@@ -2,12 +2,17 @@
   <%= devise_error_messages! %>
 
   <div>
-    <h2>Update Password</h2>
+    <h2>Account Settings</h2>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
+
+  <div class="field form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, autocomplete: "off" %>
+  </div>
 
   <div class="field form-group">
     <%= f.label :current_password %>
