@@ -160,3 +160,10 @@ hr {
   margin-top: 20px;
   margin-bottom: 30px;
 }
+
+.support-container {
+  width: 100%;
+  @media screen and (min-width: 481px) {
+    width: 50%;
+  }
+}
