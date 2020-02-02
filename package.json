@@ -12,7 +12,7 @@
     "datatables.net-bs4": "^1.10.20",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
-    "snyk": "^1.258.2",
+    "snyk": "^1.278.2",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
@@ -21,7 +21,7 @@
   },
   "scripts": {
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "yarn run snyk-protect"
   },
   "snyk": true
 }

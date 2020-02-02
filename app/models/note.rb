@@ -5,6 +5,8 @@ class Note < ApplicationRecord
 
   after_create :send_alerts
 
+  validates :notable_action, inclusion: { in: %w{create update annotate} }
+
   def author
     if user
       user.display_name

@@ -55,6 +55,13 @@ header {
       display: block;
     }
   }
+  .nav-item-right {
+    float: right;
+    clear: right;
+    a {
+      font-size: 1em;
+    }
+  }
 }
 
 .container.secondary-nav {

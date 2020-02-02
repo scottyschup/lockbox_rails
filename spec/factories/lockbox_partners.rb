@@ -13,5 +13,9 @@ FactoryBot.define do
       users { build_list :user, 1, :partner_user }
       lockbox_actions { build_list :lockbox_action, 1, :add_cash, :completed }
     end
+
+    trait :with_active_user do
+      users { build_list :user, 1, :partner_user }
+    end
   end
 end

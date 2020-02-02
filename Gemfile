@@ -42,10 +42,15 @@ gem 'cocoon'
 # Add versions table for logging purposes
 gem 'paper_trail'
 
+gem 'sqreen', '>= 1.16'
+
 # TODO -- before we go live, should move this back to test/dev bundle
 # For test data generation
 gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+
+gem 'sentry-raven'
+gem 'skylight'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -80,8 +85,7 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
+  gem 'capybara', '>= 3.18.0'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'webdrivers', '~> 4.0'
 
