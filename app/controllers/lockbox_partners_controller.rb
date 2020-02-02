@@ -22,7 +22,7 @@ class LockboxPartnersController < ApplicationController
 
   def update
     if @lockbox_partner.update(lockbox_params)
-      redirect_to @lockbox_partner, notice: 'Contact information was successfully updated.'
+      redirect_to edit_lockbox_partner_path(@lockbox_partner), notice: 'Contact information was successfully updated.'
     else
       render :edit
     end
@@ -36,7 +36,7 @@ class LockboxPartnersController < ApplicationController
 
   def lockbox_params
     params.require(:lockbox_partner)
-          .permit(:name, :phone_number, :street_address,
+          .permit(:name, :phone_number, :phone_ext, :street_address,
                   :city, :state, :zip_code)
   end
 
