@@ -67,7 +67,7 @@ class Users::PasswordsController < Devise::PasswordsController
     # The variable can't be named @user or @resource as the super call
     # will assign a newly initialized User to those variables.
     token = Devise.token_generator.digest(
-      self, :reset_password_token, params[:reset_password_token]
+      self, :reset_password_token, params[:reset_password_token] || params[:user][:reset_password_token]
     )
     @existing_user = User.find_by(reset_password_token: token)
   end
