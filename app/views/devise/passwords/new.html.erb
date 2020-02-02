@@ -6,7 +6,11 @@
 
     <div class="form-group">
       <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+      <%= f.email_field :email,
+        autofocus: true,
+        autocomplete: "email",
+        class: 'form-control',
+        required: true %>
     </div>
 
     <div class="actions">
@@ -14,3 +18,5 @@
     </div>
   <% end %>
 </div>
+
+<%= javascript_pack_tag 'forms', 'data-turbolinks-track': 'reload' %>

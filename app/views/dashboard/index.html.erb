@@ -1,7 +1,7 @@
 <div class="container">
   <% if current_user.partner? %>
     <%= render partial: 'dashboard/lockbox_partner', object: @lockbox_partner, as: :lockbox_partner %>
-  <% else %>
+  <% elsif current_user.admin? %>
     <div id="dashboard-lockbox-partners">
       <%= render partial: 'lockbox_partners/dashboard_header' %>
       <p>

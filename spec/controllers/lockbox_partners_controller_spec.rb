@@ -175,8 +175,8 @@ describe LockboxPartnersController do
         expect(authorized_lockbox_partner.reload.name).to eq(@new_name)
       end
 
-      it "redirects to the partner" do
-        expect(response).to redirect_to(lockbox_partner_path(authorized_lockbox_partner))
+      it "redirects to the lockbox partner edit page" do
+        expect(response).to redirect_to(edit_lockbox_partner_path(user_lockbox_partner))
       end
     end
 

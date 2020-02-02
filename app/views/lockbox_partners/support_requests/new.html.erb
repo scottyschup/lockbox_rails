@@ -1,19 +1,21 @@
-  <% if @lockbox_partner.nil? || @lockbox_partner.active? %>
-    <% if @lockbox_partner %>
-      <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
-      <%= render partial: 'support_requests/form', locals: { path: @path, form_action: "New" } %>
-    <% else %>
-      <div id="dashboard-lockbox-partners">
-        <%= render partial: 'lockbox_partners/back_to_dashboard', locals: {:alignment => 'left'} %>
-        <br/>
-        <%= render partial: 'lockbox_partners/dashboard_header' %>
-        <div id="support-request-form">
-          <%= render partial: 'support_requests/form', locals: { path: @path, form_action: "New" } %>
-        </div>
-      </div>
-    <% end %>
+<% if @lockbox_partner %>
+  <%= render partial: 'lockbox_partners/header', locals: { lockbox_partner: @lockbox_partner } %>
+<% end %>
+<% if @lockbox_partner.nil? || @lockbox_partner.active? %>
+  <% if @lockbox_partner %>
+    <%= render partial: 'support_requests/form', locals: { path: @path, form_action: "New" } %>
   <% else %>
-    <p class="text-center">
-      Lockbox partner not yet active. There must be an active user and a completed cash addition.
-    </p>
+    <div id="dashboard-lockbox-partners">
+      <%= render partial: 'lockbox_partners/back_to_dashboard', locals: {:alignment => 'left'} %>
+      <br/>
+      <%= render partial: 'lockbox_partners/dashboard_header' %>
+      <div id="support-request-form">
+        <%= render partial: 'support_requests/form', locals: { path: @path, form_action: "New" } %>
+      </div>
+    </div>
   <% end %>
+<% else %>
+  <p class="text-center">
+    Lockbox partner not yet active. There must be an active user and a completed cash addition.
+  </p>
+<% end %>

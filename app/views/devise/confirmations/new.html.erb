@@ -5,7 +5,11 @@
 
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+    <%= f.email_field :email,
+      autofocus: true,
+      autocomplete: "email",
+      value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email),
+      required: true %>
   </div>
 
   <div class="actions">
@@ -14,3 +18,4 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+<%= javascript_pack_tag 'forms', 'data-turbolinks-track': 'reload' %>
