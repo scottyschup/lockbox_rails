@@ -2,6 +2,11 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
 
+  # Raising 404 rather than the 500 the JsonApiClient error would raise
+  rescue_from ActiveRecord::RecordNotFound do
+    render "errors/not_found", status: :not_found
+  end
+
   def require_admin
     unless current_user&.admin?
       flash[:error] = "You are not authorized to access this page"
