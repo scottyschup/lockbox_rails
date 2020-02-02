@@ -22,7 +22,10 @@ class LockboxPartnersController < ApplicationController
 
   def update
     if @lockbox_partner.update(lockbox_params)
-      redirect_to edit_lockbox_partner_path(@lockbox_partner), notice: 'Contact information was successfully updated.'
+      redirect_to(
+        (current_user.admin? ? @lockbox_partner : edit_lockbox_partner_path(@lockbox_partner)),
+        notice: 'Contact information was successfully updated.'
+      )
     else
       render :edit
     end
