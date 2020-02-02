@@ -15,6 +15,14 @@
 }
 
 .notes-log .table {
+  thead {
+    display: none;
+  }
+  @media screen and (min-width: 768px) {
+    thead {
+      display: table-header-group;
+    }
+  }
   border-top: 0px;
   tr.green {
     background: #e7f4e5;

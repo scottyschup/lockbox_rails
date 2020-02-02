@@ -1,8 +1,8 @@
-<tr data-id="<%= note.id %>">
-  <td><%= note.created_at.strftime('%Y/%m/%d %I:%M %p') %></td>
-  <td><%= note.author %></td>
-  <td><%= note.text %></td>
-  <td class="font-weight-bold">
+<tr class="row" data-id="<%= note.id %>">
+  <td class="col-12"><%= note.created_at.strftime('%Y/%m/%d %I:%M %p') %></td>
+  <td class="col-12"><%= note.author %></td>
+  <td class="col-12"><%= note.text %></td>
+  <td class="font-weight-bold col-12">
     <% if note.user && note.user == current_user %>
       <a href="#" class="edit-note-button">
         Edit <%= fa_icon "arrow-right" %>

@@ -1,25 +1,31 @@
-<div class="lockbox-partner-header">
-  <strong><%= lockbox_partner.city %></strong>
-  <% if current_user.admin? %>
-    <%= render partial: 'lockbox_partners/back_to_dashboard', locals: {:alignment => 'right'} %>
-  <% end %>
-  <h2>
-    <%= lockbox_partner.name %>
-    <span class="float-right">
-      <%= lockbox_partner.balance %>
-    </span>
-  </h2>
-  <div class="lockbox-partner-info">
-    <p class="address">
-      <% if lockbox_partner.street_address %>
-        <%= lockbox_partner.street_address %>
-        <br>
-      <% end %>
-      <%= lockbox_partner.city %>, <%= lockbox_partner.state %> <%= lockbox_partner.zip_code %>
-    </p>
-    <p class="phone_number">
-      <%= lockbox_partner.phone_number %>
-    </p>
+<div class="lockbox-partner-header row">
+  <div class="col-12 col-md-8">
+    <div class="city-and-name">
+      <strong><%= lockbox_partner.city %></strong>
+      <h2 data-toggle="collapse" data-target=".lockbox-partner-info" aria-expanded="false">
+        <%= lockbox_partner.name %> <i class="fa fa-angle-down"></i>
+      </h2>
+    </div>
+    <div class="lockbox-partner-info collapse">
+      <p class="address">
+        <% if lockbox_partner.street_address %>
+          <%= lockbox_partner.street_address %>
+          <br>
+        <% end %>
+        <%= lockbox_partner.city %>, <%= lockbox_partner.state %> <%= lockbox_partner.zip_code %>
+      </p>
+      <p class="phone_number">
+        <%= lockbox_partner.phone_number %>
+      </p>
+    </div>
+  </div>
+  <div class="header-right col-12 col-md-4">
+    <% if current_user.admin? %>
+      <div>
+        <%= link_to (fa_icon "arrow-left", text:"View All Activity"), lockbox_partners_path %>
+      </div>
+    <% end %>
+    <h4 class="lockbox-partner-balance">$<%= lockbox_partner.balance %></h4>
   </div>
   <div class="horizontal-rule"></div>
 </div>

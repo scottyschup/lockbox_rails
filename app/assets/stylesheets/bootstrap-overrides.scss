@@ -6,6 +6,11 @@ label {
   font-family: $font-sans;
 }
 
+.container,
+.main-content {
+  overflow-x: hidden;
+}
+
 h1,
 h2,
 h3,
@@ -35,7 +40,7 @@ a {
 }
 
 .btn-active:after {
-  content:'';
+  content: '';
   display: block;
   position: relative;
   top: 25%;
