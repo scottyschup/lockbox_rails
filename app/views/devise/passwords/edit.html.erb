@@ -16,11 +16,14 @@
     <% unless @existing_user&.has_signed_in? %>
       <div class="form-group">
         <%= f.label :name %><br />
-        <%= f.text_field :name, class: 'form-control' %>
+        <%= f.text_field :name, class: 'form-control', required: true %>
       </div>
       <div class="form-group">
         <%= f.label :email %><br />
-        <%= f.text_field :email, class: 'form-control', value: @existing_user.email, disabled: true %>
+        <%= f.text_field :email,
+          class: 'form-control',
+          value: @existing_user.email,
+          disabled: true %>
       </div>
     <% end %>
 
@@ -29,20 +32,30 @@
       <% if @minimum_password_length %>
         <em>(<%= @minimum_password_length %> characters minimum)</em><br />
       <% end %>
-      <%= f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control' %>
+      <%= f.password_field :password,
+        autofocus: true,
+        autocomplete: "off",
+        class: 'form-control',
+        required: true %>
     </div>
 
     <div class="form-group">
       <%= f.label :password_confirmation, "Confirm new password" %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+      <%= f.password_field :password_confirmation,
+        autocomplete: "off",
+        class: 'form-control',
+        required: true %>
     </div>
 
     <div class="actions">
       <% if @existing_user&.has_signed_in? %>
-        <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password", class: 'btn btn-primary' %>
+        <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password",
+          class: 'btn btn-primary' %>
       <% else %>
         <%= f.submit "Submit", class: 'btn btn-primary' %>
       <% end %>
     </div>
   <% end %>
 </div>
+
+<%= javascript_pack_tag 'forms', 'data-turbolinks-track': 'reload' %>
