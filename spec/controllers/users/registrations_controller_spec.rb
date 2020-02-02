@@ -26,4 +26,17 @@ describe Users::RegistrationsController do
       expect{subject}.to raise_error(ActionController::RoutingError)
     end
   end
+
+  describe "#destroy" do
+    let(:user) { create(:user) }
+
+    subject do
+      login_with(user)
+      delete :destroy
+    end
+
+    it "does not work" do
+      expect{subject}.to raise_error(ActionController::RoutingError)
+    end
+  end
 end
