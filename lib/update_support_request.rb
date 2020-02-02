@@ -67,7 +67,7 @@ class UpdateSupportRequest
       end
     end
 
-    support_request.notes.create(text: note_text.join("\n"))
+    support_request.notes.create(text: note_text.join("\n"), notable_action: "update")
   end
 
   def field_labels

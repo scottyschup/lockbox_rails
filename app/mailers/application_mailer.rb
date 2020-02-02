@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default from: "MAC Lockbox <no-reply@midwestaccesscoalition.org>"
   layout 'mailer'
 end

@@ -3,7 +3,7 @@ FactoryBot.define do
     association    :user
     association    :lockbox_partner
     name_or_alias  { Faker::Name.first_name }
-    client_ref_id  { Faker::Alphanumeric.alpha(8) }
+    client_ref_id  { Faker::Alphanumeric.alpha(number: 8) }
   end
 
   trait(:pending) do

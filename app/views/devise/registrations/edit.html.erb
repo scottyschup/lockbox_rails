@@ -11,7 +11,7 @@
 
   <div class="field form-group">
     <%= f.label :current_password %>
-    <%= f.password_field :current_password, autocomplete: "off" %>
+    <%= f.password_field :current_password, autocomplete: "off", required: true %>
   </div>
 
   <div class="field form-group">
@@ -20,15 +20,17 @@
       <em><%= @minimum_password_length %> characters minimum</em>
       <br />
     <% end %>
-    <%= f.password_field :password, autocomplete: "off" %>
+    <%= f.password_field :password, autocomplete: "off", required: true %>
   </div>
 
   <div class="field form-group">
     <%= f.label :password_confirmation, "Re-enter Password" %>
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    <%= f.password_field :password_confirmation, autocomplete: "off", required: true %>
   </div>
 
   <div class="actions form-group">
     <%= f.submit "Update Password", class: "btn btn-primary" %>
   </div>
 <% end %>
+
+<%= javascript_pack_tag 'forms', 'data-turbolinks-track': 'reload' %>

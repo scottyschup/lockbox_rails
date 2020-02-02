@@ -63,7 +63,7 @@ class LockboxPartners::NotesController < ApplicationController
   private
 
   def note_params
-    params.require(:note).permit(:id, :text)
+    params.require(:note).permit(:id, :text).merge({notable_action: "annotate"})
   end
 
   def find_commentable

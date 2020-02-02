@@ -15,13 +15,6 @@
   </li>
   <li>
     Total amount: <%= @support_request.amount.format %>
-    <ul>
-      <% @support_request.lockbox_transactions.each do |transaction| %>
-        <li>
-          <%= transaction.amount.format %> for <%= transaction.category %>
-        </li>
-      <% end %>
-    </ul>
   </li>
   <li>
     MAC coordinator: <%= @support_request.user.name %>
