@@ -7,14 +7,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   layout 'application', only: [:edit, :update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    not_found
+  end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    not_found
+  end
 
   # GET /resource/edit
   # def edit

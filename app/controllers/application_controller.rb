@@ -15,4 +15,8 @@ class ApplicationController < ActionController::Base
     flash[:alert] = "You are not authorized to access this page"
     return redirect_to root_path
   end
+
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
 end
