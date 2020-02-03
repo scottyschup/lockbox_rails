@@ -52,7 +52,11 @@ header {
   }
   #navbar {
     .container {
-      display: block;
+      display: flex;
+      align-items: normal;
+      .navbar-subcontainer {
+        flex: 0 1 50%;
+      }
     }
   }
   .nav-item-right {
@@ -81,4 +85,20 @@ nav a.edit_contact_info {
 
 .fa-cog {
   font-size: 1.5em;
+}
+
+@media screen and (max-width: 481px) {
+  #navbar {
+    .container {
+      display: block;
+      .navbar-subcontainer {
+        flex: none;
+        .btn,
+        .nav-item-right {
+          float: none;
+          clear: none;
+        }
+      }
+    }
+  }
 }
