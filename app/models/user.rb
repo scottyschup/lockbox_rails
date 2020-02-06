@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   belongs_to :lockbox_partner, optional: true
   has_many :support_requests
+  has_many :invitees, class_name: "User", foreign_key: 'invited_by_id'
+  belongs_to :inviter, class_name: "User",  optional: true, foreign_key: 'invited_by_id'
 
   # all but :omniauthable
   devise :database_authenticatable, :registerable,
@@ -8,19 +10,21 @@ class User < ApplicationRecord
          :confirmable, :lockable, :trackable,
          :timeoutable
 
-  scope :confirmed, -> { where.not(confirmed_at: nil) }
-
   ROLES = [
     ADMIN  = 'admin',
     PARTNER = 'partner'
   ].freeze
-  
+
+  validates :role, presence: true, inclusion: { in: ROLES }
+
   # for grepability:
   # scope :admin
   # scope :partner
   ROLES.each do |role|
     scope role, -> { where(role: role) }
   end
+
+  scope :confirmed, -> { where.not(confirmed_at: nil) }
 
   def admin?
     role == ADMIN
