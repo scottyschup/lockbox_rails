@@ -8,11 +8,11 @@ Technical requirements for this project. See below for step-by-step first-time s
 
 | Tool | Version |
 |------|---------|
-| Ruby | v2.6.2 |
-| Bundler | v2.0.1 |
-| Rails | v6.0.0.beta3 |
-| PostgreSQL | v11.2 |
-| Node | v11.14.0 |
+| Ruby | v2.6.5 |
+| Bundler | v2.1.1 |
+| Rails | 6.0.2.1 |
+| PostgreSQL | v11.3 |
+| Node | v10.15.3 |
 
 ### Environment Setup
 Clone the repo:
@@ -46,7 +46,7 @@ rbenv install $ruby_version
 
 #### Rails
 ```sh
-gem install bundler -v 2.0.1
+gem install bundler -v 2.1.1
 bundle install # Make sure you're in the lockbox-rails root directory
 ```
 

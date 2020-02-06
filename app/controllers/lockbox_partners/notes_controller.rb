@@ -1,7 +1,7 @@
 class LockboxPartners::NotesController < ApplicationController
   before_action :find_commentable, only: %w[create]
   before_action :find_note, except: [:create]
-  before_action :ensure_not_system_created_note, only: [:edit, :update]
+  before_action :ensure_not_system_note_or_other_user, only: [:edit, :update]
 
   def create
     @note = @commentable.notes.build(note_params.merge(user_id: current_user.id))
@@ -63,7 +63,7 @@ class LockboxPartners::NotesController < ApplicationController
   private
 
   def note_params
-    params.require(:note).permit(:id, :text)
+    params.require(:note).permit(:id, :text).merge({notable_action: "annotate"})
   end
 
   def find_commentable
@@ -82,8 +82,8 @@ class LockboxPartners::NotesController < ApplicationController
     @note = Note.find(params[:id])
   end
 
-  def ensure_not_system_created_note
-    unless @note.user
+  def ensure_not_system_note_or_other_user
+    unless @note.user && @note.user == current_user
       return render status: 401, body: nil
     end
   end

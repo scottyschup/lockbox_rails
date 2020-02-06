@@ -1,4 +1,4 @@
-<% if @support_request.urgency_flag %>
+<% if @support_request.urgency_flag.present? %>
   <div class="alert alert-primary d-flex">
     <div class="p-2">
       <i class="fa fa-info-circle alert-primary-icon" aria-hidden="true"></i>

@@ -10,12 +10,12 @@ class User < ApplicationRecord
          :confirmable, :lockable, :trackable,
          :timeoutable
 
-  scope :confirmed, -> { where.not(confirmed_at: nil) }
-
   ROLES = [
     ADMIN  = 'admin',
     PARTNER = 'partner'
   ].freeze
+
+  validates :role, presence: true, inclusion: { in: ROLES }
 
   # for grepability:
   # scope :admin
@@ -23,6 +23,8 @@ class User < ApplicationRecord
   ROLES.each do |role|
     scope role, -> { where(role: role) }
   end
+
+  scope :confirmed, -> { where.not(confirmed_at: nil) }
 
   def admin?
     role == ADMIN

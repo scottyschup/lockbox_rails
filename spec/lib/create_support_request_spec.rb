@@ -137,23 +137,10 @@ describe CreateSupportRequest do
   end
 
   context "partner notification email" do
-    let(:delivery) do
-      instance_double(
-        ActionMailer::Parameterized::MessageDelivery,
-        deliver_now: nil
-      )
-    end
-
-    let(:mailer) { double(creation_alert: delivery) }
-
-    before do
-      allow(SupportRequestMailer).to receive(:with).and_return(mailer)
-
-      CreateSupportRequest.call(params: params)
-    end
-
     it "sends the email" do
-      expect(delivery).to have_received(:deliver_now)
+      allow(NoteMailer).to receive(:deliver_note_creation_alerts)
+      CreateSupportRequest.call(params: params)
+      expect(NoteMailer).to have_received(:deliver_note_creation_alerts)
     end
   end
 

@@ -3,7 +3,7 @@
   <td><%= note.author %></td>
   <td><%= note.text %></td>
   <td class="font-weight-bold">
-    <% if note.user %>
+    <% if note.user && note.user == current_user %>
       <a href="#" class="edit-note-button">
         Edit <%= fa_icon "arrow-right" %>
       </a>

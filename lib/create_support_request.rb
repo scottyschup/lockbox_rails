@@ -72,7 +72,6 @@ class CreateSupportRequest
     end
 
     support_request.record_creation
-    send_creation_alert
     send_low_balance_alert if support_request.lockbox_partner.low_balance?
 
     support_request
@@ -82,12 +81,5 @@ class CreateSupportRequest
 
   def send_low_balance_alert
     LockboxPartnerMailer.with(lockbox_partner: support_request.lockbox_partner).low_balance_alert.deliver
-  end
-
-  def send_creation_alert
-    SupportRequestMailer
-      .with(support_request: support_request)
-      .creation_alert
-      .deliver_now
   end
 end
