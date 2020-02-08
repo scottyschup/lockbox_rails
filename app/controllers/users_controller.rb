@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_admin, :user_from_params
+  before_action :require_account_ownership
 
   def edit
   end
@@ -23,8 +23,10 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name)
   end
 
-  def user_from_params
+  def require_account_ownership
     @user = User.find params[:id]
-    redirect_back(fallback_location: root_path) unless @user
+    return if @user == current_user
+    flash[:error] = "You are not authorized to access this page"
+    redirect_back(fallback_location: root_path)
   end
 end
