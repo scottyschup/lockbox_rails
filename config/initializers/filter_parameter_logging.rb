@@ -5,7 +5,6 @@ Rails.application.config.filter_parameters += [
   # Regex string matching;
   # will filter any param with the following substrings
   :password, # :password_confirmation, :current_password
-  :email,
-  :name, # :name_or_alias
+  :name_or_alias,
   :text
 ]
