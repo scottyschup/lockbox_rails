@@ -10,11 +10,11 @@ class UsersController < ApplicationController
     if @user.save
       flash.clear
       flash[:notice] = "User account for #{@user.email} has been updated."
-      redirect_to root_path
-    else
-      flash[:alert] = @user.errors.full_messages.join(', ')
-      redirect_back(fallback_location: root_path)
+      redirect_to(root_path)
     end
+
+    flash[:alert] = @user.errors.full_messages.join(", ")
+    redirect_back(fallback_location: root_path)
   end
 
   private
@@ -24,9 +24,10 @@ class UsersController < ApplicationController
   end
 
   def require_account_ownership
-    @user = User.find params[:id]
+    @user = User.find(params[:id])
     return if @user == current_user
-    flash[:error] = "You are not authorized to access this page"
+
+    flash[:error] = "You are not authorized to access this page."
     redirect_back(fallback_location: root_path)
   end
 end

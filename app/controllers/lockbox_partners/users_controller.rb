@@ -15,7 +15,7 @@ class LockboxPartners::UsersController < ApplicationController
       flash[:notice] = "New user created for Lockbox Partner #{@lockbox_partner.name}"
       redirect_back(fallback_location: root_path)
     else
-      flash[:alert] = @user.errors.full_messages.join(', ')
+      flash[:alert] = @user.errors.full_messages.join(", ")
       render :index
     end
   end
@@ -31,9 +31,9 @@ class LockboxPartners::UsersController < ApplicationController
     @user = User.find(params[:id])
 
     case update_action
-    when 'lock'
+    when "lock"
       @user.locked_at = Time.current
-    when 'unlock'
+    when "unlock"
       @user.locked_at = nil
     end
 
@@ -42,7 +42,7 @@ class LockboxPartners::UsersController < ApplicationController
       flash[:notice] = "User account for #{@user.email} has been #{update_action}ed."
       redirect_back(fallback_location: root_path)
     else
-      flash[:alert] = @user.errors.full_messages.join(', ')
+      flash[:alert] = @user.errors.full_messages.join(", ")
       redirect_back(fallback_location: root_path)
     end
   end
