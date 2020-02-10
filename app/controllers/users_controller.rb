@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     if @user.save
       flash.clear
       flash[:notice] = "User account for #{@user.email} has been updated."
-      redirect_to(root_path)
+      redirect_to(root_path) && return
     end
 
     flash[:alert] = @user.errors.full_messages.join(", ")

@@ -27,13 +27,6 @@ describe UsersController do
   end
 
   context "When the user does not own the account" do
-    let(:flash) { instance_double("flash").as_null_object }
-    before do
-      allow_any_instance_of(LockboxPartners::UsersController)
-        .to receive(:flash)
-        .and_return(flash)
-    end
-
     it "does not allow access" do
       get :edit, params: { id: other_user }
       expect(response).to redirect_to(back)
