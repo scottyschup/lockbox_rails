@@ -24,7 +24,7 @@ class Users::PasswordsController < Devise::PasswordsController
     set_existing_user
     super do |resource|
       if resource.errors.empty?
-        resource.update(update_password_params)
+        resource.update(include_name_params)
       end
     end
   end
@@ -48,7 +48,7 @@ class Users::PasswordsController < Devise::PasswordsController
   #   super(resource_name)
   # end
 
-  def update_password_params
+  def include_name_params
     # Devise does not use these params to update the password itself, hence
     # the absence of password and password_confirmation
     params.require(:user).permit(:name)
@@ -73,5 +73,9 @@ class Users::PasswordsController < Devise::PasswordsController
       self, :reset_password_token, params[:reset_password_token]
     )
     @existing_user = User.find_by(reset_password_token: token)
+    flash[:alert] = "Whoops! It looks like your password reset link has expired. Please check your email for a more recent reset link."
+    if !@existing_user
+      raise ActiveRecord::RecordNotFound
+    end
   end
 end

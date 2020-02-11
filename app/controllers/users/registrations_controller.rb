@@ -28,7 +28,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # DELETE /resource
   def destroy
-    not_found
+    return not_found unless current_user.admin?
   end
 
   # GET /resource/cancel
