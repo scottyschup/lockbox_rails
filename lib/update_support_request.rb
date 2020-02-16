@@ -58,12 +58,10 @@ class UpdateSupportRequest
   def notate_changes
     note_text = []
 
-    timestamp = Time.now.strftime("%Y-%m-%d at %-I:%M%P")
-
     original_values.each do |field, original_value|
       new_value = support_request.send(field)
       if new_value != original_value
-        note_text << "The #{field_labels[field]} for this Support Request was changed on #{timestamp} from #{original_value} to #{new_value}"
+        note_text << "The #{field_labels[field]} for this Support Request was changed from #{original_value} to #{new_value}"
       end
     end
 
