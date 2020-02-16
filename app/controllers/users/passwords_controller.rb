@@ -73,8 +73,8 @@ class Users::PasswordsController < Devise::PasswordsController
       self, :reset_password_token, params[:reset_password_token]
     )
     @existing_user = User.find_by(reset_password_token: token)
-    flash[:alert] = "Whoops! It looks like your password reset link has expired. Please check your email for a more recent reset link."
     if !@existing_user
+      flash[:alert] = "Whoops! It looks like your password reset link has expired. Please check your email for a more recent reset link."
       raise ActiveRecord::RecordNotFound
     end
   end
