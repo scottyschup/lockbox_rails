@@ -29,6 +29,7 @@ gem 'jbuilder', '~> 2.9', '>= 2.9.1'
 gem 'bootsnap', '~> 1.4', '>= 1.4.5'
 
 gem 'devise', '~> 4.7', '>= 4.7.1'
+gem 'rails_admin', '~> 2.0'
 gem 'font-awesome-rails'
 gem 'font_assets', '>= 0.1.14'
 gem 'bootstrap', '~> 4.4', '>= 4.4.1'
