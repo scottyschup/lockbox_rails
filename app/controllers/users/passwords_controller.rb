@@ -79,7 +79,7 @@ class Users::PasswordsController < Devise::PasswordsController
   def record_not_found
     flash[:alert] = <<~ALERT
       Whoops! It looks like your password reset is invalid or has expired.
-      Please check your email for a more recent reset link."
+      Please check your email for a more recent reset link.
     ALERT
     raise ActiveRecord::RecordNotFound
   end
