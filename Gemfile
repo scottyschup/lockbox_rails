@@ -50,6 +50,7 @@ gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 
 gem 'sentry-raven'
+gem 'sidekiq'
 gem 'skylight'
 
 group :development, :test do

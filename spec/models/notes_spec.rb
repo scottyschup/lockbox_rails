@@ -20,7 +20,7 @@ describe Note, type: :model do
       let(:mailer) { double(note_creation_alert: delivery) }
 
       it "kicks off email alerts" do
-        expect(NoteMailer).to receive(:with).and_return(mailer)
+        expect(NoteMailerWorker).to receive(:perform_async)
         note.save
       end
     end
