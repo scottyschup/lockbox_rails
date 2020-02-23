@@ -13,6 +13,7 @@ class LockboxTransaction < ApplicationRecord
     DEBIT  = 'debit',
     CREDIT = 'credit'
   ].freeze
+  validates :balance_effect, inclusion: BALANCE_EFFECTS
 
   EXPENSE_CATEGORIES = [
     GAS           = 'gas',
@@ -24,6 +25,7 @@ class LockboxTransaction < ApplicationRecord
     ADJUSTMENT    = 'adjustment',
     CASH_ADDITION = 'cash_addition'
   ].freeze
+  validates :category, inclusion: EXPENSE_CATEGORIES
 
   def eff_date
     lockbox_action.eff_date
