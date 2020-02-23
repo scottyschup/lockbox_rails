@@ -10,6 +10,8 @@ class LockboxPartners::AddCashController < ApplicationController
     action = AddCashToLockbox.call(
       lockbox_partner: @lockbox_partner,
       amount: add_cash_params[:amount],
+      tracking_number: add_cash_params[:tracking_number],
+      delivery_method: add_cash_params[:delivery_method],
       eff_date: Date.current
     )
     if action.succeeded?
@@ -30,6 +32,6 @@ class LockboxPartners::AddCashController < ApplicationController
   end
 
   def add_cash_params
-    params.require(:add_cash).permit(:amount)
+    params.require(:add_cash).permit(:amount, :tracking_number, :delivery_method)
   end
 end

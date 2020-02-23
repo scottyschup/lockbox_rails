@@ -10,6 +10,20 @@
       class: "form-control",
       required: true %>
   </div>
+  <div class="form-group">
+    <%= f.label "(Optional) Tracking number for checks/Confirmation number for online processing" %>
+    <%= f.text_field :tracking_number,
+      type: "text",
+      class: "form-control",
+      required: false %>
+  </div>
+  <div class="form-group">
+    <%= f.label "(Optional) Tracking delivery method for checks (FedEx, UPS, Venmo, etc)" %>
+    <%= f.text_field :delivery_method,
+      type: "text",
+      class: "form-control",
+      required: false %>
+  </div>
   <%= f.submit "Submit", class: "btn btn-primary" %>
 <% end %>
 

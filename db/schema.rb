@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_26_005338) do
+ActiveRecord::Schema.define(version: 2020_02_23_213623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,13 @@ ActiveRecord::Schema.define(version: 2020_01_26_005338) do
     t.index ["user_id"], name: "index_support_requests_on_user_id"
   end
 
+  create_table "tracking_infos", force: :cascade do |t|
+    t.string "tracking_number"
+    t.string "delivery_method"
+    t.bigint "lockbox_action_id", null: false
+    t.index ["lockbox_action_id"], name: "index_tracking_infos_on_lockbox_action_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -119,5 +126,6 @@ ActiveRecord::Schema.define(version: 2020_01_26_005338) do
 
   add_foreign_key "lockbox_transactions", "lockbox_actions"
   add_foreign_key "support_requests", "lockbox_partners"
+  add_foreign_key "tracking_infos", "lockbox_actions"
   add_foreign_key "users", "users", column: "invited_by_id"
 end
