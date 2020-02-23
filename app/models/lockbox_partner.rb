@@ -48,6 +48,27 @@ class LockboxPartner < ApplicationRecord
     lockbox_actions.pending_cash_additions.any?
   end
 
+  def longstanding_pending_cash_addition?
+    pending_cash_addition_age >= 3
+  end
+
+  def pending_cash_addition_age
+    earliest_pending_cash_addition = lockbox_actions.pending_cash_additions.order(:eff_date).first
+    return 0 unless earliest_pending_cash_addition
+    (Date.today - earliest_pending_cash_addition.eff_date).to_i
+  end
+
+  def recently_completed_first_cash_addition?
+    completed_additions = lockbox_actions.completed_cash_additions
+    return false if completed_additions.none?
+    puts lockbox_actions.where(action_type: LockboxAction::SUPPORT_CLIENT).inspect
+    return false if lockbox_actions.where(action_type: LockboxAction::SUPPORT_CLIENT).any?
+    first_cash_addition_completed_at = completed_additions.order(:updated_at).first.updated_at
+    hours_since_first_cash_addition_completed = (Time.now - first_cash_addition_completed_at) / 1.hour
+    return false unless hours_since_first_cash_addition_completed <= 48
+    true
+  end
+
   def relevant_transactions_for_balance(exclude_pending: false)
     excluded_statuses = [ LockboxAction::CANCELED ]
     excluded_statuses << LockboxAction::PENDING if exclude_pending
