@@ -85,6 +85,18 @@ describe LockboxPartners::SupportRequestsController do
       }
       expect(support_request.lockbox_action.reload.status).to eq 'completed'
     end
+
+    it 'updates in less than 1/40th of a second' do
+      sign_in(user)
+      expect(NoteMailer).not_to receive(:deliver_note_creation_alerts)
+      expect {
+        post :update_status, params: {
+          lockbox_partner_id: support_request.lockbox_partner_id,
+          support_request_id: support_request.id,
+          status: 'completed'
+        }
+      }.to perform_under(0.025).sec
+    end
   end
 
   describe "#edit" do

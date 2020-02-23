@@ -112,6 +112,9 @@ GEM
     autoprefixer-rails (9.7.3)
       execjs
     bcrypt (3.1.13)
+    benchmark-malloc (0.1.0)
+    benchmark-perf (0.5.0)
+    benchmark-trend (0.3.0)
     bindex (0.8.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
@@ -258,6 +261,11 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rspec-benchmark (0.5.1)
+      benchmark-malloc (~> 0.1.0)
+      benchmark-perf (~> 0.5.0)
+      benchmark-trend (~> 0.3.0)
+      rspec (>= 3.0.0, < 4.0.0)
     rspec-rails (4.0.0.beta3)
       actionpack (>= 4.2)
       activesupport (>= 4.2)
@@ -378,6 +386,7 @@ DEPENDENCIES
   rails (~> 6.0.2)
   rails-controller-testing
   rspec!
+  rspec-benchmark
   rspec-core!
   rspec-expectations!
   rspec-mocks!
