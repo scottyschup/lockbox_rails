@@ -7,8 +7,20 @@ describe LockboxAction, type: :model do
   it { is_expected.to have_many(:notes) }
 
   describe '.create_with_transactions' do
+    context 'some unknown status' do
+      it 'raises an error' do 
+        action = LockboxAction.new(status: 'oops')
+        action.valid?
+        expect(action.errors.messages[:status]).to include('is not included in the list')
+      end
+    end
+
     context 'some unknown action type' do
-      # it raises some meaningful error
+      it 'raises an error' do 
+        action = LockboxAction.new(action_type: 'whoops')
+        action.valid?
+        expect(action.errors.messages[:action_type]).to include('is not included in the list')
+      end
     end
 
     context 'add_cash' do
