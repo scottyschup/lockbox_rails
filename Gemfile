@@ -91,6 +91,7 @@ group :test do
 
   # This is used in CI
   gem 'rspec_junit_formatter', '~> 0.4.1'
+  gem 'timecop', '0.9.1'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
