@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:name, :time_zone)
   end
 
   def require_account_ownership
