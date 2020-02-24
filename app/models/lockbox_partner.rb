@@ -70,8 +70,6 @@ class LockboxPartner < ApplicationRecord
   def reconciliation_needed?
     return false unless persisted?
     return false unless !!reconciliation_interval_start
-    # Cast the DateTime to a Date, since comparing a Date with a DateTime can
-    # cause unexpected results when the date is different in CST and UTC
     reconciliation_interval_start <= RECONCILIATION_INTERVAL.days.ago.to_date
   end
 
