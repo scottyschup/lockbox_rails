@@ -4,13 +4,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2'
+gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem "puma", ">= 3.12.2"
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 5.1', '>= 5.1.0'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.2', '>= 4.2.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -29,11 +29,11 @@ gem 'jbuilder', '~> 2.9', '>= 2.9.1'
 gem 'bootsnap', '~> 1.4', '>= 1.4.5'
 
 gem 'devise', '~> 4.7', '>= 4.7.1'
-gem 'font-awesome-rails'
+gem 'font-awesome-rails', '>= 4.7.0.5'
 gem 'font_assets', '>= 0.1.14'
 gem 'bootstrap', '~> 4.4', '>= 4.4.1'
 
-gem 'money-rails', '~>1.12'
+gem 'money-rails', '~> 1.13', '>= 1.13.3'
 
 gem 'verbalize', '~> 2.2'
 
@@ -46,7 +46,7 @@ gem 'sqreen', '>= 1.16'
 
 # TODO -- before we go live, should move this back to test/dev bundle
 # For test data generation
-gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
+gem 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 
 gem 'sentry-raven'
@@ -69,14 +69,14 @@ group :development, :test do
   gem 'rspec-mocks', github: 'rspec/rspec-mocks', branch: 'master'
   gem 'rspec-expectations', github: 'rspec/rspec-expectations', branch: 'master'
   gem 'rspec-support', github: 'rspec/rspec-support', branch: 'master'
-  gem 'rails-controller-testing'
+  gem 'rails-controller-testing', '>= 1.0.4'
 
   gem 'shoulda-matchers', '~> 4.0', '>= 4.0.1'
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
+  gem 'web-console', '>= 4.0.1'
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -85,9 +85,9 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.18.0'
+  gem 'capybara', '>= 3.29.0'
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'webdrivers', '~> 4.0'
+  gem 'webdrivers', '~> 4.1', '>= 4.1.3'
 
   # This is used in CI
   gem 'rspec_junit_formatter', '~> 0.4.1'
