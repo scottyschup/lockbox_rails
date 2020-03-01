@@ -373,6 +373,28 @@ describe LockboxPartner, type: :model do
 
         it { is_expected.to be true }
       end
+
+      context 'when the date is different in CST and UTC' do
+        before do
+          Timecop.freeze(Time.local(2020, 2, 23, 23, 0, 0)) # 11 PM CST
+        end
+
+        context 'when the lockbox was last reconciled within the reconciliation interval' do
+          let(:reconciliation_date) do
+            (LockboxPartner::RECONCILIATION_INTERVAL - 1).days.ago
+          end
+
+          it { is_expected.to be false }
+        end
+
+        context 'when the lockbox was last reconciled outside the reconciliation interval' do
+          let(:reconciliation_date) do
+            LockboxPartner::RECONCILIATION_INTERVAL.days.ago
+          end
+
+          it { is_expected.to be true }
+        end
+      end
     end
 
     context 'when the lockbox has not been reconciled before' do

@@ -29,15 +29,18 @@ describe NoteMailer, type: :mailer do
 
   describe "#note_creation_alert" do
     describe "content" do
-      it "has the expected subject line" do
+      before do
         admin_note
+        NoteMailerWorker.drain
+      end
+
+      it "has the expected subject line" do
         email = ActionMailer::Base.deliveries.first
         expected_subject = "New note from #{admin_note.author} on Support Request ##{admin_note.notable_id}"
         expect(email.subject).to eq(expected_subject)
       end
 
       it "includes a link to the support_request" do
-        admin_note
         email = ActionMailer::Base.deliveries.first
         path = "/lockbox_partners/#{lockbox_partner.id}/support_requests/#{admin_note.notable_id}"
         expect(email.body.encoded).to include(path)
@@ -45,8 +48,12 @@ describe NoteMailer, type: :mailer do
     end
 
     context "for a system note" do
-      it "has the expected subject line" do
+      before do
         system_note
+        NoteMailerWorker.drain
+      end
+
+      it "has the expected subject line" do
         email = ActionMailer::Base.deliveries.first
         expected_subject = "New System note on Support Request ##{system_note.notable_id}"
         expect(email.subject).to eq(expected_subject)
@@ -54,6 +61,11 @@ describe NoteMailer, type: :mailer do
     end
 
     context "when an admin user creates the note" do
+      before do
+        admin_note
+        NoteMailerWorker.drain
+      end
+
       it "emails the lockbox partner's users" do
         admin_note.notable.lockbox_partner.users.pluck(:email).compact.each do |address|
           expect(recipients).to include(address)
@@ -69,6 +81,11 @@ describe NoteMailer, type: :mailer do
     end
 
     context "when a partner user creates the note" do
+      before do
+        partner_note
+        NoteMailerWorker.drain
+      end
+
       it "emails the lockbox partner's users" do
         partner_note.notable.lockbox_partner.users.pluck(:email).compact.each do |address|
           expect(recipients).to include(address)
@@ -76,7 +93,6 @@ describe NoteMailer, type: :mailer do
       end
 
       it "emails all the admins" do
-        partner_note
         expect(User.admin.count).to be > 1 # need to make sure we're emailing OTHER admins
         User.admin.pluck(:email).compact.each do |address|
           expect(recipients).to include(address)
@@ -88,12 +104,17 @@ describe NoteMailer, type: :mailer do
       context "when there is no urgency flag" do
         it "has the expected subject line" do
           support_request_creation_note
+          NoteMailerWorker.drain
           email = ActionMailer::Base.deliveries.first
           expect(email.subject).to eq("MAC Cash Box Withdrawal Request")
         end
       end
 
       context "when there is an urgency flag" do
+        before do
+          urgent_support_request_creation_note
+          NoteMailerWorker.drain
+        end
         it "has the expected subject line" do
           urgent_support_request_creation_note
           email = ActionMailer::Base.deliveries.first
@@ -104,6 +125,7 @@ describe NoteMailer, type: :mailer do
       context "body" do
         before do
           support_request_creation_note
+          NoteMailerWorker.drain
           @email = ActionMailer::Base.deliveries.first
         end
 

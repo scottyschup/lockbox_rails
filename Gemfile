@@ -50,6 +50,7 @@ gem 'factory_bot_rails', '~> 5.0', '>= 5.0.1'
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 
 gem 'sentry-raven'
+gem 'sidekiq'
 gem 'skylight'
 
 group :development, :test do
@@ -91,6 +92,8 @@ group :test do
 
   # This is used in CI
   gem 'rspec_junit_formatter', '~> 0.4.1'
+  gem 'rspec-benchmark'
+  gem 'timecop', '0.9.1'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
