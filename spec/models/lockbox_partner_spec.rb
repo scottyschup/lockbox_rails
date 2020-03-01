@@ -279,6 +279,9 @@ describe LockboxPartner, type: :model do
     context 'when the lockbox has been reconciled before' do
       let(:lockbox_partner) { create(:lockbox_partner, :active) }
 
+      # We're initializing this in before blocks rather than calling #let!
+      # because the latter approach caused state to persist between example
+      # groups, causing order-dependent test failures where Timecop is used
       let(:reconciliation_action) do
         create(
           :lockbox_action,
@@ -289,9 +292,6 @@ describe LockboxPartner, type: :model do
       end
 
       context 'when the lockbox was last reconciled within the reconciliation interval' do
-        # We're initializing this in a before block rather than calling #let!
-        # because the latter approach caused state to persist between example
-        # groups, causing order-dependent test failures where Timecop is used
         before { reconciliation_action }
 
         let(:reconciliation_date) do
