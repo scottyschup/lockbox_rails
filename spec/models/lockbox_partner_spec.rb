@@ -104,11 +104,18 @@ describe LockboxPartner, type: :model do
     end
     
     context 'when there is a completed cash addition' do
-      let(:cash_addition) { add_cash(partner, 4.days.ago) }
+      let(:cash_addition) { add_cash(partner, 3.days.ago) }
 
       it 'is true if the cash addition is recently complete' do
         cash_addition.complete!
         expect(partner.recently_completed_first_cash_addition?).to be_truthy
+      end
+
+      it 'is false if the cash addition is not recently complete' do
+        Timecop.freeze(49.hours.ago) {
+          cash_addition.complete!
+        }
+        expect(partner.recently_completed_first_cash_addition?).not_to be_truthy
       end
 
       context 'when there has been a support request filed' do
