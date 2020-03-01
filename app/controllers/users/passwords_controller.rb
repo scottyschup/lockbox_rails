@@ -50,7 +50,7 @@ class Users::PasswordsController < Devise::PasswordsController
   def include_name_params
     # Devise does not use these params to update the password itself, hence
     # the absence of password and password_confirmation
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:name, :time_zone)
   end
 
   private

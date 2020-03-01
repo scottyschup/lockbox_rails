@@ -19,6 +19,16 @@
         <%= f.text_field :name, class: 'form-control', required: true %>
       </div>
       <div class="form-group">
+        <%= f.label :time_zone %>
+        <%= f.time_zone_select(
+          :time_zone,
+          User::PRIORITY_TIME_ZONES,
+          {},
+          default: "Central Time (US & Canada)",
+          class: "form-control",
+          required: true) %>
+      </div>
+      <div class="form-group">
         <%= f.label :email %><br />
         <%= f.text_field :email,
           class: 'form-control',
