@@ -15,6 +15,7 @@ class LockboxPartner < ApplicationRecord
   # to reconcile the lockbox. TODO make this configurable (issue #138)
   RECONCILIATION_INTERVAL = 30
   MINIMUM_ACCEPTABLE_BALANCE = Money.new(30000)
+  ZERO_BALANCE = Money.new(0)
 
   scope :active, -> { with_active_user.with_initial_cash }
   scope :with_active_user, -> { joins(:users).merge(User.confirmed) }
@@ -42,6 +43,10 @@ class LockboxPartner < ApplicationRecord
 
   def low_balance?
     balance < MINIMUM_ACCEPTABLE_BALANCE
+  end
+
+  def insufficient_funds?
+    balance < ZERO_BALANCE
   end
 
   def cash_addition_confirmation_pending?
