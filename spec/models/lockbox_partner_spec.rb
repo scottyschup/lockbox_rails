@@ -7,8 +7,8 @@ describe LockboxPartner, type: :model do
 
   def add_cash(partner, date)
     LockboxAction.create!(
-      action_type:     'add_cash',
-      status:          'pending',
+      action_type:     LockboxAction::ADD_CASH,
+      status:          LockboxAction::PENDING,
       eff_date:        date,
       lockbox_partner: partner
     ).tap do |action|
@@ -22,9 +22,10 @@ describe LockboxPartner, type: :model do
 
   def pending_request_on(partner, date, amount_breakdown)
     partner.lockbox_actions.create!(
-      action_type: 'client_support',
-      status:      'pending',
+      action_type: LockboxAction::SUPPORT_CLIENT,
+      status:      LockboxAction::PENDING,
       eff_date:    date,
+      support_request: partner.support_requests.first
     ).tap do |lb_action|
       amount_breakdown.each do |amt_cents|
         lb_action.lockbox_transactions.create!(
@@ -55,6 +56,8 @@ describe LockboxPartner, type: :model do
 
   describe '#balance' do
     let(:lockbox)    { FactoryBot.create(:lockbox_partner) }
+    let(:user)       { FactoryBot.create(:user, lockbox_partner: lockbox) }
+    let!(:request)    { FactoryBot.create(:support_request, lockbox_partner: lockbox, user: user) }
     let(:start_date) { Date.current - 2.months }
 
     context 'have only added cash but no support requests yet' do
@@ -182,6 +185,11 @@ describe LockboxPartner, type: :model do
   describe '#relevant_transactions_for_balance' do
     let(:partner_1) { FactoryBot.create(:lockbox_partner) }
     let(:partner_2) { FactoryBot.create(:lockbox_partner) }
+
+    let(:user_1)    { FactoryBot.create(:user, lockbox_partner: partner_1) }
+    let(:user_2)    { FactoryBot.create(:user, lockbox_partner: partner_2) }
+    let!(:request_1) { FactoryBot.create(:support_request, lockbox_partner: partner_1, user: user_1) }
+    let!(:request_2) { FactoryBot.create(:support_request, lockbox_partner: partner_2, user: user_2) }
 
     let!(:pending_add_cash)                { add_cash(partner_1, Date.yesterday) }
     let!(:completed_add_cash)              { add_cash(partner_1, Date.yesterday).tap{|a| a.complete!} }

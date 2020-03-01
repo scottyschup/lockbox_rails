@@ -24,7 +24,7 @@ class LockboxAction < ApplicationRecord
     COMPLETED = 'completed',
     CANCELED  = 'canceled'
   ].freeze
-  validates :status, inclusion: STATUSES
+  validates :status, inclusion: STATUSES, allow_nil: true
 
   EDITABLE_STATUSES = [
     'pending'

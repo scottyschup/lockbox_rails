@@ -49,10 +49,12 @@ describe LockboxAction, type: :model do
       FactoryBot.create(:lockbox_action, :support_client).tap do |action|
         action.lockbox_transactions.create(
           amount_cents: 20_00,
+          balance_effect: LockboxTransaction::DEBIT,
           category: LockboxTransaction::GAS
         )
         action.lockbox_transactions.create(
           amount_cents: 20_00,
+          balance_effect: LockboxTransaction::DEBIT,
           category: 'medicine'
         )
       end
