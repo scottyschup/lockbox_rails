@@ -48,8 +48,8 @@ LOCKBOX_PARTNERS.map do |partner_name, partner_user_email|
 
   5.times do
     support_request = SupportRequest.create!(
-      client_ref_id: Faker::Alphanumeric.alpha(10),
-      name_or_alias: [Faker::Name.first_name, Faker::Name.initials(2)].sample,
+      client_ref_id: Faker::Alphanumeric.alpha(number: 10),
+      name_or_alias: [Faker::Name.first_name, Faker::Name.initials(number: 2)].sample,
       lockbox_partner: lockbox_partner,
       user: User.first
     ).tap do |sup_req|
