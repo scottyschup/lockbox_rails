@@ -5,6 +5,11 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  require 'sidekiq/web'
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   resources :users, only: [:edit, :update]
 
   root to: 'dashboard#index'
