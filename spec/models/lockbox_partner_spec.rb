@@ -356,7 +356,10 @@ describe LockboxPartner, type: :model do
     context 'when the lockbox has been reconciled before' do
       let(:lockbox_partner) { create(:lockbox_partner, :active) }
 
-      let!(:reconciliation_action) do
+      # We're initializing this in before blocks rather than calling #let!
+      # because the latter approach caused state to persist between example
+      # groups, causing order-dependent test failures where Timecop is used
+      let(:reconciliation_action) do
         create(
           :lockbox_action,
           :reconciliation,
@@ -366,6 +369,8 @@ describe LockboxPartner, type: :model do
       end
 
       context 'when the lockbox was last reconciled within the reconciliation interval' do
+        before { reconciliation_action }
+
         let(:reconciliation_date) do
           (LockboxPartner::RECONCILIATION_INTERVAL - 1).days.ago
         end
@@ -374,6 +379,8 @@ describe LockboxPartner, type: :model do
       end
 
       context 'when the lockbox was last reconciled outside the reconciliation interval' do
+        before { reconciliation_action }
+
         let(:reconciliation_date) do
           LockboxPartner::RECONCILIATION_INTERVAL.days.ago
         end
@@ -387,6 +394,8 @@ describe LockboxPartner, type: :model do
         end
 
         context 'when the lockbox was last reconciled within the reconciliation interval' do
+          before { reconciliation_action }
+
           let(:reconciliation_date) do
             (LockboxPartner::RECONCILIATION_INTERVAL - 1).days.ago
           end
@@ -395,6 +404,8 @@ describe LockboxPartner, type: :model do
         end
 
         context 'when the lockbox was last reconciled outside the reconciliation interval' do
+          before { reconciliation_action }
+
           let(:reconciliation_date) do
             LockboxPartner::RECONCILIATION_INTERVAL.days.ago
           end
