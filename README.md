@@ -100,7 +100,7 @@ Ports in use:
 * 1080: Mailcatcher
 
 ### Login
-**Admin**
+**MAC (Admin)**
 Username: `cats@test.com`  
 Password: `password1234`
 

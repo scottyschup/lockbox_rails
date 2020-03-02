@@ -73,14 +73,7 @@ class CreateSupportRequest
 
     support_request.record_creation
     send_low_balance_alert if support_request.lockbox_partner.low_balance?
-    if support_request.lockbox_partner.insufficient_funds?
-      flash[:alert] << %Q(
-        The Pending Support Requests exceed your Lockbox balance. Please reconcile
-        your current Lockbox, and if the balance is still negative, please reach
-        out to your lockbox manager at #{ENV[LOCKBOX_EMAIL]}.
-      ).strip
-      send_insufficient_funds_alert
-    end
+    send_insufficient_funds_alert if support_request.lockbox_partner.insufficient_funds?
 
     support_request
   rescue CreateSupportRequest::ValidationError => err

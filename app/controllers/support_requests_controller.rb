@@ -10,9 +10,12 @@ class SupportRequestsController < ApplicationController
   def create
     merged_params = support_request_params.merge(user_id: current_user.id)
     result = CreateSupportRequest.call(params: merged_params)
+
     if result.success?
       @support_request = result.value
-      redirect_to lockbox_partner_support_request_path(@support_request.lockbox_partner, @support_request)
+      partner = @support_request.lockbox_partner
+      add_insufficient_funds_alert if partner.insufficient_funds?
+      redirect_to lockbox_partner_support_request_path(partner, @support_request)
     else
       render json: {
         error: render_to_string(
@@ -24,6 +27,14 @@ class SupportRequestsController < ApplicationController
   end
 
   private
+
+  def add_insufficient_funds_alert
+    flash[:alert] = %Q(
+      The Pending Support Requests exceed your Lockbox balance. Please reconcile
+      your current Lockbox, and if the balance is still negative, please reach
+      out to your lockbox manager at #{ENV['LOCKBOX_EMAIL']}.
+    ).strip
+  end
 
   def support_request_params
     params.require(:support_request).permit(
