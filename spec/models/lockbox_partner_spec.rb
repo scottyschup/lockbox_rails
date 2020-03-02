@@ -7,8 +7,8 @@ describe LockboxPartner, type: :model do
 
   def add_cash(partner, date)
     LockboxAction.create!(
-      action_type:     'add_cash',
-      status:          'pending',
+      action_type:     LockboxAction::ADD_CASH,
+      status:          LockboxAction::PENDING,
       eff_date:        date,
       lockbox_partner: partner
     ).tap do |action|
@@ -21,10 +21,16 @@ describe LockboxPartner, type: :model do
   end
 
   def pending_request_on(partner, date, amount_breakdown)
+    request = partner.support_requests.create!(
+      user: partner.users.first,
+      name_or_alias: Faker::Name.first_name,
+      client_ref_id: 'abcdefgh'
+    )
     partner.lockbox_actions.create!(
-      action_type: 'client_support',
-      status:      'pending',
-      eff_date:    date,
+      action_type: LockboxAction::SUPPORT_CLIENT,
+      status:      LockboxAction::PENDING,
+      support_request: request,
+      eff_date:    date
     ).tap do |lb_action|
       amount_breakdown.each do |amt_cents|
         lb_action.lockbox_transactions.create!(
@@ -53,8 +59,79 @@ describe LockboxPartner, type: :model do
     end
   end
 
+  describe '#longstanding_pending_cash_addition?' do
+    let(:partner) { FactoryBot.create(:lockbox_partner) }
+
+    context 'with a longstanding pending cash addition' do
+      let!(:cash_addition) { add_cash(partner, 4.days.ago) }
+      it 'is true' do
+        expect(partner.longstanding_pending_cash_addition?).to be_truthy
+      end
+    end
+
+    context 'with a recent pending cash addition' do
+      let!(:cash_addition) { add_cash(partner, 2.days.ago) }
+      it 'is false' do
+        expect(partner.longstanding_pending_cash_addition?).not_to be_truthy
+      end
+    end
+  end
+
+  describe '#pending_cash_addition_age' do
+    let(:partner) { FactoryBot.create(:lockbox_partner) }
+
+    context 'without a pending cash addition' do
+      it 'is zero' do
+        expect(partner.pending_cash_addition_age).to eq(0)
+      end
+    end
+
+    context 'with a pending cash addition' do
+      let!(:cash_addition) { add_cash(partner, 2.days.ago) }
+      it 'counts the correct number of days' do
+        expect(partner.pending_cash_addition_age).to eq(2)
+      end
+    end
+  end
+
+  describe '#recently_completed_first_cash_addition?' do
+    let(:partner) { FactoryBot.create(:lockbox_partner, :with_active_user) }
+
+    context 'when there is no completed cash addition' do
+      it 'is false' do
+        expect(partner.recently_completed_first_cash_addition?).not_to be_truthy
+      end
+    end
+    
+    context 'when there is a completed cash addition' do
+      let(:cash_addition) { add_cash(partner, 3.days.ago) }
+
+      it 'is true if the cash addition is recently complete' do
+        cash_addition.complete!
+        expect(partner.recently_completed_first_cash_addition?).to be_truthy
+      end
+
+      it 'is false if the cash addition is not recently complete' do
+        Timecop.freeze(49.hours.ago) {
+          cash_addition.complete!
+        }
+        expect(partner.recently_completed_first_cash_addition?).not_to be_truthy
+      end
+
+      context 'when there has been a support request filed' do
+        let(:support) { pending_request_on(partner, Date.yesterday, [10_00]) }
+
+        it 'is false even if the cash addition is recently complete' do
+          cash_addition.complete!
+          support
+          expect(partner.recently_completed_first_cash_addition?).not_to be_truthy
+        end
+      end
+    end
+  end
+
   describe '#balance' do
-    let(:lockbox)    { FactoryBot.create(:lockbox_partner) }
+    let(:lockbox)    { FactoryBot.create(:lockbox_partner, :with_active_user) }
     let(:start_date) { Date.current - 2.months }
 
     context 'have only added cash but no support requests yet' do
@@ -180,8 +257,8 @@ describe LockboxPartner, type: :model do
   end
 
   describe '#relevant_transactions_for_balance' do
-    let(:partner_1) { FactoryBot.create(:lockbox_partner) }
-    let(:partner_2) { FactoryBot.create(:lockbox_partner) }
+    let(:partner_1) { FactoryBot.create(:lockbox_partner, :with_active_user) }
+    let(:partner_2) { FactoryBot.create(:lockbox_partner, :with_active_user) }
 
     let!(:pending_add_cash)                { add_cash(partner_1, Date.yesterday) }
     let!(:completed_add_cash)              { add_cash(partner_1, Date.yesterday).tap{|a| a.complete!} }
