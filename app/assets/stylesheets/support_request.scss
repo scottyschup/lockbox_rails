@@ -77,10 +77,16 @@ $note-form-color: #d6d7d9;
     .tab {
       display: inline-block;
       text-decoration: none;
-      padding: 17px;
-      width: 250px;
+      width: 100%;
+      padding-bottom: 17px;
       .btn {
         width: 100%;
+      }
+    }
+    @media screen and (min-width: 768px) {
+      .tab {
+        width: 250px;
+        padding: 17px;
       }
     }
     .tab.selected {
@@ -143,15 +149,23 @@ $note-form-color: #d6d7d9;
     div {
       p {
         font-size: 2em;
+        margin-bottom: 0;
       }
     }
+  }
+  .support-request-details > div {
+    margin-bottom: 13px;
   }
   .lockbox-activity {
     margin-top: -30px;
   }
   .status-label {
     font-size: 1.5em;
-    text-align: right;
+  }
+  @media screen and (min-width: 768px) {
+    .dropdown {
+      text-align: right;
+    }
   }
   .icon-spacer {
     margin-right: 1.25em;
