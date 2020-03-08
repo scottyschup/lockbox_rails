@@ -4,7 +4,14 @@
       💸 <span id="nav-title">Lockbox</span>
     </a>
     <% if current_user %>
-      <button type="button" class="navbar-toggle collapsed flex-item" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <button
+        type="button"
+        class="navbar-toggle collapsed flex-item"
+        data-toggle="collapse"
+        data-target="#navbar"
+        aria-expanded="false"
+        aria-controls="navbar"
+      >
         <span class="sr-only">Toggle navigation</span>
         <% if current_user.admin? %>
           <%= fa_icon "bars" %>
@@ -18,28 +25,49 @@
   <% if current_user %>
     <div id="navbar" class="navbar-collapse collapse">
       <div class="container">
-        <%= link_to(destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-white') do %>
-          <span>Log Out</span>
-        <% end %>
-        <%= link_to(edit_user_registration_path, class: 'btn btn-primary btn-invert') do %>
-          <span>Update Password</span>
-        <% end %>
-        <% if current_user.partner? %>
-          <p class="nav-item-right"><%= link_to "Get support", support_path %></p>
-        <% end %>
-        <% if current_user.admin? %>
-          <p>Quick Actions</p>
-          <p><a href="<%= lockbox_partners_path %>">View all lockboxes</a></p>
-          <p><a href="<%= support_requests_new_path %>">File a support request</a></p>
-          <p><a href="<%= new_lockbox_partner_path %>">Add a new lockbox partner</a></p>
-          <p><%= link_to "Get support", support_path %></p>
-        <% elsif lp = current_user.lockbox_partner %>
-          <h2><%= lp.name %></h2>
-          <p><%= lp.street_address %></p>
-          <p><%= lp.city %>, <%= lp.state %> <%= lp.zip_code %></p>
-          <p><%= lp.phone_number %></p>
-          <p><%= link_to "Edit Contact Information", edit_lockbox_partner_path(lp), class: "edit_contact_info btn btn-primary btn-invert" %></p>
-        <% end %>
+        <!-- Left container -->
+        <div class="navbar-subcontainer">
+          <% if current_user.admin? %>
+            <h2><%= current_user.name %></h2>
+            <p><a href="mailto:<%= current_user.email %>"><%= current_user.email %></a></p>
+            <p><%= link_to "Edit Profile", edit_user_path(current_user), class: "edit_contact_info btn btn-primary btn-invert" %></p>
+          <% elsif lp = current_user.lockbox_partner %>
+            <h2><%= lp.name %></h2>
+            <h3><%= current_user.name %></h3>
+            <p><%= lp.street_address %></p>
+            <p><%= lp.city %>, <%= lp.state %> <%= lp.zip_code %></p>
+            <p><%= lp.phone_number %></p>
+            <p>
+              <%= link_to "Edit Profile", edit_user_path(current_user), class: "edit_contact_info btn btn-primary btn-invert" %>
+              <%= link_to "Edit Contact Information", edit_lockbox_partner_path(lp), class: "edit_contact_info btn btn-primary btn-invert" %>
+            </p>
+          <% end %>
+        </div>
+
+        <!-- Right container -->
+        <div class="navbar-subcontainer">
+          <%= link_to(destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-white') do %>
+            <span>Log Out</span>
+          <% end %>
+          <%= link_to(edit_user_registration_path, class: 'btn btn-primary btn-invert') do %>
+            <span>Update Password</span>
+          <% end %>
+
+          <% if current_user.admin? %>
+            <div class="nav-item-right">
+              <p><strong>Quick Actions</strong></p>
+              <p><a href="<%= lockbox_partners_path %>">View all lockboxes</a></p>
+              <p><a href="<%= support_requests_new_path %>">File a support request</a></p>
+              <p><a href="<%= new_lockbox_partner_path %>">Add a new lockbox partner</a></p>
+              <p><%= link_to "Get support", support_path %></p>
+            </div>
+          <% elsif current_user.partner? %>
+            <p class="nav-item-right">
+              <%= link_to "Get support", support_path %>
+            </p>
+          <% end %>
+        </div>
+
       </div>
     </div>
   <% end %>

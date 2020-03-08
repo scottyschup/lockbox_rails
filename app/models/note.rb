@@ -22,6 +22,6 @@ class Note < ApplicationRecord
   private
 
   def send_alerts
-    NoteMailer.deliver_note_creation_alerts(self)
+    NoteMailerWorker.perform_async(id)
   end
 end

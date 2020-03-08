@@ -8,7 +8,7 @@
     </p>
   <% end %>
 
-  <%= form_for(resource, as: resource_name, url: password_path(resource_name), class: 'form', html: { method: :put }) do |f| %>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'form' }) do |f| %>
     <%= devise_error_messages! %>
     <%= f.hidden_field :reset_password_token %>
 
@@ -16,11 +16,24 @@
     <% unless @existing_user&.has_signed_in? %>
       <div class="form-group">
         <%= f.label :name %><br />
-        <%= f.text_field :name, class: 'form-control' %>
+        <%= f.text_field :name, class: 'form-control', required: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label :time_zone %>
+        <%= f.time_zone_select(
+          :time_zone,
+          User::PRIORITY_TIME_ZONES,
+          {},
+          default: "Central Time (US & Canada)",
+          class: "form-control",
+          required: true) %>
       </div>
       <div class="form-group">
         <%= f.label :email %><br />
-        <%= f.text_field :email, class: 'form-control', value: @existing_user.email, disabled: true %>
+        <%= f.text_field :email,
+          class: 'form-control',
+          value: @existing_user.email,
+          disabled: true %>
       </div>
     <% end %>
 
@@ -29,20 +42,30 @@
       <% if @minimum_password_length %>
         <em>(<%= @minimum_password_length %> characters minimum)</em><br />
       <% end %>
-      <%= f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control' %>
+      <%= f.password_field :password,
+        autofocus: true,
+        autocomplete: "off",
+        class: 'form-control',
+        required: true %>
     </div>
 
     <div class="form-group">
       <%= f.label :password_confirmation, "Confirm new password" %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+      <%= f.password_field :password_confirmation,
+        autocomplete: "off",
+        class: 'form-control',
+        required: true %>
     </div>
 
     <div class="actions">
       <% if @existing_user&.has_signed_in? %>
-        <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password", class: 'btn btn-primary' %>
+        <%= f.submit "#{resource.password.present? ? 'Change' : 'Set'} my password",
+          class: 'btn btn-primary' %>
       <% else %>
         <%= f.submit "Submit", class: 'btn btn-primary' %>
       <% end %>
     </div>
   <% end %>
 </div>
+
+<%= javascript_pack_tag 'forms', 'data-turbolinks-track': 'reload' %>

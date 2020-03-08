@@ -1,4 +1,8 @@
 <%= render partial: 'header', locals: { lockbox_partner: @lockbox_partner } %>
+<% if current_user.admin? %>
+  <%= render partial: 'lockbox_partners/admin_alerts', locals: { lockbox_partner: @lockbox_partner } %>
+  <div class="horizontal-rule"></div>
+<% end %>
 <div class="support-request-container">
   <div class="lockbox-activity">
     <table class="table">

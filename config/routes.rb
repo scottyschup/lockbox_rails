@@ -5,6 +5,13 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  require 'sidekiq/web'
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
+  resources :users, only: [:edit, :update]
+
   root to: 'dashboard#index'
   get 'lockbox_partners', to: 'dashboard#index'
 
@@ -29,4 +36,7 @@ Rails.application.routes.draw do
   end
 
   resources :lockbox_actions, only: [:update]
+
+  match '/404', to: "errors#not_found", via: :all
+  match '/500', to: "errors#internal_server_error", via: :all
 end

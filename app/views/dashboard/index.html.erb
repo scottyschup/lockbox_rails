@@ -1,9 +1,10 @@
 <div class="container">
   <% if current_user.partner? %>
     <%= render partial: 'dashboard/lockbox_partner', object: @lockbox_partner, as: :lockbox_partner %>
-  <% else %>
+  <% elsif current_user.admin? %>
     <div id="dashboard-lockbox-partners">
       <%= render partial: 'lockbox_partners/dashboard_header' %>
+      <%= render partial: 'lockbox_partners/admin_alerts', collection: @lockbox_partners, as: :lockbox_partner %>
       <p>
         <strong>Current View:</strong>
         <%= render 'shared/url_switching_select', options: [

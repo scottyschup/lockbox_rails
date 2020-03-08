@@ -1,16 +1,19 @@
 class DashboardController < ApplicationController
+  before_action :set_lockbox_partner
+
   def index
-    if current_user.partner?
-      @lockbox_partner = current_user.lockbox_partner
-    else
-      @lockbox_partners = LockboxPartner.all
-    end
+    @lockbox_partners = current_user.admin? ? LockboxPartner.all : nil
   end
 
   def onboarding_success
-    @lockbox_partner = current_user.lockbox_partner
   end
 
   def support
+  end
+
+  private
+
+  def set_lockbox_partner
+    @lockbox_partner = current_user.partner? ? current_user.lockbox_partner : nil
   end
 end
