@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2020_02_23_213623) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "role"
     t.bigint "invited_by_id"
+    t.string "time_zone"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"

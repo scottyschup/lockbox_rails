@@ -30,7 +30,7 @@
           <% if current_user.admin? %>
             <h2><%= current_user.name %></h2>
             <p><a href="mailto:<%= current_user.email %>"><%= current_user.email %></a></p>
-            <p><%= link_to "Edit Name", edit_user_path(current_user), class: "edit_contact_info btn btn-primary btn-invert" %></p>
+            <p><%= link_to "Edit Profile", edit_user_path(current_user), class: "edit_contact_info btn btn-primary btn-invert" %></p>
           <% elsif lp = current_user.lockbox_partner %>
             <h2><%= lp.name %></h2>
             <h3><%= current_user.name %></h3>
@@ -38,7 +38,7 @@
             <p><%= lp.city %>, <%= lp.state %> <%= lp.zip_code %></p>
             <p><%= lp.phone_number %></p>
             <p>
-              <%= link_to "Edit Name", edit_user_path(current_user), class: "edit_contact_info btn btn-primary btn-invert" %>
+              <%= link_to "Edit Profile", edit_user_path(current_user), class: "edit_contact_info btn btn-primary btn-invert" %>
               <%= link_to "Edit Contact Information", edit_lockbox_partner_path(lp), class: "edit_contact_info btn btn-primary btn-invert" %>
             </p>
           <% end %>

@@ -1,6 +1,8 @@
 require 'capybara/rspec'
 require 'devise'
 require 'webdrivers'
+require 'rspec-benchmark'
+require 'sidekiq/testing'
 
 require_relative 'support/capybara'
 require_relative 'support/controller_helpers'
@@ -109,4 +111,6 @@ RSpec.configure do |config|
   #   - http://rspec.info/blog/2014/05/notable-changes-in-rspec-3/#zero-monkey-patching-mode
   config.disable_monkey_patching!
 =end
+
+  config.include RSpec::Benchmark::Matchers
 end

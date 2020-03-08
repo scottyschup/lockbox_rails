@@ -51,7 +51,7 @@ class NoteMailer < ApplicationMailer
     users -= [note.user]
 
     # Partner users get emailed about all notes
-    users.concat(note.notable.try(:lockbox_partner).try(:users))
+    users.concat(note.notable.try(:lockbox_partner).try(:users) || [])
 
     users.collect(&:email)
   end
