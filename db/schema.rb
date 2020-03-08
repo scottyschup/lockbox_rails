@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 2020_02_23_213623) do
     t.string "tracking_number"
     t.string "delivery_method"
     t.bigint "lockbox_action_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["lockbox_action_id"], name: "index_tracking_infos_on_lockbox_action_id"
   end
 

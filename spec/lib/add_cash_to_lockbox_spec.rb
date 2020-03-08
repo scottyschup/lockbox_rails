@@ -4,18 +4,20 @@ require './lib/add_cash_to_lockbox'
 describe AddCashToLockbox do
   let(:lockbox_partner) { FactoryBot.create(:lockbox_partner, :with_active_user) }
   let(:eff_date) { 1.day.from_now.to_date }
-
-  def add_cash
-    AddCashToLockbox.call(
+  let(:params) do
+    {
       lockbox_partner: lockbox_partner,
       eff_date: eff_date,
       amount: amount
-    )
+    }
+  end
+  let(:amount) { Money.new(1000) }
+
+  def add_cash
+    AddCashToLockbox.call(params)
   end
 
   context 'when the params are valid' do
-    let(:amount) { Money.new(1000) }
-
     it "creates one lockbox action" do
       expect{add_cash}.to change(LockboxAction, :count).by(1)
     end
@@ -38,6 +40,10 @@ describe AddCashToLockbox do
       expect(lockbox_transaction.balance_effect).to eq(LockboxTransaction::CREDIT)
     end
 
+    it "does not create lockbox_infos without any tracking info passed in" do
+      expect{add_cash}.to change(TrackingInfo, :count).by(0)
+    end
+
     it "emails the lockbox partner's users" do
       expect{ add_cash }.to change{ ActionMailer::Base.deliveries.count }.by(1)
       mail = ActionMailer::Base.deliveries.last
@@ -47,6 +53,52 @@ describe AddCashToLockbox do
 
     it "succeeds" do
       expect(add_cash.succeeded?).to be true
+    end
+  end
+
+  context "when tracking number is passed in" do
+    let(:params) {{
+      lockbox_partner: lockbox_partner,
+      eff_date: eff_date,
+      amount: amount,
+      tracking_number: 12345
+    }}
+
+    it "saves tracking info" do
+      expect{add_cash}.to change(TrackingInfo, :count).by(1)
+      expect(TrackingInfo.order(:created_at).last.tracking_number).to eq ("12345")
+      expect(TrackingInfo.order(:created_at).last.delivery_method).to eq nil
+    end
+  end
+
+  context "when delivery method is passed in" do
+    let(:params) {{
+      lockbox_partner: lockbox_partner,
+      eff_date: eff_date,
+      amount: amount,
+      delivery_method: "Mail Today"
+    }}
+
+    it "saves tracking info" do
+      expect{add_cash}.to change(TrackingInfo, :count).by(1)
+      expect(TrackingInfo.order(:created_at).last.tracking_number).to eq nil
+      expect(TrackingInfo.order(:created_at).last.delivery_method).to eq "Mail Today"
+    end
+  end
+
+  context "when delivery method and tracking number are passed in" do
+    let(:params) {{
+      lockbox_partner: lockbox_partner,
+      eff_date: eff_date,
+      amount: amount,
+      tracking_number: 123456,
+      delivery_method: "Mail Today"
+    }}
+
+    it "saves tracking info" do
+      expect{add_cash}.to change(TrackingInfo, :count).by(1)
+      expect(TrackingInfo.order(:created_at).last.tracking_number).to eq "123456"
+      expect(TrackingInfo.order(:created_at).last.delivery_method).to eq "Mail Today"
     end
   end
 
