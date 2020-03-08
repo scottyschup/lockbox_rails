@@ -20,7 +20,7 @@
   <% end %>
   <div class="form-group">
     <%= f.label :name_or_alias, 'Client Alias' %>
-    <small class="form-text text-muted">Please do not use legal name</small>
+    <p class="form-text text-muted font-italic my-0">Please do not use legal name</p>
     <%= f.text_field :name_or_alias, class: 'form-control', required: true %>
   </div>
   <div class="form-group">
@@ -43,7 +43,8 @@
   <legend id="total">Total: $0.00</legend>
   <div class="form-group">
     <%= f.label :urgency_flag %>
-    <%= f.text_field :urgency_flag, class: 'form-control' %>
+    <p class="form-text text-muted font-italic my-0">Displays in email subject line (75 character limit)</p>
+    <%= f.text_field :urgency_flag, class: 'form-control', maxlength: "75" %>
   </div>
   <%= f.submit "Submit", class: 'btn btn-primary' %>
 <% end %>
