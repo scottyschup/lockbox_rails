@@ -25,6 +25,7 @@
   </div>
   <div class="form-group">
     <%= f.label :client_ref_id, 'Client Reference ID' %>
+    <p class="form-text text-muted font-italic my-0">Use the Client ID from the Client Coordination Airtable here. If the client hasn't yet gone through intake, please type "Intake Pending"</p>
     <%= f.text_field :client_ref_id, class: 'form-control', required: true %>
   </div>
   <%= f.fields_for :lockbox_action, @support_request.lockbox_action || empty_lockbox_action do |la| %>
