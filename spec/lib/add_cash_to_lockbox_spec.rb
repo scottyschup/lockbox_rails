@@ -102,6 +102,20 @@ describe AddCashToLockbox do
     end
   end
 
+  context "when delivery method and tracking number are passed in but they're empty" do
+    let(:params) {{
+      lockbox_partner: lockbox_partner,
+      eff_date: eff_date,
+      amount: amount,
+      tracking_number: "",
+      delivery_method: ""
+    }}
+
+    it "does not save tracking info" do
+      expect{add_cash}.to change(TrackingInfo, :count).by(0)
+    end
+  end
+
   context 'when the params are invalid' do
     let(:amount) { "this is not a number" }
 

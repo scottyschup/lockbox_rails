@@ -20,7 +20,7 @@ class AddCashToLockbox
         raise ActiveRecord::Rollback
       end
 
-      if tracking_number || delivery_method
+      if tracking_number.present? || delivery_method.present?
         lockbox_action.tracking_infos.create(
           tracking_number: tracking_number,
           delivery_method: delivery_method
