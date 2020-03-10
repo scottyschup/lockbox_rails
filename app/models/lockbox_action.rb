@@ -5,6 +5,7 @@ class LockboxAction < ApplicationRecord
   belongs_to :support_request, optional: true
   has_many :lockbox_transactions, dependent: :destroy
   has_many :notes, as: :notable
+  has_many :tracking_infos
 
   accepts_nested_attributes_for :lockbox_transactions, reject_if: :all_blank,
     allow_destroy: true

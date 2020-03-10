@@ -3,7 +3,7 @@ require 'verbalize'
 class AddCashToLockbox
   include Verbalize::Action
 
-  input :lockbox_partner, :eff_date, :amount
+  input :lockbox_partner, :eff_date, :amount, optional: [:tracking_number, :delivery_method]
 
   def call
     err_message = nil
@@ -18,6 +18,13 @@ class AddCashToLockbox
       unless lockbox_action.valid?
         err_message = "Lockbox action not created: #{lockbox_action.errors.full_messages.join(', ')}"
         raise ActiveRecord::Rollback
+      end
+
+      if tracking_number.present? || delivery_method.present?
+        lockbox_action.tracking_infos.create(
+          tracking_number: tracking_number,
+          delivery_method: delivery_method
+        )
       end
 
       lockbox_transaction = lockbox_action.lockbox_transactions.create(
