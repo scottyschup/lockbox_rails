@@ -1,18 +1,16 @@
-<div class="container">
-  <% if current_user.partner? %>
-    <%= render partial: 'dashboard/lockbox_partner', object: @lockbox_partner, as: :lockbox_partner %>
-  <% elsif current_user.admin? %>
-    <div id="dashboard-lockbox-partners">
-      <%= render partial: 'lockbox_partners/dashboard_header' %>
-      <%= render partial: 'lockbox_partners/admin_alerts', collection: @lockbox_partners, as: :lockbox_partner %>
-      <p>
-        <strong>Current View:</strong>
-        <%= render 'shared/url_switching_select', options: [
-          ['Lockbox Partners', root_path],
-          ['Pending Support Requests', support_requests_path]
-        ], selected_value: root_path %>
-      </p>
-      <%= render partial: 'dashboard/admin_dash', collection: @lockbox_partners, as: :lockbox_partner%>
-    </div>
-  <% end %>
-</div>
+<% if current_user.partner? %>
+  <%= render partial: 'dashboard/lockbox_partner', object: @lockbox_partner, as: :lockbox_partner %>
+<% elsif current_user.admin? %>
+  <div id="dashboard-lockbox-partners">
+    <%= render partial: 'lockbox_partners/dashboard_header' %>
+    <%= render partial: 'lockbox_partners/admin_alerts', collection: @lockbox_partners, as: :lockbox_partner %>
+    <p>
+      <strong>Current View:</strong>
+      <%= render 'shared/url_switching_select', options: [
+        ['Lockbox Partners', root_path],
+        ['Pending Support Requests', support_requests_path]
+      ], selected_value: root_path %>
+    </p>
+    <%= render partial: 'dashboard/admin_dash', collection: @lockbox_partners, as: :lockbox_partner%>
+  </div>
+<% end %>
