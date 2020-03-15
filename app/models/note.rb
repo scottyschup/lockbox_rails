@@ -15,6 +15,10 @@ class Note < ApplicationRecord
     end
   end
 
+  def created_at_formatted
+    created_at.strftime('%B %d, %Y')
+  end
+
   def system_generated?
     user_id.blank?
   end

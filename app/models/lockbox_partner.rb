@@ -20,11 +20,11 @@ class LockboxPartner < ApplicationRecord
   ZERO_BALANCE = Money.new(0)
 
   scope :active, -> { with_active_user.with_initial_cash }
-  scope :with_active_user, -> { joins(:users).merge(User.confirmed) }
+  scope :with_active_user, -> { includes(:users).merge(User.confirmed).references(:users) }
 
   scope :with_initial_cash, -> do
     # returns partners that have had cash successfully added at least once
-    joins(:lockbox_actions).merge(LockboxAction.completed_cash_additions)
+    includes(:lockbox_actions).merge(LockboxAction.completed_cash_additions).references(:lockbox_actions)
   end
 
   def pending_support_requests

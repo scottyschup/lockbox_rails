@@ -130,6 +130,37 @@ describe LockboxPartner, type: :model do
     end
   end
 
+  describe 'with scope' do
+    let!(:partner_1) { FactoryBot.create(:lockbox_partner) } # no active users or cash additions
+    let!(:partner_2) { FactoryBot.create(:lockbox_partner) } # active users, no cash additions
+    let!(:partner_3) { FactoryBot.create(:lockbox_partner) } # no active users, a completed cash addition - not sure this is something we would actually see in production?
+    let!(:partner_4) { FactoryBot.create(:lockbox_partner) } # active users and cash additions
+
+    let!(:active_users_partner_2) { FactoryBot.create_list(:user, 2, :partner_user, lockbox_partner: partner_2) }
+    let!(:active_users_partner_4) { FactoryBot.create_list(:user, 2, :partner_user, lockbox_partner: partner_4) }
+
+    let!(:cash_additions_partner_3) { FactoryBot.create_list(:lockbox_action, 2, :completed, :add_cash, lockbox_partner: partner_3) }
+    let!(:cash_additions_partner_4) { FactoryBot.create_list(:lockbox_action, 2, :completed, :add_cash, lockbox_partner: partner_4) }
+
+    context '#with_active_user' do
+      it 'includes only the partners with an active user, and does not duplicate them' do
+        expect(LockboxPartner.with_active_user).to match_array([partner_2, partner_4])
+      end
+    end
+
+    context '#with_initial_cash' do
+      it 'includes only the partners with a completed cash addition, and does not duplicate them' do
+        expect(LockboxPartner.with_initial_cash).to match_array([partner_3, partner_4])
+      end
+    end
+
+    context '#active' do
+      it 'includes only the partner with a completed cash addition and an active user, and does not duplicate it' do
+        expect(LockboxPartner.active).to match_array([partner_4])
+      end
+    end
+  end
+
   describe '#balance' do
     let(:lockbox)    { FactoryBot.create(:lockbox_partner, :with_active_user) }
     let(:start_date) { Date.current - 2.months }
