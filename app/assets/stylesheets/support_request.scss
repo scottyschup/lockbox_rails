@@ -18,6 +18,11 @@
       background-color: $darker-blue;
     }
   }
+  @media screen and (min-width: 768px) {
+    .dropdown {
+      text-align: right;
+    }
+  }
 }
 $note-form-color: #d6d7d9;
 
