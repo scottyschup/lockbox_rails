@@ -16,7 +16,7 @@ class LockboxAction < ApplicationRecord
 
   before_validation :inherit_lockbox_partner_id
 
-  before_save :set_default_status
+  before_validation :set_default_status
   has_paper_trail
 
   STATUSES = [
@@ -24,7 +24,7 @@ class LockboxAction < ApplicationRecord
     COMPLETED = 'completed',
     CANCELED  = 'canceled'
   ].freeze
-  validates :status, inclusion: STATUSES, allow_nil: true
+  validates :status, inclusion: STATUSES
 
   EDITABLE_STATUSES = [
     'pending'
