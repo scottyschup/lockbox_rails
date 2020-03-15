@@ -72,8 +72,11 @@ class CreateSupportRequest
     end
 
     support_request.record_creation
-    send_low_balance_alert if support_request.lockbox_partner.low_balance?
-    send_insufficient_funds_alert if support_request.lockbox_partner.insufficient_funds?
+    if support_request.lockbox_partner.insufficient_funds?
+      send_insufficient_funds_alert
+    elsif support_request.lockbox_partner.low_balance?
+      send_low_balance_alert
+    end
 
     support_request
   rescue CreateSupportRequest::ValidationError => err

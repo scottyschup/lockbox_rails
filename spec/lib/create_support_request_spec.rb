@@ -243,7 +243,7 @@ describe CreateSupportRequest do
       ).complete!
     end
 
-    it 'goes to the finance team when balance is below $0' do
+    it 'goes to the lockbox email address when balance is below $0' do
       allow(ENV).to receive(:[]).with('LOCKBOX_EMAIL').and_return('insufficientfunds@alert.com')
 
       result = nil
@@ -270,7 +270,7 @@ describe CreateSupportRequest do
       expect {
         CreateSupportRequest.call(params: insufficient_funds_params)
         NoteMailerWorker.drain
-      }.to change{ActionMailer::Base.deliveries.length}
+      }.to change { ActionMailer::Base.deliveries.length }
     end
 
     # What is this actually testing? The expecatation would be the same whether
