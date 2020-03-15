@@ -92,6 +92,10 @@ class LockboxAction < ApplicationRecord
     end
   end
 
+  def eff_date_formatted
+    eff_date.strftime('%B %d, %Y')
+  end
+
   def amount
     return Money.zero if canceled?
     return Money.zero if lockbox_transactions.none?

@@ -2,7 +2,7 @@
   <div class="header">
     <div class="content">
       <%= render partial: 'lockbox_partners/support_requests/status_dropdown', locals: { support_request: support_request, label: true } %>
-      <p><b><%= support_request.pickup_date %> - <%= support_request.name_or_alias %></b></p>
+      <p><b><%= support_request.pickup_date.strftime('%B %d, %Y') %> - <%= support_request.name_or_alias %></b></p>
       <h3>Support Request:  $<%= support_request.amount %></h3>
     </div>
   </div>
@@ -10,7 +10,7 @@
     <div class="content">
       <div class="row">
         <div class="col-sm-3">
-          <%= support_request.most_recent_note&.created_at %>
+          <%= support_request.most_recent_note&.created_at_formatted %>
         </div>
         <div class="col-sm-3">
           <%= support_request.most_recent_note&.author %>
