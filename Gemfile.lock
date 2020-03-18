@@ -138,6 +138,10 @@ GEM
     concurrent-ruby (1.1.5)
     connection_pool (2.2.2)
     crass (1.0.5)
+    database_cleaner (1.8.3)
+    database_cleaner-active_record (1.8.0)
+      activerecord
+      database_cleaner (~> 1.8.0)
     devise (4.7.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -371,6 +375,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.29.0)
   cocoon
+  database_cleaner-active_record
   devise (~> 4.7, >= 4.7.1)
   factory_bot_rails (~> 5.1, >= 5.1.1)
   faker!

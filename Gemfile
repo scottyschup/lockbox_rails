@@ -94,6 +94,7 @@ group :test do
   gem 'rspec_junit_formatter', '~> 0.4.1'
   gem 'rspec-benchmark'
   gem 'timecop', '0.9.1'
+  gem 'database_cleaner-active_record'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
