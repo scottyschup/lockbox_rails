@@ -4,6 +4,8 @@ class LockboxPartnersController < ApplicationController
   before_action :require_admin, only: [:new, :create]
   before_action :require_admin_or_ownership, only: [:show, :edit, :update]
 
+  ACTIONS_PER_PAGE = 20
+
   def new
     @lockbox_partner = LockboxPartner.new
   end
@@ -33,6 +35,10 @@ class LockboxPartnersController < ApplicationController
 
   def show
     require_admin_or_ownership
+    page_number = params.permit(:page)[:page]
+    @historical_actions = @lockbox_partner.historical_actions
+                                          .order(created_at: :desc)
+                                          .paginate(page: page_number, per_page: ACTIONS_PER_PAGE)
   end
 
   private
