@@ -70,6 +70,10 @@ class LockboxPartner < ApplicationRecord
     true
   end
 
+  def has_admin_alerts?
+    recently_completed_first_cash_addition? || longstanding_pending_cash_addition?
+  end
+
   def relevant_transactions_for_balance(exclude_pending: false)
     excluded_statuses = [ LockboxAction::CANCELED ]
     excluded_statuses << LockboxAction::PENDING if exclude_pending
