@@ -39,7 +39,7 @@ SecureHeaders::Configuration.default do |config|
     manifest_src: %w('self'),
     media_src: %w(utoob.com),
     object_src: %w('self'),
-    sandbox: true, # true and [] will set a maximally restrictive setting
+    sandbox: false, # true and [] will set a maximally restrictive setting
     script_src: %w('self'),
     style_src: %w('self' 'unsafe-inline'),
     worker_src: %w('self'),
