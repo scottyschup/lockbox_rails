@@ -38,6 +38,7 @@ gem 'money-rails', '~> 1.13', '>= 1.13.3'
 gem 'verbalize', '~> 2.2'
 
 gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap4'
 
 gem 'cocoon'
 
