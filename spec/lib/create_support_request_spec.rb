@@ -171,12 +171,12 @@ describe CreateSupportRequest do
     end
 
     it 'goes to the finance team when balance is below $300' do
-      allow(ENV).to receive(:[]).with('LOW_BALANCE_ALERT_EMAIL').and_return('lowbalance@alert.com')
+      stub_const('ENV', ENV.to_hash.merge('LOW_BALANCE_ALERT_EMAIL' => 'lowbalance@alert.com'))
 
-      result = nil
-
-      expect { result = CreateSupportRequest.call(params: low_balance_params) }
-        .to change{ActionMailer::Base.deliveries.length}
+      expect {
+        CreateSupportRequest.call(params: low_balance_params)
+        NoteMailerWorker.drain
+      }.to change{ActionMailer::Base.deliveries.length}
       expected_dollar_value = (LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE - Money.new(100)).to_s
 
       mail = ActionMailer::Base.deliveries.last
@@ -191,7 +191,7 @@ describe CreateSupportRequest do
     # still sent
 
     it "doesn't blow up when email is missing" do
-      allow(ENV).to receive(:[]).with('LOW_BALANCE_ALERT_EMAIL').and_return(nil)
+      stub_const('ENV', ENV.to_hash.merge('LOW_BALANCE_ALERT_EMAIL' => nil))
 
       expect {
         CreateSupportRequest.call(params: low_balance_params)
@@ -200,7 +200,7 @@ describe CreateSupportRequest do
     end
 
     it 'is not sent when the balance remains above $300' do
-      allow(ENV).to receive(:[]).with('LOW_BALANCE_ALERT_EMAIL').and_return('lowbalance@alert.com')
+      stub_const('ENV', ENV.to_hash.merge('LOW_BALANCE_ALERT_EMAIL' => 'lowbalance@alert.com'))
 
       AddCashToLockbox.call!(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE + Money.new(15000)).complete!
 
