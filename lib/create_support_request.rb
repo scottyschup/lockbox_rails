@@ -80,6 +80,6 @@ class CreateSupportRequest
   end
 
   def send_low_balance_alert
-    LockboxPartnerMailer.with(lockbox_partner: support_request.lockbox_partner).low_balance_alert.deliver
+    LowBalanceAlertWorker.perform_async(support_request.lockbox_partner.id)
   end
 end

@@ -3,7 +3,12 @@ require './lib/create_support_request'
 require './lib/add_cash_to_lockbox'
 
 describe CreateSupportRequest do
-  let(:mac_user) { FactoryBot.create(:user) }
+  def drain_queues
+    NoteMailerWorker.drain
+    LowBalanceAlertWorker.drain
+  end
+
+  let!(:mac_user) { FactoryBot.create(:user) }
 
   let(:lockbox_partner) do
     FactoryBot.create(:lockbox_partner, :active)
@@ -140,7 +145,7 @@ describe CreateSupportRequest do
     it "sends the email" do
       allow(NoteMailer).to receive(:deliver_note_creation_alerts)
       CreateSupportRequest.call(params: params)
-      NoteMailerWorker.drain
+      drain_queues
       expect(NoteMailer).to have_received(:deliver_note_creation_alerts)
     end
   end
@@ -175,11 +180,12 @@ describe CreateSupportRequest do
 
       expect {
         CreateSupportRequest.call(params: low_balance_params)
-        NoteMailerWorker.drain
-      }.to change{ActionMailer::Base.deliveries.length}
+        drain_queues
+      }.to change{ActionMailer::Base.deliveries.length}.by(3)
       expected_dollar_value = (LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE - Money.new(100)).to_s
 
-      mail = ActionMailer::Base.deliveries.last
+      emails = ActionMailer::Base.deliveries.last(3)
+      mail = emails.detect {|e| e.subject.include?('[LOW LOCKBOX BALANCE]') }
       expect(mail).to be_present
       expect(mail.to).to include ENV['LOW_BALANCE_ALERT_EMAIL']
 
@@ -195,8 +201,8 @@ describe CreateSupportRequest do
 
       expect {
         CreateSupportRequest.call(params: low_balance_params)
-        NoteMailerWorker.drain
-      }.to change{ActionMailer::Base.deliveries.length}
+        drain_queues
+      }.to change{ActionMailer::Base.deliveries.length}.by(2)
     end
 
     it 'is not sent when the balance remains above $300' do
@@ -207,8 +213,8 @@ describe CreateSupportRequest do
       params[:lockbox_action_attributes][:lockbox_transactions_attributes]["0"][:amount] = 100
       expect {
         CreateSupportRequest.call(params: params)
-        NoteMailerWorker.drain
-      }.to change{ActionMailer::Base.deliveries.length}
+        drain_queues
+      }.to change{ActionMailer::Base.deliveries.length}.by(2)
     end
   end
 end
