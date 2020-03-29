@@ -29,10 +29,10 @@ class SupportRequestsController < ApplicationController
   private
 
   def add_insufficient_funds_alert
-    flash[:alert] = %Q(
-      The Pending Support Requests exceed your Lockbox balance. Please reconcile
-      your current Lockbox, and if the balance is still negative, please reach
-      out to your lockbox manager at #{ENV['LOCKBOX_EMAIL']}.
+    flash[:alert] = %(
+      The Pending Support Requests exceed your Lockbox balance. If more funds
+      are not already on the way, please reach out to your lockbox manager at
+      #{ENV['LOCKBOX_EMAIL']}.
     ).strip
   end
 
