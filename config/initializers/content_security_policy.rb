@@ -37,7 +37,7 @@ SecureHeaders::Configuration.default do |config|
     frame_ancestors: %w('none'),
     img_src: %w('self' https://*.amazonaws.com), # Whitelist amazonaws to support the Sqreen image
     manifest_src: %w('self'),
-    media_src: %w(utoob.com),
+    media_src: %w('self'),
     object_src: %w('self'),
     sandbox: false, # true and [] will set a maximally restrictive setting
     script_src: %w('self'),
