@@ -40,7 +40,7 @@ SecureHeaders::Configuration.default do |config|
     media_src: %w('self'),
     object_src: %w('self'),
     sandbox: false, # true and [] will set a maximally restrictive setting
-    script_src: %w('self'),
+    script_src: %w('self' 'unsafe-inline'), # unsafe-inline is needed for rails-ujs
     style_src: %w('self' 'unsafe-inline' https://fonts.googleapis.com),
     worker_src: %w('self'),
     upgrade_insecure_requests: true, # see https://www.w3.org/TR/upgrade-insecure-requests/
