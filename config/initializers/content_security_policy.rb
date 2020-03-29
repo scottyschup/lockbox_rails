@@ -43,7 +43,7 @@ SecureHeaders::Configuration.default do |config|
     script_src: %w('self' 'unsafe-inline'), # unsafe-inline is needed for rails-ujs
     style_src: %w('self' 'unsafe-inline' https://fonts.googleapis.com),
     worker_src: %w('self'),
-    upgrade_insecure_requests: true, # see https://www.w3.org/TR/upgrade-insecure-requests/
+    upgrade_insecure_requests: Rails.env.production?, # see https://www.w3.org/TR/upgrade-insecure-requests/
   }  # This is available only from 3.5.0; use the `report_only: true` setting for 3.4.1 and below.
 end
 # Below is the Rails auto-generated CSP config in case
