@@ -11,9 +11,7 @@ end
 `yarn`
 if $?.success?
   $stdout.puts("\n\e[92mAll Node packages were successfully installed\e[0m")
-  exit
+else
+  $stderr.puts("\n\e[91mThere were issues installing JavaScript dependencies; ensure that you can run `yarn`\e[0m")
+  exit 1
 end
-
-$stderr.puts("\n\e[91mThere were issues installing JavaScript dependencies; ensure that you can run `yarn`\e[0m")
-exit 1
-
