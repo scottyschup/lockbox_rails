@@ -98,14 +98,23 @@ bundle exec rails webpacker:install
 ```
 
 ### Local Development
+```sh
+yarn run dev
+```
+The above command will do the following:
+* run the `predev` script in `package.json` which calls the bin script [`dev_setup`](./bin/dev_setup).
+  * the setup script will `bundle install` and `yarn install`
+* run the `dev:assets` script in `package.json` which will start `webpack` in watch mode (with a few other flags set for development purposes)
+* run the `dev:rails` script in `package.json` which will start the Rails server on port 3000.
 
+If you just need individual parts of the above, here is the manual startup process that you can tweak as needed:
 ```sh
 # Start the dev Webpack server
 yarn # if necessary
-./bin/webpack --watch --colors --progress
+./bin/webpack --watch --colors --progress --display-error-details # or `yarn run dev:assets`
 # Open a new terminal pane/tab/window
 bundle install # if necessary
-bundle exec rails s
+bundle exec rails s # or `yarn run dev:rails`
 # If testing email sending functionality, start mailcatcher
 mailcatcher # This will run on localhost:1080
 ```
@@ -123,7 +132,7 @@ brew services start redis
 
 - 3000: main site
 - 3035: Webpack dev server
-- 1080: Mailcatcher
+- 1080: Mailcatcher (if applicable)
 
 ### Login
 
