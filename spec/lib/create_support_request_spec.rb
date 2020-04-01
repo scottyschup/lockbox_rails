@@ -4,6 +4,7 @@ require './lib/add_cash_to_lockbox'
 
 describe CreateSupportRequest do
   def drain_queues
+    NotesWorker.drain
     NoteMailerWorker.drain
     LowBalanceAlertWorker.drain
   end
@@ -46,7 +47,10 @@ describe CreateSupportRequest do
   end
 
   it "creates a note" do
-    expect{subject}.to change{Note.count}.by(1)
+    expect {
+      subject
+      drain_queues
+    }.to change{Note.count}.by(1)
   end
 
   context "if creation of the lockbox action fails" do
