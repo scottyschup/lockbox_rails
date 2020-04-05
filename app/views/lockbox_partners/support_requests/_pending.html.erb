@@ -1,9 +1,13 @@
 <div class="pending-request">
   <div class="header">
-    <div class="content">
-      <%= render partial: 'lockbox_partners/support_requests/status_dropdown', locals: { support_request: support_request, label: true } %>
-      <p><b><%= support_request.pickup_date.strftime('%B %d, %Y') %> - <%= support_request.name_or_alias %></b></p>
-      <h3>Support Request:  $<%= support_request.amount %></h3>
+    <div class="content row">
+      <div class="col-12 col-md-8">
+        <p><b><%= support_request.pickup_date.strftime('%B %d, %Y') %> - <%= support_request.name_or_alias %></b></p>
+        <h3>Support Request:  $<%= support_request.amount %></h3>
+      </div>
+      <div class="col-12 col-md-4">
+        <%= render partial: 'lockbox_partners/support_requests/status_dropdown', locals: { support_request: support_request, label: true } %>
+      </div>
     </div>
   </div>
   <div class="notes">
