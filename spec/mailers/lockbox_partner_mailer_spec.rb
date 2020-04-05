@@ -36,7 +36,8 @@ describe LockboxPartnerMailer, type: :mailer do
     it "alerts the recipient to the low balance" do
       alert_text = "The lockbox balance at <b>#{lockbox_partner.name}</b> is at " \
                    "<b>$#{lockbox_partner.balance.to_s}</b>"
-      expect(email.body.encoded).to include(alert_text)
+      # `CGI.unescapeHTML` turns HTML entities back into chars (e.g. `&#39;` back into `'`)
+      expect(CGI.unescapeHTML(email.body.encoded)).to include(alert_text)
     end
   end
 end

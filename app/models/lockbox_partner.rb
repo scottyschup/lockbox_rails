@@ -17,6 +17,7 @@ class LockboxPartner < ApplicationRecord
   MINIMUM_ACCEPTABLE_BALANCE = Money.new(30000)
   THRESHOLD_FOR_RECENT_INITIAL_CASH_ADDITION_IN_HOURS = 48
   THRESHOLD_LONGSTANDING_CASH_ADDITION_IN_DAYS = 3
+  ZERO_BALANCE = Money.new(0)
 
   scope :active, -> { with_active_user.with_initial_cash }
   scope :with_active_user, -> { includes(:users).merge(User.confirmed).references(:users) }
@@ -44,6 +45,10 @@ class LockboxPartner < ApplicationRecord
 
   def low_balance?
     balance < MINIMUM_ACCEPTABLE_BALANCE
+  end
+
+  def insufficient_funds?
+    balance < ZERO_BALANCE
   end
 
   def cash_addition_confirmation_pending?

@@ -126,8 +126,7 @@ brew services start redis
 - 1080: Mailcatcher
 
 ### Login
-
-**Admin**
+**Fund Admin**
 Username: `cats@test.com`
 Password: `password1234`
 
