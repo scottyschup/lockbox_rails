@@ -21,11 +21,16 @@ describe LockboxPartner, type: :model do
   end
 
   def pending_request_on(partner, date, amount_breakdown)
+    request = partner.support_requests.first_or_create!(
+      user: partner.users.first,
+      name_or_alias: Faker::Name.first_name,
+      client_ref_id: 'abcdefgh'
+    )
     partner.lockbox_actions.create!(
       action_type: LockboxAction::SUPPORT_CLIENT,
       status:      LockboxAction::PENDING,
-      eff_date:    date,
-      support_request: partner.support_requests.first
+      support_request: request,
+      eff_date:    date
     ).tap do |lb_action|
       amount_breakdown.each do |amt_cents|
         lb_action.lockbox_transactions.create!(
@@ -55,9 +60,8 @@ describe LockboxPartner, type: :model do
   end
 
   describe '#balance' do
-    let(:lockbox)    { FactoryBot.create(:lockbox_partner) }
-    let(:user)       { FactoryBot.create(:user, lockbox_partner: lockbox) }
-    let!(:request)    { FactoryBot.create(:support_request, lockbox_partner: lockbox, user: user) }
+    let(:lockbox)    { FactoryBot.create(:lockbox_partner, :with_active_user) }
+    let!(:request)    { FactoryBot.create(:support_request, lockbox_partner: lockbox, user: lockbox.users.first) }
     let(:start_date) { Date.current - 2.months }
 
     context 'have only added cash but no support requests yet' do
