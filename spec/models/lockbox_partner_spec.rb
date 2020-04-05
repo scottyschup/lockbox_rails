@@ -115,7 +115,8 @@ describe LockboxPartner, type: :model do
       end
 
       context 'when there has been a support request filed' do
-        let(:support) { pending_request_on(partner, Date.yesterday, [10_00]) }
+        let(:request) { FactoryBot.create(:support_request, lockbox_partner: partner, user: partner.users.first) }
+        let(:support) { pending_request_on(partner, Date.yesterday, [10_00], request) }
 
         it 'is false even if the cash addition is recently complete' do
           cash_addition.complete!
