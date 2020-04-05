@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
+  around_action :set_time_zone, if: -> { current_user&.time_zone }
 
   # Raising 404 rather than the 500 the JsonApiClient error would raise
   rescue_from ActiveRecord::RecordNotFound do
@@ -23,5 +24,9 @@ class ApplicationController < ActionController::Base
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
+  end
+
+  def set_time_zone(&block)
+    Time.use_zone(current_user.time_zone, &block)
   end
 end

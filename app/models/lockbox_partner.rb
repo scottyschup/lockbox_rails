@@ -15,13 +15,15 @@ class LockboxPartner < ApplicationRecord
   # to reconcile the lockbox. TODO make this configurable (issue #138)
   RECONCILIATION_INTERVAL = 30
   MINIMUM_ACCEPTABLE_BALANCE = Money.new(30000)
+  THRESHOLD_FOR_RECENT_INITIAL_CASH_ADDITION_IN_HOURS = 48
+  THRESHOLD_LONGSTANDING_CASH_ADDITION_IN_DAYS = 3
 
   scope :active, -> { with_active_user.with_initial_cash }
-  scope :with_active_user, -> { joins(:users).merge(User.confirmed) }
+  scope :with_active_user, -> { includes(:users).merge(User.confirmed).references(:users) }
 
   scope :with_initial_cash, -> do
     # returns partners that have had cash successfully added at least once
-    joins(:lockbox_actions).merge(LockboxAction.completed_cash_additions)
+    includes(:lockbox_actions).merge(LockboxAction.completed_cash_additions).references(:lockbox_actions)
   end
 
   def pending_support_requests
@@ -48,6 +50,30 @@ class LockboxPartner < ApplicationRecord
     lockbox_actions.pending_cash_additions.any?
   end
 
+  def longstanding_pending_cash_addition?
+    pending_cash_addition_age >= THRESHOLD_LONGSTANDING_CASH_ADDITION_IN_DAYS
+  end
+
+  def pending_cash_addition_age
+    earliest_pending_cash_addition = lockbox_actions.pending_cash_additions.order(:eff_date).first
+    return 0 unless earliest_pending_cash_addition
+    (Date.current - earliest_pending_cash_addition.eff_date).to_i
+  end
+
+  def recently_completed_first_cash_addition?
+    completed_additions = lockbox_actions.completed_cash_additions
+    return false if completed_additions.none?
+    return false if lockbox_actions.where(action_type: LockboxAction::SUPPORT_CLIENT).any?
+    first_cash_addition_completed_at = completed_additions.order(:updated_at).first.updated_at
+    hours_since_first_cash_addition_completed = (Time.current - first_cash_addition_completed_at) / 1.hour
+    return false unless hours_since_first_cash_addition_completed <= THRESHOLD_FOR_RECENT_INITIAL_CASH_ADDITION_IN_HOURS
+    true
+  end
+
+  def has_admin_alerts?
+    recently_completed_first_cash_addition? || longstanding_pending_cash_addition?
+  end
+
   def relevant_transactions_for_balance(exclude_pending: false)
     excluded_statuses = [ LockboxAction::CANCELED ]
     excluded_statuses << LockboxAction::PENDING if exclude_pending
@@ -70,7 +96,10 @@ class LockboxPartner < ApplicationRecord
   def reconciliation_needed?
     return false unless persisted?
     return false unless !!reconciliation_interval_start
-    reconciliation_interval_start <= RECONCILIATION_INTERVAL.days.ago
+    # Cast the DateTime to a Date, since comparing a Date with a DateTime can
+    # cause unexpected results when the date is different in UTC and the current
+    # time zone
+    reconciliation_interval_start <= RECONCILIATION_INTERVAL.days.ago.to_date
   end
 
   def reconciliation_interval_start

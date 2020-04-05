@@ -16,3 +16,23 @@
 tr.canceled {
   font-style: italic;
 }
+
+.action-label {
+  display: none;
+}
+
+@media screen and (max-width: $mobile-width) {
+  .lockbox-activity {
+    .table {
+      td {
+        padding: 0;
+      }
+      tr {
+        padding: 10px;
+      }
+    }
+    .action-label {
+      display: inline;
+    }
+  }
+}

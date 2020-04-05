@@ -24,6 +24,13 @@ class User < ApplicationRecord
     scope role, -> { where(role: role) }
   end
 
+  PRIORITY_TIME_ZONES = [
+    ActiveSupport::TimeZone["Eastern Time (US & Canada)"],
+    ActiveSupport::TimeZone["Central Time (US & Canada)"],
+    ActiveSupport::TimeZone["Mountain Time (US & Canada)"],
+    ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
+  ].freeze
+
   scope :confirmed, -> { where.not(confirmed_at: nil) }
 
   def admin?

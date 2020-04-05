@@ -140,6 +140,7 @@ describe CreateSupportRequest do
     it "sends the email" do
       allow(NoteMailer).to receive(:deliver_note_creation_alerts)
       CreateSupportRequest.call(params: params)
+      NoteMailerWorker.drain
       expect(NoteMailer).to have_received(:deliver_note_creation_alerts)
     end
   end
@@ -192,8 +193,10 @@ describe CreateSupportRequest do
     it "doesn't blow up when email is missing" do
       allow(ENV).to receive(:[]).with('LOW_BALANCE_ALERT_EMAIL').and_return(nil)
 
-      expect { CreateSupportRequest.call(params: low_balance_params) }
-        .to change{ActionMailer::Base.deliveries.length}
+      expect {
+        CreateSupportRequest.call(params: low_balance_params)
+        NoteMailerWorker.drain
+      }.to change{ActionMailer::Base.deliveries.length}
     end
 
     it 'is not sent when the balance remains above $300' do
@@ -202,8 +205,10 @@ describe CreateSupportRequest do
       AddCashToLockbox.call!(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE + Money.new(15000)).complete!
 
       params[:lockbox_action_attributes][:lockbox_transactions_attributes]["0"][:amount] = 100
-      expect { CreateSupportRequest.call(params: params) }
-        .to change{ActionMailer::Base.deliveries.length}
+      expect {
+        CreateSupportRequest.call(params: params)
+        NoteMailerWorker.drain
+      }.to change{ActionMailer::Base.deliveries.length}
     end
   end
 end

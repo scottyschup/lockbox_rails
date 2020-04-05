@@ -20,6 +20,7 @@ describe LockboxPartner, type: :model do
     end
   end
 
+
   def pending_request_on(partner, date, amount_breakdown, request)
     partner.lockbox_actions.create!(
       action_type: LockboxAction::SUPPORT_CLIENT,
@@ -51,6 +52,108 @@ describe LockboxPartner, type: :model do
       end
 
       expect(lp).not_to be_cash_addition_confirmation_pending
+    end
+  end
+
+  describe '#longstanding_pending_cash_addition?' do
+    let(:partner) { FactoryBot.create(:lockbox_partner) }
+
+    context 'with a longstanding pending cash addition' do
+      let!(:cash_addition) { add_cash(partner, 4.days.ago) }
+      it 'is true' do
+        expect(partner.longstanding_pending_cash_addition?).to be_truthy
+      end
+    end
+
+    context 'with a recent pending cash addition' do
+      let!(:cash_addition) { add_cash(partner, 2.days.ago) }
+      it 'is false' do
+        expect(partner.longstanding_pending_cash_addition?).not_to be_truthy
+      end
+    end
+  end
+
+  describe '#pending_cash_addition_age' do
+    let(:partner) { FactoryBot.create(:lockbox_partner) }
+
+    context 'without a pending cash addition' do
+      it 'is zero' do
+        expect(partner.pending_cash_addition_age).to eq(0)
+      end
+    end
+
+    context 'with a pending cash addition' do
+      let!(:cash_addition) { add_cash(partner, 2.days.ago) }
+      it 'counts the correct number of days' do
+        expect(partner.pending_cash_addition_age).to eq(2)
+      end
+    end
+  end
+
+  describe '#recently_completed_first_cash_addition?' do
+    let(:partner) { FactoryBot.create(:lockbox_partner, :with_active_user) }
+
+    context 'when there is no completed cash addition' do
+      it 'is false' do
+        expect(partner.recently_completed_first_cash_addition?).not_to be_truthy
+      end
+    end
+    
+    context 'when there is a completed cash addition' do
+      let(:cash_addition) { add_cash(partner, 3.days.ago) }
+
+      it 'is true if the cash addition is recently complete' do
+        cash_addition.complete!
+        expect(partner.recently_completed_first_cash_addition?).to be_truthy
+      end
+
+      it 'is false if the cash addition is not recently complete' do
+        Timecop.freeze(49.hours.ago) {
+          cash_addition.complete!
+        }
+        expect(partner.recently_completed_first_cash_addition?).not_to be_truthy
+      end
+
+      context 'when there has been a support request filed' do
+        let(:support) { pending_request_on(partner, Date.yesterday, [10_00]) }
+
+        it 'is false even if the cash addition is recently complete' do
+          cash_addition.complete!
+          support
+          expect(partner.recently_completed_first_cash_addition?).not_to be_truthy
+        end
+      end
+    end
+  end
+
+  describe 'with scope' do
+    let!(:partner_1) { FactoryBot.create(:lockbox_partner) } # no active users or cash additions
+    let!(:partner_2) { FactoryBot.create(:lockbox_partner) } # active users, no cash additions
+    let!(:partner_3) { FactoryBot.create(:lockbox_partner) } # no active users, a completed cash addition - not sure this is something we would actually see in production?
+    let!(:partner_4) { FactoryBot.create(:lockbox_partner) } # active users and cash additions
+
+    let!(:active_users_partner_2) { FactoryBot.create_list(:user, 2, :partner_user, lockbox_partner: partner_2) }
+    let!(:active_users_partner_4) { FactoryBot.create_list(:user, 2, :partner_user, lockbox_partner: partner_4) }
+
+    let!(:cash_additions_partner_3) { FactoryBot.create_list(:lockbox_action, 2, :completed, :add_cash, lockbox_partner: partner_3) }
+    let!(:cash_additions_partner_4) { FactoryBot.create_list(:lockbox_action, 2, :completed, :add_cash, lockbox_partner: partner_4) }
+
+    context '#with_active_user' do
+      it 'includes only the partners with an active user, and does not duplicate them' do
+        expect(LockboxPartner.with_active_user).to match_array([partner_2, partner_4])
+      end
+    end
+
+    context '#with_initial_cash' do
+      it 'includes only the partners with a completed cash addition, and does not duplicate them' do
+        expect(LockboxPartner.with_initial_cash).to match_array([partner_3, partner_4])
+      end
+    end
+
+    context '#active' do
+      it 'includes only the partner with a completed cash addition and an active user, and does not duplicate it' do
+        expect(LockboxPartner.active).to match_array([partner_4])
+      end
     end
   end
 
@@ -182,8 +285,8 @@ describe LockboxPartner, type: :model do
   end
 
   describe '#relevant_transactions_for_balance' do
-    let(:partner_1) { FactoryBot.create(:lockbox_partner) }
-    let(:partner_2) { FactoryBot.create(:lockbox_partner) }
+    let(:partner_1) { FactoryBot.create(:lockbox_partner, :with_active_user) }
+    let(:partner_2) { FactoryBot.create(:lockbox_partner, :with_active_user) }
 
     let(:user_1)    { FactoryBot.create(:user, lockbox_partner: partner_1) }
     let(:user_2)    { FactoryBot.create(:user, lockbox_partner: partner_2) }
@@ -286,7 +389,10 @@ describe LockboxPartner, type: :model do
     context 'when the lockbox has been reconciled before' do
       let(:lockbox_partner) { create(:lockbox_partner, :active) }
 
-      let!(:reconciliation_action) do
+      # We're initializing this in before blocks rather than calling #let!
+      # because the latter approach caused state to persist between example
+      # groups, causing order-dependent test failures where Timecop is used
+      let(:reconciliation_action) do
         create(
           :lockbox_action,
           :reconciliation,
@@ -296,6 +402,8 @@ describe LockboxPartner, type: :model do
       end
 
       context 'when the lockbox was last reconciled within the reconciliation interval' do
+        before { reconciliation_action }
+
         let(:reconciliation_date) do
           (LockboxPartner::RECONCILIATION_INTERVAL - 1).days.ago
         end
@@ -304,11 +412,39 @@ describe LockboxPartner, type: :model do
       end
 
       context 'when the lockbox was last reconciled outside the reconciliation interval' do
+        before { reconciliation_action }
+
         let(:reconciliation_date) do
           LockboxPartner::RECONCILIATION_INTERVAL.days.ago
         end
 
         it { is_expected.to be true }
+      end
+
+      context 'when the date is different in CST and UTC' do
+        before do
+          Timecop.freeze(Time.local(2020, 2, 23, 23, 0, 0)) # 11 PM CST
+        end
+
+        context 'when the lockbox was last reconciled within the reconciliation interval' do
+          before { reconciliation_action }
+
+          let(:reconciliation_date) do
+            (LockboxPartner::RECONCILIATION_INTERVAL - 1).days.ago
+          end
+
+          it { is_expected.to be false }
+        end
+
+        context 'when the lockbox was last reconciled outside the reconciliation interval' do
+          before { reconciliation_action }
+
+          let(:reconciliation_date) do
+            LockboxPartner::RECONCILIATION_INTERVAL.days.ago
+          end
+
+          it { is_expected.to be true }
+        end
       end
     end
 

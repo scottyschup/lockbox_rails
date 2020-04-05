@@ -15,6 +15,10 @@ class Note < ApplicationRecord
     end
   end
 
+  def created_at_formatted
+    created_at.strftime('%B %d, %Y')
+  end
+
   def system_generated?
     user_id.blank?
   end
@@ -22,6 +26,6 @@ class Note < ApplicationRecord
   private
 
   def send_alerts
-    NoteMailer.deliver_note_creation_alerts(self)
+    NoteMailerWorker.perform_async(id)
   end
 end
