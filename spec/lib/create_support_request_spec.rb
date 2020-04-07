@@ -265,7 +265,7 @@ describe CreateSupportRequest do
       expect(mail.parts.detect { |p| p.mime_type == "text/plain" }.body.raw_source)
         .to include insufficient_funds_lockbox_partner.name
       expect(mail.parts.detect{ |p| p.mime_type == "text/html" }.body.raw_source)
-        .to include insufficient_funds_lockbox_partner.name
+        .to include CGI.escapeHTML(insufficient_funds_lockbox_partner.name)
     end
 
     # The deliveries count will still change by 1 because the creation alert was
@@ -278,19 +278,6 @@ describe CreateSupportRequest do
         CreateSupportRequest.call(params: insufficient_funds_params)
         drain_queues
       }.to change { ActionMailer::Base.deliveries.length }
-    end
-
-    # What is this actually testing? The expecatation would be the same whether
-    # it's sent or not.
-    xit 'is not sent when the balance remains above $0' do
-      allow(ENV).to receive(:[]).with('LOCKBOX_EMAIL').and_return('insufficientfunds@alert.com')
-
-      AddCashToLockbox.call!(lockbox_partner: lockbox_partner, eff_date: 1.day.ago, amount: Money.new(35000)).complete!
-
-      expect {
-        CreateSupportRequest.call(params: params)
-        drain_queues
-      }.to change{ActionMailer::Base.deliveries.length}
     end
   end
 end
