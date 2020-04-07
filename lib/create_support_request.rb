@@ -72,14 +72,27 @@ class CreateSupportRequest
     end
 
     support_request.record_creation
-    send_low_balance_alert if support_request.lockbox_partner.low_balance?
+    send_applicable_balance_alerts
 
     support_request
   rescue CreateSupportRequest::ValidationError => err
     fail!(err.message)
   end
 
-  def send_low_balance_alert
-    LowBalanceAlertWorker.perform_async(support_request.lockbox_partner.id)
+  def send_applicable_balance_alerts
+    alert_type = if support_request.lockbox_partner.insufficient_funds?
+      'insufficient_funds'
+    elsif support_request.lockbox_partner.low_balance?
+      'low_balance'
+    else
+      ''
+    end
+
+    return if alert_type.blank?
+
+    LowBalanceAlertWorker.perform_async({
+      'alert': alert_type,
+      'lockbox_partner_id': support_request.lockbox_partner.id
+    })
   end
 end
