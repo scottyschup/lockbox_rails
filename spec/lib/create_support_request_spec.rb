@@ -192,9 +192,6 @@ describe CreateSupportRequest do
       expect(mail.parts.detect{|p| p.mime_type == "text/html"}.body.raw_source).to include expected_dollar_value
     end
 
-    # The deliveries count will still change by 1 because the creation alert was
-    # still sent
-
     # Are we sure we don't want it to blow up when this email is missing?
     it "doesn't blow up when email is missing" do
       stub_const('ENV', ENV.to_hash.merge('LOW_BALANCE_ALERT_EMAIL' => nil))
@@ -268,16 +265,13 @@ describe CreateSupportRequest do
         .to include CGI.escapeHTML(insufficient_funds_lockbox_partner.name)
     end
 
-    # The deliveries count will still change by 1 because the creation alert was
-    # still sent
-
     it "doesn't blow up when email is missing" do
       stub_const('ENV', ENV.to_hash.merge('LOCKBOX_EMAIL' => nil))
 
       expect {
         CreateSupportRequest.call(params: insufficient_funds_params)
         drain_queues
-      }.to change { ActionMailer::Base.deliveries.length }
+      }.to change { ActionMailer::Base.deliveries.length }.by(2)
     end
   end
 end
