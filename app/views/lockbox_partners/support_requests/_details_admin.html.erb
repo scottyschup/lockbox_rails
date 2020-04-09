@@ -1,25 +1,29 @@
 <div class="support-request-header">
   <% locals =  { support_request: @support_request, label: false } %>
-  <%= render partial: 'coordinator_status_dropdown', locals: locals %>
-  <h3>Support Request for <%= @support_request.name_or_alias %></h3>
+  <div class="row">
+    <h3 class="col-12 col-md-8">Support Request for <%= @support_request.name_or_alias %></h3>
+    <div class="col-12 col-md-4">
+      <%= render partial: 'coordinator_status_dropdown', locals: locals %>
+    </div>
+  </div>
   <%= render partial: 'flag', locals: { support_request: @support_request } %>
 </div>
-<div class="row">
-  <div class="col-3">
+<div class="row support-request-details">
+  <div class="col-12 col-md-3">
     <strong>Pickup Date</strong>
     <p><%= @support_request&.pickup_date %></p>
   </div>
-  <div class="col-3">
+  <div class="col-12 col-md-3">
     <strong>Amount</strong>
     <p>$<%= @support_request&.amount %></p>
   </div>
-  <div class="col-3">
+  <div class="col-12 col-md-3">
     <strong>Amount Breakdown</strong>
     <% @support_request.lockbox_action.breakdown.each do |item| %>
       <div><%= item[:amount] %> for <%= item[:category] %></div>
     <% end %>
   </div>
-  <div class="col-3">
+  <div class="col-12 col-md-3">
     <strong>Client ID</strong>
     <div><%= @support_request&.client_ref_id %></div>
   </div>
