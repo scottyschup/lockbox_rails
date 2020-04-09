@@ -71,7 +71,7 @@ class CreateSupportRequest
       end
     end
 
-    support_request.record_creation
+    support_request.record_creation_async
     send_applicable_balance_alerts
 
     support_request
