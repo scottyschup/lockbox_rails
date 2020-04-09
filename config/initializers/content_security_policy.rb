@@ -32,7 +32,7 @@ SecureHeaders::Configuration.default do |config|
     base_uri: %w('self'),
     block_all_mixed_content: true, # see http://www.w3.org/TR/mixed-content/
     child_src: %w('self'), # if child-src isn't supported, the value for frame-src will be set.
-    font_src: %w('self' data: https://fonts.gstatic.com),
+    font_src: %w('self' data: https://fonts.gstatic.com https://demo-lockbox.herokuapp.com),
     form_action: %w('self'),
     frame_ancestors: %w('none'),
     img_src: %w('self' https://*.amazonaws.com), # Whitelist amazonaws to support the Sqreen image
