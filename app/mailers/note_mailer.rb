@@ -38,7 +38,6 @@ class NoteMailer < ApplicationMailer
     end
 
     subject = "#{urgency_flag_prefix}MAC Cash Box Withdrawal Request"
-
     mail(to: params[:address], subject: subject, template_name: "support_request_creation_alert")
   end
 
