@@ -47,7 +47,7 @@ class SupportRequest < ApplicationRecord
   alias_method :pickup_date, :eff_date
 
   def most_recent_note
-    @most_recent_note ||= notes.last(order: :created_at)
+    @most_recent_note ||= notes.last
   end
 
   def newer_request_by_partner
