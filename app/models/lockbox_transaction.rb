@@ -16,14 +16,15 @@ class LockboxTransaction < ApplicationRecord
   validates :balance_effect, inclusion: BALANCE_EFFECTS
 
   EXPENSE_CATEGORIES = [
-    GAS           = 'gas',
-    PARKING       = 'parking',
-    TRANSIT       = 'transit',
-    CHILDCARE     = 'childcare',
-    MEDICINE      = 'medicine',
-    FOOD          = 'food',
-    ADJUSTMENT    = 'adjustment',
-    CASH_ADDITION = 'cash_addition'
+    GAS                 = 'gas',
+    PARKING             = 'parking',
+    TRANSIT             = 'transit',
+    CHILDCARE           = 'childcare',
+    MEDICINE            = 'medicine',
+    FOOD                = 'food',
+    ADJUSTMENT          = 'adjustment',
+    CASH_ADDITION       = 'cash_addition',
+    HOTEL_REINBURSEMENT = 'hotel_reinbursement'
   ].freeze
   validates :category, inclusion: EXPENSE_CATEGORIES
 
