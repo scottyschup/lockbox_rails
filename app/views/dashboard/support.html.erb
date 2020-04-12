@@ -3,11 +3,22 @@
   <p>
     If you're having issues in the app, please check out
     <% user_type = current_user.admin? ? "ADMIN" : "PARTNER" %>
-    <%= link_to "our FAQ manual", ENV["LOCKBOX_#{user_type}_FAQ_LINK"] %>
-    first.
-  </p>
-  <p>
-    If you can't find the answer there, you can also email
-    <%= link_to ENV["LOCKBOX_EMAIL"], "mailto:#{ENV["LOCKBOX_EMAIL"]}" %>.
-  </p>
-</div>
+      <%= link_to "our FAQ manual", ENV["LOCKBOX_#{user_type}_FAQ_LINK"] %>
+      first.
+    </p>
+    <p>
+      If you aren't able to find the answer there, you can also fill out this form and click submit to log your issue. Our all-volunteer IT team will start work on it right away, but the issue may remain for some time depending on how heavy their workload
+      is this week.
+    </p>
+
+    <p>
+      <a href="https://forms.gle/tw6MJQTgjfZhq2nD7" target="_blank">Fill out form</a> 
+    </p>
+
+    <p class="text-muted font-italic my-0">
+      If you need immediate assistance, please email
+    </p>
+    <p>
+      <%= link_to ENV["LOCKBOX_EMAIL"], "mailto:#{ENV["LOCKBOX_EMAIL"]}" %>.
+    </p>
+  </div>
