@@ -10,7 +10,7 @@
     "bootstrap": "^4.3.1",
     "cocoon-js": "^0.0.5",
     "datatables.net-bs4": "^1.10.20",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.15.0",
     "snyk": "^1.278.2",
     "turbolinks": "^5.2.0"
