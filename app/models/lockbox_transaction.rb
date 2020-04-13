@@ -24,7 +24,7 @@ class LockboxTransaction < ApplicationRecord
     FOOD                = 'food',
     ADJUSTMENT          = 'adjustment',
     CASH_ADDITION       = 'cash_addition',
-    HOTEL_REINBURSEMENT = 'hotel_reinbursement'
+    HOTEL_REIMBURSEMENT = 'hotel_reimbursement'
   ].freeze
   validates :category, inclusion: EXPENSE_CATEGORIES
 
