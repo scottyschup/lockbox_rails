@@ -6,7 +6,8 @@
   <h2>
     <%= lockbox_partner.name %>
     <span class="float-right">
-      <%= lockbox_partner.balance %>
+      <%= fa_icon "info-circle" %>
+      <%= number_to_currency lockbox_partner.balance %>
     </span>
   </h2>
   <div class="lockbox-partner-info">
