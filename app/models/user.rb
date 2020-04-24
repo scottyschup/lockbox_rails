@@ -5,7 +5,7 @@ class User < ApplicationRecord
   belongs_to :inviter, class_name: "User",  optional: true, foreign_key: 'invited_by_id'
 
   # all but :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :authy_authenticatable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :trackable,
          :timeoutable
