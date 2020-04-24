@@ -51,7 +51,11 @@ gem 'sentry-raven'
 gem 'sidekiq'
 gem 'skylight'
 
+# for our CSP
 gem 'secure_headers', '~> 6.3'
+
+# for 2FA
+gem 'devise-authy', '~> 1.11', '>= 1.11.1'
 
 group :production do
   gem 'sqreen', '>= 1.16'
