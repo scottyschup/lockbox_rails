@@ -18,6 +18,28 @@ describe UpdateSupportRequest do
     expect(result.value.client_ref_id).to eq('5678')
   end
 
+  it 'adds a transaction to the support request' do
+    expect(support_request).to be_persisted
+    result = UpdateSupportRequest.call(support_request: support_request, params: {client_ref_id: '5678', lockbox_transactions_attributes: {
+      "0": {
+        category: "hotel_reimbursement",
+        distance: "",
+        amount: "10.00",
+        _destroy: "false",
+        id: lockbox_transaction.id
+      },
+      "1": {
+        category: "food",
+        distance: "",
+        amount: "12",
+        _destroy: "false"
+      }
+    }})
+    expect(result).to be_success
+    expect(result.value).to be_an_instance_of(SupportRequest)
+    expect(result.value.client_ref_id).to eq('5678')
+  end
+
   it 'creates a note if certain support request fields were changed' do
     new_values = {
       client_ref_id: 'new client ref',
@@ -154,4 +176,3 @@ describe UpdateSupportRequest do
     expect(result).not_to be_success
   end
 end
-
