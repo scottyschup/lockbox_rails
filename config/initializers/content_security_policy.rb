@@ -10,17 +10,17 @@
 
 Rails.application.config.content_security_policy do |policy|
   policy.base_uri        :self
-  policy.default_src     :self, :https
-  policy.font_src        :self, :https, 'https://fonts.gstatic.com', 'https://demo-lockbox.herokuapp.com'
+  policy.default_src     :self
+  policy.font_src        :self, 'https://fonts.gstatic.com', 'https://demo-lockbox.herokuapp.com'
   policy.form_action     :self
   policy.frame_ancestors :none
-  policy.img_src         :self, :https, 'https://*.amazonaws.com'
+  policy.img_src         :self, 'https://*.amazonaws.com'
   policy.object_src      :none
-  policy.script_src      :self, :https
-  policy.style_src       :self, :https, :unsafe_inline, 'https://fonts.googleapis.com'
-  policy.worker_src      :self, :https
+  policy.script_src      :self
+  policy.style_src       :self, :unsafe_inline, 'https://fonts.googleapis.com'
+  policy.worker_src      :self
   # If you are using webpack-dev-server then specify webpack-dev-server host
-  policy.connect_src     :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
+  policy.connect_src     :self, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
 
   policy.block_all_mixed_content true
   # Specify URI for violation reports
