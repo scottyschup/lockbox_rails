@@ -51,8 +51,6 @@ gem 'sentry-raven'
 gem 'sidekiq'
 gem 'skylight'
 
-#gem 'secure_headers', '~> 6.3'
-
 group :production do
   gem 'sqreen', '>= 1.16'
 end
