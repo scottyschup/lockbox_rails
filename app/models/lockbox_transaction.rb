@@ -9,6 +9,8 @@ class LockboxTransaction < ApplicationRecord
   validates :category, presence: true
   has_paper_trail
 
+  before_validation :default_values
+
   BALANCE_EFFECTS = [
     DEBIT  = 'debit',
     CREDIT = 'credit'
@@ -30,5 +32,11 @@ class LockboxTransaction < ApplicationRecord
 
   def eff_date
     lockbox_action.eff_date
+  end
+
+  private
+
+  def default_values
+    self.balance_effect ||= DEBIT
   end
 end
