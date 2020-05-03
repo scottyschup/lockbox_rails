@@ -23,4 +23,4 @@ require('../src/notes');
 require('../src/pending_support_requests_table');
 require('../src/transactions');
 require('../src/url_switching_select');
-require('../src/text_popper');
+require('../src/info_popover');

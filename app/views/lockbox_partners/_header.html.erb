@@ -6,8 +6,10 @@
   <h2>
     <%= lockbox_partner.name %>
     <span class="float-right">
-      <button id="lockbox_partner_balance_button" class="fa fa-info-circle" aria-describedby="tooltip"></button>
-      <div id="lockbox_partner_balance_popup_text">The balance here includes all cash in the partner lockbox, minus any Pending Support Requests.</div>
+      <i button id="lockbox_partner_balance_button" class="fa fa-info-circle" aria-describedby="tooltip"></i>
+      <div id="lockbox_partner_balance_popup_text" class="btn btn-secondary" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="bottom">
+        The balance here includes all cash in the partner lockbox, minus any Pending Support Requests.
+      </div>
       <%= lockbox_partner.balance %>
     </span>
   </h2>
