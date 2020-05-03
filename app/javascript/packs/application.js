@@ -7,10 +7,14 @@ require('@rails/ujs').start();
 require('turbolinks').start();
 require('@rails/activestorage').start();
 require('babel-polyfill');
-require('bootstrap');
 require('channels');
 require('cocoon-js');
-require('datatables.net-bs4/js/dataTables.bootstrap4.min');
+require('jquery')
+require('bootstrap/dist/js/bootstrap')
+window.$ = $
+require('imports-loader?define=>false!datatables.net')(window, $)
+require('imports-loader?define=>false!datatables.net-bs4')(window, $)
+
 require('../src/alerts');
 require('../src/notes');
 require('../src/pending_support_requests_table');
