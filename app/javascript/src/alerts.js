@@ -3,7 +3,6 @@ const handleAlert = response => {
   if (data.error) {
     document.getElementById('errors').innerHTML = data.error;
     $('.alert').alert();
-    console.log('alert has been set');
     $('html, body').animate({ scrollTop: 0 }, 500);
   }
 };
