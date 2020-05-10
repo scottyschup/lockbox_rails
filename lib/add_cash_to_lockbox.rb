@@ -21,7 +21,7 @@ class AddCashToLockbox
       end
 
       if tracking_number.present? || delivery_method.present?
-        lockbox_action.tracking_infos.create(
+        lockbox_action.tracking_info = TrackingInfo.create(
           tracking_number: tracking_number,
           delivery_method: delivery_method
         )

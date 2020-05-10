@@ -1,7 +1,5 @@
 MAC has sent cash for your lockbox in the amount of $<%= @lockbox_action.amount %>. Please log into the app to confirm once it's arrived.
-<% if @lockbox_action.tracking_infos.present? %>
+<% if @lockbox_action.tracking_info.present? %>
   Tracking info:
-  <% @lockbox_action.tracking_infos.each do |tracking_info| %>
-    <%= tracking_info.delivery_method %> <%= tracking_info.tracking_number %>
-  <% end %>
+  <%=  @lockbox_action.tracking_info_formatted %>
 <% end %>
