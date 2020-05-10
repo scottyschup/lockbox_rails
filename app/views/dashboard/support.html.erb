@@ -7,12 +7,14 @@
       first.
     </p>
     <p>
-      If you aren't able to find the answer there, you can also fill out this form and click submit to log your issue. Our all-volunteer IT team will start work on it right away, but the issue may remain for some time depending on how heavy their workload
+      If you aren't able to find the answer there, you can also
+      <%= link_to "fill out this form", ENV["ISSUE_FORM_LINK"] %>
+      and click submit to log your issue. Our all-volunteer IT team will start work on it right away, but the issue may remain for some time depending on how heavy their workload
       is this week.
     </p>
 
     <p>
-      <a href="https://forms.gle/tw6MJQTgjfZhq2nD7" target="_blank">Fill out form</a> 
+      <%= link_to "Log an Issue or Feedback", ENV["ISSUE_FORM_LINK"], :class => "btn btn-primary" %>
     </p>
 
     <p class="text-muted font-italic my-0">
