@@ -39,6 +39,8 @@ class Reconciliation
           raise ActiveRecord::Rollback
         end
       end
+
+      LockboxPartnerMailer.with(lockbox_partner: lockbox_partner, amount: amount).reconciliation_completed_alert.deliver_now
       lockbox_action
     end
 

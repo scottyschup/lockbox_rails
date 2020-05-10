@@ -19,4 +19,15 @@ class LockboxPartnerMailer < ApplicationMailer
 
     mail(to: email_address, subject: subject)
   end
+
+  def reconciliation_completed_alert
+    @lockbox_partner = params[:lockbox_partner]
+    @lockbox_url = ENV['HOST']
+    @lockbox_help_email = ENV['LOCKBOX_EMAIL']
+    email_addresses = [ENV['LOCKBOX_EMAIL'], ENV['FINANCE_EMAIL']].select(&:present?)
+    return unless email_addresses.any?
+    subject = "#{@lockbox_partner.name} lockbox reconciled: $#{params[:amount]}"
+
+    mail(to: email_addresses, subject: subject)
+  end
 end
