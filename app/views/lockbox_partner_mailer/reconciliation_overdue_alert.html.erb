@@ -1,0 +1,10 @@
+<html>
+  <head></head>
+  <body>
+    <p>
+      <%= @lockbox_partner.name %> has not reconciled their lockbox in <%= @days_since_reconciliation %> days.
+      Please reach out to confirm if lockbox still has funds, and whether they can cover any Pending Support Requests.
+      To check other Lockbox details, sign in at <a href="<%= @lockbox_url %>"><%= @lockbox_url %></a> or, if you have questions, email <a href="mailto:<%= @lockbox_help_email %>"><%= @lockbox_help_email %></a>.
+    </p>
+  </body>
+</html>
