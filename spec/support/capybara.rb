@@ -4,6 +4,8 @@ Capybara.register_driver :selenium_firefox do |app|
   Capybara::Selenium::Driver.new(app, browser: :firefox)
 end
 
+Capybara.disable_animation = true # disables CSS animations in test suite
+
 RSpec.configure do |config|
   config.before(:each, type: :system) do
     if ENV['BROWSER']
