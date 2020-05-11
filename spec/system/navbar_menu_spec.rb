@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Nav bar menu", type: :system do
+RSpec.describe "Navbar menu", type: :system do
   let!(:user) { FactoryBot.create(:user) }
 
   before do
