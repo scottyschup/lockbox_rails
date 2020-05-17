@@ -24,8 +24,7 @@
         <div>A $<%= cash_action.amount %> check was mailed on <%= cash_action.eff_date.try(:strftime, "%B %-d") %>, please confirm it was received.</div>
 
         <% if cash_action.tracking_info.present? %>
-          <div>Tracking info:</div>
-          <div><%= cash_action.tracking_info_formatted %></div>
+          <div>Tracking info: <%= cash_action.tracking_info_formatted %></div>
         <% end %>
       </div>
       <div class="p-2">
