@@ -6,7 +6,8 @@
   <h2>
     <%= lockbox_partner.name %>
     <span class="float-right">
-      <%= fa_icon "info-circle" %>
+      <button id="lockbox_partner_balance_button" class="fa fa-info-circle" aria-describedby="tooltip"></button>
+      <div id="lockbox_partner_balance_popup_text">The balance here includes all cash in the partner lockbox, minus any Pending Support Requests.</div>
       <%= number_to_currency lockbox_partner.balance %>
     </span>
   </h2>

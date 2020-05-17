@@ -16,9 +16,11 @@ require('bootstrap/dist/js/bootstrap')
 window.$ = $
 require('imports-loader?define=>false!datatables.net')(window, $)
 require('imports-loader?define=>false!datatables.net-bs4')(window, $)
-
+require('popper.js');
+require('datatables.net-bs4/js/dataTables.bootstrap4.min');
 require('../src/alerts');
 require('../src/notes');
 require('../src/pending_support_requests_table');
 require('../src/transactions');
 require('../src/url_switching_select');
+require('../src/text_popper');
