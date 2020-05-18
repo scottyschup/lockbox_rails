@@ -16,14 +16,15 @@ header {
       font-size: 0.8em;
     }
   }
-  button.navbar-toggle {
+  button.navbar-control {
     background-color: transparent;
     border: none;
     color: white;
-    &.collapsed .fa-times {
+    &.expanded .fa-bars,
+    &.expanded .fa-cog {
       display: none;
     }
-    &:not(.collapsed) .fa-bars {
+    &:not(.expanded) .fa-times {
       display: none;
     }
   }
@@ -51,6 +52,12 @@ header {
     border: 2px solid white;
   }
   #navbar {
+    display: none;
+
+    &.expanded {
+      display: contents;
+    }
+
     .container {
       display: flex;
       align-items: normal;
@@ -65,6 +72,10 @@ header {
     a {
       font-size: 1em;
     }
+  }
+  button:focus,
+  a:focus {
+    outline: 1px dotted white !important;
   }
 }
 
