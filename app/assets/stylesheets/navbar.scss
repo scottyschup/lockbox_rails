@@ -52,10 +52,11 @@ header {
     border: 2px solid white;
   }
   #navbar {
+    flex-grow: 1;
     display: none;
 
     &.expanded {
-      display: contents;
+      display: block;
     }
 
     .container {
