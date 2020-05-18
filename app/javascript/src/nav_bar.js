@@ -1,8 +1,12 @@
 const addHandlers = () => {
-  navBarPane().addEventListener('keydown', handleKeyDown);
+  focusableElements().forEach(el => {
+    el.addEventListener('keydown', handleKeyDown);
+  });
   headerSiblings().forEach(el => {
     el.addEventListener('click', closePane);
-  })
+  });
+  const logoLink = document.querySelector('a[href="/"]');
+  logoLink.addEventListener('click', closePane);
 }
 
 const closePane = () => {
@@ -13,6 +17,8 @@ const closePane = () => {
   button.classList.remove('expanded');
   pane.classList.remove('expanded');
   removeHandlers();
+
+  button.focus();
 }
 
 const focusableElements = element => {
@@ -28,8 +34,9 @@ const handleKeyDown = ev => {
       closePane();
       break;
     case 'Tab':
-      const nextFocusableElement = nextFocusableElement(ev.currentTarget, ev.shiftKey);
-      nextFocusableElement.focus();
+      const nextElement = nextFocusableElement(ev.currentTarget, ev.shiftKey);
+      console.log(ev.currentTarget, ev.shiftKey, nextElement);
+      nextElement.focus();
       break;
     default:
       return;
@@ -52,10 +59,8 @@ const navBarPane = () => {
 const nextFocusableElement = (currElement, shiftUsed) => {
   const focusables = focusableElements();
   const numFocusables = focusables.length;
-  // If currElement is undefined, return the first visible link in header drawer.
-  // If the drawer is empty—which shouldn't really ever happen—then return the drawer anchor.
+  // If currElement is undefined, return the first button/link in nav bar pane.
   if (!currElement) { return focusables[0] || navBarControl(); }
-  if (!numFocusables) { return currElement; }
   const currIdx = [...focusables].indexOf(currElement);
   const delta = shiftUsed ? -1 : 1;
   const nextIdx = (numFocusables + currIdx + delta) % numFocusables;
@@ -77,10 +82,14 @@ const openPane = () => {
 }
 
 const removeHandlers = () => {
-  navBarPane().removeEventListener('keydown', handleKeyDown);
+  focusableElements().forEach(el => {
+    el.removeEventListener('keydown', handleKeyDown);
+  });
   headerSiblings().forEach(el => {
     el.removeEventListener('click', closePane);
-  })
+  });
+  const logoLink = document.querySelector('a[href="/"]');
+  logoLink.removeEventListener('click', closePane);
 }
 
 const toggleNavBarPane = () => {
