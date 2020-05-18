@@ -35,7 +35,6 @@ const handleKeyDown = ev => {
       break;
     case 'Tab':
       const nextElement = nextFocusableElement(ev.currentTarget, ev.shiftKey);
-      console.log(ev.currentTarget, ev.shiftKey, nextElement);
       nextElement.focus();
       break;
     default:
