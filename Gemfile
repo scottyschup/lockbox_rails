@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -40,7 +40,7 @@ gem 'verbalize', '~> 2.2'
 gem 'cocoon'
 
 # Add versions table for logging purposes
-gem 'paper_trail'
+gem 'paper_trail', '>= 10.3.1'
 
 # TODO -- before we go live, should move this back to test/dev bundle
 # For test data generation
@@ -49,7 +49,7 @@ gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 
 gem 'sentry-raven'
 gem 'sidekiq'
-gem 'skylight'
+gem 'skylight', '>= 4.2.1'
 
 group :production do
   gem 'sqreen', '>= 1.16'
@@ -66,7 +66,7 @@ group :development, :test do
 
   # Apparently rspec is not yet ready for rails 6 :(
   # gem 'rspec-rails', '~> 3.8'
-  gem 'rspec-rails', '~> 4.0.0.beta2'  # gem 'rspec-rails', github: 'rspec/rspec-rails', branch: '4-0-dev'
+  gem 'rspec-rails', '~> 4.0.0.0' # gem 'rspec-rails', github: 'rspec/rspec-rails', branch: '4-0-dev'
   gem 'rspec', github: 'rspec/rspec', branch: 'master'
   gem 'rspec-core', github: 'rspec/rspec-core', branch: 'master'
   gem 'rspec-mocks', github: 'rspec/rspec-mocks', branch: 'master'
@@ -74,7 +74,7 @@ group :development, :test do
   gem 'rspec-support', github: 'rspec/rspec-support', branch: 'master'
   gem 'rails-controller-testing', '>= 1.0.4'
 
-  gem 'shoulda-matchers', '~> 4.0', '>= 4.0.1'
+  gem 'shoulda-matchers', '~> 4.1', '>= 4.1.2'
 end
 
 group :development do
@@ -96,7 +96,7 @@ group :test do
   gem 'rspec_junit_formatter', '~> 0.4.1'
   gem 'rspec-benchmark'
   gem 'timecop', '0.9.1'
-  gem 'database_cleaner-active_record'
+  gem 'database_cleaner-active_record', '>= 1.8.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
