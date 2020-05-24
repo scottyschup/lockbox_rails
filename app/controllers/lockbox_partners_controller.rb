@@ -38,7 +38,8 @@ class LockboxPartnersController < ApplicationController
     page_number = params.permit(:page)[:page]
     @historical_actions = @lockbox_partner.historical_actions
                                           .order(created_at: :desc)
-                                          .paginate(page: page_number, per_page: ACTIONS_PER_PAGE)
+                                          .page(page_number)
+                                          .per(ACTIONS_PER_PAGE)
   end
 
   private

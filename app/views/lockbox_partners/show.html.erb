@@ -44,6 +44,6 @@
         <% end %>
       </tbody>
     </table>
-    <%= will_paginate @historical_actions, list_classes: %w(pagination justify-content-center) %>
+    <%= paginate @historical_actions, window: 1, outer_window: 0 %>
   </div>
 </div>
