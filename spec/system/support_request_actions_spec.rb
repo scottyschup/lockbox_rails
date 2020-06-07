@@ -49,13 +49,15 @@ RSpec.describe "Support Request Actions", type: :system do
   end
 
   it "successfully add a transaction to a support request" do
+    transaction_count = support_request.reload.lockbox_action.lockbox_transactions.count
     visit "/lockbox_partners/#{lockbox_partner.id}/support_requests/#{support_request.id}"
     click_link "Edit Support Request"
     click_link "Add more values +"
     all("option[value='childcare']")[1].click
     page.all(:fillable_field, 'Amount').last.set 10
     click_button "Submit"
+    sleep(1)
+    expect(support_request.reload.lockbox_action.lockbox_transactions.count).to eq(transaction_count + 1)
     assert_selector "div.support-request-details", text: "10.00 for childcare"
-    expect(support_request.reload.lockbox_action.lockbox_transactions.count).to eq(2)
   end
 end
