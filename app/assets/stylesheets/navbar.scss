@@ -65,7 +65,6 @@ header {
   #navbar-drawer {
     flex-grow: 1;
     display: none;
-    visibility: hidden;
 
     &.expanded {
       display: block;
