@@ -3,26 +3,26 @@ const addHandlers = () => {
     el.addEventListener('keydown', handleKeyDown);
   });
   headerSiblings().forEach(el => {
-    el.addEventListener('click', closePane);
+    el.addEventListener('click', closeDrawer);
   });
   const logoLink = document.querySelector('a[href="/"]');
-  logoLink.addEventListener('click', closePane);
+  logoLink.addEventListener('click', closeDrawer);
 }
 
-const closePane = () => {
+const closeDrawer = () => {
   const button = navBarControl();
-  const pane = navBarPane();
+  const drawer = navBarDrawer();
 
   button.setAttribute('aria-expanded', false);
   button.classList.remove('expanded');
-  pane.classList.remove('expanded');
+  drawer.classList.remove('expanded');
   removeHandlers();
 
   button.focus();
 }
 
 const focusableElements = element => {
-  element = element || navBarPane();
+  element = element || navBarDrawer();
   return [...element.querySelectorAll('a, button, [tabindex]')];
 }
 
@@ -31,7 +31,7 @@ const handleKeyDown = ev => {
     case 'Escape':
     case 'Esc':
       // IE11 uses 'Esc'; all other browsers use 'Escape'
-      closePane();
+      closeDrawer();
       break;
     case 'Tab':
       const nextElement = nextFocusableElement(ev.currentTarget, ev.shiftKey);
@@ -51,14 +51,14 @@ const navBarControl = () => {
   return document.getElementById('navbar-control');
 }
 
-const navBarPane = () => {
-  return document.getElementById('navbar');
+const navBarDrawer = () => {
+  return document.getElementById('navbar-drawer');
 }
 
 const nextFocusableElement = (currElement, shiftUsed) => {
   const focusables = focusableElements();
   const numFocusables = focusables.length;
-  // If currElement is undefined, return the first button/link in nav bar pane.
+  // If currElement is undefined, return the first button/link in nav bar drawer.
   if (!currElement) { return focusables[0] || navBarControl(); }
   const currIdx = [...focusables].indexOf(currElement);
   const delta = shiftUsed ? -1 : 1;
@@ -67,16 +67,16 @@ const nextFocusableElement = (currElement, shiftUsed) => {
   return focusables[nextIdx];
 }
 
-const openPane = () => {
+const openDrawer = () => {
   const button = navBarControl();
-  const pane = navBarPane();
+  const drawer = navBarDrawer();
 
   button.setAttribute('aria-expanded', true);
   button.classList.add('expanded');
-  pane.classList.add('expanded');
+  drawer.classList.add('expanded');
   addHandlers();
 
-  const focusables = focusableElements(pane);
+  const focusables = focusableElements(drawer);
   focusables[0].focus();
 }
 
@@ -85,18 +85,18 @@ const removeHandlers = () => {
     el.removeEventListener('keydown', handleKeyDown);
   });
   headerSiblings().forEach(el => {
-    el.removeEventListener('click', closePane);
+    el.removeEventListener('click', closeDrawer);
   });
   const logoLink = document.querySelector('a[href="/"]');
-  logoLink.removeEventListener('click', closePane);
+  logoLink.removeEventListener('click', closeDrawer);
 }
 
-const toggleNavBarPane = () => {
+const toggleNavBarDrawer = () => {
   const button = navBarControl();
   const isExpanded = button.getAttribute('aria-expanded') === 'true';
 
-  isExpanded ? closePane() : openPane();
+  isExpanded ? closeDrawer() : openDrawer();
 }
 
 const control = navBarControl();
-control.addEventListener('click', toggleNavBarPane);
+control.addEventListener('click', toggleNavBarDrawer);
