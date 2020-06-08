@@ -33,7 +33,7 @@ header {
     }
 
     a:hover {
-      color: $gray;
+      color: darken($white, 10%);
     }
   }
 
