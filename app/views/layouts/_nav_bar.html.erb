@@ -12,11 +12,7 @@
         aria-controls="navbar"
       >
         <span class="sr-only">Toggle navigation</span>
-        <% if current_user.admin? %>
-          <%= fa_icon "bars" %>
-        <% else %>
-          <%= fa_icon "cog" %>
-        <% end %>
+        <%= fa_icon(current_user.admin? ? "bars" : "cog") %>
         <%= fa_icon "times" %>
       </button>
     <% end %>
@@ -65,9 +61,9 @@
               <p><a href="<%= lockbox_partners_path %>">View all lockboxes</a></p>
               <p><a href="<%= support_requests_new_path %>">File a support request</a></p>
               <p><a href="<%= new_lockbox_partner_path %>">Add a new lockbox partner</a></p>
-              <p><%= link_to "Get support", support_path %></p>
+              <p><%= link_to "Get Support", support_path %></p>
             <% elsif current_user.partner? %>
-              <%= link_to "Get support", support_path %>
+              <%= link_to "Get Support", support_path %>
             <% end %>
           </div>
         </div>
