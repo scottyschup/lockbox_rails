@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Navbar menu", type: :system do
-  let!(:admin_user) { FactoryBot.create(:user), role: User::ADMIN }
+  let!(:admin_user) { FactoryBot.create(:user, role: User::ADMIN) }
   let!(:lockbox_partner) { create(:lockbox_partner, :active) }
   let!(:partner_user) { FactoryBot.create(:user, role: User::PARTNER, lockbox_partner: lockbox_partner) }
 
