@@ -1,9 +1,12 @@
 <nav class="navbar navbar-default d-flex">
   <!-- Header nav bar -->
   <div class="container-fluid">
-    <a href="/" class="navbar-brand flex-item" title="Home" aria-label="Home">
-      💸 <span id="nav-title">Lockbox</span>
-    </a>
+    <h1>
+      <a href="/" class="navbar-brand flex-item" title="Home" aria-label="Home">
+        💸
+        <span id="nav-title">Lockbox</span>
+      </a>
+    </h1>
     <% if current_user %>
       <button
         id="navbar-control"
@@ -26,10 +29,14 @@
           <% if current_user.admin? %>
             <h2><%= current_user.name %></h2>
             <div class="links">
-              <a href="mailto:<%= current_user.email %>"><%= current_user.email %></a>
+              <p>
+                <a href="mailto:<%= current_user.email %>">
+                  <%= current_user.email %>
+                </a>
+              </p>
             </div>
             <div class="links">
-              <%= link_to "Edit Profile", edit_user_path(current_user), class: "edit_contact_info btn btn-primary btn-invert" %>
+              <%= link_to "Edit Profile", edit_user_path(current_user), class: "edit-contact-info btn btn-primary btn-invert" %>
             </div>
           <% elsif lp = current_user.lockbox_partner %>
             <h2><%= lp.name %></h2>
@@ -40,8 +47,8 @@
               <%= lp.phone_number %>
             </p>
             <div class="links">
-              <%= link_to "Edit Profile", edit_user_path(current_user), class: "edit_contact_info btn btn-primary btn-invert" %>
-              <%= link_to "Edit Contact Information", edit_lockbox_partner_path(lp), class: "edit_contact_info btn btn-primary btn-invert" %>
+              <%= link_to "Edit Profile", edit_user_path(current_user), class: "edit-contact-info btn btn-primary btn-invert" %>
+              <%= link_to "Edit Contact Information", edit_lockbox_partner_path(lp), class: "edit-contact-info btn btn-primary btn-invert" %>
             </div>
           <% end %>
         </div>
@@ -57,13 +64,13 @@
 
           <div class="links nav-item-right">
             <% if current_user.admin? %>
-              <p><strong>Quick Actions</strong></p>
+              <p class="heading">Quick Actions</p>
               <p><a href="<%= lockbox_partners_path %>">View all lockboxes</a></p>
               <p><a href="<%= support_requests_new_path %>">File a support request</a></p>
               <p><a href="<%= new_lockbox_partner_path %>">Add a new lockbox partner</a></p>
               <p><%= link_to "Get Support", support_path %></p>
             <% elsif current_user.partner? %>
-              <%= link_to "Get Support", support_path %>
+              <P><%= link_to "Get Support", support_path %></p>
             <% end %>
           </div>
         </div>
