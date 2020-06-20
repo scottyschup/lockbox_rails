@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -66,7 +66,7 @@ group :development, :test do
 
   # Apparently rspec is not yet ready for rails 6 :(
   # gem 'rspec-rails', '~> 3.8'
-  gem 'rspec-rails', '~> 4.0.0.beta2'  # gem 'rspec-rails', github: 'rspec/rspec-rails', branch: '4-0-dev'
+  gem 'rspec-rails', '~> 4.0.0.0' # gem 'rspec-rails', github: 'rspec/rspec-rails', branch: '4-0-dev'
   gem 'rspec', github: 'rspec/rspec', branch: 'master'
   gem 'rspec-core', github: 'rspec/rspec-core', branch: 'master'
   gem 'rspec-mocks', github: 'rspec/rspec-mocks', branch: 'master'
