@@ -14,7 +14,7 @@ RSpec.describe "Support Request Actions", type: :system do
         eff_date: Date.current,
         lockbox_transactions_attributes:
         {
-          "0":{ amount: "50", category: LockboxTransaction::GAS }
+          "0":{ amount: "50", category: "medicine" }
         }
       }
     }
@@ -46,6 +46,15 @@ RSpec.describe "Support Request Actions", type: :system do
     sleep(1)
     assert_selector "p.status-label", text: "Completed"
     expect(support_request.reload.status).to eq("completed")
+  end
+
+  it "successfully changes the name of a support request" do
+    visit "/lockbox_partners/#{lockbox_partner.id}/support_requests/#{support_request.id}"
+    click_link "Edit Support Request"
+    page.all(:fillable_field, 'Client Alias').last.set "Fleafy Greens"
+    click_button "Submit"
+    sleep(1)
+    assert_selector "h3", text: "Fleafy Greens"
   end
 
   it "successfully add a transaction to a support request" do
