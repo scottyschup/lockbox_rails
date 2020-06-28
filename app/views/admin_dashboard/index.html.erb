@@ -18,4 +18,6 @@
 <% end %>
 <div class="horizontal-rule"></div>
 <h3>Manage users</h3>
-<%= render partial: 'users', locals: { users: @users } %>
+<div class="admin-dashboard-users-wrapper">
+  <%= render partial: 'users', locals: { users: @users } %>
+</div>

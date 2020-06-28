@@ -17,12 +17,24 @@ const handleUserResponse = response => {
   }
 }
 
+const handleExpandUser = event => {
+  button = $(event.target)
+  hidden = button.parents('tr').find('p:last-child')
+  hidden.slideToggle(300)
+  if (button.html() == "Expand record") {
+    button.html("Collapse record")
+  } else {
+    button.html("Expand record")
+  }
+}
+
 const setupAdminDashboard = () => {
-  const users = $('.admin-dashboard-users')
+  const users = $('.admin-dashboard-users-wrapper')
   if (users) {
-    console.log('setting up user form handler')
     $('#new-user-form').off('ajax:success', handleUserResponse)
     $('#new-user-form').on('ajax:success', handleUserResponse)
+    users.off('click', '.expand', handleExpandUser)
+    users.on('click', '.expand', handleExpandUser)
   }
 }
 
