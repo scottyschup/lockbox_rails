@@ -1,0 +1,20 @@
+<table class="table admin-dashboard-users">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.role %></td>
+        <td><%= user.status %></td>
+        <td>expand record</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

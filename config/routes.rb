@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   get 'onboarding_success', to: 'dashboard#onboarding_success'
   get 'support', to: 'dashboard#support'
 
+  get 'admin_dashboard', to: 'admin_dashboard#index'
+  scope '/admin_dashboard' do
+    post 'users', to: 'admin_dashboard#create', as: 'admin_users'
+  end
+
   match 'support_requests/new', to: 'lockbox_partners/support_requests#new', via: [:get]
   resources :support_requests, only: [:index, :create]
 
