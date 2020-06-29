@@ -89,6 +89,10 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+      - store_artifacts:
+          path: ~/repo/tmp/screenshots
+          destination: screenshots
+
 
   deploy:
     docker:
