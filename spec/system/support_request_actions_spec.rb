@@ -14,7 +14,7 @@ RSpec.describe "Support Request Actions", type: :system do
         eff_date: Date.current,
         lockbox_transactions_attributes:
         {
-          "0":{ amount: "50", category: "medicine" }
+          "0":{ amount: "50", category: LockboxTransaction::MEDICINE }
         }
       }
     }
