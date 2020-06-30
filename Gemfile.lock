@@ -149,6 +149,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.3)
+    docile (1.3.2)
     erubi (1.9.0)
     execjs (2.7.0)
     factory_bot (5.1.1)
@@ -313,6 +314,10 @@ GEM
       rack (~> 2.0)
       rack-protection (>= 2.0.0)
       redis (>= 4.1.0)
+    simplecov (0.18.5)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.2)
     skylight (4.2.1)
       skylight-core (= 4.2.1)
     skylight-core (4.2.1)
@@ -403,6 +408,7 @@ DEPENDENCIES
   sentry-raven
   shoulda-matchers (~> 4.0, >= 4.0.1)
   sidekiq
+  simplecov
   skylight
   spring
   spring-watcher-listen (~> 2.0.0)
