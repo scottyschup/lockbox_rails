@@ -1,70 +1,112 @@
 header {
   margin: 0;
   background-color: $color-primary;
-  font-family: $font-sans;
-  color: white;
+  font-family: $font-serif;
+  color: $white;
+
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 0;
+  }
+
   #nav-title {
     font-weight: bolder;
-    color: white;
+    color: $white;
   }
-  p {
+
+  .links {
     margin-bottom: 0;
+
+    .heading {
+      font-size: 1.2em;
+    }
+
+    p {
+      font-family: $font-serif;
+    }
+
     a,
     a:visited {
-      color: white;
+      color: $white;
       text-decoration: none;
-      font-size: 0.8em;
+      font-weight: 200;
+    }
+
+    a:hover {
+      color: darken($white, 10%);
     }
   }
-  button.navbar-toggle {
+
+  button.navbar-control {
     background-color: transparent;
     border: none;
-    color: white;
-    &.collapsed .fa-times {
+    color: $white;
+
+    &.expanded .fa-bars,
+    &.expanded .fa-cog {
       display: none;
     }
-    &:not(.collapsed) .fa-bars {
+
+    &:not(.expanded) .fa-times {
       display: none;
     }
   }
+
   .container {
     width: 80%;
   }
+
   .btn {
     display: block;
-    float: right;
-    clear: right;
     border: 2px solid $color-primary;
-    background: white;
+    background: $white;
     color: $color-primary;
     width: 200px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
+
   .btn-white:hover {
     background: $color-primary;
-    color: white;
-    border: 2px solid white;
+    color: $white;
+    border: 2px solid $white;
   }
+
   .btn-invert {
     background: $color-primary;
-    color: white;
-    border: 2px solid white;
+    color: $white;
+    border: 2px solid $white;
   }
-  #navbar {
+
+  nav a.edit-contact-info {
+    display: inline-block;
+    width: auto;
+    padding: 0.25em 2em;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  #navbar-drawer {
+    flex-grow: 1;
+    display: none;
+
+    &.expanded {
+      display: block;
+    }
+
     .container {
-      display: flex;
       align-items: normal;
-      .navbar-subcontainer {
-        flex: 0 1 50%;
-      }
     }
   }
-  .nav-item-right {
-    float: right;
-    clear: right;
-    a {
-      font-size: 1em;
-    }
+
+  .nav-item-right a {
+    font-size: 1em;
+  }
+
+  button:focus,
+  a:focus {
+    outline: 1px dotted $white !important;
   }
 }
 
@@ -74,31 +116,6 @@ header {
   }
 }
 
-nav a.edit_contact_info {
-  float: none;
-  display: inline-block;
-  width: auto;
-  margin-top: 1em;
-  font-size: 0.75em;
-  padding: 0.25em 2em;
-}
-
 .fa-cog {
   font-size: 1.5em;
-}
-
-@media screen and (max-width: 481px) {
-  #navbar {
-    .container {
-      display: block;
-      .navbar-subcontainer {
-        flex: none;
-        .btn,
-        .nav-item-right {
-          float: none;
-          clear: none;
-        }
-      }
-    }
-  }
 }

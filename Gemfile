@@ -97,6 +97,7 @@ group :test do
   gem 'rspec-benchmark'
   gem 'timecop', '0.9.1'
   gem 'database_cleaner-active_record', '>= 1.8.0'
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
