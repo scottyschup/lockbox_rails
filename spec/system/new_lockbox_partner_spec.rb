@@ -8,7 +8,7 @@ RSpec.describe "New lockbox partner form", type: :system do
   before do
     login_as(user, :scope => :user)
     visit("/")
-    click_link("Add a new lockbox partner")
+    find_link("Add a new lockbox partner", class: "btn").click
   end
 
   context "on initial page load" do
