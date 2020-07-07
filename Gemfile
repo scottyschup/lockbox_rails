@@ -4,11 +4,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem "puma", ">= 4.3.2"
+gem "puma", ">= 4.3.5"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.1', '>= 5.1.0'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -49,7 +49,7 @@ gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 
 gem 'sentry-raven'
 gem 'sidekiq', '>= 6.0.5'
-gem 'skylight'
+gem 'skylight', '>= 4.2.1'
 
 group :production do
   gem 'sqreen', '>= 1.16'
@@ -74,7 +74,7 @@ group :development, :test do
   gem 'rspec-support', github: 'rspec/rspec-support', branch: 'master'
   gem 'rails-controller-testing', '>= 1.0.4'
 
-  gem 'shoulda-matchers', '~> 4.0', '>= 4.0.1'
+  gem 'shoulda-matchers', '~> 4.1', '>= 4.1.2'
 end
 
 group :development do
@@ -96,7 +96,8 @@ group :test do
   gem 'rspec_junit_formatter', '~> 0.4.1'
   gem 'rspec-benchmark'
   gem 'timecop', '0.9.1'
-  gem 'database_cleaner-active_record'
+  gem 'database_cleaner-active_record', '>= 1.8.0'
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
