@@ -219,8 +219,6 @@ GEM
     puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.2.3)
-    rack-protection (2.0.8.1)
-      rack
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -398,7 +396,7 @@ DEPENDENCIES
   pry-rails
   pry-remote
   puma (>= 4.3.5)
-  rails (~> 6.0.3, >= 6.0.3.1)
+  rails (~> 6.0.3, >= 6.0.3.2)
   rails-controller-testing (>= 1.0.4)
   rspec!
   rspec-benchmark
