@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rspec/rspec-core.git
-  revision: 257fae1559539a1f1e40b1500bc8522c9e65c5d1
+  revision: 24e5b7b0059bc35bdeb0e0c985ffa7ff4e2362aa
   branch: master
   specs:
     rspec-core (3.10.0.pre)
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-expectations.git
-  revision: 2406548527e322bee387c9478eaa8f20b1c8c0ee
+  revision: c87ab72748d4467fe8f9d84fe0ab87f314b18f6c
   branch: master
   specs:
     rspec-expectations (3.10.0.pre)
@@ -17,7 +17,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-mocks.git
-  revision: 17d24de0a3cd5ce9496d1195a104b246e6056b9d
+  revision: 1728885f65b25a9676c5ce54133ef8a1283e2e0d
   branch: master
   specs:
     rspec-mocks (3.10.0.pre)
@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-support.git
-  revision: 64a14e2126ae0b9bc629f6e0b280f9df05c39e42
+  revision: 47c9ea9479e65c9f719a3bbdb20f516b773cad97
   branch: master
   specs:
     rspec-support (3.10.0.pre)
@@ -396,7 +396,7 @@ DEPENDENCIES
   pry-rails
   pry-remote
   puma (>= 4.3.5)
-  rails (~> 6.0.3, >= 6.0.3.1)
+  rails (~> 6.0.3, >= 6.0.3.2)
   rails-controller-testing (>= 1.0.4)
   rspec!
   rspec-benchmark
