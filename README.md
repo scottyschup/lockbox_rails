@@ -119,7 +119,7 @@ bundle exec rails s # or `yarn run dev:rails`
 mailcatcher # This will run on localhost:1080
 ```
 
-### Redis
+#### Redis
 
 You'll need redis for sidekiq to work
 
@@ -128,17 +128,35 @@ brew install redis
 brew services start redis
 ```
 
-### Ports in use
+#### Ports in use
 
-- 3000: main site
-- 3035: Webpack dev server
-- 1080: Mailcatcher (if applicable)
 
-### Login
-**Fund Admin**
-Username: `cats@test.com`
-Password: `password1234`
+- 3000: main site	- 3000: main site
+- 3035: Webpack dev server	- 3035: Webpack dev server
+- 1080: Mailcatcher (if applicable)	- 1080: Mailcatcher (if applicable)
 
-**Lockbox Partner**
-Username: `fluffy@catsclinic.com`
-Password: `heytherefancypants4321`
+
+### Login	#### Login
+**Fund Admin**	**Fund Admin**
+Username: `cats@test.com`	Username: `cats@test.com`
+Password: `password1234`	Password: `password1234`
+
+
+**Lockbox Partner**	**Lockbox Partner**
+Username: `fluffy@catsclinic.com`	Username: `fluffy@catsclinic.com`
+Password: `heytherefancypants4321`	Password: `heytherefancypants4321`
+
+### Security
+#### Brakeman (WIP)
+We are starting to use Brakeman to check for security vulnerabilities. More details to come later, but for now, you can familiarize yourself with [Brakeman's usage options](https://github.com/presidentbeef/brakeman/blob/master/OPTIONS.md).
+
+Eventually Brakeman will be incorporated as part of the CI process (or used in a Git hook). But until then, you should run it once locally before merging any new PRs. To do so, from the app root run:
+```sh
+rake brakeman:full_scan
+```
+
+This will output a summary file to `log/brakeman/{NUMERIC_TIMESTAMP}_fullscan.log`. There is also a `quick_scan` command that will run the scan without checking the `lib` directory.
+
+#### Bundler Audit
+
+#### DangerBot
