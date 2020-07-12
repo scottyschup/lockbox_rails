@@ -12,8 +12,6 @@ const handleUserResponse = response => {
   if (data.users) {
     refreshUsers(data.users)
     clearUserForm()
-  } else {
-    console.log(data)
   }
 }
 
