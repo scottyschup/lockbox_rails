@@ -8,7 +8,7 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem "puma", ">= 4.3.2"
+gem "puma", ">= 4.3.5"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.1', '>= 5.1.0'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -48,7 +48,7 @@ gem 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 
 gem 'sentry-raven'
-gem 'sidekiq'
+gem 'sidekiq', '>= 6.0.5'
 gem 'skylight', '>= 4.2.1'
 
 group :production do
