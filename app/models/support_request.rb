@@ -77,6 +77,10 @@ class SupportRequest < ApplicationRecord
     notes.create(text: note_text, notable_action: "create")
   end
 
+  def record_creation_async
+    NotesWorker.perform_async(id)
+  end
+
   private
 
   def index_in_support_requests_collection

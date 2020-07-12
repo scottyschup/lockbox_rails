@@ -1,6 +1,6 @@
 module SupportRequestsHelper
   def expense_category_select_options
-    LockboxTransaction::EXPENSE_CATEGORIES.map { |c| [c.capitalize, c] }
+    LockboxTransaction::EXPENSE_CATEGORIES.map { |c| [c.humanize, c] }
   end
 
   def lockbox_partner_select_options

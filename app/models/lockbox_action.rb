@@ -5,7 +5,7 @@ class LockboxAction < ApplicationRecord
   belongs_to :support_request, optional: true
   has_many :lockbox_transactions, dependent: :destroy
   has_many :notes, as: :notable
-  has_many :tracking_infos
+  has_one :tracking_info
 
   accepts_nested_attributes_for :lockbox_transactions, reject_if: :all_blank,
     allow_destroy: true
@@ -17,7 +17,7 @@ class LockboxAction < ApplicationRecord
 
   before_validation :inherit_lockbox_partner_id
 
-  before_save :set_default_status
+  before_validation :set_default_status
   has_paper_trail
 
   STATUSES = [
@@ -25,6 +25,7 @@ class LockboxAction < ApplicationRecord
     COMPLETED = 'completed',
     CANCELED  = 'canceled'
   ].freeze
+  validates :status, inclusion: STATUSES
 
   EDITABLE_STATUSES = [
     'pending'
@@ -35,6 +36,7 @@ class LockboxAction < ApplicationRecord
     RECONCILE = 'reconcile',
     SUPPORT_CLIENT = 'support_client'
   ].freeze
+  validates :action_type, inclusion: ACTION_TYPES
 
   scope :excluding_statuses, -> (*statuses) { where.not(status: statuses) }
 
@@ -138,6 +140,12 @@ class LockboxAction < ApplicationRecord
 
   def debit?
     lockbox_transactions.first&.balance_effect == LockboxTransaction::DEBIT
+  end
+
+  def tracking_info_formatted
+    if tracking_info.present?
+      "#{tracking_info.delivery_method} #{tracking_info.tracking_number}"
+    end
   end
 
   private

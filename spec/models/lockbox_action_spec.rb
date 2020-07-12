@@ -5,10 +5,23 @@ describe LockboxAction, type: :model do
   it { is_expected.to belong_to(:support_request).optional }
   it { is_expected.to have_many(:lockbox_transactions) }
   it { is_expected.to have_many(:notes) }
+  it { is_expected.to have_one(:tracking_info) }
 
   describe '.create_with_transactions' do
+    context 'some unknown status' do
+      it 'raises an error' do
+        action = LockboxAction.new(status: 'oops')
+        action.valid?
+        expect(action.errors.messages[:status]).to include('is not included in the list')
+      end
+    end
+
     context 'some unknown action type' do
-      # it raises some meaningful error
+      it 'raises an error' do
+        action = LockboxAction.new(action_type: 'whoops')
+        action.valid?
+        expect(action.errors.messages[:action_type]).to include('is not included in the list')
+      end
     end
 
     context 'add_cash' do
@@ -37,10 +50,12 @@ describe LockboxAction, type: :model do
       FactoryBot.create(:lockbox_action, :support_client).tap do |action|
         action.lockbox_transactions.create(
           amount_cents: 20_00,
+          balance_effect: LockboxTransaction::DEBIT,
           category: LockboxTransaction::GAS
         )
         action.lockbox_transactions.create(
           amount_cents: 20_00,
+          balance_effect: LockboxTransaction::DEBIT,
           category: 'medicine'
         )
       end
