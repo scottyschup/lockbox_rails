@@ -10,6 +10,7 @@
     "bootstrap": "^4.3.1",
     "cocoon-js": "^0.0.5",
     "datatables.net-bs4": "^1.10.20",
+    "graphlib": "^2.1.8",
     "imports-loader": "^0.8.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.15.0",
