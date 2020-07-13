@@ -1,0 +1,11 @@
+.admin-dashboard-users {
+  td {
+    p:last-child {
+      display: none
+    }
+  }
+  .expand {
+    color: $color-primary;
+    cursor: pointer;
+  }
+}

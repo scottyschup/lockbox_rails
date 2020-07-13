@@ -86,7 +86,12 @@ class LockboxPartners::SupportRequestsController < ApplicationController
       flash[:notice] = "Support request was successfully updated"
       redirect_to lockbox_partner_support_request_path(@support_request)
     else
-      render 'edit'
+      render json: {
+        error: render_to_string(
+          partial: 'shared/error',
+          locals: { key: 'alert', value: result.failure }
+        )
+      }
     end
   end
 
