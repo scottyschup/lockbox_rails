@@ -27,6 +27,10 @@ describe LockboxPartnerMailer, type: :mailer do
       expect(email.to).to eq([low_balance_alert_email])
     end
 
+    it "ccs the admins" do
+      expect(email.cc).to eq([User.get_admin_emails])
+    end
+
     it "has the expected subject line" do
       expect(email.subject).to eq(
         "[LOW LOCKBOX BALANCE] #{lockbox_partner.name} needs cash"
