@@ -35,9 +35,8 @@
                 </a>
               </p>
             </div>
-            <div class="links">
-              <%= link_to "Edit Profile", edit_user_path(current_user), class: "edit-contact-info btn btn-primary btn-invert" %>
-            </div>
+            <%= link_to "Edit Profile", edit_user_path(current_user), class: "edit-contact-info btn btn-primary btn-invert" %>
+            <%= link_to "Admin Dashboard", admin_dashboard_path, class: "admin-dashboard btn btn-primary btn-white" %>
           <% elsif lp = current_user.lockbox_partner %>
             <h2><%= lp.name %></h2>
             <h3><%= current_user.name %></h3>
