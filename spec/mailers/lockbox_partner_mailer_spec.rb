@@ -13,6 +13,8 @@ describe LockboxPartnerMailer, type: :mailer do
         .deliver_now
     end
 
+    let(:admin) { FactoryBot.create(:user) }
+
     before do
       allow(ENV)
         .to receive(:[])
@@ -28,7 +30,8 @@ describe LockboxPartnerMailer, type: :mailer do
     end
 
     it "ccs the admins" do
-      expect(email.cc).to eq([User.get_admin_emails])
+      expect(admin.email).to eq(User.get_admin_emails)
+      expect(email.cc).to eq([admin.email])
     end
 
     it "has the expected subject line" do
