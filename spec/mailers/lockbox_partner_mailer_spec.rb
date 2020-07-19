@@ -5,6 +5,7 @@ describe LockboxPartnerMailer, type: :mailer do
 
   describe "#low_balance_alert" do
     let(:low_balance_alert_email) { "lowbalancealert@example.com" }
+    let(:lockbox_email) { "lockboxemail@example.com" }
 
     let(:email) do
       described_class
@@ -23,10 +24,14 @@ describe LockboxPartnerMailer, type: :mailer do
         .to receive(:[])
         .with("LOW_BALANCE_ALERT_EMAIL")
         .and_return(low_balance_alert_email)
+      allow(ENV)
+        .to receive(:[])
+        .with("LOCKBOX_EMAIL")
+        .and_return(lockbox_email)
     end
 
-    it "sends the email to the address specified in an env var" do
-      expect(email.to).to eq([low_balance_alert_email])
+    it "sends the email to the address specified in the env vars" do
+      expect(email.to).to eq([low_balance_alert_email, lockbox_email])
     end
 
     it "ccs the admins" do
