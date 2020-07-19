@@ -14,7 +14,7 @@ class LockboxPartnerMailer < ApplicationMailer
 
   def low_balance_alert
     @lockbox_partner = params[:lockbox_partner]
-    email_address = ENV['LOW_BALANCE_ALERT_EMAIL']
+    email_address = [ENV['LOW_BALANCE_ALERT_EMAIL'], ENV['LOCKBOX_EMAIL']].join(",")
     return unless email_address.present?
     admin_emails = User.get_admin_emails
     subject = "[LOW LOCKBOX BALANCE] #{@lockbox_partner.name} needs cash"
