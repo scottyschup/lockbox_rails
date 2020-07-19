@@ -115,6 +115,7 @@ class LockboxPartner < ApplicationRecord
   end
 
   private
+
   def reconciliation_over_n_days_ago?(num_days)
     return false unless persisted?
     return false unless !!reconciliation_interval_start

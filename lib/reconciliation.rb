@@ -40,7 +40,7 @@ class Reconciliation
         end
       end
 
-      LockboxPartnerMailer.with(lockbox_partner: lockbox_partner, amount: amount).reconciliation_completed_alert.deliver_now
+      ReconciliationCompletedMailerWorker.perform_async(lockbox_partner.id, amount)
       lockbox_action
     end
 

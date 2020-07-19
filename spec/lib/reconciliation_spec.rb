@@ -77,5 +77,11 @@ describe Reconciliation do
       expect(lockbox_transaction.amount).to eq(Monetize.parse('100.00'))
       expect(lockbox_transaction.balance_effect).to eq(LockboxTransaction::CREDIT)
     end
+
+    it 'is performant' do
+      expect(LockboxPartnerMailer).not_to receive(:with)
+      expect(LockboxPartnerMailer).not_to receive(:reconciliation_completed_alert)
+      expect { reconcile }.to perform_under(0.025).sec
+    end
   end
 end
