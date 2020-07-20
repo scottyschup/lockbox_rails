@@ -61,6 +61,10 @@ class User < ApplicationRecord
     self.name || "User #{id}"
   end
 
+  def self.get_admin_emails
+    User.admin.pluck(:email).join(",")
+  end
+
   private
 
   def password_required?

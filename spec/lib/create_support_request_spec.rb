@@ -199,7 +199,7 @@ describe CreateSupportRequest do
       expect {
         CreateSupportRequest.call(params: low_balance_params)
         drain_queues
-      }.to change{ActionMailer::Base.deliveries.length}.by(2)
+      }.to change{ActionMailer::Base.deliveries.length}.by(3)
     end
 
     it 'is not sent when the balance remains above $300' do
