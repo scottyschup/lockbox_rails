@@ -8,6 +8,16 @@
     </div>
   </div>
 <% end %>
+<% if lockbox_partner.low_balance? %>
+  <div class="alert alert-danger d-flex">
+    <div class="p-2">
+      <i class="fa fa-exclamation-circle alert-primary-icon" aria-hidden="true"></i>
+    </div>
+    <div class="p-2 flex-grow-1">
+      <div><%= lockbox_partner.name %>'s balance of $<%= lockbox_partner.balance %> is below $<%= LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE %>. Please replenish the funds.</div>
+    </div>
+  </div>
+<% end %>
 <% if lockbox_partner.recently_completed_first_cash_addition? %>
   <div class="alert alert-success d-flex">
     <div class="p-2">
