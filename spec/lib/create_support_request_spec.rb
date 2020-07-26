@@ -40,17 +40,22 @@ describe CreateSupportRequest do
 
   subject { CreateSupportRequest.call(params: params) }
 
-  it "creates one note and triggers two emails" do
+  it 'creates one note and triggers two emails' do
+    get_request_emails = lambda do
+      ActionMailer::Base.deliveries.reject do |delivery|
+        delivery.subject['MAC Cash Box Withdrawal Request'].nil?
+      end
+    end
     notes_count = Note.count
-    emails_count = ActionMailer::Base.deliveries.count
+    emails_count = get_request_emails.call.count
 
     result = nil
 
     expect {
       result = subject
       drain_queues
-    }.to change{
-      [Note.count, ActionMailer::Base.deliveries.count]
+    }.to change {
+      [Note.count, get_request_emails.call.count]
     }.from([notes_count, emails_count]).to([notes_count+1, emails_count+2])
 
     expect(result).to be_success
@@ -199,7 +204,7 @@ describe CreateSupportRequest do
       expect {
         CreateSupportRequest.call(params: low_balance_params)
         drain_queues
-      }.to change{ActionMailer::Base.deliveries.length}.by(2)
+      }.to change{ActionMailer::Base.deliveries.length}.by(3)
     end
 
     it 'is not sent when the balance remains above $300' do
@@ -249,7 +254,7 @@ describe CreateSupportRequest do
 
       result = nil
 
-      expect { 
+      expect {
         result = CreateSupportRequest.call(params: insufficient_funds_params)
         drain_queues
       }.to change{ ActionMailer::Base.deliveries.length }.by(3)

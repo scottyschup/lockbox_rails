@@ -99,7 +99,7 @@ bundle exec rails webpacker:install
 
 ### Local Development
 ```sh
-yarn run dev
+yarn dev
 ```
 The above command will do the following:
 * run the `predev` script in `package.json` which calls the bin script [`dev_setup`](./bin/dev_setup).

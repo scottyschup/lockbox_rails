@@ -69,6 +69,15 @@ describe AddCashToLockbox do
       expect(TrackingInfo.order(:created_at).last.tracking_number).to eq ("12345")
       expect(TrackingInfo.order(:created_at).last.delivery_method).to eq nil
     end
+
+
+    it "emails the tracking info" do
+      expect{ add_cash }.to change{ ActionMailer::Base.deliveries.count }.by(1)
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq('Incoming Lockbox Cash in the Mail')
+      expect(mail.body).to include(amount)
+      expect(mail.body).to include("12345")
+    end
   end
 
   context "when delivery method is passed in" do
@@ -83,6 +92,14 @@ describe AddCashToLockbox do
       expect{add_cash}.to change(TrackingInfo, :count).by(1)
       expect(TrackingInfo.order(:created_at).last.tracking_number).to eq nil
       expect(TrackingInfo.order(:created_at).last.delivery_method).to eq "Mail Today"
+    end
+
+    it "emails the tracking info" do
+      expect{ add_cash }.to change{ ActionMailer::Base.deliveries.count }.by(1)
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq('Incoming Lockbox Cash in the Mail')
+      expect(mail.body).to include(amount)
+      expect(mail.body).to include("Mail Today")
     end
   end
 
@@ -99,6 +116,15 @@ describe AddCashToLockbox do
       expect{add_cash}.to change(TrackingInfo, :count).by(1)
       expect(TrackingInfo.order(:created_at).last.tracking_number).to eq "123456"
       expect(TrackingInfo.order(:created_at).last.delivery_method).to eq "Mail Today"
+    end
+
+    it "emails the tracking info" do
+      expect{ add_cash }.to change{ ActionMailer::Base.deliveries.count }.by(1)
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq('Incoming Lockbox Cash in the Mail')
+      expect(mail.body).to include(amount)
+      expect(mail.body).to include("123456")
+      expect(mail.body).to include("Mail Today")
     end
   end
 

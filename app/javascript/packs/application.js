@@ -19,6 +19,7 @@ require('imports-loader?define=>false!datatables.net-bs4')(window, $)
 
 require('../src/alerts');
 require('../src/notes');
+require('../src/admin_dashboard');
 require('../src/pending_support_requests_table');
 require('../src/transactions');
 require('../src/url_switching_select');

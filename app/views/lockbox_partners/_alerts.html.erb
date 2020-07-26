@@ -22,10 +22,28 @@
       <div class="p-2 flex-grow-1">
         <h4 class="alert-heading">Cash Sent</h4>
         <div>A $<%= cash_action.amount %> check was mailed on <%= cash_action.eff_date.try(:strftime, "%B %-d") %>, please confirm it was received.</div>
+
+        <% if cash_action.tracking_info.present? %>
+          <div>Tracking info: <%= cash_action.tracking_info_formatted %></div>
+        <% end %>
       </div>
       <div class="p-2">
         <%= link_to "Confirm Cash Addition", lockbox_action_path(cash_action, {lockbox_action: {status: :completed}}), method: :put, class: 'btn btn-warning' %>
       </div>
     </div>
   <% end %>
+<% end %>
+
+<% if lockbox_partner.low_balance? %>
+  <% alert_email = ENV['LOCKBOX_EMAIL'] %>
+  <div class="alert alert-danger d-flex">
+    <div class="p-2">
+      <i class="fa fa-exclamation-circle alert-primary-icon" aria-hidden="true"></i>
+    </div>
+    <div class="p-2 flex-grow-1">
+      <div>
+        Your lockbox balance is below $<%= LockboxPartner::MINIMUM_ACCEPTABLE_BALANCE %>. The lockbox manager should be reaching out to you shortly. If you haven't heard from them in a few days, please email <%= link_to alert_email, "mailto:#{alert_email}" %>.
+      </div>
+    </div>
+  </div>
 <% end %>

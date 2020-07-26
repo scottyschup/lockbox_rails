@@ -1,0 +1,32 @@
+<table class="table admin-dashboard-users">
+  <thead>
+    <tr class="d-flex">
+      <th class="col-3">Name</th>
+      <th class="col-3">Role</th>
+      <th class="col-3">Status</th>
+      <th class="col-3">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.each do |user| %>
+      <tr class="d-flex">
+        <td class="col-3">
+          <p><%= user.name.present? ? user.name : 'N/A' %></p>
+          <p><b>Email:</b></br><%= user.email || 'N/A' %></p>
+        </td>
+        <td class="col-3">
+          <p><%= user.role %></p>
+          <p><b>Date added:</b></br><%= user.created_at.strftime('%m/%d/%y %I:%M%p') || 'N/A' %></p>
+        </td>
+        <td class="col-3">
+          <p><%= user.status %></p>
+          <p><b>Last login:</b></br><%= user.last_sign_in_at&.strftime('%m/%d/%y %I:%M%p') || 'N/A' %></p>
+        </td>
+        <td class="col-3">
+          <p class="expand">Expand record</p>
+          <p><b>Last login IP:</b></br><%= user.last_sign_in_ip || 'N/A' %></p>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
