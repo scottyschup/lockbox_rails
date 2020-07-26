@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @lockbox_partner.historical_actions.each do |action| %>
+        <% @historical_actions.each do |action| %>
           <tr class=<%= action.status %>>
             <td><%= action.eff_date_formatted %></td>
             <td><%= action.action_type.humanize %></td>
@@ -44,5 +44,6 @@
         <% end %>
       </tbody>
     </table>
+    <%= paginate @historical_actions, window: 1, outer_window: 0 %>
   </div>
 </div>
