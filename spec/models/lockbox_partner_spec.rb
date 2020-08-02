@@ -491,10 +491,13 @@ describe LockboxPartner, type: :model do
   end
 
   describe '#reconciliation_severely_overdue?' do
-    subject { lockbox_partner.reconciliation_needed? }
-    let(:lockbox_partner) { create(:lockbox_partner, :active) }
+    subject { lockbox_partner.reconciliation_severely_overdue? }
 
-    let(:reconciliation_action) do
+    let(:lockbox_partner) { create(:lockbox_partner, :active) }
+    let(:reconciliation_interval) { LockboxPartner::RECONCILIATION_INTERVAL }
+    let(:days_until_overdue_notification) { LockboxPartner::DAYS_UNTIL_OVERDUE_RECONCILIATION_NOTIFICATION }
+
+    before(:example) do
       create(
         :lockbox_action,
         :reconciliation,
@@ -504,22 +507,17 @@ describe LockboxPartner, type: :model do
     end
 
     context 'when the lockbox was last reconciled within the reconciliation interval' do
-      before { reconciliation_action }
+      let(:reconciliation_date) { reconciliation_interval.days.ago - 1}
+      it { is_expected.to be false }
+    end
 
-      let(:reconciliation_date) do
-        (LockboxPartner::RECONCILIATION_INTERVAL - 1).days.ago
-      end
-
+    context 'when the lockbox reconciliation is needed but no further time has elapsed' do
+      let(:reconciliation_date) { reconciliation_interval.days.ago }
       it { is_expected.to be false }
     end
 
     context 'when the lockbox was last reconciled long enough ago to necessitate a notification' do
-      before { reconciliation_action }
-
-      let(:reconciliation_date) do
-        (LockboxPartner::RECONCILIATION_INTERVAL + LockboxPartner::DAYS_UNTIL_OVERDUE_RECONCILIATION_NOTIFICATION).days.ago
-      end
-
+      let(:reconciliation_date) { (reconciliation_interval + days_until_overdue_notification).days.ago }
       it { is_expected.to be true }
     end
   end
