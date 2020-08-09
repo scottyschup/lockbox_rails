@@ -14,7 +14,7 @@ class Reconciliation
     err_message = nil
 
     result = ActiveRecord::Base.transaction do
-      lockbox_action = lockbox_partner.lockbox_actions.create!(
+      lockbox_action = lockbox_partner.lockbox_actions.create(
         action_type: LockboxAction::RECONCILE,
         eff_date: Date.current,
         status: LockboxAction::COMPLETED
@@ -28,7 +28,7 @@ class Reconciliation
       if amount != expected_amount
         difference = amount - expected_amount
 
-        lockbox_transaction = lockbox_action.lockbox_transactions.create!(
+        lockbox_transaction = lockbox_action.lockbox_transactions.create(
           amount: difference.abs,
           balance_effect: balance_effect(difference),
           category: LockboxTransaction::ADJUSTMENT
