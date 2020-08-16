@@ -136,15 +136,15 @@ brew services start redis
 - 1080: Mailcatcher (if applicable)	- 1080: Mailcatcher (if applicable)
 
 
-### Login	#### Login
-**Fund Admin**	**Fund Admin**
-Username: `cats@test.com`	Username: `cats@test.com`
-Password: `password1234`	Password: `password1234`
+### Login
+#### Fund Admin
+Username: `cats@test.com`
+Password: `password1234`
 
 
-**Lockbox Partner**	**Lockbox Partner**
-Username: `fluffy@catsclinic.com`	Username: `fluffy@catsclinic.com`
-Password: `heytherefancypants4321`	Password: `heytherefancypants4321`
+#### Lockbox Partner
+Username: `fluffy@catsclinic.com`
+Password: `heytherefancypants4321`
 
 ### Security
 #### Brakeman (WIP)
