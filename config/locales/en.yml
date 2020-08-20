@@ -31,3 +31,12 @@
 
 en:
   hello: "Hello world"
+
+  # for kaminari pagination
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "&hellip;"
