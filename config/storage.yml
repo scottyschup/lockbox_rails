@@ -1,3 +1,7 @@
+# ActiveStorage is currently disabled, and this file is therefore not loaded.
+# This file remains here so that it will be easier to configure ActiveStorage
+# if we decide to do so in the future.
+
 test:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>
