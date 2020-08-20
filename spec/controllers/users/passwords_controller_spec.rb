@@ -10,7 +10,7 @@ describe Users::PasswordsController do
     it "#edit" do
       get :edit, params: { reset_password_token: token }
       expect(response.status).to eq(200)
-      response.should render_template('devise/passwords/edit')
+      expect(response).to render_template('devise/passwords/edit')
     end
 
     it "#update" do
