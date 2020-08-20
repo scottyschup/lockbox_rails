@@ -9,7 +9,7 @@
   <% end %>
 
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'form' }) do |f| %>
-    <%= devise_error_messages! %>
+    <%= render "devise/shared/error_messages", resource: resource %>
     <%= f.hidden_field :reset_password_token %>
 
     <% # The user should be able to set a name the first time they confirm the account, but not if they request a subsequent password reset %>
