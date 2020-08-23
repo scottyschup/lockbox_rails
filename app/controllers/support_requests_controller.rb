@@ -26,6 +26,18 @@ class SupportRequestsController < ApplicationController
     end
   end
 
+  def export
+    @support_requests = SupportRequest.includes(:lockbox_partner, :user).pending.order("created_at desc")
+    respond_to do |format|
+      format.html
+      format.csv do
+        response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-Disposition'] = 'attachment; filename=support_requests-#{Date.today}.csv'
+        send_data @support_requests.to_csv, filename: "support_requests-#{Date.today}.csv"
+      end
+    end
+  end
+
   private
 
   def add_insufficient_funds_alert
