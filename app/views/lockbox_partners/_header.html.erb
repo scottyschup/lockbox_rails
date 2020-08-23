@@ -6,7 +6,14 @@
   <h2>
     <%= lockbox_partner.name %>
     <span class="float-right">
-      <i class="fa fa-info-circle tooltip-icon"></i>
+      <i
+        class="fa fa-info-circle tooltip-icon"
+        tabindex="0"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title="The balance here includes all cash in the partner lockbox, minus any Pending Support Requests."
+      >
+      </i>
       <%= lockbox_partner.balance %>
     </span>
   </h2>
