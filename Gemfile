@@ -37,6 +37,8 @@ gem 'money-rails', '~> 1.13', '>= 1.13.3'
 
 gem 'verbalize', '~> 2.2'
 
+gem 'kaminari'
+
 gem 'cocoon'
 
 # Add versions table for logging purposes
