@@ -124,13 +124,12 @@ describe Reconciliation do
       expect(lockbox_transaction.balance_effect).to eq(LockboxTransaction::CREDIT)
     end
 
-    it 'is performant' do
+    it 'does not send out an email immediately during reconciliation' do
       expect(LockboxPartnerMailer).not_to receive(:with)
       expect(LockboxPartnerMailer).not_to receive(:reconciliation_completed_alert)
-      expect { reconcile }.to perform_under(0.025).sec
     end
 
-    it 'sends out an email upon completion' do
+    it 'sends out a delayed email after reconciliation' do
       reconcile
       expect { ReconciliationCompletedMailerWorker.drain }.to change { ActionMailer::Base.deliveries.count }
     end
