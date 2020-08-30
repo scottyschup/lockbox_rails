@@ -14,6 +14,7 @@ class LockboxPartner < ApplicationRecord
   # Number of days since last reconciliation when clinic user will be prompted
   # to reconcile the lockbox. TODO make this configurable (issue #138)
   RECONCILIATION_INTERVAL = 30
+  DAYS_UNTIL_OVERDUE_RECONCILIATION_NOTIFICATION = 7
   MINIMUM_ACCEPTABLE_BALANCE = Money.new(30000)
   THRESHOLD_FOR_RECENT_INITIAL_CASH_ADDITION_IN_HOURS = 48
   THRESHOLD_LONGSTANDING_CASH_ADDITION_IN_DAYS = 3
@@ -98,13 +99,12 @@ class LockboxPartner < ApplicationRecord
     @all_actions ||= lockbox_actions.order(eff_date: :desc)
   end
 
+  def reconciliation_severely_overdue?
+    reconciliation_over_n_days_ago?(RECONCILIATION_INTERVAL + DAYS_UNTIL_OVERDUE_RECONCILIATION_NOTIFICATION)
+  end
+
   def reconciliation_needed?
-    return false unless persisted?
-    return false unless !!reconciliation_interval_start
-    # Cast the DateTime to a Date, since comparing a Date with a DateTime can
-    # cause unexpected results when the date is different in UTC and the current
-    # time zone
-    reconciliation_interval_start <= RECONCILIATION_INTERVAL.days.ago.to_date
+    reconciliation_over_n_days_ago?(RECONCILIATION_INTERVAL)
   end
 
   def reconciliation_interval_start
@@ -112,6 +112,17 @@ class LockboxPartner < ApplicationRecord
     # the first cash addition
     start_date = last_reconciled_at || initial_cash_addition_date
     start_date&.to_date
+  end
+
+  private
+
+  def reconciliation_over_n_days_ago?(num_days)
+    return false unless persisted?
+    return false unless !!reconciliation_interval_start
+    # Cast the DateTime to a Date, since comparing a Date with a DateTime can
+    # cause unexpected results when the date is different in UTC and the current
+    # time zone
+    reconciliation_interval_start <= num_days.days.ago.to_date
   end
 
   def last_reconciled_at

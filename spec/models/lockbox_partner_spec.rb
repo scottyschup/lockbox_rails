@@ -98,7 +98,7 @@ describe LockboxPartner, type: :model do
         expect(partner.recently_completed_first_cash_addition?).not_to be_truthy
       end
     end
-    
+
     context 'when there is a completed cash addition' do
       let(:cash_addition) { add_cash(partner, 3.days.ago) }
 
@@ -487,6 +487,38 @@ describe LockboxPartner, type: :model do
       let(:lockbox_partner) { build(:lockbox_partner) }
 
       it { is_expected.to be false }
+    end
+  end
+
+  describe '#reconciliation_severely_overdue?' do
+    subject { lockbox_partner.reconciliation_severely_overdue? }
+
+    let(:lockbox_partner) { create(:lockbox_partner, :active) }
+    let(:reconciliation_interval) { LockboxPartner::RECONCILIATION_INTERVAL }
+    let(:days_until_overdue_notification) { LockboxPartner::DAYS_UNTIL_OVERDUE_RECONCILIATION_NOTIFICATION }
+
+    before(:example) do
+      create(
+        :lockbox_action,
+        :reconciliation,
+        lockbox_partner: lockbox_partner,
+        eff_date: reconciliation_date
+      )
+    end
+
+    context 'when the lockbox was last reconciled within the reconciliation interval' do
+      let(:reconciliation_date) { reconciliation_interval.days.ago - 1}
+      it { is_expected.to be false }
+    end
+
+    context 'when the lockbox reconciliation is needed but no further time has elapsed' do
+      let(:reconciliation_date) { reconciliation_interval.days.ago }
+      it { is_expected.to be false }
+    end
+
+    context 'when the lockbox was last reconciled long enough ago to necessitate a notification' do
+      let(:reconciliation_date) { (reconciliation_interval + days_until_overdue_notification).days.ago }
+      it { is_expected.to be true }
     end
   end
 

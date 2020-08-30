@@ -21,4 +21,4 @@ Fixes issue #N/A
 - [ ] Added relevant tests
 - [ ] Linked PR to the issue
 - [ ] Added notes for QA/special notes
-- [ ] Added revelant screenshots
+- [ ] Added relevant screenshots
