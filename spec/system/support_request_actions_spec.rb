@@ -69,4 +69,20 @@ RSpec.describe "Support Request Actions", type: :system do
     expect(support_request.reload.lockbox_action.lockbox_transactions.count).to eq(transaction_count + 1)
     assert_selector "div.support-request-details", text: "10.00 for childcare"
   end
+
+  it 'exports the support requests' do
+    visit '/'
+    click_button 'navbar-control'
+    click_link 'Financial Export'
+
+    full_path = Rails.root.join("tmp/downloads/support_requests-#{Date.current}.csv")
+    table = CSV.parse(File.read(full_path), headers: true)
+
+    assert_equal('support_client', table[0]['Action type'])
+    assert_equal('pending', table[0]['Status'])
+    assert_equal(lockbox_partner.name, table[0]['Partner'])
+    assert_equal(support_request.client_ref_id, table[0]['Client Reference ID'])
+    assert_equal(support_request.created_at.to_s, table[0]['Date submitted'])
+    assert_equal(Date.current.to_s, table[0]['Date of expense'])
+  end
 end
