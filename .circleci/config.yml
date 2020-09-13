@@ -4,6 +4,23 @@
 #
 version: 2
 jobs:
+  bundler-audit:
+    docker:
+      - image: circleci/ruby:2.6.5
+    working_directory: ~/repo
+    description: Runs bundle-audit to check gem security
+    parameters:
+      ignore:
+        description: Vulnerabilities to ignore
+        type: string
+        default: CVE-2017-1002201
+    steps:
+      - run:
+          name: Dependencies security audit
+          command: >
+            bundle exec bundle-audit check --update <<# parameters.ignore >>
+            --ignore << parameters.ignore >> <</ parameters.ignore >>
+  brakeman-scan:
   ruby-scans:
     docker:
       - image: circleci/ruby:2.6.5
@@ -142,3 +159,7 @@ workflows:
       #     filters:
       #       branches:
       #         only: trunk
+  security-scans:
+    jobs:
+      - bundler-audit
+      - brakeman-scan
