@@ -31,7 +31,7 @@ class SupportRequestsController < ApplicationController
       format.html
       format.csv do
         response.headers['Content-Type'] = 'text/csv'
-        response.headers['Content-Disposition'] = 'attachment; filename=support_requests-#{Date.today}.csv'
+        response.headers['Content-Disposition'] = "attachment; filename=support_requests-#{Date.today}.csv"
         send_data SupportRequest.to_csv, filename: "support_requests-#{Date.today}.csv"
       end
     end
