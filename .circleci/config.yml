@@ -82,6 +82,7 @@ jobs:
           CVE-2017-1002201
           CVE-2020-15169
     steps:
+      - checkout
       # Run security scans
       - run:
           name: Security scans
