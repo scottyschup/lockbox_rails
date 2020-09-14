@@ -42,36 +42,23 @@ commands:
             - ~/.yarn-cache
           key: cache-yarn-{{ checksum "yarn.lock" }}
 
-job_defaults: &defaults
-  docker:
-    - image: circleci/ruby:2.6.5-node-browsers
-      environment:
-        PGHOST: 127.0.0.1
-        PGUSER: lockbox_rails_test
-        RAILS_ENV: test
-        NODE_ENV: test
-    - image: postgres:11.2
-      environment:
-        POSTGRES_USER: lockbox_rails_test
-        POSTGRES_DB: lockbox_rails_test
-        POSTGRES_PASSWORD: ""
-        RAILS_ENV: test
-        NODE_ENV: test
-  working_directory: ~/repo
-
 jobs:
-  build:
-    <<: *defaults
-    steps:
-      - checkout
-      - bundle
-      - yarn
-      - run:
-          name: Set up database
-          command: bundle exec rake db:create db:schema:load
-
-  test:
-    <<: *defaults
+  build-and-test:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/ruby:2.6.5-node-browsers
+        environment:
+          PGHOST: 127.0.0.1
+          PGUSER: lockbox_rails_test
+          RAILS_ENV: test
+          NODE_ENV: test
+      - image: postgres:11.2
+        environment:
+          POSTGRES_USER: lockbox_rails_test
+          POSTGRES_DB: lockbox_rails_test
+          POSTGRES_PASSWORD: ""
+          RAILS_ENV: test
+          NODE_ENV: test
     parameters:
       bundler-audit-ignore:
         description: Known vulnerabilities to ignore
@@ -83,6 +70,11 @@ jobs:
           CVE-2020-15169
     steps:
       - checkout
+      - bundle
+      - yarn
+      - run:
+          name: Set up database
+          command: bundle exec rake db:create db:schema:load
       # Run security scans
       - run:
           name: Security scans
@@ -138,13 +130,10 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - build-and-test
       # - deploy:
       #     requires:
-      #       - build
+      #       - build-and-test
       #     filters:
       #       branches:
       #         only: trunk
