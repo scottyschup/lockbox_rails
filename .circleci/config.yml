@@ -3,6 +3,47 @@
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
 version: 2.1
+commands:
+  bundle:
+    description: Install Ruby dependencies
+    steps:
+      - run:
+          name: Install bundler
+          command: gem install bundler -v 2.1.4 && bundle config set path 'vendor/bundle'
+      - restore_cache:
+          name: Restore bundler cache
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-dependencies- # fallback to using the latest cache if no exact match is found
+      - run:
+          name: Install Ruby dependencies
+          command: bundle install --jobs=4 --retry=3
+      - save_cache:
+          name: Save bundler cache
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+  yarn:
+    description: Install Javascript dependencies
+    steps:
+      - restore_cache:
+          name: Restore yarn cache
+          keys:
+            - cache-yarn-{{ checksum "yarn.lock" }}
+            - cache-yarn-
+      - run:
+          name: Install JS dependencies
+          command: yarn install --cache-folder ~/.yarn-cache
+      - save_cache:
+          name: Save yarn cache
+          paths:
+            - ~/.yarn-cache
+          key: cache-yarn-{{ checksum "yarn.lock" }}
+      - run:
+          name: Compile JS assets
+          command: NODE_ENV=test bundle exec rails webpacker:compile
+
 jobs:
   build:
     docker:
@@ -26,6 +67,8 @@ jobs:
       bundler-audit-ignore:
         description: Known vulnerabilities to ignore
         type: string
+        # This list is a string, but since YAML `>` converts single new lines into single spaces,
+        # the CVEs can be listed here one per line rather than as one long string for better reaabaility.
         default: >
           CVE-2017-1002201
           CVE-2020-15169
@@ -33,41 +76,43 @@ jobs:
     steps:
       - checkout
 
-      # Install and cache dependencies
+      # Install dependencies
       # Ruby
-      - run:
-          name: Install bundler
-          command: gem install bundler -v 2.1.4 && bundle config set path 'vendor/bundle'
-      - restore_cache:
-          name: Restore bundler cache
-          keys:
-            - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            - v1-dependencies- # fallback to using the latest cache if no exact match is found
-      - run:
-          name: Install Ruby dependencies
-          command: bundle install --jobs=4 --retry=3
-      - save_cache:
-          name: Save bundler cache
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+      - bundle
+      # - run:
+      #     name: Install bundler
+      #     command: gem install bundler -v 2.1.4 && bundle config set path 'vendor/bundle'
+      # - restore_cache:
+      #     name: Restore bundler cache
+      #     keys:
+      #       - v1-dependencies-{{ checksum "Gemfile.lock" }}
+      #       - v1-dependencies- # fallback to using the latest cache if no exact match is found
+      # - run:
+      #     name: Install Ruby dependencies
+      #     command: bundle install --jobs=4 --retry=3
+      # - save_cache:
+      #     name: Save bundler cache
+      #     paths:
+      #       - ./vendor/bundle
+      #     key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       # Javascript
-      - restore_cache:
-          name: Restore yarn cache
-          keys:
-            - cache-yarn-{{ checksum "yarn.lock" }}
-            - cache-yarn-
-      - run:
-          name: Install JS dependencies
-          command: yarn install --cache-folder ~/.yarn-cache
-      - save_cache:
-          name: Save yarn cache
-          paths:
-            - ~/.yarn-cache
-          key: cache-yarn-{{ checksum "yarn.lock" }}
-      - run:
-          name: Compile JS assets
-          command: NODE_ENV=test bundle exec rails webpacker:compile
+      - yarn
+      # - restore_cache:
+      #     name: Restore yarn cache
+      #     keys:
+      #       - cache-yarn-{{ checksum "yarn.lock" }}
+      #       - cache-yarn-
+      # - run:
+      #     name: Install JS dependencies
+      #     command: yarn install --cache-folder ~/.yarn-cache
+      # - save_cache:
+      #     name: Save yarn cache
+      #     paths:
+      #       - ~/.yarn-cache
+      #     key: cache-yarn-{{ checksum "yarn.lock" }}
+      # - run:
+      #     name: Compile JS assets
+      #     command: NODE_ENV=test bundle exec rails webpacker:compile
 
       # Database setup
       - run:
@@ -75,14 +120,15 @@ jobs:
           command: bundle exec rake db:create db:schema:load
 
       # Run security scans
-      - run: mkdir tmp/security-scans
+      - run:
+          name: Create tmp artifact directories
+          command: mkdir tmp/security-scans tmp/test-results
       - run:
           name: Bundler audit scan
-          command: |
-            bundle exec bundle-audit check --update <<# parameters.bundler-audit-ignore >> \
-            --ignore << parameters.bundler-audit-ignore >> <</ parameters.bundler-audit-ignore >> > \
-            tmp/security-scans/bundler-audit.log
-
+          command: >
+            bundle exec bundle-audit check --update <<# parameters.bundler-audit-ignore >>
+            --ignore << parameters.bundler-audit-ignore >> <</ parameters.bundler-audit-ignore >>
+            > tmp/security-scans/bundler-audit.log
       - run:
           name: Brakeman scan
           command: bundle exec brakeman -A --no-exit-on-warn -o tmp/security-scans/brakeman.log
@@ -90,15 +136,14 @@ jobs:
           name: DangerJS scan
           command: echo "Not yet implemented" > tmp/security-scans/dangerjs.log
 
-      # Run tests!
+      # Run tests
       - run:
-          name: Run RSpec tests
+          name: Run RSpec test suite
           command: |
-            mkdir tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
               circleci tests split --split-by=timings)"
 
-            bundle exec rspec \
+              bundle exec rspec \
               --format progress \
               --format RspecJunitFormatter \
               --out tmp/test-results/rspec.xml \

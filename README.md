@@ -119,7 +119,7 @@ bundle exec rails s # or `yarn run dev:rails`
 mailcatcher # This will run on localhost:1080
 ```
 
-### Redis
+#### Redis
 
 You'll need redis for sidekiq to work
 
@@ -128,17 +128,37 @@ brew install redis
 brew services start redis
 ```
 
-### Ports in use
+#### Ports in use
 
 - 3000: main site
 - 3035: Webpack dev server
 - 1080: Mailcatcher (if applicable)
 
 ### Login
-**Fund Admin**
+#### Fund Admin
 Username: `cats@test.com`
 Password: `password1234`
 
-**Lockbox Partner**
+#### Lockbox Partner
 Username: `fluffy@catsclinic.com`
 Password: `heytherefancypants4321`
+
+### Security
+#### Brakeman (WIP)
+We use Brakeman to check for security vulnerabilities in our project's gem dependencies.
+This check runs in CircleCI and any output from the scan is saved in the Artifacts
+tab under `security-scans/brakeman.log`. Brakeman can also be run locally, in which case
+[Brakeman's usage options](https://github.com/presidentbeef/brakeman/blob/master/OPTIONS.md)
+might come in handy.
+
+#### bundler-audit
+We use `bundler-audit` to check for security vulnerabilities in our project's gem dependencies.
+his check runs in CircleCI and any output from the scan is saved in the Artifacts
+tab under `security-scans/bundler-audit.log`. `bundler-audit` can also be run locally.
+
+Any non-critical vulnerabilities that cannot be fixed immediately can be temporarily
+ignored by adding the CVE ID to the list at `jobs.builds.parameters.bundler-audit-ignore`
+in `.circleci/config.yml`.
+
+#### DangerBot
+WIP
