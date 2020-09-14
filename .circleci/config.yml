@@ -39,6 +39,7 @@ jobs:
           name: Install bundler
           command: gem install bundler -v 2.1.4 && bundle config set path 'vendor/bundle'
       - restore_cache:
+          name: Restore bundler cache
           keys:
             - v1-dependencies-{{ checksum "Gemfile.lock" }}
             - v1-dependencies- # fallback to using the latest cache if no exact match is found
@@ -46,11 +47,13 @@ jobs:
           name: Install Ruby dependencies
           command: bundle install --jobs=4 --retry=3
       - save_cache:
+          name: Save bundler cache
           paths:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       # Javascript
       - restore_cache:
+          name: Restore yarn cache
           keys:
             - cache-yarn-{{ checksum "yarn.lock" }}
             - cache-yarn-
@@ -58,6 +61,7 @@ jobs:
           name: Install JS dependencies
           command: yarn install --cache-folder ~/.yarn-cache
       - save_cache:
+          name: Save yarn cache
           paths:
             - ~/.yarn-cache
           key: cache-yarn-{{ checksum "yarn.lock" }}
@@ -81,39 +85,45 @@ jobs:
 
       - run:
           name: Brakeman scan
-          command: bundle exec brakeman -A --no-exit-on-warn -o tmp/security-sacns/brakeman.log
+          command: bundle exec brakeman -A --no-exit-on-warn -o tmp/security-scans/brakeman.log
       - run:
           name: DangerJS scan
-          command: echo "Not yet implemented"
+          command: echo "Not yet implemented" > tmp/security-scans/dangerjs.log
 
       # Run tests!
       - run:
-          name: bundle exec rspec
+          name: Run RSpec tests
           command: |
-            mkdir /tmp/test-results
+            mkdir tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
               circleci tests split --split-by=timings)"
 
             bundle exec rspec \
               --format progress \
               --format RspecJunitFormatter \
-              --out /tmp/test-results/rspec.xml \
+              --out tmp/test-results/rspec.xml \
               --format progress \
               $TEST_FILES
           timeout: 2400
 
       # Collect reports
-      - store_artifacts:
-          path: tmp/security-scans
       - store_test_results:
+          name: Save test results
           path: tmp/test-results
       - store_artifacts:
+          name: Upload security scan results
+          path: tmp/security-scans
+          destination: security-scans
+      - store_artifacts:
+          name: Upload test results
           path: tmp/test-results
           destination: test-results
       - store_artifacts:
+          name: Upload screenshots
           path: tmp/screenshots
           destination: screenshots
       - store_artifacts:
+          name: Upload coverage
           path: coverage
 
   deploy:
