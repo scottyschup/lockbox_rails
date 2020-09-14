@@ -35,7 +35,7 @@ jobs:
       - run:
           name: Install bundler
           command: gem install bundler -v 2.1.4 && bundle config set path 'vendor/bundle'
-      - run: bundle clean --force # Recommended here: https://circleci.com/docs/2.0/caching/#bundler-ruby
+      # - run: bundle clean --force # Recommended here: https://circleci.com/docs/2.0/caching/#bundler-ruby
       # Ruby
       - restore_cache:
           keys:
