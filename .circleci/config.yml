@@ -34,7 +34,7 @@ jobs:
       # Install and cache dependencies
       - run:
           name: Install bundler
-          command: gem install bundler -v 2.1.4
+          command: gem install bundler -v 2.1.4 && bundle config set path 'vendor/bundle'
       - run: bundle clean --force # Recommended here: https://circleci.com/docs/2.0/caching/#bundler-ruby
       # Ruby
       - restore_cache:
@@ -43,9 +43,7 @@ jobs:
             - v1-dependencies- # fallback to using the latest cache if no exact match is found
       - run:
           name: Install Ruby dependencies
-          command: |
-            bundle config set path 'vendor/bundle' &&
-            bundle install --jobs=4 --retry=3
+          command: bundle install --jobs=4 --retry=3
       - save_cache:
           paths:
             - ./vendor/bundle
