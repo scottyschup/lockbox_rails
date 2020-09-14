@@ -1,4 +1,4 @@
-# Ruby CircleCI 2.0 configuration file
+# Ruby CircleCI 2.1 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
@@ -86,12 +86,12 @@ jobs:
       - run:
           name: Security scans
           command: >
-            mkdir tmp/security-scans &&
+            mkdir -p tmp/security-scans &&
             bundle exec brakeman -A --no-exit-on-warn -o tmp/security-scans/brakeman.log &&
             bundle exec bundle-audit check --update <<# parameters.bundler-audit-ignore >>
             --ignore << parameters.bundler-audit-ignore >> <</ parameters.bundler-audit-ignore >>
             > tmp/security-scans/bundler-audit.log &&
-            echo "DangerJS scan Not yet implemented" > tmp/security-scans/dangerjs.log
+            echo "DangerJS scan not yet implemented" > tmp/security-scans/dangerjs.log
       # Run tests
       - run:
           name: Run RSpec test suite
