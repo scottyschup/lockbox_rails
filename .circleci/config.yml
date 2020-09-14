@@ -12,8 +12,8 @@ commands:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run: |
-          bundle config set path 'vendor/bundle'
           gem install bundler -v 2.1.4 &&
+          bundle config set path 'vendor/bundle' &&
           bundle install --jobs=4 --retry=3
 
 jobs:
