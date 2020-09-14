@@ -7,7 +7,6 @@ jobs:
   bundler-audit:
     docker:
       - image: circleci/ruby:2.6.5
-    working_directory: ~/repo
     description: Runs bundle-audit to check gem security
     parameters:
       ignore:
@@ -21,23 +20,12 @@ jobs:
             bundle exec bundle-audit check --update <<# parameters.ignore >>
             --ignore << parameters.ignore >> <</ parameters.ignore >>
   brakeman-scan:
-  ruby-scans:
     docker:
       - image: circleci/ruby:2.6.5
-    working_directory: ~/repo
     steps:
       - run:
-          name: Install bundler-audit
-          command: gem install bundler-audit
-      - run:
-          name: Run bundler-audit
-          command: bundler-audit check --update > ~/repo/log/bundler-audit.log
-      - run:
-          name: Install brakeman
-          command: gem install brakeman
-      - run:
           name: Run brakeman
-          command: brakeman -A -o ~/repo/log/brakeman.log
+          command: bundle exec brakeman -A --no-exit-on-warn
   js-scans:
     docker:
       - image: circleci/node:10.15.3
