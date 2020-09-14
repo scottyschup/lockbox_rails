@@ -48,8 +48,8 @@ gem 'sentry-raven'
 gem 'sidekiq', '>= 6.0.5'
 gem 'skylight', '>= 4.2.1'
 
-gem 'brakeman', '~> 2.0.0'
-gem 'bundler-audit', '~> 0.7.0.1'
+gem 'brakeman'
+gem 'bundler-audit'
 
 group :production do
   gem 'sqreen', '>= 1.16'
