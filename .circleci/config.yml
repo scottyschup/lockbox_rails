@@ -15,10 +15,17 @@ jobs:
         default: CVE-2017-1002201
     steps:
       - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run:
           name: install bundler and bundle
           command: |
-            gem install bundler -v 2.1.4 && bundle
+            gem install bundler -v 2.1.4 &&
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
       - run:
           name: Run bundler-audit
           command: >
@@ -30,10 +37,17 @@ jobs:
       - image: circleci/ruby:2.6.5
     steps:
       - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run:
           name: install bundler and bundle
           command: |
-            gem install bundler -v 2.1.4 && bundle
+            gem install bundler -v 2.1.4 &&
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
       - run:
           name: Run brakeman
           command: bundle exec brakeman -A --no-exit-on-warn
