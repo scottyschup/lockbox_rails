@@ -2,7 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
@@ -22,52 +22,69 @@ jobs:
 
     working_directory: ~/repo
 
+    parameters:
+      bundler-audit-ignore:
+        description: Known vulnerabilities to ignore
+        type: string
+        default: CVE-2017-1002201
+
     steps:
       - checkout
 
-      # Download and cache dependencies
+      # Install and cache dependencies
+      - run: bundle clean --force # Recommended here: https://circleci.com/docs/2.0/caching/#bundler-ruby
+      # Ruby
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
+            - v1-dependencies- # fallback to using the latest cache if no exact match is found
       - run:
-          name: install latest bundler
-          command: |
-            gem install bundler
-
+          name: Install bundler
+          command: gem install bundler -v 2.1.4
       - run:
-          name: install dependencies
+          name: Install Ruby dependencies
           command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-
-      - run:
-          name: Yarn
-          command: |
-            yarn install
-
-      # Store yarn / webpacker cache
-      - save_cache:
-          paths:
-          - ~/.yarn-cache
-          key: cache-yarn-{{ checksum "yarn.lock" }}
-
-      - run:
-          name: Boot up server
-          command: |
-            NODE_ENV=test bundle exec rails webpacker:compile
-
+            bundle config set path 'vendor/bundle' &&
+            bundle install --jobs=4 --retry=3
       - save_cache:
           paths:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+      # Javascript
+      - restore_cache:
+          keys:
+            - cache-yarn-{{ checksum "yarn.lock" }}
+            - cache-yarn-
+      - run:
+          name: Install JS dependencies
+          command: yarn install --cache-folder ~/.yarn-cache
+      - save_cache:
+          paths:
+            - ~/.yarn-cache
+          key: cache-yarn-{{ checksum "yarn.lock" }}
+      - run:
+          name: Compile JS assets
+          command: NODE_ENV=test bundle exec rails webpacker:compile
 
       # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+      - run:
+          name: Set up database
+          command: bundle exec rake db:create db:schema:load
 
-      # run tests!
+      # Run security scans
+      - run:
+          name: Bundler audit scan
+          command: >
+            bundle exec bundle-audit check --update <<# parameters.bundler-audit-ignore >>
+            --ignore << parameters.bundler-audit-ignore >> <</ parameters.bundler-audit-ignore >>
+      - run:
+          name: Brakeman scan
+          command: bundle exec brakeman -A --no-exit-on-warn
+      - run:
+          name: DangerJS scan
+          command: echo "Not yet implemented"
+
+      # Run tests!
       - run:
           name: bundle exec rspec
           command: |
@@ -83,7 +100,7 @@ jobs:
               $TEST_FILES
           timeout: 2400
 
-      # collect reports
+      # Collect reports
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
@@ -94,7 +111,6 @@ jobs:
           destination: screenshots
       - store_artifacts:
           path: coverage
-
 
   deploy:
     docker:
@@ -111,9 +127,9 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: trunk
+      # - deploy:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: trunk
