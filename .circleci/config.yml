@@ -16,6 +16,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: install bundler and bundle
+          command: |
+            gem install bundler -v 2.1.4 && bundle
+      - run:
           name: Run bundler-audit
           command: >
             bundle exec bundle-audit check --update <<# parameters.ignore >>
@@ -26,6 +30,10 @@ jobs:
       - image: circleci/ruby:2.6.5
     steps:
       - checkout
+      - run:
+          name: install bundler and bundle
+          command: |
+            gem install bundler -v 2.1.4 && bundle
       - run:
           name: Run brakeman
           command: bundle exec brakeman -A --no-exit-on-warn
