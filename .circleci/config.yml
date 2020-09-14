@@ -26,17 +26,18 @@ jobs:
       bundler-audit-ignore:
         description: Known vulnerabilities to ignore
         type: string
-        default: CVE-2017-1002201
+        default: >
+          CVE-2017-1002201
+          CVE-2020-15169
 
     steps:
       - checkout
 
       # Install and cache dependencies
+      # Ruby
       - run:
           name: Install bundler
           command: gem install bundler -v 2.1.4 && bundle config set path 'vendor/bundle'
-      # - run: bundle clean --force # Recommended here: https://circleci.com/docs/2.0/caching/#bundler-ruby
-      # Ruby
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "Gemfile.lock" }}
@@ -70,14 +71,17 @@ jobs:
           command: bundle exec rake db:create db:schema:load
 
       # Run security scans
+      - run: mkdir tmp/security-scans
       - run:
           name: Bundler audit scan
-          command: >
-            bundle exec bundle-audit check --update <<# parameters.bundler-audit-ignore >>
-            --ignore << parameters.bundler-audit-ignore >> <</ parameters.bundler-audit-ignore >>
+          command: |
+            bundle exec bundle-audit check --update <<# parameters.bundler-audit-ignore >> \
+            --ignore << parameters.bundler-audit-ignore >> <</ parameters.bundler-audit-ignore >> > \
+            tmp/security-scans/bundler-audit.log
+
       - run:
           name: Brakeman scan
-          command: bundle exec brakeman -A --no-exit-on-warn
+          command: bundle exec brakeman -A --no-exit-on-warn -o tmp/security-sacns/brakeman.log
       - run:
           name: DangerJS scan
           command: echo "Not yet implemented"
@@ -99,13 +103,15 @@ jobs:
           timeout: 2400
 
       # Collect reports
-      - store_test_results:
-          path: /tmp/test-results
       - store_artifacts:
-          path: /tmp/test-results
+          path: tmp/security-scans
+      - store_test_results:
+          path: tmp/test-results
+      - store_artifacts:
+          path: tmp/test-results
           destination: test-results
       - store_artifacts:
-          path: ~/repo/tmp/screenshots
+          path: tmp/screenshots
           destination: screenshots
       - store_artifacts:
           path: coverage
