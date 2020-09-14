@@ -14,18 +14,22 @@ jobs:
         type: string
         default: CVE-2017-1002201
     steps:
+      - checkout
       - run:
-          name: Dependencies security audit
+          name: Run bundler-audit
           command: >
             bundle exec bundle-audit check --update <<# parameters.ignore >>
             --ignore << parameters.ignore >> <</ parameters.ignore >>
+
   brakeman-scan:
     docker:
       - image: circleci/ruby:2.6.5
     steps:
+      - checkout
       - run:
           name: Run brakeman
           command: bundle exec brakeman -A --no-exit-on-warn
+
   js-scans:
     docker:
       - image: circleci/node:10.15.3
@@ -35,6 +39,7 @@ jobs:
           command: yarn danger ci
       - run:
           name:
+
   build:
     docker:
       - image: circleci/ruby:2.6.5-node-browsers
