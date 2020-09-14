@@ -15,6 +15,7 @@ commands:
           bundle config set path 'vendor/bundle'
           gem install bundler -v 2.1.4 &&
           bundle install --jobs=4 --retry=3
+
 jobs:
   repo-setup:
     docker:
@@ -54,8 +55,6 @@ jobs:
       - run:
           name: DangerJS
           command: yarn danger ci
-      - run:
-          name:
 
   build:
     docker:
