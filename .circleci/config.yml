@@ -84,12 +84,13 @@ jobs:
             bundle exec bundle-audit check --update <<# parameters.bundler-audit-ignore >>
             --ignore << parameters.bundler-audit-ignore >> <</ parameters.bundler-audit-ignore >>
             > tmp/security-scans/bundler-audit.log &&
-            echo "DangerJS scan not yet implemented" > tmp/security-scans/dangerjs.log
+            yarn lockfile-check > tmp/security-scans/lockfile-check.log &&
+            yarn snyk-protext > tmp/security-scans/snyk.log
       # Run tests
       - run:
           name: Run RSpec test suite
           command: |
-            mkdir tmp/test-results
+            mkdir -p tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
               circleci tests split --split-by=timings)"
             bundle exec rspec \

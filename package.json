@@ -22,12 +22,13 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect && yarn run snyk-protect",
-    "predev": "./bin/dev_setup",
-    "dev:assets": "./bin/webpack --watch --colors --progress --display-error-details",
+    "clean": "rm -rf node_modules",
+    "dev": "yarn dev:webpack & yarn dev:rails && fg",
+    "dev:webpack": "./bin/webpack --watch --colors --progress --display-error-details",
     "dev:rails": "bundle exec rails server --port 3000",
-    "dev": "yarn run dev:assets & yarn run dev:rails && fg"
-  },
-  "snyk": true
+    "install-dependencies": "./bin/install-dependencies",
+    "lockfile-check": "./bin/lockfile-check",
+    "predev": "yarn install-dependencies",
+    "snyk-protect": "snyk protect"
+  }
 }
