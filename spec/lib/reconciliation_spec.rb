@@ -3,6 +3,12 @@ require './lib/reconciliation'
 
 describe Reconciliation do
   let!(:lockbox_partner) { create(:lockbox_partner, :active) }
+  let(:amount) { Monetize.parse('1100.00') }
+
+  before do
+    ENV['LOCKBOX_EMAIL'] = 'foo@bar.com'
+    ENV['FINANCE_EMAIL'] = 'fizz@buzz.com'
+  end
 
   def reconcile
     Reconciliation.call(lockbox_partner: lockbox_partner, amount: amount)
@@ -18,11 +24,51 @@ describe Reconciliation do
     it 'fails' do
       expect(reconcile.succeeded?).to be false
     end
+
+    it 'does not send out an email' do
+      reconcile
+      expect  { ReconciliationCompletedMailerWorker.drain }
+        .not_to change { ActionMailer::Base.deliveries.count }
+    end
+  end
+
+  context 'the lockbox action is invalid' do
+    before do
+      allow_any_instance_of(LockboxAction).to receive(:valid?).and_return(false)
+    end
+
+    it 'does return an error message to caller' do
+      response = reconcile
+      expect(response.outcome).to be :error
+      expect(response.failure).to match(/Lockbox action not created: /)
+    end
+
+    it 'does not send out an email' do
+      reconcile
+      expect  { ReconciliationCompletedMailerWorker.drain }
+        .not_to change { ActionMailer::Base.deliveries.count }
+    end
+  end
+
+  context 'the lockbox transaction is invalid' do
+    before do
+      allow_any_instance_of(LockboxTransaction).to receive(:valid?).and_return(false)
+    end
+
+    it 'does return an error message to the caller' do
+      response = reconcile
+      expect(response.outcome).to be :error
+      expect(response.failure).to match(/Lockbox transaction not created: /)
+    end
+
+    it 'does not send out an email' do
+      reconcile
+      expect  { ReconciliationCompletedMailerWorker.drain }
+        .not_to change { ActionMailer::Base.deliveries.count }
+    end
   end
 
   context 'when the amount is valid' do
-    let(:amount) { Monetize.parse('1100.00') }
-
     before do
       allow(lockbox_partner)
         .to receive(:balance)
@@ -76,6 +122,16 @@ describe Reconciliation do
       expect(lockbox_transaction.eff_date).to eq(Date.current)
       expect(lockbox_transaction.amount).to eq(Monetize.parse('100.00'))
       expect(lockbox_transaction.balance_effect).to eq(LockboxTransaction::CREDIT)
+    end
+
+    it 'does not send out an email immediately during reconciliation' do
+      expect(LockboxPartnerMailer).not_to receive(:with)
+      expect(LockboxPartnerMailer).not_to receive(:reconciliation_completed_alert)
+    end
+
+    it 'sends out a delayed email after reconciliation' do
+      reconcile
+      expect { ReconciliationCompletedMailerWorker.drain }.to change { ActionMailer::Base.deliveries.count }
     end
   end
 end

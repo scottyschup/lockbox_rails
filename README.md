@@ -81,7 +81,7 @@ Setup DB:
 bundle exec rake db:setup # runs `rake db:create db:schema:load db:seed
 ```
 
-_If you have issues at this step, see this [PostrgreSQL Setup](https://github.com/MidwestAccessCoalition/jane_point_oh/blob/master/docs/db_setup.md) doc. But while going through it, wherever you see the string `admin_app`, replace it with `lockbox_rails`. (This includes instances like `admin_app_development` => `lockbox_rails_development`.)_
+_If you have issues at this step, see this [PostgreSQL Setup](https://github.com/MidwestAccessCoalition/jane_point_oh/blob/master/docs/db_setup.md) doc. But while going through it, wherever you see the string `admin_app`, replace it with `lockbox_rails`. (This includes instances like `admin_app_development` => `lockbox_rails_development`.)_
 
 #### Mailcatcher
 
@@ -129,34 +129,39 @@ brew services start redis
 ```
 
 #### Ports in use
-
-
-- 3000: main site	- 3000: main site
-- 3035: Webpack dev server	- 3035: Webpack dev server
-- 1080: Mailcatcher (if applicable)	- 1080: Mailcatcher (if applicable)
-
+* 3000: Rails server
+* 3035: Webpack server
+* 6379: Redis server
+* 1080: Mailcatcher (if applicable)
 
 ### Login
 #### Fund Admin
 Username: `cats@test.com`
 Password: `password1234`
 
-
 #### Lockbox Partner
 Username: `fluffy@catsclinic.com`
 Password: `heytherefancypants4321`
 
 ### Security
-#### Brakeman (WIP)
-We are starting to use Brakeman to check for security vulnerabilities. More details to come later, but for now, you can familiarize yourself with [Brakeman's usage options](https://github.com/presidentbeef/brakeman/blob/master/OPTIONS.md).
+#### Brakeman
+We use Brakeman to check for security vulnerabilities in our project's codebase.
+This check runs in CircleCI and any output from the scan is saved in the Artifacts
+tab under `security-scans/brakeman.log`. Brakeman can also be run locally, in which case
+[Brakeman's usage options](https://github.com/presidentbeef/brakeman/blob/master/OPTIONS.md)
+might come in handy.
 
-Eventually Brakeman will be incorporated as part of the CI process (or used in a Git hook). But until then, you should run it once locally before merging any new PRs. To do so, from the app root run:
-```sh
-rake brakeman:full_scan
-```
+#### bundler-audit
+We use `bundler-audit` to check for security vulnerabilities in our project's gem dependencies.
+This check runs in CircleCI and any output from the scan is saved in the Artifacts
+tab under `security-scans/bundler-audit.log`. `bundler-audit` can also be run locally.
 
-This will output a summary file to `log/brakeman/{NUMERIC_TIMESTAMP}_fullscan.log`. There is also a `quick_scan` command that will run the scan without checking the `lib` directory.
+Any non-critical vulnerabilities that cannot be fixed immediately can be temporarily
+ignored by adding the CVE ID to the list at `jobs.builds.parameters.bundler-audit-ignore`
+in `.circleci/config.yml`.
 
-#### Bundler Audit
-
-#### DangerBot
+#### Snyk
+Snyk is simmilar to `bundler-audit` except that it checks out project's Javascript
+package dependencies for vulnerabilities. This check runs in CircleCI and any output from the scan 
+is saved in the Artifacts tab under `security-scans/snyk-protect.log`. 
+`snyk-protect` can also be run locally.
