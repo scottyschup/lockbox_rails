@@ -1,4 +1,4 @@
-#! /usr/bin/env ruby -w
+#!/usr/bin/env ruby
 
 GEMFILE_LOCK = 'Gemfile.lock'
 YARN_LOCK = 'yarn.lock'
