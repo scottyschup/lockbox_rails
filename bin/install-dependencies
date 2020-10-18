@@ -2,16 +2,18 @@
 
 `bundle`
 if $?.success?
-  $stdout.puts("\n\e[92mAll Ruby gems were successfully installed\e[0m")
+  $stdout.puts("\n✅ All Ruby gems were successfully installed!")
 else
-  $stderr.puts("\n\e[91mThere were issues installing Ruby dependencies; ensure that you can run `bundle install`\e[0m")
+  $stderr.puts("\n❌ There were issues installing Ruby dependencies; ensure that `bundle install` runs and completes successfully.")
   exit 1
 end
 
 `yarn`
 if $?.success?
-  $stdout.puts("\n\e[92mAll Node packages were successfully installed\e[0m")
+  $stdout.puts("\n✅ All Node packages were successfully installed!")
 else
-  $stderr.puts("\n\e[91mThere were issues installing JavaScript dependencies; ensure that you can run `yarn`\e[0m")
+  $stderr.puts("\n❌ There were issues installing JavaScript dependencies; ensure that `yarn` runs and completes successfully.")
   exit 1
 end
+
+$stdout.puts("\n🎉 All dependencies successfully installed!")

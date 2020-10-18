@@ -1,0 +1,5 @@
+# Add CVE IDs to be ignored here--one per line or separated by a space.
+# Any comments in this file must be on their own line (not appended after an ID)
+# otherwise that ID will be ignored.
+
+CVE-2020-15169

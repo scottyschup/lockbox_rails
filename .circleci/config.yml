@@ -59,15 +59,6 @@ jobs:
           POSTGRES_PASSWORD: ""
           RAILS_ENV: test
           NODE_ENV: test
-    parameters:
-      bundler-audit-ignore:
-        description: Known vulnerabilities to ignore
-        type: string
-        # This list is a string, but since YAML `>` converts single new lines into single spaces,
-        # the CVEs can be listed here one per line rather than as one long string for better reaabaility.
-        default: >
-          CVE-2017-1002201
-          CVE-2020-15169
     steps:
       - checkout
       - bundle
@@ -78,14 +69,7 @@ jobs:
       # Run security scans
       - run:
           name: Security scans
-          command: >
-            mkdir -p tmp/security-scans &&
-            bundle exec brakeman -A --no-exit-on-warn -o tmp/security-scans/brakeman.log &&
-            bundle exec bundle-audit check --update <<# parameters.bundler-audit-ignore >>
-            --ignore << parameters.bundler-audit-ignore >> <</ parameters.bundler-audit-ignore >>
-            > tmp/security-scans/bundler-audit.log &&
-            yarn lockfile-check > tmp/security-scans/lockfile-check.log &&
-            yarn snyk-protext > tmp/security-scans/snyk.log
+          command: mkdir -p tmp/security-scans && yarn scan:all
       # Run tests
       - run:
           name: Run RSpec test suite

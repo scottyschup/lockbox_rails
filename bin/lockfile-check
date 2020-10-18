@@ -17,7 +17,7 @@ VALID_LOCKFILES.each do |lockfile|
     $stderr.puts "Be sure to run `#{INSTALLERS[lockfile]}` before merging."
     exit 1
   end
-  $stdout.puts "\t✅ #{lockfile} found."
+  $stdout.puts "✅ #{lockfile} found."
 end
 
 if File.exist? PACKAGE_LOCK
@@ -27,5 +27,5 @@ if File.exist? PACKAGE_LOCK
   exit 2
 end
 
-$stdout.puts "\n🎉 Everything is as it should be, lockfile-wise at least."
+$stdout.puts "\n🎉 All is well! (Lockfile-wise, at least.)"
 exit 0

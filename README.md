@@ -98,6 +98,7 @@ bundle exec rails webpacker:install
 ```
 
 ### Local Development
+
 ```sh
 yarn dev
 ```
@@ -143,25 +144,57 @@ Password: `password1234`
 Username: `fluffy@catsclinic.com`
 Password: `heytherefancypants4321`
 
-### Security
+### Security Scans
+We use several automated scans to check for known vulnerabilities both in our code
+and our dependencies. To run all of the scans at one time:
+```sh
+yarn scan:all
+```
+
+There are also scripts that can be run for each individual scan or grouped by language
+(see `package.json > scripts` for more specifics). Every scan is configured to automatically
+print its output to the terminal as well as a log file in the `tmp/security-scans`
+directory. These scans are integrated as part of the CI build-and-test process.
+
+Note that some of the scans can find issues that are not severe enough to be considered
+`errors` but should still be attended to. Brakeman especially highlights low, moderate,
+and high level `warnings` that may need to be addressed to ensure the highest level
+of AppSec confidence.
+
 #### Brakeman
 We use Brakeman to check for security vulnerabilities in our project's codebase.
 This check runs in CircleCI and any output from the scan is saved in the Artifacts
-tab under `security-scans/brakeman.log`. Brakeman can also be run locally, in which case
-[Brakeman's usage options](https://github.com/presidentbeef/brakeman/blob/master/OPTIONS.md)
-might come in handy.
+tab under `security-scans/brakeman.log`. Brakeman can also be run locally:
+```sh
+yarn scan:brakeman
+```
 
-#### bundler-audit
+For more control over the process, you can also run `brakeman` manually from the 
+terminal to get more detailed output or to ignore for lower-level warnings, in which case 
+[Brakeman's usage options](https://github.com/presidentbeef/brakeman/blob/master/OPTIONS.md)
+may be useful.
+
+#### Bundler Audit
 We use `bundler-audit` to check for security vulnerabilities in our project's gem dependencies.
 This check runs in CircleCI and any output from the scan is saved in the Artifacts
-tab under `security-scans/bundler-audit.log`. `bundler-audit` can also be run locally.
+tab under `security-scans/bundler-audit.log`. `bundler-audit` can also be run locally:
+```sh
+yarn scan:bundler-audit
+```
 
 Any non-critical vulnerabilities that cannot be fixed immediately can be temporarily
-ignored by adding the CVE ID to the list at `jobs.builds.parameters.bundler-audit-ignore`
-in `.circleci/config.yml`.
+ignored by adding the CVE ID to the root-level `.bundler-audit.ignore` file.
+
+#### `lockfile-check`
+This is a custom script that ensures `yarn` and `bundle` have both been run
+successfully and that `npm i` has not also been run. To run locally:
+```sh
+yarn scan:lockfiles
+```
 
 #### Snyk
-Snyk is simmilar to `bundler-audit` except that it checks out project's Javascript
-package dependencies for vulnerabilities. This check runs in CircleCI and any output from the scan 
-is saved in the Artifacts tab under `security-scans/snyk-protect.log`. 
-`snyk-protect` can also be run locally.
+Snyk is simmilar to `bundler-audit` except that it checks our project's Javascript
+package dependencies for vulnerabilities. To run locally:
+```sh
+yarn scan:snyk
+```
